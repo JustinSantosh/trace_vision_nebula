@@ -1,0 +1,34 @@
+{
+  "labels": "TRACEVISION_DATA/evaluation/test_clip_labels.csv",
+  "vehicles": 51,
+  "clips": 11,
+  "errors": 1,
+  "warnings": 0,
+  "in_registry_no": 42,
+  "cross_camera_groups": [],
+  "readability": {
+    "full": 11,
+    "partial": 8,
+    "none": 32
+  },
+  "vehicle_types": {
+    "SUV": 12,
+    "auto_rickshaw": 6,
+    "bicycle": 0,
+    "bus": 0,
+    "car": 24,
+    "motorcycle": 5,
+    "other": 0,
+    "scooter": 1,
+    "truck": 3,
+    "unknown": 0,
+    "van": 0
+  },
+  "issues": [
+    {
+      "severity": "error",
+      "target_vehicle_id": "(coverage)",
+      "issue": "no cross-camera group spanning 2 clips; the spec requires >= 1"
+    }
+  ]
+}
