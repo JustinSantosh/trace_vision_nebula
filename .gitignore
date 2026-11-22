@@ -53,3 +53,4 @@ runs/_last_run.log
 runs/jobs/
 runs_degraded/**/vehicles/
 runs_degraded/**/report.*
+*.log
