@@ -285,6 +285,30 @@ def main():
         case("clip", "<from pipeline>", "<from pipeline>", "<from pipeline>", outcome, cands,
              f"ground truth plate {r.get('plate_text_truth') or '(none)'}", src="clip", clip=r.get("clip_id", ""), tv=r["target_vehicle_id"])
 
+    # answer-key consistency: a synthetic "match:<id>" case is really ambiguous if another registry vehicle
+    # agrees with every readable query character AND with the query's colour and type (e.g. a decoy whose
+    # changed character happens to sit on a hidden '?' position). Relabel such cases, never the matcher.
+    by_id = {r["synthetic_vehicle_id"]: r for r in g.rows}
+    relabelled = 0
+    for c in cases:
+        if c["case_source"] != "synthetic_query" or not c["expected_outcome"].startswith("match:"):
+            continue
+        qp, target = c["query_plate"], c["expected_outcome"].split(":", 1)[1]
+        def fits(r):
+            p = r["registration_number"]
+            return (len(p) == len(qp) and all(x == "?" or x == y for x, y in zip(qp, p))
+                    and (c["query_colour"] == "unknown" or r["vehicle_colour"] == c["query_colour"])
+                    and (c["query_type"] == "unknown" or r["vehicle_type"] == c["query_type"]))
+        if not fits(by_id[target]):
+            continue
+        rivals = [r["synthetic_vehicle_id"] for r in g.rows if r["synthetic_vehicle_id"] != target and fits(r)]
+        if rivals:
+            c["expected_outcome"] = "ambiguous"
+            c["expected_candidates"] = ";".join([target] + rivals)
+            c["notes"] += f" [auto-check: {len(rivals)} other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
+            relabelled += 1
+    print(f"answer-key check: {relabelled} case(s) relabelled match -> ambiguous")
+
     # absent check
     leaks = [b for b in g.blocked if b in g.plates]
     if leaks:

@@ -107,6 +107,14 @@ Full report: `TRACEVISION_DATA/reports/p2_plate_detector.md`.
 - On our clips: close plates are found and cropped cleanly (day, night, two-wheelers). Far plates are found but only 5–14 px tall, so they're unreadable (C7). False detections are all low-confidence, so the threshold is 0.5 and plates under 16 px aren't OCR'd (M8).
 - Weights `models/weights/plate_yolov8n_quobotic.pt` are shared via Git LFS.
 
+## 4d. Phase 2, step P3: the judged algorithms (done 2026-11-23, approved)
+
+Full report: `TRACEVISION_DATA/reports/p3_fusion_and_matching.md`. Code in `tracevision/`, tests in `tests/`.
+- **Multi-frame fusion** (`fuse.py`): aligns reads (a dropped character doesn't shift the rest), takes quality × probability votes per position, and writes `?` below the share or confidence bar. Never guesses. Handles BH plates and warns on unknown state codes.
+- **Registry matching** (`match.py`): wildcard- and look-alike-aware match score, reasons for every candidate, and match / ambiguous / no-confident-match decisions.
+- **26 unit tests pass.** Thresholds calibrated with a split by anchor: **held-out 62/62**, top-1 32/32. The cases are synthetic designed traps, not real-world accuracy.
+- Found and fixed **20 wrong expected outcomes** in the generated answer key (A24).
+
 ## 5. Decisions
 
 All decisions, with the reason for each and their status, are in **[DECISIONS.md](DECISIONS.md)** (D1–D10 data, M1–M6 models, E1–E9 evaluation, P1–P3 process).
@@ -130,4 +138,5 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | 097c073 | Phase 0D–0F scripts, blank label template, starter synthetic registry and test cases |
 | 4b6bd57 | DECISIONS.md, status docs refreshed |
 | 74994ff | P1: vision stack, UVH-26 class mapping, two-process OCR, smoke test |
-| (this push) | P2: plate detector trained and evaluated; weights via LFS |
+| 1fcaf35 | P2: plate detector trained and evaluated; weights via LFS |
+| (this push) | P3: fusion + matching + tests + calibration; answer-key fix |

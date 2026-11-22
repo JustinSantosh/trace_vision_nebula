@@ -27,8 +27,8 @@
     "no_matching_entry": 4
   },
   "outcomes": {
-    "match": 84,
-    "ambiguous": 36,
+    "match": 64,
+    "ambiguous": 56,
     "no_match": 4
   },
   "types": {

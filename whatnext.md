@@ -50,7 +50,8 @@
 
 - [x] **P1 done:** UVH-26 loaded on GPU, `class_mapping.json` built from the real 14 classes, ByteTrack smoke-tested, OCR worker process designed and tested (see `reports/p1_vision_stack.md`)
 - [x] **P2 done:** YOLOv8n plate detector, leakage-free mAP50 0.995. Plates under 16 px are reported unreadable (see `reports/p2_plate_detector.md`)
-- [ ] **P3 (needs approval):** `fuse.py` + `match.py` + unit tests against the 124 registry cases
+- [x] **P3 done:** fusion + matching built, 26 tests pass, thresholds calibrated (held-out 62/62 on synthetic cases). See `reports/p3_fusion_and_matching.md`
+- [ ] **P4 (needs approval):** `pipeline.py` end to end on all clips → `result.json` (re-extract frames for the 6 trimmed clips first, A25)
 - [ ] **Colour classifier:** HSV / k-means on the vehicle body crop (excluding glass and road), mapped to about 10 named colours, with a confidence score
 - [ ] Vehicle tracking across frames (ByteTrack via ultralytics)
 

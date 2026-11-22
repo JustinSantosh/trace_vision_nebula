@@ -1,6 +1,6 @@
 # TRACEVISION AI — Pipeline Design (Phase 1–3)
 
-**Status:** P1 and P2 done (approved 2026-11-23). **P3 onwards waits for the owner's approval** (see §10). Updated 2026-11-23.
+**Status:** P1, P2 and P3 done (approved 2026-11-23). **P4 onwards waits for the owner's approval** (see §10). Updated 2026-11-23.
 Problem: **AIML-01 Vehicle Identification and Traceability from CCTV Footage**. Related: [DECISIONS.md](DECISIONS.md) · [PROBLEMS.md](PROBLEMS.md) · [whatnext.md](whatnext.md) · [TEAM_TASKS.md](TEAM_TASKS.md)
 
 ---
@@ -54,9 +54,9 @@ One clip runs as a **batch job**: there's no real-time requirement. Every stage 
 | 4 | **Best-frame selection** | track → K best frames (default 5) | Rank frames by: plate box size (from stage 5), plate sharpness (Laplacian variance), detector confidence, and not cut off at the frame edge. Keep frames ≥ 3 apart so they aren't near-duplicates. | new | — |
 | 5 | **Plate detection** ✅ P2 | vehicle crop → plate box(es) | **YOLOv8n fine-tuned** on `processed/plate_detection` (Quobotic, 2,069 train images) on the RTX 3050. Run on the **vehicle crop** (upscaled), not the full frame, so small plates become bigger. Report mAP50 on the official and leakage-free test (A15). **Trained (P2): mAP50 0.995 on the leakage-free test. Confidence ≥ 0.5; plates under 16 px are reported unreadable (M8).** | ultralytics | ✅ `plate_yolov8n_quobotic.pt` |
 | 6 | **Plate OCR** | plate crop → text + **per-character probability + top-3** | **Awiros**, `--device gpu`, **always `prep_paddle`** (B8), **in a separate OCR worker process** (torch and Paddle can't share a process on Windows: C5, DECISIONS M7). 15 ms per crop. **Two-row plates** (60.5% exact today): if the crop's aspect ratio is under 2.2, also try splitting it into 2 rows, OCR each row, join them, and keep whichever has the higher mean char prob. *To be tested on zenitsu09's two-row slice before adopting.* | `awiros_feasibility_check.py` | ✅ Works |
-| 7 | **Multi-frame fusion** (judged) | K OCR reads → one plate with per-position confidence or `?` | See §4 | new | — |
+| 7 | **Multi-frame fusion** (judged) ✅ P3 | K OCR reads → one plate with per-position confidence or `?` | See §4 | `tracevision/fuse.py` | ✅ Built, 13 tests |
 | 8 | **Colour** | best vehicle crops → colour + confidence | See §5 | new | — |
-| 9 | **Registry matching** (judged) | fused plate + colour + type → top 5 / no match | See §6 | new | — |
+| 9 | **Registry matching** (judged) ✅ P3 | fused plate + colour + type → top 5 / no match | See §6 | `tracevision/match.py` | ✅ Built, 13 tests, calibrated |
 | 10 | **Report + UI** | job folder → HTML/PDF report, web UI | See §7 | new | Needs installs |
 | 11 | *Cross-camera (bonus)* | results from 2 clips → linked vehicles | Link tracks whose **fused plates agree** on all positions that both clips read (allowing `?`), **and** whose colour and type agree. Without plates there's no claim; looks alone are not identity (spec). | new | Waits on the car pair |
 
@@ -71,7 +71,7 @@ One clip runs as a **batch job**: there's no real-time requirement. Every stage 
 3. **Align each read to the template** with a small edit-distance alignment. A read can miss or add a character; a dropped character becomes an empty slot, not a shift of everything after it.
 4. **Respect position classes:** letter positions vs digit positions. A `0` in a letter position counts as a vote for `O`/`D`, at half weight, using the look-alike table (0↔O↔D, 1↔I, 8↔B, 5↔S, 2↔Z).
 5. **Weighted vote per position:** `score(c) = Σ_frames q_f × p_f(c)`, where `p_f` comes from the top-3 so second choices also count.
-6. **Decide each position:** emit the top character **only if** its vote share is ≥ τ_share (default 0.6) **and** its mean probability is ≥ τ_prob (default 0.8). Otherwise emit **`?`**. Never fill in a guess.
+6. **Decide each position:** emit the top character **only if** its vote share is ≥ τ_share (default 0.6) **and** its mean probability over the reads that agree is ≥ τ_prob (default 0.8). Otherwise emit **`?`**. Never fill in a guess.
 7. **Validity check:** check the state code against the list of Indian RTO state codes. An invalid state code stays readable but gets a warning (`state code not recognised`). It is never "corrected".
 8. **Output:** the fused plate (e.g. `CG04?B12?4`), per-position confidence, the frames each position came from, and the disagreements (for the report).
 
@@ -194,7 +194,7 @@ evaluation/eval.py # computes §8 tables from runs/ + labels
 |---|---|---|---|
 | **P1** ✅ | Done 2026-11-23: torch 2.14.1+cu126, ultralytics, lap, UVH-26 YOLOv11-S, `class_mapping.json`, smoke test on clip01/02, two-process OCR. See `reports/p1_vision_stack.md`. | Approved | Detector and tracker running |
 | **P2** ✅ | Done 2026-11-23: YOLOv8n, 60 epochs in 24 min. Leakage-free test mAP50 0.995 / mAP50-95 0.754. Checked on 6 clips. See `reports/p2_plate_detector.md`. | Approved | `models/weights/plate_yolov8n_quobotic.pt` (LFS) |
-| **P3** | `fuse.py` + `match.py` + unit tests against the 124 registry cases | Nothing | Tested judged algorithms |
+| **P3** ✅ | Done 2026-11-23: `tracevision/{plates,fuse,match,calibrate}.py`, 26 unit tests, thresholds calibrated (holdout 62/62). See `reports/p3_fusion_and_matching.md`. | Approved | Tested judged algorithms |
 | **P4** | `pipeline.py` end to end on all clips → `result.json` | Nothing | First results |
 | **P5** | Report + FastAPI + UI | Install `fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool | Demo app, one report per clip |
 | **P6** | Evaluation on hand labels + degraded variants → final metrics | Nothing (needs the labels) | Results tables, README |

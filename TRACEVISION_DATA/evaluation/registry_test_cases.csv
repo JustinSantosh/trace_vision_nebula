@@ -1,7 +1,7 @@
 case_id,case_source,scenario,clip_id,target_vehicle_id,query_plate,query_colour,query_type,expected_outcome,expected_candidates,notes
 RC0001,synthetic_query,exact_match,,,CG13B0287,blue,van,match:SV457965,SV457965,
-RC0002,synthetic_query,partial_plate_match,,,CG13B0???,blue,van,match:SV457965,SV457965;SV054185,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high"
-RC0003,synthetic_query,unknown_characters,,,CG13B?28?,blue,van,match:SV457965,SV457965;SV339065,decoy fits every known character; only colour separates them
+RC0002,synthetic_query,partial_plate_match,,,CG13B0???,blue,van,ambiguous,SV457965;SV054185,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
+RC0003,synthetic_query,unknown_characters,,,CG13B?28?,blue,van,ambiguous,SV457965;SV005257,"decoy fits every known character; only colour separates them [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0004,synthetic_query,unknown_characters_no_colour,,,CG13B?28?,unknown,van,ambiguous,SV457965;SV339065,plate alone cannot separate anchor and decoy -> should not claim a confident single match
 RC0005,synthetic_query,cross_class_ocr_confusion,,,CG1380287,blue,van,match:SV457965,SV457965;SV005257,query has B->8 at position 5; look-alike credit should recover the anchor
 RC0006,synthetic_query,confusable_candidates,,,CG13B0287,blue,van,match:SV457965,SV457965;SV005257,exact plate must beat its confusable twin
@@ -10,13 +10,13 @@ RC0008,synthetic_query,similar_colour_different_type,,,CG13B02??,blue,van,match:
 RC0009,synthetic_query,similar_looking_vehicles,,,CG???????,blue,van,ambiguous,SV457965;SV306291;SV589653,only the state code is readable; several identical-looking vehicles -> no confident single match
 RC0010,synthetic_query,multiple_plausible,,,?????0287,unknown,unknown,ambiguous,SV457965,only the last 4 digits are known
 RC0011,synthetic_query,exact_match,,,MP34YT7726,silver,scooter,match:SV352942,SV352942,
-RC0012,synthetic_query,partial_plate_match,,,MP34YT7???,silver,scooter,match:SV352942,SV352942;SV925225,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high"
-RC0013,synthetic_query,unknown_characters,,,MP34YT?72?,silver,scooter,match:SV352942,SV352942;SV697729,decoy fits every known character; only colour separates them
+RC0012,synthetic_query,partial_plate_match,,,MP34YT7???,silver,scooter,ambiguous,SV352942;SV315692,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
+RC0013,synthetic_query,unknown_characters,,,MP34YT?72?,silver,scooter,ambiguous,SV352942;SV315692,"decoy fits every known character; only colour separates them [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0014,synthetic_query,unknown_characters_no_colour,,,MP34YT?72?,unknown,scooter,ambiguous,SV352942;SV697729,plate alone cannot separate anchor and decoy -> should not claim a confident single match
 RC0015,synthetic_query,cross_class_ocr_confusion,,,MP34YT77Z6,silver,scooter,match:SV352942,SV352942;SV315692,query has 2->Z at position 9; look-alike credit should recover the anchor
 RC0016,synthetic_query,confusable_candidates,,,MP34YT7726,silver,scooter,match:SV352942,SV352942;SV315692,exact plate must beat its confusable twin
 RC0017,synthetic_query,conflicting_colour,,,MP34YT7726,grey,scooter,match:SV352942,SV352942,"plate is exact, colour disagrees -> still the anchor, with a colour-conflict reason and a lower match score"
-RC0018,synthetic_query,similar_colour_different_type,,,MP34YT77??,silver,scooter,match:SV352942,SV352942;SV742810,decoy shares colour and nearly the plate but is a different type
+RC0018,synthetic_query,similar_colour_different_type,,,MP34YT77??,silver,scooter,ambiguous,SV352942;SV315692,"decoy shares colour and nearly the plate but is a different type [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0019,synthetic_query,similar_looking_vehicles,,,MP????????,silver,scooter,ambiguous,SV352942;SV723686;SV159486,only the state code is readable; several identical-looking vehicles -> no confident single match
 RC0020,synthetic_query,multiple_plausible,,,??????7726,unknown,unknown,ambiguous,SV352942,only the last 4 digits are known
 RC0021,synthetic_query,exact_match,,,OD18PU9548,yellow,auto_rickshaw,match:SV995732,SV995732,
@@ -50,8 +50,8 @@ RC0048,synthetic_query,similar_colour_different_type,,,MH14TZ73??,green,car,matc
 RC0049,synthetic_query,similar_looking_vehicles,,,MH????????,green,car,ambiguous,SV600075;SV953969;SV992057,only the state code is readable; several identical-looking vehicles -> no confident single match
 RC0050,synthetic_query,multiple_plausible,,,??????7382,unknown,unknown,ambiguous,SV600075;SV652261,only the last 4 digits are known
 RC0051,synthetic_query,exact_match,,,MH27TW0261,white,SUV,match:SV222655,SV222655,
-RC0052,synthetic_query,partial_plate_match,,,MH27TW0???,white,SUV,match:SV222655,SV222655;SV382048,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high"
-RC0053,synthetic_query,unknown_characters,,,MH27TW0?6?,white,SUV,match:SV222655,SV222655;SV722843,decoy fits every known character; only colour separates them
+RC0052,synthetic_query,partial_plate_match,,,MH27TW0???,white,SUV,ambiguous,SV222655;SV944909,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
+RC0053,synthetic_query,unknown_characters,,,MH27TW0?6?,white,SUV,ambiguous,SV222655;SV944909,"decoy fits every known character; only colour separates them [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0054,synthetic_query,unknown_characters_no_colour,,,MH27TW0?6?,unknown,SUV,ambiguous,SV222655;SV722843,plate alone cannot separate anchor and decoy -> should not claim a confident single match
 RC0055,synthetic_query,cross_class_ocr_confusion,,,MH27TW026I,white,SUV,match:SV222655,SV222655;SV944909,query has 1->I at position 10; look-alike credit should recover the anchor
 RC0056,synthetic_query,confusable_candidates,,,MH27TW0261,white,SUV,match:SV222655,SV222655;SV944909,exact plate must beat its confusable twin
@@ -60,8 +60,8 @@ RC0058,synthetic_query,similar_colour_different_type,,,MH27TW02??,white,SUV,matc
 RC0059,synthetic_query,similar_looking_vehicles,,,MH????????,white,SUV,ambiguous,SV222655;SV952773;SV468636,only the state code is readable; several identical-looking vehicles -> no confident single match
 RC0060,synthetic_query,multiple_plausible,,,??????0261,unknown,unknown,ambiguous,SV222655,only the last 4 digits are known
 RC0061,synthetic_query,exact_match,,,MP12UC8002,white,scooter,match:SV219156,SV219156,
-RC0062,synthetic_query,partial_plate_match,,,MP12UC8???,white,scooter,match:SV219156,SV219156;SV565207,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high"
-RC0063,synthetic_query,unknown_characters,,,MP12UC??02,white,scooter,match:SV219156,SV219156;SV205814,decoy fits every known character; only colour separates them
+RC0062,synthetic_query,partial_plate_match,,,MP12UC8???,white,scooter,ambiguous,SV219156;SV499596,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
+RC0063,synthetic_query,unknown_characters,,,MP12UC??02,white,scooter,ambiguous,SV219156;SV499596,"decoy fits every known character; only colour separates them [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0064,synthetic_query,unknown_characters_no_colour,,,MP12UC??02,unknown,scooter,ambiguous,SV219156;SV205814,plate alone cannot separate anchor and decoy -> should not claim a confident single match
 RC0065,synthetic_query,cross_class_ocr_confusion,,,MP12UCB002,white,scooter,match:SV219156,SV219156;SV499596,query has 8->B at position 7; look-alike credit should recover the anchor
 RC0066,synthetic_query,confusable_candidates,,,MP12UC8002,white,scooter,match:SV219156,SV219156;SV499596,exact plate must beat its confusable twin
@@ -70,33 +70,33 @@ RC0068,synthetic_query,similar_colour_different_type,,,MP12UC80??,white,scooter,
 RC0069,synthetic_query,similar_looking_vehicles,,,MP????????,white,scooter,ambiguous,SV219156;SV925386;SV189830,only the state code is readable; several identical-looking vehicles -> no confident single match
 RC0070,synthetic_query,multiple_plausible,,,??????8002,unknown,unknown,ambiguous,SV219156;SV565207,only the last 4 digits are known
 RC0071,synthetic_query,exact_match,,,MH21NW1299,white,scooter,match:SV691474,SV691474,
-RC0072,synthetic_query,partial_plate_match,,,MH21NW1???,white,scooter,match:SV691474,SV691474;SV461195,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high"
+RC0072,synthetic_query,partial_plate_match,,,MH21NW1???,white,scooter,ambiguous,SV691474;SV461195;SV487712,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high [auto-check: 2 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0073,synthetic_query,unknown_characters,,,MH21NW??99,white,scooter,match:SV691474,SV691474;SV616898,decoy fits every known character; only colour separates them
 RC0074,synthetic_query,unknown_characters_no_colour,,,MH21NW??99,unknown,scooter,ambiguous,SV691474;SV616898,plate alone cannot separate anchor and decoy -> should not claim a confident single match
 RC0075,synthetic_query,cross_class_ocr_confusion,,,MH21NW1Z99,white,scooter,match:SV691474,SV691474;SV487712,query has 2->Z at position 8; look-alike credit should recover the anchor
 RC0076,synthetic_query,confusable_candidates,,,MH21NW1299,white,scooter,match:SV691474,SV691474;SV487712,exact plate must beat its confusable twin
 RC0077,synthetic_query,conflicting_colour,,,MH21NW1299,yellow,scooter,match:SV691474,SV691474,"plate is exact, colour disagrees -> still the anchor, with a colour-conflict reason and a lower match score"
-RC0078,synthetic_query,similar_colour_different_type,,,MH21NW12??,white,scooter,match:SV691474,SV691474;SV591953,decoy shares colour and nearly the plate but is a different type
+RC0078,synthetic_query,similar_colour_different_type,,,MH21NW12??,white,scooter,ambiguous,SV691474;SV461195;SV487712,"decoy shares colour and nearly the plate but is a different type [auto-check: 2 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0079,synthetic_query,similar_looking_vehicles,,,MH????????,white,scooter,ambiguous,SV691474;SV044242;SV267386,only the state code is readable; several identical-looking vehicles -> no confident single match
 RC0080,synthetic_query,multiple_plausible,,,??????1299,unknown,unknown,ambiguous,SV691474,only the last 4 digits are known
 RC0081,synthetic_query,exact_match,,,CG07J9635,white,van,match:SV227508,SV227508,
-RC0082,synthetic_query,partial_plate_match,,,CG07J9???,white,van,match:SV227508,SV227508;SV320206,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high"
-RC0083,synthetic_query,unknown_characters,,,CG07J96??,white,van,match:SV227508,SV227508;SV505013,decoy fits every known character; only colour separates them
+RC0082,synthetic_query,partial_plate_match,,,CG07J9???,white,van,ambiguous,SV227508;SV132475,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
+RC0083,synthetic_query,unknown_characters,,,CG07J96??,white,van,ambiguous,SV227508;SV132475,"decoy fits every known character; only colour separates them [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0084,synthetic_query,unknown_characters_no_colour,,,CG07J96??,unknown,van,ambiguous,SV227508;SV505013,plate alone cannot separate anchor and decoy -> should not claim a confident single match
 RC0085,synthetic_query,cross_class_ocr_confusion,,,CG07J963S,white,van,match:SV227508,SV227508;SV132475,query has 5->S at position 9; look-alike credit should recover the anchor
 RC0086,synthetic_query,confusable_candidates,,,CG07J9635,white,van,match:SV227508,SV227508;SV132475,exact plate must beat its confusable twin
 RC0087,synthetic_query,conflicting_colour,,,CG07J9635,blue,van,match:SV227508,SV227508,"plate is exact, colour disagrees -> still the anchor, with a colour-conflict reason and a lower match score"
-RC0088,synthetic_query,similar_colour_different_type,,,CG07J96??,white,van,match:SV227508,SV227508;SV908211,decoy shares colour and nearly the plate but is a different type
+RC0088,synthetic_query,similar_colour_different_type,,,CG07J96??,white,van,ambiguous,SV227508;SV132475,"decoy shares colour and nearly the plate but is a different type [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0089,synthetic_query,similar_looking_vehicles,,,CG???????,white,van,ambiguous,SV227508;SV378356;SV177946,only the state code is readable; several identical-looking vehicles -> no confident single match
 RC0090,synthetic_query,multiple_plausible,,,?????9635,unknown,unknown,ambiguous,SV227508,only the last 4 digits are known
 RC0091,synthetic_query,exact_match,,,CG08YR7911,orange,motorcycle,match:SV952557,SV952557,
-RC0092,synthetic_query,partial_plate_match,,,CG08YR7???,orange,motorcycle,match:SV952557,SV952557;SV349583,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high"
-RC0093,synthetic_query,unknown_characters,,,CG08YR?9?1,orange,motorcycle,match:SV952557,SV952557;SV116582,decoy fits every known character; only colour separates them
+RC0092,synthetic_query,partial_plate_match,,,CG08YR7???,orange,motorcycle,ambiguous,SV952557;SV644692,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
+RC0093,synthetic_query,unknown_characters,,,CG08YR?9?1,orange,motorcycle,ambiguous,SV952557;SV644692,"decoy fits every known character; only colour separates them [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0094,synthetic_query,unknown_characters_no_colour,,,CG08YR?9?1,unknown,motorcycle,ambiguous,SV952557;SV116582,plate alone cannot separate anchor and decoy -> should not claim a confident single match
 RC0095,synthetic_query,cross_class_ocr_confusion,,,CG0BYR7911,orange,motorcycle,match:SV952557,SV952557;SV644692,query has 8->B at position 4; look-alike credit should recover the anchor
 RC0096,synthetic_query,confusable_candidates,,,CG08YR7911,orange,motorcycle,match:SV952557,SV952557;SV644692,exact plate must beat its confusable twin
 RC0097,synthetic_query,conflicting_colour,,,CG08YR7911,white,motorcycle,match:SV952557,SV952557,"plate is exact, colour disagrees -> still the anchor, with a colour-conflict reason and a lower match score"
-RC0098,synthetic_query,similar_colour_different_type,,,CG08YR79??,orange,motorcycle,match:SV952557,SV952557;SV618691,decoy shares colour and nearly the plate but is a different type
+RC0098,synthetic_query,similar_colour_different_type,,,CG08YR79??,orange,motorcycle,ambiguous,SV952557;SV644692,"decoy shares colour and nearly the plate but is a different type [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0099,synthetic_query,similar_looking_vehicles,,,CG????????,orange,motorcycle,ambiguous,SV952557;SV352693;SV774780,only the state code is readable; several identical-looking vehicles -> no confident single match
 RC0100,synthetic_query,multiple_plausible,,,??????7911,unknown,unknown,ambiguous,SV952557,only the last 4 digits are known
 RC0101,synthetic_query,exact_match,,,MH22L3986,yellow,auto_rickshaw,match:SV019201,SV019201,
@@ -110,13 +110,13 @@ RC0108,synthetic_query,similar_colour_different_type,,,MH22L39??,yellow,auto_ric
 RC0109,synthetic_query,similar_looking_vehicles,,,MH???????,yellow,auto_rickshaw,ambiguous,SV019201;SV057953;SV638126,only the state code is readable; several identical-looking vehicles -> no confident single match
 RC0110,synthetic_query,multiple_plausible,,,?????3986,unknown,unknown,ambiguous,SV019201;SV097101,only the last 4 digits are known
 RC0111,synthetic_query,exact_match,,,CG02ZP6299,black,motorcycle,match:SV547913,SV547913,
-RC0112,synthetic_query,partial_plate_match,,,CG02ZP6???,black,motorcycle,match:SV547913,SV547913;SV783107,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high"
-RC0113,synthetic_query,unknown_characters,,,CG02ZP6??9,black,motorcycle,match:SV547913,SV547913;SV636007,decoy fits every known character; only colour separates them
+RC0112,synthetic_query,partial_plate_match,,,CG02ZP6???,black,motorcycle,ambiguous,SV547913;SV783107;SV119347,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high [auto-check: 2 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
+RC0113,synthetic_query,unknown_characters,,,CG02ZP6??9,black,motorcycle,ambiguous,SV547913;SV119347,"decoy fits every known character; only colour separates them [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0114,synthetic_query,unknown_characters_no_colour,,,CG02ZP6??9,unknown,motorcycle,ambiguous,SV547913;SV636007,plate alone cannot separate anchor and decoy -> should not claim a confident single match
 RC0115,synthetic_query,cross_class_ocr_confusion,,,CG0ZZP6299,black,motorcycle,match:SV547913,SV547913;SV119347,query has 2->Z at position 4; look-alike credit should recover the anchor
 RC0116,synthetic_query,confusable_candidates,,,CG02ZP6299,black,motorcycle,match:SV547913,SV547913;SV119347,exact plate must beat its confusable twin
 RC0117,synthetic_query,conflicting_colour,,,CG02ZP6299,white,motorcycle,match:SV547913,SV547913,"plate is exact, colour disagrees -> still the anchor, with a colour-conflict reason and a lower match score"
-RC0118,synthetic_query,similar_colour_different_type,,,CG02ZP62??,black,motorcycle,match:SV547913,SV547913;SV625420,decoy shares colour and nearly the plate but is a different type
+RC0118,synthetic_query,similar_colour_different_type,,,CG02ZP62??,black,motorcycle,ambiguous,SV547913;SV119347,"decoy shares colour and nearly the plate but is a different type [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0119,synthetic_query,similar_looking_vehicles,,,CG????????,black,motorcycle,ambiguous,SV547913;SV249221;SV744689,only the state code is readable; several identical-looking vehicles -> no confident single match
 RC0120,synthetic_query,multiple_plausible,,,??????6299,unknown,unknown,ambiguous,SV547913,only the last 4 digits are known
 RC0121,synthetic_query,no_matching_entry,,,OD23R2974,black,auto_rickshaw,no_match,,plate is >= 3 edits from every registry plate

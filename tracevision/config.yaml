@@ -1,0 +1,22 @@
+# TRACEVISION pipeline settings: one place for thresholds and weights.
+# Values marked (calibrated) are set by `python -m tracevision.calibrate` and recorded in its report.
+
+fusion:
+  tau_share: 0.6          # min share of the weighted vote for a character at a position
+  tau_prob: 0.8           # min quality-weighted mean OCR probability for that character
+  min_support: 1          # min number of reads covering a position
+  cross_class_weight: 0.5 # weight of a look-alike vote from the wrong class (e.g. '0' at a letter position -> 'O')
+  use_top3: true          # alternatives (top-3) also vote, with their own probabilities
+
+plate_detector:
+  conf: 0.5               # DECISIONS M8
+  min_plate_height_px: 16 # below this the plate is reported unreadable, never OCR'd (M8)
+
+match:
+  weights: {plate: 0.70, colour: 0.15, type: 0.15}
+  lookalike_cost: 0.4     # substitution cost between look-alike characters (0/O/D/Q, 1/I, 2/Z, 5/S, 8/B, 6/G)
+  min_known_for_match: 5  # fewer readable plate characters than this -> never a confident single match
+  t_abs: 67.5             # (calibrated) top match score below this -> "no confident match"
+  t_margin: 5.0           # (calibrated) top score minus 2nd below this -> "ambiguous"
+  top_k: 5
+  min_plate_sim_candidate: 0.5  # candidates below this plate similarity are dropped, unless the plate is mostly unknown

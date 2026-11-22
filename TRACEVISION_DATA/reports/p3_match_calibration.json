@@ -1,0 +1,79 @@
+{
+  "cases": 124,
+  "calib_cases": 62,
+  "holdout_cases": 62,
+  "grid": {
+    "t_abs": "50..90 step 2.5",
+    "t_margin": "0..20 step 1",
+    "objective": "balanced accuracy on calibration split"
+  },
+  "best_calibration_balanced_accuracy": 1.0,
+  "plateau_size": 120,
+  "chosen": {
+    "t_abs": 67.5,
+    "t_margin": 5.0
+  },
+  "calibration": {
+    "balanced_accuracy": 1.0,
+    "accuracy_by_expected": {
+      "match": 1.0,
+      "ambiguous": 1.0,
+      "no_match": 1.0
+    },
+    "counts_by_expected": {
+      "match": 32,
+      "ambiguous": 28,
+      "no_match": 2
+    },
+    "accuracy_by_scenario": {
+      "conflicting_colour": "6/6",
+      "confusable_candidates": "6/6",
+      "cross_class_ocr_confusion": "6/6",
+      "exact_match": "6/6",
+      "multiple_plausible": "6/6",
+      "no_matching_entry": "2/2",
+      "partial_plate_match": "6/6",
+      "similar_colour_different_type": "6/6",
+      "similar_looking_vehicles": "6/6",
+      "unknown_characters": "6/6",
+      "unknown_characters_no_colour": "6/6"
+    },
+    "match_cases_top1": "32/32",
+    "match_cases_top5": "32/32",
+    "errors": []
+  },
+  "holdout": {
+    "balanced_accuracy": 1.0,
+    "accuracy_by_expected": {
+      "match": 1.0,
+      "ambiguous": 1.0,
+      "no_match": 1.0
+    },
+    "counts_by_expected": {
+      "match": 32,
+      "ambiguous": 28,
+      "no_match": 2
+    },
+    "accuracy_by_scenario": {
+      "conflicting_colour": "6/6",
+      "confusable_candidates": "6/6",
+      "cross_class_ocr_confusion": "6/6",
+      "exact_match": "6/6",
+      "multiple_plausible": "6/6",
+      "no_matching_entry": "2/2",
+      "partial_plate_match": "6/6",
+      "similar_colour_different_type": "6/6",
+      "similar_looking_vehicles": "6/6",
+      "unknown_characters": "6/6",
+      "unknown_characters_no_colour": "6/6"
+    },
+    "match_cases_top1": "32/32",
+    "match_cases_top5": "32/32",
+    "errors": []
+  },
+  "before_calibration_defaults": {
+    "t_abs": 75.0,
+    "t_margin": 5.0,
+    "holdout": 1.0
+  }
+}

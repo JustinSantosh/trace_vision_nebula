@@ -1,6 +1,6 @@
 # TRACEVISION AI — Phase 0 Problem Log
 
-**Last updated:** 2026-11-23 (P2 done. AI-draft labels renamed to a draft file, waiting for human verification: A23.)
+**Last updated:** 2026-11-23 (P3 done: fusion + matching, 26 tests, calibrated. Answer-key fix A24. Clip trim by another session A25.)
 **Severity:** 🔴 Blocker (stops a phase) · 🟠 High (risks the demo or the results) · 🟡 Medium (workaround exists) · ⚪ Low / note
 
 Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summarised in [completions.md](completions.md), the plan is in [whatnext.md](whatnext.md) and decisions are in [DECISIONS.md](DECISIONS.md).
@@ -55,6 +55,8 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | A21 | 🟡 | Quobotic **train contains horizontally flipped images** (Roboflow augmentation), so their plates read backwards. | Plates cropped from train would poison OCR training or evaluation. | Never crop train plates for OCR. The detector is unaffected. | Note |
 | A22 | ⚪ | The spec's label columns have no place for a vehicle's full plate when the clip shows it only partly, but the registry needs a full plate to seed that vehicle. | Partly readable vehicles that should be `in_registry = yes` could not be seeded. | Added an optional `registry_plate_full` column, filled only when the team knows the plate from outside the clip (their own vehicle). It is never inferred from video. The validator checks it against the readable characters. | Decision, documented in LABELING_GUIDE.md |
 | A23 | 🟠 | **An AI-drafted label file appeared** (`test_clip_labels.csv`, 36 rows all noted "AI DRAFT - verify", plus `label_review/` images). It was probably written in a forked session; the origin can't be confirmed. I pushed it to the public repo on 2026-11-23 without noticing. It marks 27 of 36 vehicles `in_registry = no` and has no cross-camera group. | Treated as ground truth, it would make the system grade itself (the spec says only humans write labels). | **Renamed to `test_clip_labels_AI_DRAFT.csv`** (owner's choice). The validator and registry script read only `test_clip_labels.csv`. The team verifies every row against the clip before saving `test_clip_labels.csv`, and the guide says so (DECISIONS E11). It's still in git history. | Mitigated: waiting for human verification |
+| A24 | 🟡 | **Registry answer key had wrong expected outcomes:** 20 of 124 synthetic cases said `match` although another registry vehicle (same colour and type) fit every readable character, e.g. a decoy differing only at a hidden `?` position. | It would have penalised a correct matcher for saying "ambiguous". | Fixed in `generate_synthetic_registry.py`: an automatic consistency check relabels such cases `ambiguous` (registry rows unchanged). Found by P3. | ✅ Fixed |
+| A25 | 🟡 | **Six WhatsApp clips (clip01, 02, 04, 05, 06, 08) play their footage twice.** Another session trimmed them to the unique first half in commit `9c8921b` (2026-11-23 01:58), overwriting the files in `raw/`. | Doubled footage would double-count vehicles and fake "re-appearances". The P1/P2 smoke checks ran on the doubled versions, and the contact sheets and `frames_index.csv` from before the trim show both halves. | The originals are still in git history (`b85526d`), so nothing is lost. Re-run `extract_test_video_frames.py` and the contact sheets on the trimmed clips before labelling frames past the half-way point. | Open: frames to regenerate |
 | A11 | ⚪ | Two `.mp4` files sit in `~/Downloads` (`DS.mp4` and `original-5adf…mp4`). They are outside the working folder and were not inspected. | They may be intended test clips. | If so, move them into `raw/test_videos/` and record their source and licence. | Team to confirm |
 
 ## B. Models
@@ -90,9 +92,9 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | Vehicle type | Partial: UVH-26 running on GPU, classes mapped; accuracy waits on labels | labels |
 | Indian plate detection | ✅ **Detector trained (P2): mAP50 0.995 on the leakage-free test**; works on our clips, small plates flagged unreadable (C7). Data ready: `processed/plate_detection/` (2,069/336/169). Official test is leaky; use the leakage-free list too. | A15 (reported), A13 |
 | Indian OCR benchmark | ✅ Awiros run on 965 zenitsu09 plates: 81.5% exact / 4.4% CER (still photos, not CCTV) | A13, A20; witvix optional (A2) |
-| Multi-frame recovery | Missing (inputs ready: per-character probabilities and top-3) | A5 |
+| Multi-frame recovery | Partial: **fusion built and unit-tested (P3)**; not yet run on real clip OCR (P4) | P4, labels |
 | Vehicle colour | Missing | A5 |
-| Registry ranking | Partial: synthetic registry and 124 expected-outcome test cases ready; clip vehicles not yet seeded | A5 |
+| Registry ranking | ✅ **Matcher built (P3):** match score + reasons + match/ambiguous/no-match; 100% on the held-out synthetic cases (designed traps, not real-world accuracy). Clip vehicles not yet seeded | labels |
 | No-match handling | Partial: synthetic no-match and ambiguous cases ready; clip cases need ≥ 2 `in_registry = no` vehicles | A5 |
 | Cross-camera tracking | Missing | A5, A6 |
 | Make/model (bonus) | Missing | No verified labels; make no claims |
