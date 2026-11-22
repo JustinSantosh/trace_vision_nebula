@@ -1,7 +1,7 @@
 # TRACEVISION AI — Team Tasks
 
 **Updated:** 2026-11-22 · Problem: **AIML-01 Vehicle Identification and Traceability from CCTV Footage**
-**Summary PDF to share with the team: [TRACEVISION_Team_Handoff.pdf](TRACEVISION_Team_Handoff.pdf)** · See also: [completions.md](completions.md) (what's done) · [whatnext.md](whatnext.md) (full plan) · [PROBLEMS.md](PROBLEMS.md) (problem IDs like A5, B1)
+**Summary PDF to share with the team: [TRACEVISION_Team_Handoff.pdf](TRACEVISION_Team_Handoff.pdf)** · Pipeline design: [PIPELINE.md](PIPELINE.md) · See also: [completions.md](completions.md) (what's done) · [whatnext.md](whatnext.md) (full plan) · [PROBLEMS.md](PROBLEMS.md) (problem IDs like A5, B1)
 
 > Write your name next to a workstream, work on a branch named `ws<N>-<topic>` (e.g. `ws4-scorer`), and open a PR into `main`. Tick boxes as you go.
 

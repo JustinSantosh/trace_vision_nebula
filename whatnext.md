@@ -41,6 +41,11 @@
 - [ ] **Team:** clips → labels → validate → degrade → regenerate the registry (TEAM_TASKS WS1 steps 1–6)
 - [ ] Final Phase 0 report, after the clips are labelled
 
+## 2c. Pipeline design
+
+- [x] **[PIPELINE.md](PIPELINE.md)**: stages, the fusion and matching algorithms, the result schema, evaluation, code layout and execution steps P1–P6. **Execution waits for the owner's approval.**
+- [x] Clips clip01–09 shared on GitHub (LFS) with contact sheets. Labelling guide updated with step-by-step instructions for the team.
+
 ## 3. Phase 1 — models
 
 - [ ] Fine-tune the **YOLOv8n plate detector** on `processed/plate_detection` (Colab, or the local RTX 3050)
