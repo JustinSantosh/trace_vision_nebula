@@ -45,3 +45,5 @@ TRACEVISION_DATA/models/plate_detector_runs/
 !TRACEVISION_DATA/models/weights/
 TRACEVISION_DATA/models/weights/*
 !TRACEVISION_DATA/models/weights/plate_yolov8n_quobotic.pt
+# ultralytics label caches
+*.cache
