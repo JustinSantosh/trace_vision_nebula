@@ -1,9 +1,9 @@
 # TRACEVISION AI — Phase 0 Problem Log
 
-**Last updated:** 2026-11-22 (Quobotic extraction verified, zenitsu09 OCR set built)
+**Last updated:** 2026-11-22 (Quobotic re-verified, Awiros reproduces card samples, completions/whatnext added)
 **Severity:** 🔴 Blocker (stops a phase) · 🟠 High (risks the demo or the results) · 🟡 Medium (workaround exists) · ⚪ Low / note
 
-Evidence for every item is in `TRACEVISION_DATA/reports/`.
+Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summarised in [completions.md](completions.md) and the plan is in [whatnext.md](whatnext.md).
 
 ## Progress so far
 
@@ -11,14 +11,16 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`.
 |---|---|
 | 0A Audit, coverage matrix, licence report | ✅ Done |
 | Replace the empty D1/D2 repos | ✅ D1 → Roboflow **Quobotic v3** (b8iqo rejected as synthetic). D2 → **zenitsu09** now, witvix pending. |
-| Quobotic v3 downloaded and extracted | ✅ All 5,151 files match the zip CRC (0 missing, 0 corrupt, 0 extra). Real scenes. |
+| Quobotic v3 downloaded and extracted | ✅ All 5,151 files match the zip CRC (0 missing, 0 corrupt, 0 extra). Real scenes. Re-checked on 2026-11-22 after a failed Explorer copy: 0 missing, 0 size mismatches. |
 | zenitsu09 OCR evaluation set | ✅ 1,709 crops → 965 unique plates, `ground_truth.csv` built (local only) |
 | 0B Plate-detection validation + Colab `data.yaml` | ⏳ Next (`validate_plate_dataset.py`, `prepare_plate_detection.py`) |
-| 0C Awiros feasibility check | ⏳ Not started (dependency install approved) |
+| 0C Awiros feasibility check | 🟡 Part done: PaddlePaddle runs on Windows CPU and **9/9 card samples are reproduced** (`models/awiros/samples_ours.json`). Still open: per-character probabilities (B1), the 965-plate benchmark, latency. |
 | witvix (harder OCR test) | ⏳ Waiting for the team (access form) |
 | 0D Test clips | ⏳ Waiting for the team (no clips yet) |
 
-**Open blockers right now:** A5 (no test clips) and A6 (no cross-camera pair). Everything else has a workaround in hand.
+| Phase 1–4 (models, own matching algorithm, app, report, evaluation) | ⏳ Planned, see [whatnext.md](whatnext.md) |
+
+**Open blockers right now:** A5 (no test clips; this is now the critical path, because the demo and the per-clip analysis reports both need clips) and A6 (no cross-camera pair, which only affects the bonus). Everything else has a workaround in hand.
 
 ---
 
@@ -30,7 +32,7 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`.
 | A2 | 🔴 | **The D2 OCR-corpus repo (`thundarstrom/indian-anpr-ocr-corpus`) contains no data.** It lists only `.gitattributes` and `README.md`, about 2.3 kB. There is no `parseq_dataset/`, `gt.txt` or LMDB. | We cannot measure Awiros CER or exact-plate accuracy on a proper test split. | **Proposed:** witvix truck plates (589 texts, CC-BY-NC-4.0, gated by a form) plus the Payals Roboflow test split (CC BY 4.0). Backup: zenitsu09 crops (no licence stated, internal use only). See `reports/d1_d2_alternatives.md`. | Alternative found. The team must fill in the witvix form. |
 | A3 | 🟠 | The maintainer's other 8 dataset repos, including `indian-anpr-ocr-benchmark`, `augmented-indian-plate-detection` and `traffic-pipeline-sample-videos`, are also card-only. | There is no fallback from the same source. | Look elsewhere. | Confirmed |
 | A4 | 🟡 | The D1 `data.yaml` points to the uploader's local path `c:/projects/traffic-analytics-system/...` and uses the split folder name `valid/`. | It would break on Colab if used unchanged. | `prepare_plate_detection.py` must rewrite the paths. Applies only if the data ever appears. | Note |
-| A5 | 🔴 | **There are no test clips in the working folder** (V1, V2 and V3 are all absent). | Phases 0D, 0E and 0F are blocked, along with every clip-based evaluation: detection, type, colour, multi-frame recovery, cross-camera and no-match. | The team downloads 5–8 Indian traffic clips from Pexels or Pixabay and records the page URL and licence for each. | Open: team action |
+| A5 | 🔴 | **There are no test clips in the working folder** (V1, V2 and V3 are all absent). | Phases 0D, 0E and 0F are blocked, along with every clip-based evaluation: detection, type, colour, multi-frame recovery, cross-camera and no-match. The deliverables also require **an analysis report per test clip**. | **Fastest:** film 5–10 short phone clips from a high, distant, CCTV-like angle, including blurred or partly hidden plates and **at least 2 vehicles that will not be in the registry** (for no-match). Alternatively, download 5–8 Indian traffic clips from Pexels or Pixabay. Record the source and licence for each in `raw/test_videos/clips.csv`. | Open: team action, top priority |
 | A6 | 🟠 | **No clip with the same vehicle in two clips has been found.** Scenario 10 is required. | Cross-camera re-identification cannot be evaluated. Stock footage rarely shows one vehicle from two angles. | The team films the same vehicle from two phone positions, or cuts two non-overlapping segments from one long clip (weaker, and must be disclosed). | Open |
 | A7 | 🟡 | The V1 Kaggle page (`nimishshandilya/car-number-plate-video`) could not be read automatically because it is rendered with JavaScript. Its licence, contents and country mix are unverified. | It could be unusable or contain non-Indian plates. | Check the licence on Kaggle when downloading and tag the country of each clip. | Open |
 | A8 | 🟠 | DenseWorld-115k (V2) ships only a manifest. The clips must be rebuilt from YouTube with `yt-dlp` at 480p. The videos stay the creators' copyright and are for research use only. | Plates are often unreadable at 480p. Videos can disappear from YouTube. The clips cannot be redistributed or used in a public demo. | Use only a few clips for evaluation, and none in the public repo or demo video. Prefer V3. | Note |
@@ -51,8 +53,8 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`.
 
 | # | Severity | Problem | Impact | Proposed fix | Status |
 |---|---|---|---|---|---|
-| B1 | 🟠 | **The Awiros card does not document per-character probabilities.** | Multi-frame plate recovery was designed around per-character confidence. | Check the CTC head output in `test.py` and PaddleOCR during Phase 0C. Fallback: use per-position agreement across frames as the confidence signal. | To verify in 0C |
-| B2 | 🟡 | Awiros needs PaddlePaddle plus a clone of the PaddleOCR repo with `test.py` and `en_dict.txt` copied in. Its input is 3×48×320. | There is a risk of installation trouble on Windows with Python 3.12. CPU latency is unknown. | Run the approved feasibility check. If the Windows install fails, run it on Colab. | To verify in 0C |
+| B1 | 🟠 | **The Awiros card does not document per-character probabilities.** | Multi-frame plate recovery was designed around per-character confidence. | Check the CTC head output in `test.py` and PaddleOCR during Phase 0C. Fallback: use per-position agreement across frames as the confidence signal. | To verify in 0C. Awiros now runs locally, so this can be checked directly. |
+| B2 | 🟡 | Awiros needs PaddlePaddle plus a clone of the PaddleOCR repo with `test.py` and `en_dict.txt` copied in. Its input is 3×48×320. | There is a risk of installation trouble on Windows with Python 3.12. CPU latency is unknown. | Run the approved feasibility check. If the Windows install fails, run it on Colab. | ✅ Install resolved: PaddlePaddle runs on Windows CPU and the PaddleOCR clone is in `third_party/` (git-ignored). 9/9 card samples reproduced. CPU latency still to be measured. |
 | B3 | 🟡 | The UVH-26 card says "14 classes" but lists 13: Hatchback, Sedan, SUV, MUV, Bus, Truck, Three-wheeler, Two-wheeler, LCV, Mini-bus, Tempo-traveller, Bicycle, Van. | `class_mapping.json` must be built from the actual model class names. | Read the names from the loaded `.pt` file and do not trust the card. | Open |
 | B4 | 🟡 | UVH-26 uses a single Two-wheeler class and cannot separate motorcycle from scooter. It also has no auto-rickshaw class name (Three-wheeler is the nearest). | Our type vocabulary splits these classes. | Map Two-wheeler to `motorcycle/scooter` (ambiguous) and Three-wheeler to `auto_rickshaw`, recording that this is a judgement call. Do not invent the split. | Open |
 | B5 | 🟡 | The UVH-26 card states no input resolution or CPU speed for any variant. | We cannot yet say whether YOLOv11-S runs acceptably on CPU. | Benchmark on the first clip. There is a local RTX 3050 with 6 GB as a fallback. | Open |
@@ -63,7 +65,7 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`.
 | # | Severity | Problem | Impact | Proposed fix | Status |
 |---|---|---|---|---|---|
 | C1 | 🟡 | **FFprobe and FFmpeg are not installed.** | Codec and duration come from OpenCV headers, which are less reliable. FFmpeg-based degradation is unavailable. | `winget install Gyan.FFmpeg` (needs approval). OpenCV covers frame extraction for now. | Open |
-| C2 | 🟡 | `huggingface_hub`, `ultralytics`, `torch`, `paddlepaddle`, `paddleocr`, `safetensors` and `imagehash` are not installed. (`pyarrow` 26.0.1 is now installed.) | Model download, inference and the near-duplicate check cannot run yet. | Install when each phase starts (each install needs approval, except the Awiros dependencies, which are already approved). | Open |
+| C2 | 🟡 | `ultralytics`, `torch`, `imagehash` and the app stack (`fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool) are not installed. (`pyarrow` 26.0.1 and `paddlepaddle` are installed. Awiros uses the PaddleOCR repo clone, not the `paddleocr` pip package.) | Model download, inference and the near-duplicate check cannot run yet. | Install when each phase starts (each install needs approval, except the Awiros dependencies, which are already approved). | Open |
 | C3 | ⚪ | Running the audit with `python -I` drops the user site-packages (Pillow, OpenCV, PyYAML). In the first version this made every image look corrupt. | Images were wrongly reported as corrupt. | **Fixed:** the script now stops with an error when a dependency is missing. Run it without `-I`, or install the packages system-wide. | Fixed |
 | C4 | ⚪ | The OpenCV video fallback cannot report codec names reliably (it gives a FourCC such as `FMP4`). | The codec column in the audit is approximate. | Install FFprobe. | Linked to C1 |
 
@@ -89,3 +91,5 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`.
 | E1 | 🟠 | The 4-hour Phase 0 budget was hit by the empty D1/D2 repos and the rejected b8iqo download. | D1/D2 are now replaced. Do not hunt for more data; move to 0B/0C. |
 | E2 | 🟠 | Hand-labelling time for the clips is not yet allocated. | Limit it to 5–8 clips at first, with bounding boxes on the first frame only. |
 | E3 | 🟡 | Real plates appear in the test clips, which is a privacy concern. | Keep raw clips and crops out of this repo (see `.gitignore`). The registry stays synthetic, with evaluation-seed entries clearly marked. |
+| E4 | 🟠 | The judged deliverable "matching and ranking algorithm developed by the team" is not started, and neither are the UI and report. Data prep could eat the remaining time. | Cap 0B/0C. Start the registry and scorer (Phase 2) in parallel with model work, since they don't need clips. See [whatnext.md](whatnext.md). |
+| E5 | 🟡 | The PaddleOCR clone (`third_party/`) and the Awiros sample images were untracked and could be committed by accident. | Added to `.gitignore` on 2026-11-22. |

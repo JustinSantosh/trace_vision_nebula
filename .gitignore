@@ -13,6 +13,9 @@ TRACEVISION_DATA/models/weights/
 *.avi
 *.mov
 *.mkv
+# Third-party repo clones (PaddleOCR for Awiros) and model-card sample plate images
+third_party/
+TRACEVISION_DATA/models/awiros/samples/
 __pycache__/
 *.pyc
 .env
