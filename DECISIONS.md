@@ -46,6 +46,7 @@
 | E8 | 2026-11-22 | A starter registry (334 records, 124 test cases) is generated **before** the clips exist, and re-seeded after labelling | The matching algorithm can be built and tested now | `reports/synthetic_registry_stats.json` | ✅ |
 | E9 | 2026-11-22 | Call scores **"match score"** and never "probability" unless calibrated. Keep detector, OCR-character and match scores separate. | Spec convention | Spec | ✅ |
 | E10 | 2026-11-23 | ~~Aim for at least half of the clips to be fixed and raised~~ → **Revised by the team (2026-11-23): no more raised clips will be added, and the demo will use ground-level (moving or dashcam) clips.** The test set is 11 clips: 2 fixed CCTV-style (clip02, clip06) and 9 moving. **Metrics are still reported separately** for `fixed_cctv_style` and `moving_camera`. clip02 and clip06 stay in the evaluation as the CCTV-style check, and the README and slides state plainly that most test footage is ground-level. | Team decision; time and access limits. Risk: the problem statement says CCTV, so being upfront avoids overclaiming. | A5, A13, E7 | 🔁 |
+| E11 | 2026-11-23 | **AI-drafted labels are kept only as `test_clip_labels_AI_DRAFT.csv`.** Nothing reads them as truth. A row becomes ground truth only after a team member has checked every field against the clip and saved it into `test_clip_labels.csv`. | Owner's choice ("rename to draft file"). It keeps the drafts as a time-saver while keeping E3: only humans write ground truth. | A23, E3 | ✅ |
 
 ## Process
 

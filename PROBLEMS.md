@@ -1,6 +1,6 @@
 # TRACEVISION AI — Phase 0 Problem Log
 
-**Last updated:** 2026-11-23 (P2 done: plate detector mAP50 0.995 on the leakage-free test. P1 done. 11 clips, labels pending.)
+**Last updated:** 2026-11-23 (P2 done. AI-draft labels renamed to a draft file, waiting for human verification: A23.)
 **Severity:** 🔴 Blocker (stops a phase) · 🟠 High (risks the demo or the results) · 🟡 Medium (workaround exists) · ⚪ Low / note
 
 Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summarised in [completions.md](completions.md), the plan is in [whatnext.md](whatnext.md) and decisions are in [DECISIONS.md](DECISIONS.md).
@@ -54,6 +54,7 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | A20 | 🟡 | zenitsu09 OCR labels: **112 of 1,709 (82 of 965 unique plates) fail both plate regexes**. Examples: `TERRANO` (a car-model badge, not a plate), `MH4705851` (likely a missing letter), `KL01KLKL01`, `MHD1CV9311` (D vs 0). 364 of the 965 primary crops are under 20 px tall. | Ground-truth errors would count against Awiros unfairly. Tiny crops lower the scores. | Flagged as `nonstandard_review` (not rejected). Report CER both with and without flagged rows, and by crop height. Optional manual review of the 82. | Open |
 | A21 | 🟡 | Quobotic **train contains horizontally flipped images** (Roboflow augmentation), so their plates read backwards. | Plates cropped from train would poison OCR training or evaluation. | Never crop train plates for OCR. The detector is unaffected. | Note |
 | A22 | ⚪ | The spec's label columns have no place for a vehicle's full plate when the clip shows it only partly, but the registry needs a full plate to seed that vehicle. | Partly readable vehicles that should be `in_registry = yes` could not be seeded. | Added an optional `registry_plate_full` column, filled only when the team knows the plate from outside the clip (their own vehicle). It is never inferred from video. The validator checks it against the readable characters. | Decision, documented in LABELING_GUIDE.md |
+| A23 | 🟠 | **An AI-drafted label file appeared** (`test_clip_labels.csv`, 36 rows all noted "AI DRAFT - verify", plus `label_review/` images). It was probably written in a forked session; the origin can't be confirmed. I pushed it to the public repo on 2026-11-23 without noticing. It marks 27 of 36 vehicles `in_registry = no` and has no cross-camera group. | Treated as ground truth, it would make the system grade itself (the spec says only humans write labels). | **Renamed to `test_clip_labels_AI_DRAFT.csv`** (owner's choice). The validator and registry script read only `test_clip_labels.csv`. The team verifies every row against the clip before saving `test_clip_labels.csv`, and the guide says so (DECISIONS E11). It's still in git history. | Mitigated: waiting for human verification |
 | A11 | ⚪ | Two `.mp4` files sit in `~/Downloads` (`DS.mp4` and `original-5adf…mp4`). They are outside the working folder and were not inspected. | They may be intended test clips. | If so, move them into `raw/test_videos/` and record their source and licence. | Team to confirm |
 
 ## B. Models
