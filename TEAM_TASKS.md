@@ -45,7 +45,7 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 - **Awiros OCR:** 81.5% exact / 4.4% CER on 965 plates. **Run it on the GPU** (15 ms per crop). It must run in a **separate process** from torch/YOLO on Windows (C5).
 - **11 test clips and 51 owner-verified labelled vehicles** are in. Most plates in the WhatsApp-quality and CCTV-style clips are under 16 px, so they're reported unreadable (C7).
 - **Windows:** anything that trains or validates with ultralytics must run from a `.py` file, not from stdin (it hangs otherwise).
-- **Next:** P4 end-to-end pipeline (waiting for owner approval). See [PIPELINE.md](PIPELINE.md).
+- **All phases P1–P6 done (2026-11-23):** pipeline, app (`python -m tracevision.api`), reports for all clips, evaluation. **What's left: [NEEDS.md](NEEDS.md).**
 
 ---
 
@@ -73,10 +73,10 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 - [x] Awiros benchmark and GPU build (15 ms per crop). Install: `pip install paddlepaddle-gpu==3.3.1 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/`
 - [x] UVH-26 loaded, `models/class_mapping.json` built from the real 14 classes (B3, B4, M6)
 - [x] ByteTrack smoke-tested on clip01/02 (`reports/p1_vision_stack.md`)
-- [ ] **Colour** estimator (PIPELINE §5): part of P4
-- [ ] **Track re-linking** and leaving edge-cut boxes out of the type vote (C6): part of P4
+- [x] **Colour** estimator (`tracevision/colour.py`): 25% exact / 55% near. Improving it is the best next task (C8).
+- [x] **Track re-linking** (position + plate + same-object rule) and the edge-box rule (C6, M10, M11)
 
-**Done when:** one function takes a clip and returns, per track, the vehicle type, colour and per-frame plate crops (P4).
+**Done:** `tracevision/pipeline.py` (P4).
 
 ## WS4 — Matching algorithm (judged deliverable) · Owner: ________
 
@@ -84,18 +84,18 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 - [x] **Multi-frame fusion** `tracevision/fuse.py`: aligned, confidence-weighted vote per position, `?` instead of guesses
 - [x] **Matcher** `tracevision/match.py`: wildcard and look-alike aware **match score** (not a probability) + reasons + match / ambiguous / no-match
 - [x] 26 unit tests; thresholds calibrated with a split by anchor (`python -m tracevision.calibrate`, held-out 62/62). See `reports/p3_fusion_and_matching.md`.
-- [ ] Re-check the thresholds on the real clip cases (P6)
+- [x] Checked on real clips (P6): 8/9 registered matched, 0/42 false matches
 
-**Done when:** ✅ for synthetic cases; re-confirm on clip cases in P6.
+**Done.**
 
-## WS5 — App and report (no clips needed to start) · Owner: ________
+## WS5 — App and report · Owner: ________
 
-- [ ] FastAPI backend: `POST /analyze` (clip upload) → job → JSON result. Use stub pipeline outputs until WS2–WS4 land.
-- [ ] Investigator UI: upload, progress, the frames used, the characters per frame with confidence, and the top-5 table with reasons (or "no confident match")
-- [ ] HTML → PDF report (Jinja2 plus WeasyPrint or Playwright) containing every field the problem statement asks for
-- [ ] Batch mode: one report per test clip into `evaluation/reports/`
+- [x] FastAPI app `tracevision/api.py`: `POST /jobs` (upload) → progress → report / PDF / JSON. Run `python -m tracevision.api` → http://127.0.0.1:8000
+- [x] Investigator view = the clip report: frames used, characters per frame with confidence, fused plate with `?`, top 5 with match scores and reasons
+- [x] HTML + PDF report (`tracevision/report.py`, reportlab; no extra installs)
+- [x] Batch: one report per test clip in `TRACEVISION_DATA/evaluation/reports/`
 
-**Done when:** a stub clip produces a full report end to end.
+**Done** (P5, `reports/p5_app_and_reports.md`).
 
 ---
 
@@ -103,9 +103,9 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 
 | # | Milestone | Needs |
 |---|---|---|
-| M1 | Clip → tracks → per-frame plate text | WS1, WS2, WS3 (pieces ✅; joined in P4) |
-| M2 | Plus fusion and ranking → top 5 / no-match | M1, WS4 (WS4 ✅) |
-| M3 | Plus UI and report for every clip | M2, WS5 |
-| M4 | Metrics on our clips, README architecture diagram, demo video | M3 |
+| M1 ✅ | Clip → tracks → per-frame plate text | P4 |
+| M2 ✅ | Plus fusion and ranking → top 5 / no-match | P4 |
+| M3 ✅ | Plus UI and report for every clip | P5 |
+| M4 🟡 | Metrics on our clips ✅ (P6), README ✅, **demo video: owner (NEEDS.md)** | P6 |
 
 Data licences and privacy: Quobotic is CC BY 4.0 (credit it in the README). zenitsu09 states no licence (internal evaluation only). Awiros is Apache-2.0. The Ultralytics models are AGPL-3.0 (B6).

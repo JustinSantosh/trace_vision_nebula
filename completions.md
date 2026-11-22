@@ -133,6 +133,16 @@ Full report: `TRACEVISION_DATA/reports/p5_app_and_reports.md`.
 - **Per-clip report** (HTML + PDF): frames used, per-frame characters with confidence, the fused plate with `?`, type and colour, the top 5 with match scores and reasons, or "no confident match" with the reason. **11 PDFs in `TRACEVISION_DATA/evaluation/reports/`.**
 - **App:** `python -m tracevision.api` → http://127.0.0.1:8000. Upload, live progress, then the report, PDF and JSON. Tested end to end (upload of clip02, error cases).
 
+## 4h. P6: evaluation (done 2026-11-23)
+
+Full report: `TRACEVISION_DATA/reports/p6_evaluation.md`. Run with `python -m tracevision.evaluate` and `python -m tracevision.robustness`.
+- **8/9 registered vehicles matched to the right record; 0/42 unregistered vehicles falsely identified.**
+- **Plate characters: 85% correct, 15% `?`, 0% wrong** (132 characters). Exact plate 7/10.
+- Type 68% exact / 93% compatible; colour 25% exact / 55% near (weakest, C8).
+- CCTV-style clips: all vehicles found, no plate large enough to read, so every answer is correctly "no confident match".
+- Robustness on 7 degradations (blur, 360p, JPEG, night, noise): see the report.
+- **All phases P1–P6 are done.** Owner actions are in **[NEEDS.md](NEEDS.md)**; README rewritten for submission.
+
 ## 5. Decisions
 
 All decisions, with the reason for each and their status, are in **[DECISIONS.md](DECISIONS.md)** (D1–D10 data, M1–M6 models, E1–E9 evaluation, P1–P3 process).
@@ -161,4 +171,7 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | 4cbbc07 | Health check; contact sheets regenerated; calibration report reproducible |
 | 89e4472 | Project docs synced to the current state (README, whatnext, TEAM_TASKS) |
 | 8a68a99 | P4: end-to-end pipeline + results for 11 clips; registry re-seeded from labels |
-| (this push) | P5: report (HTML/PDF) + FastAPI app; 11 clip reports |
+| 5be951d | P5: report (HTML/PDF) + FastAPI app; 11 clip reports |
+| c5290a5 | P6 part 1: evaluation vs labels; same-object containment rule |
+| 32a50d2 | README for submission; NEEDS.md; robustness script |
+| (this push) | P6 done: evaluation report, robustness sweep, docs final |

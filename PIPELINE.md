@@ -1,6 +1,6 @@
 # TRACEVISION AI — Pipeline Design (Phase 1–3)
 
-**Status:** P1–P5 done. The owner approved all remaining phases on 2026-11-23 (see §10). Updated 2026-11-23.
+**Status:** P1–P6 done (all phases). The owner approved all remaining phases on 2026-11-23 (see §10). Updated 2026-11-23.
 Problem: **AIML-01 Vehicle Identification and Traceability from CCTV Footage**. Related: [DECISIONS.md](DECISIONS.md) · [PROBLEMS.md](PROBLEMS.md) · [whatnext.md](whatnext.md) · [TEAM_TASKS.md](TEAM_TASKS.md)
 
 ---
@@ -197,7 +197,7 @@ evaluation/eval.py # computes §8 tables from runs/ + labels
 | **P3** ✅ | Done 2026-11-23: `tracevision/{plates,fuse,match,calibrate}.py`, 26 unit tests, thresholds calibrated (holdout 62/62). See `reports/p3_fusion_and_matching.md`. | Approved | Tested judged algorithms |
 | **P4** ✅ | Done 2026-11-23: `tracevision/pipeline.py` on all 11 clips → `runs/<clip>/result.json`; 8/9 registered vehicles matched, 0 false matches. See `reports/p4_pipeline.md`. | Approved | First results |
 | **P5** ✅ | Done 2026-11-23: `tracevision/report.py` (HTML + PDF via reportlab) and `tracevision/api.py` (FastAPI upload → progress → report). 11 clip reports in `evaluation/reports/`. No new installs were needed. See `reports/p5_app_and_reports.md`. | Approved | Demo app, one report per clip |
-| **P6** | Evaluation on hand labels + degraded variants → final metrics | Nothing (needs the labels) | Results tables, README |
+| **P6** ✅ | Done 2026-11-23: `tracevision/evaluate.py` + `robustness.py`. 8/9 registered matched, 0/42 false matches, **0/132 wrong plate characters**. See `reports/p6_evaluation.md`. | Approved | Results tables, README |
 
 P3 has no dependencies and can run in parallel with P1/P2.
 

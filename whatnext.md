@@ -5,7 +5,7 @@
 **Where we are:**
 - **Phase 0 (data):** done, except the **cross-camera pair** (A6) and the Phase 0 runs that need final labels (0E variants, 0F registry re-seed, final report).
 - **Built and tested:** the vision stack (P1), the plate detector (P2) and the two judged algorithms (P3). The health check passed on 2026-11-23.
-- **Next build step:** P4, the end-to-end pipeline. It **waits for the owner's approval.**
+- **All build phases P1–P6 are done** (2026-11-23 overnight). **What's left is owner actions: [NEEDS.md](NEEDS.md)** (car pair, repo visibility, demo video and slides).
 
 ## 0. Team and owner actions
 
@@ -23,9 +23,9 @@
 - [x] 0A audit · 0B plate data (validated, short-name copy, `data.yaml`) · 0C Awiros check (81.5% exact, GPU 15 ms per crop)
 - [x] 0D: 11 clips, frames, contact sheets, template, guide; labels verified (51 vehicles)
 - [x] All 10 spec scripts exist and pass a smoke run (health check 2026-11-23)
-- [ ] **0E:** run `degrade_clips.py` on the labelled clips, then the team marks `readable_after_degradation` for the ~25% review sample. *Can run now.*
+- [x] **0E:** degraded variants made for all 11 clips (77 videos, local) and used in the robustness test. **Owner:** fill `readable_after_degradation` for the review sample (NEEDS 5).
 - [x] **0F:** registry regenerated from the real labels (9 `evaluation_seed` rows plus decoys). *Re-run after the car pair.*
-- [ ] **0D/0E:** `multi_frame_sequences.json` and `cross_camera_ground_truth.csv` are written once the label validator shows 0 errors (needs the car pair).
+- [x] **0D/0E:** `multi_frame_sequences.json` written (51 sequences). `cross_camera_ground_truth.csv` is empty until the car pair is filmed.
 - [ ] **Final Phase 0 report** (after the car pair)
 
 ## 2. Build steps (PIPELINE.md §10)
@@ -34,7 +34,7 @@
 - [x] **P3** judged algorithms: **multi-frame fusion** (`?` instead of guesses) + **registry matching** (match score, reasons, match / ambiguous / no-match), 26 tests, calibrated (held-out 62/62 on synthetic cases). `reports/p3_fusion_and_matching.md`
 - [x] **P4 done** (`reports/p4_pipeline.md`): ~~ `tracevision/pipeline.py`, running clip → detect → track (with re-linking, C6) → best frames → plate detect → OCR worker → fuse → colour → match → `runs/<job>/result.json`, on all 11 clips. Includes the **colour estimator** (PIPELINE §5).~~ 8/9 registered vehicles matched, 0 false matches.
 - [x] **P5 done:** report (HTML + PDF) for every clip in `evaluation/reports/`, and the FastAPI app (`python -m tracevision.api`). See `reports/p5_app_and_reports.md`.
-- [ ] **P6:** evaluation on the labels, split by camera type (E10): plate character accuracy, **`?` rate against wrong-character rate**, type and colour accuracy, top-1/top-5, no-match precision, robustness on degraded variants, speed. Re-check the matcher thresholds on clip cases.
+- [x] **P6 done:** evaluation vs labels + robustness sweep (`reports/p6_evaluation.md`): 8/9 matched, 0/42 false matches, 0/132 wrong plate characters.
 
 ## 3. Submission
 - [ ] README: architecture diagram, how to run, models and licences (Quobotic CC BY 4.0 credit, AGPL for Ultralytics: B6), honest note on camera types (E7)
@@ -46,12 +46,10 @@
 
 ## What remains to finish the project (summary)
 
-| # | Remaining piece | Blocked by | Size |
+| # | Remaining piece | Who | Size |
 |---|---|---|---|
-| 1 | **P4 end-to-end pipeline** (+ colour, track re-linking) on all clips | Owner approval | Large |
-| 2 | **P5 app + per-clip PDF reports** | P4; install approval | Medium |
-| 3 | **P6 evaluation** (headline metrics from our clips) | P4 | Medium |
-| 4 | Phase 0 finish: 0E variants, 0F registry re-seed, final Phase 0 report | Can start now; the car pair for the final version | Small |
-| 5 | Cross-camera pair (film + label) | Team | Small |
-| 6 | README, demo video, slides | P4–P6 | Medium |
-| 7 | Stretch: cross-camera re-ID, make/model | Car pair; verified labels | Optional |
+| 1 | Film and label the cross-camera car pair; then Claude re-runs validation, registry, pipeline, reports, evaluation, and the final Phase 0 report | Owner → Claude | Small |
+| 2 | Repo visibility decision | Owner | 1 min |
+| 3 | Demo video and slides (demo flow in NEEDS.md) | Owner (Claude can draft slides) | Medium |
+| 4 | Optional: more `in_registry = yes` vehicles; originals instead of WhatsApp copies; review the degraded sample; check 2 unverifiable plate reads | Owner | Small |
+| 5 | Optional improvements: a trained colour classifier (C8), better car/SUV typing (C9), more CCTV-style clips (E7) | Team | Medium |

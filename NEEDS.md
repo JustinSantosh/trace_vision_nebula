@@ -37,11 +37,15 @@
 ### 6. Originals instead of WhatsApp copies (if you still have them)
 - clip01–09 are WhatsApp copies (about 1.5 Mbit/s), which costs plate detail. Copying the phone originals over the same file names (same content, same length) would improve plate reading. Tell Claude, so it can re-run frames, pipeline, reports and evaluation. The labels stay valid as long as the clips are the same footage.
 
+### 7. Check 2 plates the system read where your labels say "unreadable" (2 min)
+- **clip08_v02**: the system read `UP37P1176`. **clip08_v03**: it read `DL3SS5192`. Your labels mark both plates `none`.
+- Open `TRACEVISION_DATA/evaluation/reports/clip08_report.pdf` and look at the plate crops. If they're readable and correct, update those label rows (plate text, `full`/`partial`). If they're wrong, tell Claude, because that would be a real error the evaluation can't see today.
+
 ## ⚪ Optional
-7. **Pexels credit:** open the clip10/11 links in `evaluation/clips.csv`, check they're the right videos, and note the creator names for the README credits.
-8. **`~/Downloads/DS.mp4` and `original-5adf….mp4`** were never checked (PROBLEMS A11). Tell Claude if they're relevant.
-9. **witvix** truck-plate dataset (Hugging Face access form) for a harder OCR test (PROBLEMS A2).
-10. Fill in the **Owner** names in `TEAM_TASKS.md`.
+8. **Pexels credit:** open the clip10/11 links in `evaluation/clips.csv`, check they're the right videos, and note the creator names for the README credits.
+9. **`~/Downloads/DS.mp4` and `original-5adf….mp4`** were never checked (PROBLEMS A11). Tell Claude if they're relevant.
+10. **witvix** truck-plate dataset (Hugging Face access form) for a harder OCR test (PROBLEMS A2).
+11. Fill in the **Owner** names in `TEAM_TASKS.md`.
 
 ## Already done (no action needed)
 Data prep, models (vehicle detector, plate detector trained, OCR), the judged fusion and matching algorithms with tests, the end-to-end pipeline, the app, **reports for all 11 clips** (`TRACEVISION_DATA/evaluation/reports/`), the evaluation against your labels, the robustness test on degraded clips, and the README. Details: [completions.md](completions.md).
