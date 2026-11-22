@@ -1,0 +1,378 @@
+{
+  "data": "TRACEVISION_DATA\\raw\\plate_detection",
+  "sample": null,
+  "hamming_threshold": 6,
+  "splits": {
+    "train": {
+      "images": 2069,
+      "labels_total_in_folder": 2069,
+      "missing_label": [],
+      "empty_label": [],
+      "unreadable": [],
+      "long_path_files": 10,
+      "image_sizes": {
+        "640x640": 2069
+      },
+      "box_lines": 1858,
+      "polygon_lines": 226,
+      "malformed_lines": 0,
+      "out_of_range_lines": 0,
+      "degenerate": 0,
+      "classes": {
+        "0": 2084
+      },
+      "orphan_labels": [],
+      "boxes": 2084,
+      "boxes_per_image": {
+        "1": 2054,
+        "2": 15
+      },
+      "box_area_frac": {
+        "median": 0.0278,
+        "p5": 0.0108,
+        "p95": 0.1233
+      },
+      "box_px": {
+        "width_median": 185.0,
+        "height_median": 68.0,
+        "height_p5": 32.5,
+        "height_lt_10px": 1,
+        "height_lt_16px": 1
+      }
+    },
+    "valid": {
+      "images": 336,
+      "labels_total_in_folder": 336,
+      "missing_label": [],
+      "empty_label": [
+        "BR9_jpg.rf.e9b3fd453fb6f72c905ac4d6160cda22.jpg"
+      ],
+      "unreadable": [],
+      "long_path_files": 0,
+      "image_sizes": {
+        "640x640": 336
+      },
+      "box_lines": 309,
+      "polygon_lines": 30,
+      "malformed_lines": 0,
+      "out_of_range_lines": 0,
+      "degenerate": 0,
+      "classes": {
+        "0": 339
+      },
+      "orphan_labels": [],
+      "boxes": 339,
+      "boxes_per_image": {
+        "0": 1,
+        "1": 331,
+        "2": 4
+      },
+      "box_area_frac": {
+        "median": 0.0291,
+        "p5": 0.0095,
+        "p95": 0.1342
+      },
+      "box_px": {
+        "width_median": 190.0,
+        "height_median": 65.5,
+        "height_p5": 29.45,
+        "height_lt_10px": 0,
+        "height_lt_16px": 1
+      }
+    },
+    "test": {
+      "images": 169,
+      "labels_total_in_folder": 169,
+      "missing_label": [],
+      "empty_label": [],
+      "unreadable": [],
+      "long_path_files": 0,
+      "image_sizes": {
+        "640x640": 169
+      },
+      "box_lines": 152,
+      "polygon_lines": 19,
+      "malformed_lines": 0,
+      "out_of_range_lines": 0,
+      "degenerate": 0,
+      "classes": {
+        "0": 171
+      },
+      "orphan_labels": [],
+      "boxes": 171,
+      "boxes_per_image": {
+        "1": 167,
+        "2": 2
+      },
+      "box_area_frac": {
+        "median": 0.0298,
+        "p5": 0.013,
+        "p95": 0.1166
+      },
+      "box_px": {
+        "width_median": 197.5,
+        "height_median": 72.0,
+        "height_p5": 33.0,
+        "height_lt_10px": 0,
+        "height_lt_16px": 0
+      }
+    }
+  },
+  "leakage": {
+    "source_images_total": 1683,
+    "source_images_in_multiple_splits": 0,
+    "source_image_examples": {},
+    "videos": {
+      "video": {
+        "valid": 1
+      },
+      "video10": {
+        "train": 66,
+        "valid": 9,
+        "test": 4
+      },
+      "video11": {
+        "train": 228,
+        "valid": 33,
+        "test": 21
+      },
+      "video12": {
+        "train": 5,
+        "valid": 4,
+        "test": 1
+      },
+      "video2": {
+        "train": 106,
+        "valid": 16,
+        "test": 4
+      },
+      "video3": {
+        "train": 106,
+        "valid": 17,
+        "test": 5
+      },
+      "video4": {
+        "train": 94,
+        "valid": 18,
+        "test": 7
+      },
+      "video5": {
+        "train": 40,
+        "valid": 6,
+        "test": 4
+      },
+      "video6": {
+        "train": 48,
+        "valid": 6,
+        "test": 8
+      },
+      "video8": {
+        "train": 86,
+        "valid": 13,
+        "test": 7
+      },
+      "video9": {
+        "train": 29,
+        "valid": 3,
+        "test": 1
+      }
+    },
+    "videos_in_multiple_splits": [
+      "video10",
+      "video11",
+      "video12",
+      "video2",
+      "video3",
+      "video4",
+      "video5",
+      "video6",
+      "video8",
+      "video9"
+    ],
+    "near_duplicates_dhash": {
+      "valid_vs_train": {
+        "checked": 336,
+        "near_duplicates": 13,
+        "fraction": 0.0387,
+        "examples": [
+          {
+            "image": "3f677265-d5fa-439f-be23-feaacce22c49___3e7fd381-0ae5-4421-8a70-279ee0ec1c61_848126147_2_1080x720_nissan-terrano-xl-d-plus-2014-diesel-upload-photos_jpg.rf.58959ee899e1f1bae03bdee29ccda672.jpg",
+            "train_match": "car-wbs-GJ05JH2501_00000_jpg.rf.8849a5b00037ef295c904f2b0322a034.jpg",
+            "hamming": 1
+          },
+          {
+            "image": "b9467810-4022-4cf5-87e7-fed0d63c8e2f___new_1658240d1500548920-close-look-2017-skoda-octavia-facelift-hands-free-parking-front-bumper-jpg_jpeg.rf.9969315303b2790dd4260474423b81f2.jpg",
+            "train_match": "6254bb73-d8a1-4f04-89a9-92caef98e233___1658240d1500548920-close-look-2017-skoda-octavia-facelift-hands-free-parking-front-bumper-jpg_jpeg.rf.2b18279abc171c2f5c77db3fcb6ce4f0.jpg",
+            "hamming": 2
+          },
+          {
+            "image": "car-wbs-KL01CA2555_00000_jpeg.rf.3e5ecd6cdfc9865de859e9527d3a1672.jpg",
+            "train_match": "car-wbs-KA01CA2555_00000_png.rf.2d51d15e02846c44d85d445044c8f95e.jpg",
+            "hamming": 0
+          },
+          {
+            "image": "car-wbs-KL10AW2814_00001_jpeg.rf.203b6b3f4026c8c25df3e336151aa636.jpg",
+            "train_match": "ec4bde57-11dd-4d59-96ae-b5d3b28afda5___Maruti-Suzuki-Celerio-Back-Number-Plates-Design-jpg_jpeg.rf.4d4ae1ac625c4cea7c0a6d2f5dce4394.jpg",
+            "hamming": 6
+          },
+          {
+            "image": "car-wbs-TN74AL5074_00000_jpeg.rf.978a9db1e69c263d9b54f3ab4a4ec61d.jpg",
+            "train_match": "936623d4-b47c-4da7-ab2e-6ac3cc63f861___new_216279d1481352986-silver-venom-mahindra-scorpio-s4-2016-ownership-review-wp_20161122_11_19_00_pro-jpg_jpeg.rf.63709078ff71eaf77dc5e23e08af87f4.jpg",
+            "hamming": 0
+          },
+          {
+            "image": "car-wbs-TN99F2378_00000_png.rf.91041974084ce1b00de9d465041c75ea.jpg",
+            "train_match": "car-wbs-TN99F2378_00000_jpeg.rf.02e02775f6a11ecd13f4847081eea254.jpg",
+            "hamming": 0
+          },
+          {
+            "image": "video11_1350_jpg.rf.8bb63a17a61467168fb9c157a9e284da.jpg",
+            "train_match": "video11_1340_jpg.rf.2642e0a14fb6c943861553f8cf903f41.jpg",
+            "hamming": 6
+          },
+          {
+            "image": "video11_2750_jpg.rf.21104fca54008d7a96c21c5cc89869b7.jpg",
+            "train_match": "video11_2740_jpg.rf.71a5b167be9126037621fe97435deb25.jpg",
+            "hamming": 5
+          },
+          {
+            "image": "video3_2190_jpg.rf.a42c12c9f43cb986604fa44e51f90e78.jpg",
+            "train_match": "video3_2180_jpg.rf.4ee664828db17e51d767174dad5d1ad3.jpg",
+            "hamming": 5
+          },
+          {
+            "image": "video5_150_jpg.rf.e313008576cbb7954dae69cc648afdfe.jpg",
+            "train_match": "video5_160_jpg.rf.6d45e2e83414ebe589ba3fcf2d884df9.jpg",
+            "hamming": 6
+          }
+        ],
+        "all": [
+          {
+            "image": "3f677265-d5fa-439f-be23-feaacce22c49___3e7fd381-0ae5-4421-8a70-279ee0ec1c61_848126147_2_1080x720_nissan-terrano-xl-d-plus-2014-diesel-upload-photos_jpg.rf.58959ee899e1f1bae03bdee29ccda672.jpg",
+            "train_match": "car-wbs-GJ05JH2501_00000_jpg.rf.8849a5b00037ef295c904f2b0322a034.jpg",
+            "hamming": 1
+          },
+          {
+            "image": "b9467810-4022-4cf5-87e7-fed0d63c8e2f___new_1658240d1500548920-close-look-2017-skoda-octavia-facelift-hands-free-parking-front-bumper-jpg_jpeg.rf.9969315303b2790dd4260474423b81f2.jpg",
+            "train_match": "6254bb73-d8a1-4f04-89a9-92caef98e233___1658240d1500548920-close-look-2017-skoda-octavia-facelift-hands-free-parking-front-bumper-jpg_jpeg.rf.2b18279abc171c2f5c77db3fcb6ce4f0.jpg",
+            "hamming": 2
+          },
+          {
+            "image": "car-wbs-KL01CA2555_00000_jpeg.rf.3e5ecd6cdfc9865de859e9527d3a1672.jpg",
+            "train_match": "car-wbs-KA01CA2555_00000_png.rf.2d51d15e02846c44d85d445044c8f95e.jpg",
+            "hamming": 0
+          },
+          {
+            "image": "car-wbs-KL10AW2814_00001_jpeg.rf.203b6b3f4026c8c25df3e336151aa636.jpg",
+            "train_match": "ec4bde57-11dd-4d59-96ae-b5d3b28afda5___Maruti-Suzuki-Celerio-Back-Number-Plates-Design-jpg_jpeg.rf.4d4ae1ac625c4cea7c0a6d2f5dce4394.jpg",
+            "hamming": 6
+          },
+          {
+            "image": "car-wbs-TN74AL5074_00000_jpeg.rf.978a9db1e69c263d9b54f3ab4a4ec61d.jpg",
+            "train_match": "936623d4-b47c-4da7-ab2e-6ac3cc63f861___new_216279d1481352986-silver-venom-mahindra-scorpio-s4-2016-ownership-review-wp_20161122_11_19_00_pro-jpg_jpeg.rf.63709078ff71eaf77dc5e23e08af87f4.jpg",
+            "hamming": 0
+          },
+          {
+            "image": "car-wbs-TN99F2378_00000_png.rf.91041974084ce1b00de9d465041c75ea.jpg",
+            "train_match": "car-wbs-TN99F2378_00000_jpeg.rf.02e02775f6a11ecd13f4847081eea254.jpg",
+            "hamming": 0
+          },
+          {
+            "image": "video11_1350_jpg.rf.8bb63a17a61467168fb9c157a9e284da.jpg",
+            "train_match": "video11_1340_jpg.rf.2642e0a14fb6c943861553f8cf903f41.jpg",
+            "hamming": 6
+          },
+          {
+            "image": "video11_2750_jpg.rf.21104fca54008d7a96c21c5cc89869b7.jpg",
+            "train_match": "video11_2740_jpg.rf.71a5b167be9126037621fe97435deb25.jpg",
+            "hamming": 5
+          },
+          {
+            "image": "video3_2190_jpg.rf.a42c12c9f43cb986604fa44e51f90e78.jpg",
+            "train_match": "video3_2180_jpg.rf.4ee664828db17e51d767174dad5d1ad3.jpg",
+            "hamming": 5
+          },
+          {
+            "image": "video5_150_jpg.rf.e313008576cbb7954dae69cc648afdfe.jpg",
+            "train_match": "video5_160_jpg.rf.6d45e2e83414ebe589ba3fcf2d884df9.jpg",
+            "hamming": 6
+          },
+          {
+            "image": "video5_350_jpg.rf.f137b79ff005334c4bcd7017d524797a.jpg",
+            "train_match": "video5_340_jpg.rf.a71f83e013caad9f0c6cd0ed31009b9b.jpg",
+            "hamming": 6
+          },
+          {
+            "image": "video5_360_jpg.rf.68c057723134a1e2d6ec3d234cdee5cd.jpg",
+            "train_match": "video5_390_jpg.rf.1ae966af67185d85d30b6a8a45b3b446.jpg",
+            "hamming": 5
+          },
+          {
+            "image": "video6_920_jpg.rf.aff003384be7d4799386675569c4a6b4.jpg",
+            "train_match": "video6_910_jpg.rf.3f66f3902bbd6bd995a0523454a8d722.jpg",
+            "hamming": 3
+          }
+        ]
+      },
+      "test_vs_train": {
+        "checked": 169,
+        "near_duplicates": 5,
+        "fraction": 0.0296,
+        "examples": [
+          {
+            "image": "12e26859-89e0-4c9b-9c59-ee793337464f___20-jpg_jpeg.rf.a293476fb34537caa4469c8e9c1c0248.jpg",
+            "train_match": "car-wbs-HR26BR9044_00000_png.rf.d6299e0148198ad4d692828182900c56.jpg",
+            "hamming": 0
+          },
+          {
+            "image": "video3_630_jpg.rf.be06cfb4724ffa853815808a117c0fad.jpg",
+            "train_match": "video3_620_jpg.rf.05ed31d3c279c0e10133bab24645a0e6.jpg",
+            "hamming": 4
+          },
+          {
+            "image": "video4_2790_jpg.rf.3ec04a0138185eea194779aa68916ecb.jpg",
+            "train_match": "video4_2800_jpg.rf.881e28b1cea8007a1922857f985067ef.jpg",
+            "hamming": 4
+          },
+          {
+            "image": "video6_890_jpg.rf.e4393d84fbe1584dab50732964ab4e50.jpg",
+            "train_match": "video6_940_jpg.rf.05802461028a8bc0ffdd2b1e8d7fe7f2.jpg",
+            "hamming": 4
+          },
+          {
+            "image": "video6_930_jpg.rf.6a05de489b5431cf15d9e9e35446a9ec.jpg",
+            "train_match": "video6_940_jpg.rf.05802461028a8bc0ffdd2b1e8d7fe7f2.jpg",
+            "hamming": 2
+          }
+        ],
+        "all": [
+          {
+            "image": "12e26859-89e0-4c9b-9c59-ee793337464f___20-jpg_jpeg.rf.a293476fb34537caa4469c8e9c1c0248.jpg",
+            "train_match": "car-wbs-HR26BR9044_00000_png.rf.d6299e0148198ad4d692828182900c56.jpg",
+            "hamming": 0
+          },
+          {
+            "image": "video3_630_jpg.rf.be06cfb4724ffa853815808a117c0fad.jpg",
+            "train_match": "video3_620_jpg.rf.05ed31d3c279c0e10133bab24645a0e6.jpg",
+            "hamming": 4
+          },
+          {
+            "image": "video4_2790_jpg.rf.3ec04a0138185eea194779aa68916ecb.jpg",
+            "train_match": "video4_2800_jpg.rf.881e28b1cea8007a1922857f985067ef.jpg",
+            "hamming": 4
+          },
+          {
+            "image": "video6_890_jpg.rf.e4393d84fbe1584dab50732964ab4e50.jpg",
+            "train_match": "video6_940_jpg.rf.05802461028a8bc0ffdd2b1e8d7fe7f2.jpg",
+            "hamming": 4
+          },
+          {
+            "image": "video6_930_jpg.rf.6a05de489b5431cf15d9e9e35446a9ec.jpg",
+            "train_match": "video6_940_jpg.rf.05802461028a8bc0ffdd2b1e8d7fe7f2.jpg",
+            "hamming": 2
+          }
+        ]
+      }
+    }
+  }
+}

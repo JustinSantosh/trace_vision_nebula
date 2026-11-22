@@ -23,6 +23,7 @@ Already cloned without these? Run `git lfs pull` and `git submodule update --ini
 
 | Path | Contents |
 |---|---|
+| `TRACEVISION_DATA/processed/plate_detection/` | **Train from here.** Short names, boxes only, `data.yaml`, `name_map.csv` and leakage-free eval lists. |
 | `TRACEVISION_DATA/raw/plate_detection/` | Quobotic v3 YOLO plate dataset, 2069 / 336 / 169 images (CC BY 4.0). **Do not open it in File Explorer and do not rename it.** It is byte-identical to the source zip. |
 | `TRACEVISION_DATA/raw/ocr_corpus/zenitsu09/` | OCR source parquet |
 | `TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/` | 1,709 plate crops, `ground_truth.csv` (965 unique plates), and the Awiros smoke-test outputs |
@@ -56,9 +57,10 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 
 ## WS2 — Plate detector data and training (Phase 0B → 1) · Owner: ________
 
-- [ ] `scripts/validate_plate_dataset.py`: box vs polygon counts (A19), near-duplicates across splits (A15, `pip install imagehash`), plate-size histogram → `reports/plate_dataset_validation.md`
-- [ ] `scripts/prepare_plate_detection.py`: write `processed/plate_detection/` with short hashed names plus `name_map.csv` (A18), polygons converted to boxes, and a relative-path `data.yaml` (A4)
-- [ ] Fine-tune YOLOv8n on Colab or the RTX 3050 (`pip install ultralytics`). Report mAP50 on test.
+- [x] Validation + processed copy done (Phase 0B). See `reports/plate_dataset_validation.md`.
+- [ ] Fine-tune YOLOv8n with **`data=<absolute path>/TRACEVISION_DATA/processed/plate_detection/data.yaml`** (never `raw/`). Use Colab or the RTX 3050 (`pip install ultralytics`, and the CUDA build of torch).
+- [ ] Report mAP50 on the **official test** AND on **`leakage_free_test.txt`** (106 images). 37% of the official test comes from videos that are also in train (A15).
+- [ ] Never crop train plates for OCR: train contains mirrored copies (A21).
 
 **Done when:** `best.pt` is on the team drive and the mAP is recorded in `reports/`.
 

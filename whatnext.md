@@ -12,11 +12,12 @@
 | 🟡 4 | Check the two `.mp4` files in `~/Downloads` (`DS.mp4` and `original-5adf….mp4`). If they are test clips, move them into `raw/test_videos/` (A11). | A5 |
 | ⚪ 5 | Optional: fill in the witvix Hugging Face access form for a harder OCR test (A2). | Out-of-domain OCR score |
 
-## 1. Phase 0B — plate-detection data prep (next coding step)
+## 1. Phase 0B: plate-detection data prep (✅ done)
 
-- [ ] `scripts/validate_plate_dataset.py`: label sanity checks, box vs polygon line counts (A19), near-duplicate frames across splits (A15, needs `imagehash`), and plate-size distribution
-- [ ] `scripts/prepare_plate_detection.py`: copy `raw/plate_detection` → `processed/plate_detection` with **short hashed filenames plus `name_map.csv`** (A18), polygons converted to boxes, and a Colab-ready `data.yaml` with relative paths (A4)
-- [ ] Write the results to `reports/plate_dataset_validation.md`
+- [x] `scripts/validate_plate_dataset.py`: integrity, boxes against polygons, plate sizes, leakage across splits (built-in dHash, so `imagehash` was not needed)
+- [x] `scripts/prepare_plate_detection.py` → `processed/plate_detection/`: short names, `name_map.csv`, boxes only, `data.yaml`, leakage-free eval lists
+- [x] `reports/plate_dataset_validation.md`
+- [ ] First step of Phase 1: open `data.yaml` with Ultralytics (not installed yet)
 
 ## 2. Phase 0C: Awiros OCR check (✅ done)
 

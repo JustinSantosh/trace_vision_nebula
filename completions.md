@@ -43,6 +43,17 @@ Notes:
 - **Quobotic must not be unzipped with File Explorer.** Its paths reach 280 characters and Explorer reports "Path too long" (A18). The copy in `raw/` was extracted with Python and is complete. One empty label (`valid/labels/BR9_jpg…txt`) is also empty in the zip, so it is a genuine background image.
 - `raw/` is kept byte-identical to the source zips. Renaming and cleaning happen only in `processed/`.
 
+## 3b. Phase 0B: plate-detection set validated and prepared (done)
+
+Report: `TRACEVISION_DATA/reports/plate_dataset_validation.md`.
+- **Integrity is clean:** 2,069 / 336 / 169 images, every image has a label, 2,084 / 339 / 171 boxes, 0 malformed or out-of-range lines, 1 genuine background image.
+- **`processed/plate_detection/` is ready to train:**
+  - byte-identical images (SHA-1 checked) under short names, which fixes A18
+  - 275 polygons converted to boxes (A19)
+  - `name_map.csv`
+  - `data.yaml` with relative paths
+- **Leakage measured, not fixed (A15):** every source video spans all 3 splits, so 37% of test comes from train videos, and dHash finds at least 18 near-duplicates. The official split is kept, and `leakage_free_{valid,test}.txt` (205 / 106) give an honest second score.
+
 ## 4. Phase 0C: Awiros OCR feasibility (done)
 
 Full report: `TRACEVISION_DATA/reports/awiros_feasibility.md`. Script: `TRACEVISION_DATA/scripts/awiros_feasibility_check.py`.
@@ -82,4 +93,5 @@ Full report: `TRACEVISION_DATA/reports/awiros_feasibility.md`. Script: `TRACEVIS
 | 246d631 | completions.md / whatnext.md plan; problem log for Awiros progress |
 | 8c10105 | Share datasets and Awiros weights with the team (LFS, submodule); TEAM_TASKS.md |
 | 05633d6 | Phase 0C: Awiros feasibility report, full 965-plate benchmark, B7/B8 diagnosis, status docs |
-| (this push) | GPU Paddle build: 15 ms per crop, full benchmark re-run on GPU, B7 resolved |
+| 2ffccc7 | GPU Paddle build: 15 ms per crop, full benchmark re-run on GPU, B7 resolved |
+| (this push) | Phase 0B: plate-dataset validation + processed training copy |

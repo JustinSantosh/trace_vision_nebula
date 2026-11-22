@@ -1,0 +1,9 @@
+# Built by scripts/prepare_plate_detection.py from raw/plate_detection (Roboflow Quobotic v3, CC BY 4.0).
+# Paths are relative to this file's folder. Pass this yaml's ABSOLUTE path to ultralytics,
+# e.g. yolo detect train data=/content/plate_detection/data.yaml
+# Official splits kept. Leakage across splits is documented in reports/plate_dataset_validation.md.
+train: train/images
+val: valid/images
+test: test/images
+nc: 1
+names: ["IndianNumberPlate"]

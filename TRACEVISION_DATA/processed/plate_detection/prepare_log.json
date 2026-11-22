@@ -1,0 +1,41 @@
+{
+  "src": "TRACEVISION_DATA\\raw\\plate_detection",
+  "dst": "TRACEVISION_DATA\\processed\\plate_detection",
+  "sample": null,
+  "splits": {
+    "train": {
+      "images": 2069,
+      "box_lines": 1858,
+      "polygons_converted": 226,
+      "clipped": 0,
+      "empty_labels": 0,
+      "copy_verified": 2069
+    },
+    "valid": {
+      "images": 336,
+      "box_lines": 309,
+      "polygons_converted": 30,
+      "clipped": 0,
+      "empty_labels": 1,
+      "copy_verified": 336
+    },
+    "test": {
+      "images": 169,
+      "box_lines": 152,
+      "polygons_converted": 19,
+      "clipped": 0,
+      "empty_labels": 0,
+      "copy_verified": 169
+    }
+  },
+  "leakage_free_lists": {
+    "valid": {
+      "kept": 205,
+      "of": 336
+    },
+    "test": {
+      "kept": 106,
+      "of": 169
+    }
+  }
+}
