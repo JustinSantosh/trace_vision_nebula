@@ -1,7 +1,7 @@
 # TRACEVISION AI — Team Tasks
 
 **Updated:** 2026-11-22 · Problem: **AIML-01 Vehicle Identification and Traceability from CCTV Footage**
-See also: [completions.md](completions.md) (what's done) · [whatnext.md](whatnext.md) (full plan) · [PROBLEMS.md](PROBLEMS.md) (problem IDs like A5, B1)
+**One-page overview to share: [TRACEVISION_Team_Handoff.pdf](TRACEVISION_Team_Handoff.pdf)** · See also: [completions.md](completions.md) (what's done) · [whatnext.md](whatnext.md) (full plan) · [PROBLEMS.md](PROBLEMS.md) (problem IDs like A5, B1)
 
 > Write your name next to a workstream, work on a branch named `ws<N>-<topic>` (e.g. `ws4-scorer`), and open a PR into `main`. Tick boxes as you go.
 
@@ -29,7 +29,8 @@ Already cloned without these? Run `git lfs pull` and `git submodule update --ini
 | `TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/` | 1,709 plate crops, `ground_truth.csv` (965 unique plates), and the Awiros smoke-test outputs |
 | `TRACEVISION_DATA/models/awiros/` | Awiros ANPR OCR weights (LFS) and `test.py` |
 | `third_party/PaddleOCR` | PaddleOCR (submodule), needed by Awiros |
-| `TRACEVISION_DATA/scripts/` | Audit, OCR eval-set builder, Awiros feasibility check |
+| `TRACEVISION_DATA/scripts/` | All 10 Phase 0 scripts (audit, plate data, OCR, clip frames, labels, degradation, registry) |
+| `TRACEVISION_DATA/evaluation/`, `registry/` | Label template and guide, registry test cases, synthetic registry |
 
 Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Share clips via the team drive instead.
 
@@ -39,7 +40,7 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 
 - **Awiros OCR works:** 9/9 model-card samples reproduced. Full benchmark on 965 unique plates: **81.5% exact / 4.4% CER**, or 86.0% / 3.1% on standard-format labels (`--preprocess paddle`; the official `test.py` preprocessing drops characters, B8). Latency: **15 ms per crop on the GPU** (`paddlepaddle-gpu` 3.3.1 cu126), against about 3.8 s on the CPU (B7 ✅). See `reports/awiros_feasibility.md`.
 - **Per-character probabilities ARE available** from the CTC head, so multi-frame fusion can use real per-character confidence (B1 resolved).
-- ⚠️ **CPU latency is about 4 s per crop (median), with p95 at 11 s.** That is too slow for video. Run OCR on a GPU (local RTX 3050 or Colab), OCR only the best 3–5 frames per track, or both.
+- **Run OCR with `--device gpu`** (15 ms per crop). The CPU build takes about 3.8 s per crop, which is too slow for video.
 - **There are no test clips yet (A5).** Everything clip-based is blocked on WS1.
 
 ---
