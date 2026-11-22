@@ -1,6 +1,6 @@
 # TRACEVISION AI — Phase 0 Problem Log
 
-**Last updated:** 2026-11-22 (Quobotic re-verified, Awiros reproduces card samples, completions/whatnext added)
+**Last updated:** 2026-11-22 (Phase 0C finished: full Awiros benchmark 81.5% exact / 4.4% CER, B8 preprocessing bug, B7 latency diagnosed)
 **Severity:** 🔴 Blocker (stops a phase) · 🟠 High (risks the demo or the results) · 🟡 Medium (workaround exists) · ⚪ Low / note
 
 Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summarised in [completions.md](completions.md) and the plan is in [whatnext.md](whatnext.md).
@@ -14,7 +14,7 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | Quobotic v3 downloaded and extracted | ✅ All 5,151 files match the zip CRC (0 missing, 0 corrupt, 0 extra). Real scenes. Re-checked on 2026-11-22 after a failed Explorer copy: 0 missing, 0 size mismatches. |
 | zenitsu09 OCR evaluation set | ✅ 1,709 crops → 965 unique plates, `ground_truth.csv` built (local only) |
 | 0B Plate-detection validation + Colab `data.yaml` | ⏳ Next (`validate_plate_dataset.py`, `prepare_plate_detection.py`) |
-| 0C Awiros feasibility check | 🟡 Part done: PaddlePaddle runs on Windows CPU, 9/9 card samples reproduced, and a 20-crop smoke test gives 80% exact plates with per-character probabilities available (B1 ✅). Still open: the full 965-plate benchmark on GPU and the latency fix (B7). |
+| 0C Awiros feasibility check | ✅ Done. On the full 965 unique plates: **81.5% exact, 4.4% CER** (86.0% / 3.1% on standard-format labels). Per-character probabilities available (B1 ✅). Official preprocessing bug found and avoided (B8 ✅). **Still open: CPU latency of about 3.8 s per crop (B7), which needs the GPU build.** Report: `reports/awiros_feasibility.md`. |
 | Team hand-off | ✅ Datasets, weights (LFS) and PaddleOCR (submodule) pushed. Workstreams are in [TEAM_TASKS.md](TEAM_TASKS.md). |
 | witvix (harder OCR test) | ⏳ Waiting for the team (access form) |
 | 0D Test clips | ⏳ Waiting for the team (no clips yet) |
@@ -55,8 +55,9 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | # | Severity | Problem | Impact | Proposed fix | Status |
 |---|---|---|---|---|---|
 | B1 | 🟠 | **The Awiros card does not document per-character probabilities.** | Multi-frame plate recovery was designed around per-character confidence. | Check the CTC head output in `test.py` and PaddleOCR during Phase 0C. Fallback: use per-position agreement across frames as the confidence signal. | ✅ Resolved: `awiros_feasibility_check.py` extracts per-character probabilities plus top-3 alternatives from the CTC head (`per_char_probabilities_available: true`). 20-crop smoke test: 80% exact, 3.2% CER (paddle preprocessing). |
-| B7 | 🟠 | **Awiros CPU latency is about 4.1 s median, 11.3 s p95 per crop** (smoke test, Paddle 3.3.1, CPU). | Video OCR on CPU is too slow for a live demo. | Run on GPU (RTX 3050 / Colab), OCR only the best 3–5 frames per track, and batch the crops. | Open (WS3) |
-| B2 | 🟡 | Awiros needs PaddlePaddle plus a clone of the PaddleOCR repo with `test.py` and `en_dict.txt` copied in. Its input is 3×48×320. | There is a risk of installation trouble on Windows with Python 3.12. CPU latency is unknown. | Run the approved feasibility check. If the Windows install fails, run it on Colab. | ✅ Install resolved: PaddlePaddle runs on Windows CPU and the PaddleOCR clone is in `third_party/` (git-ignored). 9/9 card samples reproduced. CPU latency still to be measured. |
+| B7 | 🟠 | **Awiros CPU latency is about 4.1 s median per crop on the smoke test, and 3.8 s median (p95 3.9 s) over the full 965-plate run** (Paddle 3.3.1 CPU, Windows). **Profiled:** the backbone (PPHGNetV2_B4) takes 3.97 s of 4.15 s. Turning on oneDNN, `jit.to_static` and **batching do not help** (a batch of 8 takes 33 s). A plain 512-channel conv runs at normal speed, so the cause is a slow backbone operator in Paddle's Windows CPU build, not the machine. | Video OCR on CPU is too slow for a live demo. The full 965-plate benchmark took 61 min on CPU. | **1)** Install `paddlepaddle-gpu` for the local RTX 3050 (**needs approval**; only the CPU build was approved). **2)** OCR only the best 3–5 frames per vehicle track. **3)** Untested: ONNX export plus onnxruntime. Batching is not a fix. Details in `reports/awiros_feasibility.md`. | Open (WS3): decision needed on GPU install |
+| B8 | 🟠 | **The official Awiros `test.py` preprocessing drops characters.** It pads with black *before* normalising (pad = −1), while PaddleOCR pads with 0 *after* normalising. On the 7 labelled card samples: official **3/7** correct, PaddleOCR-style **7/7**. The published `sample_results.json` shows the same dropped characters (e.g. `UP14BQ9208`→`UP14BQ208`), so "9/9 reproduced" means we reproduced their errors. | Anyone using `test.py` as-is under-reads plates, which hurts the multi-frame fusion and registry matching downstream. | `awiros_feasibility_check.py --preprocess paddle` (the default). **The app pipeline must use the same preprocessing** (copy `prep_paddle`). Smoke test: paddle 80% exact against official 70%. | ✅ Resolved in our code |
+| B2 | 🟡 | Awiros needs PaddlePaddle plus a clone of the PaddleOCR repo with `test.py` and `en_dict.txt` copied in. Its input is 3×48×320. | There is a risk of installation trouble on Windows with Python 3.12. CPU latency is unknown. | Run the approved feasibility check. If the Windows install fails, run it on Colab. | ✅ Install resolved: PaddlePaddle runs on Windows CPU and the PaddleOCR clone is in `third_party/` (git-ignored). 9/9 card samples reproduced (including their errors, see B8). CPU latency measured: about 4 s per crop (B7). |
 | B3 | 🟡 | The UVH-26 card says "14 classes" but lists 13: Hatchback, Sedan, SUV, MUV, Bus, Truck, Three-wheeler, Two-wheeler, LCV, Mini-bus, Tempo-traveller, Bicycle, Van. | `class_mapping.json` must be built from the actual model class names. | Read the names from the loaded `.pt` file and do not trust the card. | Open |
 | B4 | 🟡 | UVH-26 uses a single Two-wheeler class and cannot separate motorcycle from scooter. It also has no auto-rickshaw class name (Three-wheeler is the nearest). | Our type vocabulary splits these classes. | Map Two-wheeler to `motorcycle/scooter` (ambiguous) and Three-wheeler to `auto_rickshaw`, recording that this is a judgement call. Do not invent the split. | Open |
 | B5 | 🟡 | The UVH-26 card states no input resolution or CPU speed for any variant. | We cannot yet say whether YOLOv11-S runs acceptably on CPU. | Benchmark on the first clip. There is a local RTX 3050 with 6 GB as a fallback. | Open |
@@ -78,8 +79,8 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | Vehicle detection | Partial | A5 |
 | Vehicle type | Partial | A5, B3, B4 |
 | Indian plate detection | Partial: Quobotic v3 in hand, validation pending (0B) | A15, A18, A19 |
-| Indian OCR benchmark | Partial: zenitsu09 ground truth built (965 plates); Awiros not yet run | B1, B2, A20 |
-| Multi-frame recovery | Missing | A5, B1 |
+| Indian OCR benchmark | ✅ Awiros run on 965 zenitsu09 plates: 81.5% exact / 4.4% CER (still photos, not CCTV) | A13, A20; witvix optional (A2) |
+| Multi-frame recovery | Missing (inputs ready: per-character probabilities and top-3) | A5 |
 | Vehicle colour | Missing | A5 |
 | Registry ranking | Missing | A5, then Phase 0F |
 | No-match handling | Missing | A5 (needs at least 2 vehicles not in the registry) |

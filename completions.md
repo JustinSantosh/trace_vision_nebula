@@ -43,14 +43,20 @@ Notes:
 - **Quobotic must not be unzipped with File Explorer.** Its paths reach 280 characters and Explorer reports "Path too long" (A18). The copy in `raw/` was extracted with Python and is complete. One empty label (`valid/labels/BR9_jpg…txt`) is also empty in the zip, so it is a genuine background image.
 - `raw/` is kept byte-identical to the source zips. Renaming and cleaning happen only in `processed/`.
 
-## 4. Phase 0C — Awiros OCR feasibility (part done)
+## 4. Phase 0C: Awiros OCR feasibility (done, except the latency fix)
 
-- Awiros weights (`model.safetensors`, 143 MB), `test.py` and the 9 card sample images are in `TRACEVISION_DATA/models/awiros/`. The PaddleOCR repo is cloned into `third_party/PaddleOCR`.
-- PaddlePaddle is installed and **inference runs on CPU on Windows** (resolves the main install risk in B2).
-- **Reproduction check:** our run (`samples_ours.json`) gives **9/9 the same plate text** as the published `sample_results.json`. Confidences agree to within about 0.03.
-- Weights and the PaddleOCR clone are git-ignored (size and licence).
+Full report: `TRACEVISION_DATA/reports/awiros_feasibility.md`. Script: `TRACEVISION_DATA/scripts/awiros_feasibility_check.py`.
 
-**Not done yet:** per-character probabilities (B1), the full benchmark on the zenitsu09 965-plate set, and CPU latency.
+- **Install:** PaddlePaddle 3.3.1 (CPU) and the PaddleOCR clone (`third_party/PaddleOCR`, a submodule) run Awiros on Windows (B2 ✅).
+- **Per-character probabilities are available (B1 ✅).** For every plate, `char_probs.jsonl` holds each character with its probability, its CTC timestep and the top-3 alternatives. Multi-frame fusion and the `?` rule can be built directly on this.
+- **We found a bug in the official preprocessing (B8 ✅).** Awiros `test.py` pads before normalising, which drops characters. Their own `sample_results.json` contains these errors. With PaddleOCR-style padding, the 7 labelled card samples go from 3/7 to 7/7 correct. **The app must reuse `prep_paddle`.**
+- **Full benchmark, 965 unique zenitsu09 plates (`--preprocess paddle`):**
+  - **81.5% exact, 4.4% CER**
+  - standard-format labels only: **86.0%, 3.1% CER**
+  - two-row plates: 60.5%
+  - when the mean char prob is at least 0.99, reads are **97.1% exact** (61% of plates)
+  - nothing below a mean prob of 0.8 was correct, so **confidence is usable for the `?` rule and the no-match rule**
+- **Latency:** about **3.8 s per crop on CPU**. The PPHGNetV2 backbone in the Windows CPU build is the bottleneck, and batching, oneDNN and `to_static` don't help (B7, open, GPU build needed).
 
 ## 5. Decisions made so far
 
@@ -58,7 +64,8 @@ Notes:
 2. Look at sample images before adopting any dataset (lesson from b8iqo).
 3. zenitsu09 is used **only** for the standalone OCR benchmark and never for end-to-end evaluation, because its crops come from the same images as Quobotic (A16).
 4. Headline metrics will come from **our own CCTV test clips**, not from the still-photo datasets (A13).
-5. Raw data, crops, weights and real plates stay out of git. The registry is synthetic.
+5. ~~Raw data, crops, weights and real plates stay out of git.~~ **Changed:** datasets, crops and weights are now in the repo so the team can use them (see PROBLEMS E6, which covers the public-repo risk). The registry stays synthetic.
+7. Awiros is always run with PaddleOCR-style preprocessing (`prep_paddle`), never with the official `test.py` preprocessing (B8).
 6. The AGPL-3.0 licence of the Ultralytics models is accepted for the hackathon and disclosed in the README (B6).
 
 ## 6. Commit history
@@ -72,3 +79,6 @@ Notes:
 | 0b0acd8 | README cleanup |
 | ea37873 | zenitsu09 OCR eval set builder; Quobotic verified |
 | 845d4ed / 92aa219 | Problem log and README progress updates |
+| 246d631 | completions.md / whatnext.md plan; problem log for Awiros progress |
+| 8c10105 | Share datasets and Awiros weights with the team (LFS, submodule); TEAM_TASKS.md |
+| (this push) | Phase 0C finished: Awiros feasibility report, full 965-plate benchmark, B7/B8 diagnosis, status docs |

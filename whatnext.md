@@ -18,13 +18,15 @@
 - [ ] `scripts/prepare_plate_detection.py`: copy `raw/plate_detection` → `processed/plate_detection` with **short hashed filenames plus `name_map.csv`** (A18), polygons converted to boxes, and a Colab-ready `data.yaml` with relative paths (A4)
 - [ ] Write the results to `reports/plate_dataset_validation.md`
 
-## 2. Phase 0C — finish the Awiros OCR check
+## 2. Phase 0C: Awiros OCR check (✅ done, one decision open)
 
-- [x] Install works on Windows CPU; 9/9 card samples reproduced
-- [ ] **B1:** check whether the CTC head exposes **per-character probabilities**. Multi-frame fusion and the `?` rule depend on this. Fallback: use per-position agreement across frames as the confidence signal.
-- [ ] Run Awiros on the zenitsu09 965-plate set. Report CER and exact-match accuracy, with and without the `nonstandard_review` rows, and split by crop height (A20).
-- [ ] Measure CPU latency per crop
-- [ ] Write the results to `reports/ocr_feasibility.md`
+- [x] Install works on Windows CPU; card samples reproduced
+- [x] **B1:** per-character probabilities plus top-3 alternatives come from the CTC head
+- [x] **B8:** official preprocessing bug found; we use `prep_paddle`
+- [x] Full 965-plate benchmark: 81.5% exact / 4.4% CER (86.0% / 3.1% on standard labels), with splits by layout, height and confidence
+- [x] Latency measured: about 3.8 s per crop on CPU (backbone-bound)
+- [x] Report: `reports/awiros_feasibility.md`
+- [ ] **Decision (B7):** approve installing `paddlepaddle-gpu` for the RTX 3050, then re-run with `--device gpu` and record the GPU latency. If not approved: OCR only the best 3–5 frames per track, or try ONNX.
 
 ## 3. Phase 1 — models
 
@@ -59,3 +61,18 @@
 ## Environment installs still needed (C1, C2)
 
 `ultralytics`, `torch` (CUDA build for the RTX 3050), `imagehash`, `fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool (e.g. `weasyprint` or `playwright`), and FFmpeg (`winget install Gyan.FFmpeg`).
+
+## What remains to finish the project (summary)
+
+| # | Remaining piece | Blocked by | Size |
+|---|---|---|---|
+| 1 | **Test clips (5–8, including no-match vehicles and a cross-camera pair)** | Team filming (A5, A6) | 🔴 Blocks everything clip-based |
+| 2 | OCR speed: GPU Paddle build, or best-frame selection | Approval (B7) | Small |
+| 3 | 0B: plate-dataset validation and the short-name processed copy with `data.yaml` | Nothing; next coding step | Small |
+| 4 | Phase 1: plate detector fine-tune, UVH-26 vehicle type, colour classifier, tracking | Installs (C2), 0B | Medium |
+| 5 | **Phase 2 (judged): multi-frame fusion with `?`, synthetic registry, scorer with reasons, no-match threshold** | Clips for calibration | Large |
+| 6 | Phase 3: FastAPI backend, investigator UI, HTML/PDF report per clip | Phases 1–2 | Medium |
+| 7 | Phase 4: hand-labels for the clips, headline metrics, README, demo video, slides | Clips | Medium |
+| 8 | Stretch: cross-camera re-ID, make/model | A6; verified labels | Optional |
+
+Phase 0 is complete apart from 0D–0F (clips, degraded variants, registry), which wait on the clips. **Phase 1 starts only after approval.**

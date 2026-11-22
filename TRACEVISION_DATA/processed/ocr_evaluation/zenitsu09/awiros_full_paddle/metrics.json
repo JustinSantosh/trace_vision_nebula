@@ -1,0 +1,134 @@
+{
+  "args": {
+    "gt": "TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/ground_truth.csv",
+    "out": "TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/awiros_full_paddle",
+    "awiros_dir": "E:\\hack_a_sol\\TRACEVISION_DATA\\models\\awiros",
+    "paddleocr_dir": "E:\\hack_a_sol\\third_party\\PaddleOCR",
+    "device": "cpu",
+    "preprocess": "paddle",
+    "sample": null,
+    "primary_only": true,
+    "seed": 0,
+    "warmup": 3
+  },
+  "model_load_s": 4.84,
+  "environment": {
+    "python": "3.12.6",
+    "paddle": "3.3.1",
+    "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "device": "cpu"
+  },
+  "unreadable": 0,
+  "latency_ms": {
+    "mean": 3788.25,
+    "median": 3800.1,
+    "p95": 3876.34,
+    "max": 4299.62
+  },
+  "per_char_probabilities_available": true,
+  "metrics": {
+    "overall": {
+      "n": 965,
+      "exact_acc": 0.8145,
+      "cer": 0.0439,
+      "empty_pred": 0
+    },
+    "standard_format_only": {
+      "n": 883,
+      "exact_acc": 0.8596,
+      "cer": 0.0312,
+      "empty_pred": 0
+    },
+    "by_format_status": {
+      "nonstandard_review": {
+        "n": 82,
+        "exact_acc": 0.3293,
+        "cer": 0.191,
+        "empty_pred": 0
+      },
+      "standard": {
+        "n": 883,
+        "exact_acc": 0.8596,
+        "cer": 0.0312,
+        "empty_pred": 0
+      }
+    },
+    "by_layout_guess": {
+      "single_row_derived": {
+        "n": 879,
+        "exact_acc": 0.835,
+        "cer": 0.0364,
+        "empty_pred": 0
+      },
+      "two_row_derived": {
+        "n": 86,
+        "exact_acc": 0.6047,
+        "cer": 0.1225,
+        "empty_pred": 0
+      }
+    },
+    "by_height_bucket": {
+      "20-39px": {
+        "n": 351,
+        "exact_acc": 0.8803,
+        "cer": 0.0263,
+        "empty_pred": 0
+      },
+      "<20px": {
+        "n": 364,
+        "exact_acc": 0.7692,
+        "cer": 0.0515,
+        "empty_pred": 0
+      },
+      ">=40px": {
+        "n": 250,
+        "exact_acc": 0.788,
+        "cer": 0.0573,
+        "empty_pred": 0
+      }
+    },
+    "acc_by_mean_char_prob": {
+      "[0.0, 0.5)": {
+        "n": 12,
+        "exact_acc": 0.0,
+        "cer": 0.7404,
+        "empty_pred": 0
+      },
+      "[0.5, 0.8)": {
+        "n": 36,
+        "exact_acc": 0.0,
+        "cer": 0.4407,
+        "empty_pred": 0
+      },
+      "[0.8, 0.9)": {
+        "n": 53,
+        "exact_acc": 0.2264,
+        "cer": 0.1523,
+        "empty_pred": 0
+      },
+      "[0.9, 0.95)": {
+        "n": 79,
+        "exact_acc": 0.557,
+        "cer": 0.058,
+        "empty_pred": 0
+      },
+      "[0.95, 0.99)": {
+        "n": 197,
+        "exact_acc": 0.8071,
+        "cer": 0.0228,
+        "empty_pred": 0
+      },
+      "[0.99, 1.0)": {
+        "n": 588,
+        "exact_acc": 0.9711,
+        "cer": 0.0035,
+        "empty_pred": 0
+      }
+    }
+  },
+  "error_types": {
+    "dropped_chars(pred shorter)": 45,
+    "extra_chars(pred longer)": 11,
+    "same_length_wrong": 123
+  }
+}
