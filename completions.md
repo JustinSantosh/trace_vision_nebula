@@ -3,7 +3,19 @@
 Hack-A-Sol 5.0 · Track 02 AIML · **AIML-01 Vehicle Identification and Traceability from CCTV Footage**
 **Last updated:** 2026-11-22
 
-Open problems are in [PROBLEMS.md](PROBLEMS.md). Next steps are in [whatnext.md](whatnext.md).
+Open problems are in [PROBLEMS.md](PROBLEMS.md). Next steps are in [whatnext.md](whatnext.md). Decisions are in [DECISIONS.md](DECISIONS.md).
+
+**Phase 0 status:**
+
+| Step | State |
+|---|---|
+| 0A Audit | ✅ |
+| 0B Plate-detection data | ✅ |
+| 0C Awiros OCR check | ✅ |
+| 0D Clips + labels | 🟡 Tools ready; waiting for clips |
+| 0E Variants + sequences | 🟡 Tools ready; waiting for labels |
+| 0F Registry | 🟡 Starter ready; re-seed after labels |
+| Final Phase 0 report | ⏳ After labels |
 
 ---
 
@@ -78,15 +90,9 @@ Full report: `TRACEVISION_DATA/reports/awiros_feasibility.md`. Script: `TRACEVIS
   - nothing below a mean prob of 0.8 was correct, so **confidence is usable for the `?` rule and the no-match rule**
 - **Latency (B7 ✅):** CPU took about 3.8 s per crop, with the Windows CPU build's backbone as the bottleneck. With `paddlepaddle-gpu` 3.3.1 on the RTX 3050 it is **15 ms median / 53 ms p95**. Accuracy is the same, and the full 965-plate run takes about 20 s instead of 61 min.
 
-## 5. Decisions made so far
+## 5. Decisions
 
-1. `raw/` is read-only. All renaming (short hashed names plus a name map) and polygon-to-box conversion happen in `processed/` via `prepare_plate_detection.py`.
-2. Look at sample images before adopting any dataset (lesson from b8iqo).
-3. zenitsu09 is used **only** for the standalone OCR benchmark and never for end-to-end evaluation, because its crops come from the same images as Quobotic (A16).
-4. Headline metrics will come from **our own CCTV test clips**, not from the still-photo datasets (A13).
-5. ~~Raw data, crops, weights and real plates stay out of git.~~ **Changed:** datasets, crops and weights are now in the repo so the team can use them (see PROBLEMS E6, which covers the public-repo risk). The registry stays synthetic.
-7. Awiros is always run with PaddleOCR-style preprocessing (`prep_paddle`), never with the official `test.py` preprocessing (B8).
-6. The AGPL-3.0 licence of the Ultralytics models is accepted for the hackathon and disclosed in the README (B6).
+All decisions, with the reason for each and their status, are in **[DECISIONS.md](DECISIONS.md)** (D1–D10 data, M1–M6 models, E1–E9 evaluation, P1–P3 process).
 
 ## 6. Commit history
 
@@ -104,4 +110,5 @@ Full report: `TRACEVISION_DATA/reports/awiros_feasibility.md`. Script: `TRACEVIS
 | 05633d6 | Phase 0C: Awiros feasibility report, full 965-plate benchmark, B7/B8 diagnosis, status docs |
 | 2ffccc7 | GPU Paddle build: 15 ms per crop, full benchmark re-run on GPU, B7 resolved |
 | dfc44a5 | Phase 0B: plate-dataset validation + processed training copy |
-| (this push) | Phase 0D–0F scripts, blank label template, starter synthetic registry and test cases |
+| 097c073 | Phase 0D–0F scripts, blank label template, starter synthetic registry and test cases |
+| (this push) | DECISIONS.md, status docs refreshed |

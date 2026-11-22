@@ -1,14 +1,18 @@
 # TRACEVISION AI — What Next
 
-**Last updated:** 2026-11-22 · What is already done is in [completions.md](completions.md). Problem IDs (A5, B1, …) refer to [PROBLEMS.md](PROBLEMS.md).
+**Last updated:** 2026-11-22 · What is already done is in [completions.md](completions.md). Problem IDs (A5, B1, …) refer to [PROBLEMS.md](PROBLEMS.md). Decisions are in [DECISIONS.md](DECISIONS.md).
+
+**Where we are:** Phase 0 is done except the parts that need clips. The only blocker is **the team's test clips and hand labels**. Every script that processes them is built and tested.
 
 ## 0. Team actions — unblock these first
 
 | Priority | Action | Unblocks |
 |---|---|---|
-| 🔴 1 | **Get 5–8 test clips** into `TRACEVISION_DATA/raw/test_videos/`. The fastest way is to film short phone clips from a high, distant, CCTV-like angle: parked and passing cars, two-wheelers, autos and trucks. Include some blurred or partly hidden plates. Record the source and licence for each clip in a `clips.csv` (A5). | Every clip-based phase, the demo and the per-clip reports |
+| 🔴 1 | **Film 6–8 clips of 8–15 s** (5 s minimum) into `TRACEVISION_DATA/raw/test_videos/` as `clip01.mp4`, `clip02.mp4`, … Film from a high, distant, CCTV-like angle (balcony or stairs, 5–15 m from the road), in landscape at 1080p, held steady. Cover: a clear daylight plate, a blurred or moving plate, a partly blocked plate, a motorcycle or scooter, an auto-rickshaw, a truck or bus, several vehicles in one frame, and dusk or night if possible. Then follow TEAM_TASKS WS1 steps 1–6 (DECISIONS E2, A5). | Every clip-based phase, the demo and the per-clip reports |
 | 🔴 2 | **Include at least 2 vehicles that will NOT be in the registry**, to test no-match handling. | No-match must-have |
 | 🟠 3 | **Cross-camera pair:** film the same vehicle from two phone positions (A6). | Bonus: cross-camera tracking |
+| 🟠 3b | **Hand-label the clips** using `evaluation/LABELING_GUIDE.md`: about 5 minutes per clip. Only humans write labels (DECISIONS E3). | 0D–0F, all clip metrics |
+| 🟠 3c | **Decide on the repo's visibility.** It is public and holds real plates (E6 / DECISIONS D10). | Privacy |
 | 🟡 4 | Check the two `.mp4` files in `~/Downloads` (`DS.mp4` and `original-5adf….mp4`). If they are test clips, move them into `raw/test_videos/` (A11). | A5 |
 | ⚪ 5 | Optional: fill in the witvix Hugging Face access form for a harder OCR test (A2). | Out-of-domain OCR score |
 

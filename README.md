@@ -2,7 +2,7 @@
 
 Hack-A-Sol 5.0, Track 02, AIML-01: vehicle identification and traceability from CCTV footage.
 
-## Status: Phase 0A is done, the datasets are in the repo, and Awiros OCR is working (0C part done). **Team: start with [TEAM_TASKS.md](TEAM_TASKS.md)** (setup and workstreams). Also see [completions.md](completions.md), [whatnext.md](whatnext.md) and [PROBLEMS.md](PROBLEMS.md).
+## Status: Phase 0 is done except the clip-dependent parts. 0A audit, 0B plate data (ready to train) and 0C Awiros OCR (81.5% exact, 15 ms/crop on GPU) are done; the 0D–0F tools and a starter synthetic registry are ready. **Waiting on the team's test clips and hand labels.** **Team: start with [TEAM_TASKS.md](TEAM_TASKS.md).** Also see [completions.md](completions.md) · [whatnext.md](whatnext.md) · [PROBLEMS.md](PROBLEMS.md) · [DECISIONS.md](DECISIONS.md).
 
 Clone with `git config --global core.longpaths true`, `git lfs install` and then `git clone --recurse-submodules …`.
 
