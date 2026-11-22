@@ -151,8 +151,13 @@ def find_plate(vcrop, plate_model, conf):
     sharp = float(cv2.Laplacian(g, cv2.CV_64F).var())
     h = y2 - y1
     c = float(r.boxes.conf[i])
+    H, W = vcrop.shape[:2]
+    # where the plate sits inside the vehicle box: plates are low and roughly centred on their own vehicle
+    rel_cx, rel_cy = ((x1 + x2) / 2) / W, ((y1 + y2) / 2) / H
+    plausibility = max(0.0, 1 - abs(rel_cx - 0.5) * 2) * max(0.0, 1 - abs(rel_cy - 0.72) / 0.5)
     quality = 0.5 * min(1.0, h / 40.0) + 0.3 * min(1.0, sharp / 300.0) + 0.2 * c
-    return {"crop": pc, "height_px": h, "conf": round(c, 3), "sharpness": round(sharp, 1), "quality": round(quality, 3)}
+    return {"crop": pc, "height_px": h, "conf": round(c, 3), "sharpness": round(sharp, 1), "quality": round(quality, 3),
+            "plausibility": round(plausibility, 3)}
 
 
 # ---------------------------------------------------------------- one clip
@@ -204,7 +209,7 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
     by_track = defaultdict(list)
     for (tid, p), r in zip(ocr_jobs, reads):
         by_track[tid].append({"frame": p["frame"], "quality": p["quality"], "chars": r["chars"], "text": r["text"],
-                              "ms": r["ms"], "height_px": p["height_px"]})
+                              "ms": r["ms"], "height_px": p["height_px"], "plausibility": p["plausibility"]})
     timing["ocr_s"] = round(time.perf_counter() - t2, 1)
 
     # plate-based re-link (C6): tracks whose fused plates agree are the same vehicle (the moving camera loses and
@@ -226,15 +231,21 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
         ix = max(0, min(a[2], b[2]) - max(a[0], b[0])); iy = max(0, min(a[3], b[3]) - max(a[1], b[1]))
         inter = ix * iy; u = (a[2] - a[0]) * (a[3] - a[1]) + (b[2] - b[0]) * (b[3] - b[1]) - inter
         return inter / u if u > 0 else 0.0
+    def contain(a, b):   # intersection over the smaller box
+        ix = max(0, min(a[2], b[2]) - max(a[0], b[0])); iy = max(0, min(a[3], b[3]) - max(a[1], b[1]))
+        m = min((a[2] - a[0]) * (a[3] - a[1]), (b[2] - b[0]) * (b[3] - b[1]))
+        return ix * iy / m if m > 0 else 0.0
     def coexist(ga, gb):
-        """True if the groups are DIFFERENT vehicles seen at the same time (shared frames, boxes not the same object).
-        Simultaneous tracks whose boxes overlap heavily (IoU > 0.5) are one vehicle detected twice -> not 'coexisting'."""
-        ious = []
+        """True if the groups are DIFFERENT vehicles seen at the same time. Simultaneous tracks that show the SAME plate
+        and whose boxes are the same object (IoU > 0.5) or one box is mostly inside the other (>= 0.5 of the smaller box,
+        e.g. a whole-car box and a bumper-region box) are one vehicle -> not 'coexisting'."""
+        same = []
         for a in ga:
             for b in gb:
                 for fr in frames_of[a] & frames_of[b]:
-                    ious.append(iou(box_at[a][fr], box_at[b][fr]))
-        return len(ious) > 2 and float(np.mean(ious)) <= 0.5
+                    A, B = box_at[a][fr], box_at[b][fr]
+                    same.append(iou(A, B) > 0.5 or contain(A, B) >= 0.5)
+        return len(same) > 2 and float(np.mean(same)) < 0.5
     members_of = {t: [t] for t in tracks}
     ids = sorted(prelim, key=lambda t: tracks[t][0]["frame"])
     plate_owner_dropped = {}
@@ -245,7 +256,7 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
                 if ra == rb:
                     continue
                 if coexist(members_of[ra], members_of[rb]):
-                    # same plate inside two simultaneous boxes: it belongs to the track where it was read best
+                    # same plate inside two clearly separate simultaneous boxes: it belongs to the track where it was read largest
                     qa = np.mean([x["height_px"] for x in by_track[a]]); qb = np.mean([x["height_px"] for x in by_track[b]])
                     loser = b if qa >= qb else a
                     plate_owner_dropped[loser] = b if loser == a else a
@@ -315,6 +326,7 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
             "first_frame": dets[0]["frame"], "last_frame": dets[-1]["frame"],
             "first_time_s": round(dets[0]["frame"] / meta["fps"], 2), "n_detections": len(dets),
             "first_box": [round(v) for v in dets[0]["box"]],
+            "track": [[d["frame"]] + [round(x) for x in d["box"]] for d in dets],   # [frame, x1, y1, x2, y2] per detection
             "type": {"label": vtype, "vote_share": tconf, "detector_conf_mean": round(float(np.mean([d["conf"] for d in dets])), 3)},
             "colour": col,
             "plate": {"status": plate_status,
