@@ -1,0 +1,92 @@
+{
+  "created_utc": "2026-11-22T14:58:38+00:00",
+  "input": "TRACEVISION_DATA\\raw\\ocr_corpus\\zenitsu09\\train-00000-of-00001.parquet",
+  "input_sha1": "c4bb48813eeb03ea4fd7c72eaff52366d3c3e00a",
+  "args": {
+    "parquet": "TRACEVISION_DATA/raw/ocr_corpus/zenitsu09/train-00000-of-00001.parquet",
+    "out": "TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09",
+    "image_col": "image",
+    "text_col": "plate_text",
+    "subset_col": "source",
+    "orig_col": "orig_filename",
+    "two_row_aspect": 2.2,
+    "limit": null
+  },
+  "counts": {
+    "rows": 1709,
+    "corrupt": 0,
+    "standard": 1597,
+    "bh_series": 0,
+    "nonstandard_review": 112,
+    "single_row_derived": 1546,
+    "two_row_derived": 163,
+    "eval_primary": 965,
+    "unique_plates": 965,
+    "unique_images": 1708
+  },
+  "by_subset": {
+    "plates": {
+      "rows": 38,
+      "unique_plates": 10,
+      "primary": 10
+    },
+    "plates1": {
+      "rows": 654,
+      "unique_plates": 137,
+      "primary": 127
+    },
+    "plates2": {
+      "rows": 417,
+      "unique_plates": 230,
+      "primary": 230
+    },
+    "plates3": {
+      "rows": 600,
+      "unique_plates": 598,
+      "primary": 598
+    }
+  },
+  "nonstandard_examples": [
+    "MHD1CV9311",
+    "MHD1CV9311",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH4705851",
+    "MH010PO323",
+    "MH038C6247",
+    "KA19TR02",
+    "KA42TC131011",
+    "DL758Y1790",
+    "TERRANO",
+    "TN21TC611",
+    "DL6CAB123X",
+    "W0BNP300",
+    "GJW115A1138",
+    "MH14TCD204",
+    "TN19TC91",
+    "MH14TC206AN",
+    "MH20TC640B",
+    "MH15TC554",
+    "KL01CC50",
+    "KL53E964",
+    "KL54H369",
+    "KL01KLKL01",
+    "KL01AU585",
+    "MH14TCF459"
+  ],
+  "purpose": "evaluation only - never train or tune on this set"
+}

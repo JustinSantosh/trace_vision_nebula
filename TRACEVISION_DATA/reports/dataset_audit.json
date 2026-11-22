@@ -93,22 +93,124 @@
           "shards": [
             {
               "file": "zenitsu09\\train-00000-of-00001.parquet",
+              "rows": 1709,
+              "columns": [
+                "image",
+                "plate_text",
+                "source",
+                "state",
+                "orig_filename",
+                "xmin",
+                "ymin",
+                "xmax",
+                "ymax"
+              ],
               "size_mb": 5.92
             }
-          ],
-          "error": "pyarrow not installed - schema/rows not inspected"
+          ]
         }
       ],
       "status": "PRESENT"
     },
     "plate_detection": {
       "path": "TRACEVISION_DATA\\raw\\plate_detection",
-      "files": 0,
-      "bytes": 0,
-      "extensions": {},
+      "files": 5131,
+      "bytes": 131484640,
+      "extensions": {
+        ".txt": 2566,
+        ".jpg": 2564,
+        ".yaml": 1
+      },
       "sources_note": [],
-      "components": [],
-      "status": "EMPTY"
+      "components": [
+        {
+          "type": "yolo_detection",
+          "splits": {
+            "test": {
+              "images": 169,
+              "checked": 169,
+              "sizes": {
+                "640x640": 169
+              },
+              "boxes": 152,
+              "empty_labels": 0,
+              "missing_labels": 0
+            },
+            "train": {
+              "images": 2069,
+              "checked": 2069,
+              "sizes": {
+                "640x640": 2059
+              },
+              "boxes": 1848,
+              "empty_labels": 0,
+              "missing_labels": 10
+            },
+            "val": {
+              "images": 336,
+              "checked": 336,
+              "sizes": {
+                "640x640": 336
+              },
+              "boxes": 309,
+              "empty_labels": 1,
+              "missing_labels": 0
+            }
+          },
+          "class_ids": {
+            "0": 2309
+          },
+          "issues": {
+            "bad_field_count": 275,
+            "corrupt_image": 10
+          },
+          "examples": {
+            "missing_label": [
+              "train\\images\\3d7cd880-ea4b-4d63-9706-bea1df54af20___135712d1400874352-skoda-rapid-1-6tdi-cr-mt-elegance-ultima-candy-white-white-monster-1911216_676392609084007_1524722860_o-jpg_jpeg.rf.329de9038b5feea8f3558d4991c8372a.jpg",
+              "train\\images\\3d7cd880-ea4b-4d63-9706-bea1df54af20___135712d1400874352-skoda-rapid-1-6tdi-cr-mt-elegance-ultima-candy-white-white-monster-1911216_676392609084007_1524722860_o-jpg_jpeg.rf.a2176fa9b6e65c892dc93beca71e2334.jpg",
+              "train\\images\\3fd93f90-f778-4f14-8b0f-67dd0be88a06___561644d1308248087-beware-fake-registration-numbers-imported-cars-proof-pg-3-257491_10150223034216705_685851704_7325894_6-Copy_jpeg.rf.68c28e8cf34710f47153d22ad6641f2c.jpg",
+              "train\\images\\3fd93f90-f778-4f14-8b0f-67dd0be88a06___561644d1308248087-beware-fake-registration-numbers-imported-cars-proof-pg-3-257491_10150223034216705_685851704_7325894_6-Copy_jpeg.rf.b58e0d57ed38c8df0fedda7076aa9ecf.jpg",
+              "train\\images\\3fd93f90-f778-4f14-8b0f-67dd0be88a06___561644d1308248087-beware-fake-registration-numbers-imported-cars-proof-pg-3-257491_10150223034216705_685851704_7325894_6829197_o-jpg_jpeg.rf.494fdd6720604b15b7e1a0590aea201f.jpg",
+              "train\\images\\3fd93f90-f778-4f14-8b0f-67dd0be88a06___561644d1308248087-beware-fake-registration-numbers-imported-cars-proof-pg-3-257491_10150223034216705_685851704_7325894_6829197_o-jpg_jpeg.rf.87193c51ba8d2e990b312355b6c36189.jpg",
+              "train\\images\\57e92915-935a-4a91-91f8-f3ad70040a6e___3e7fd381-0ae5-4421-8a70-279ee0ec1c61_847071203_1_1080x720_nissan-terrano-xv-d-thp-premium-110-ps-2015-diesel-ghaziabad_jpg.rf.d1bc6a9106bf1697936089b3e17221bc.jpg",
+              "train\\images\\57e92915-935a-4a91-91f8-f3ad70040a6e___3e7fd381-0ae5-4421-8a70-279ee0ec1c61_847071203_1_1080x720_nissan-terrano-xv-d-thp-premium-110-ps-2015-diesel-ghaziabad_jpg.rf.ddcb7fee35241951ff2e708c9e8b952d.jpg",
+              "train\\images\\8625b831-13a1-4b7d-9466-826cd6d36c67___1304650d1414861991-number-plates-merchandise-canvas-ink-gurgaon-edit-closed-10471269_1537317779842156_5063668061078329632_n-jpg_jpeg.rf.5e4cb91a1ab0634b0b14266d3b126883.jpg",
+              "train\\images\\8625b831-13a1-4b7d-9466-826cd6d36c67___1304650d1414861991-number-plates-merchandise-canvas-ink-gurgaon-edit-closed-10471269_1537317779842156_5063668061078329632_n-jpg_jpeg.rf.8adacd40083b867bac73a81fc2be52be.jpg"
+            ],
+            "corrupt_image": [
+              "train\\images\\3d7cd880-ea4b-4d63-9706-bea1df54af20___135712d1400874352-skoda-rapid-1-6tdi-cr-mt-elegance-ultima-candy-white-white-monster-1911216_676392609084007_1524722860_o-jpg_jpeg.rf.329de9038b5feea8f3558d4991c8372a.jpg",
+              "train\\images\\3d7cd880-ea4b-4d63-9706-bea1df54af20___135712d1400874352-skoda-rapid-1-6tdi-cr-mt-elegance-ultima-candy-white-white-monster-1911216_676392609084007_1524722860_o-jpg_jpeg.rf.a2176fa9b6e65c892dc93beca71e2334.jpg",
+              "train\\images\\3fd93f90-f778-4f14-8b0f-67dd0be88a06___561644d1308248087-beware-fake-registration-numbers-imported-cars-proof-pg-3-257491_10150223034216705_685851704_7325894_6-Copy_jpeg.rf.68c28e8cf34710f47153d22ad6641f2c.jpg",
+              "train\\images\\3fd93f90-f778-4f14-8b0f-67dd0be88a06___561644d1308248087-beware-fake-registration-numbers-imported-cars-proof-pg-3-257491_10150223034216705_685851704_7325894_6-Copy_jpeg.rf.b58e0d57ed38c8df0fedda7076aa9ecf.jpg",
+              "train\\images\\3fd93f90-f778-4f14-8b0f-67dd0be88a06___561644d1308248087-beware-fake-registration-numbers-imported-cars-proof-pg-3-257491_10150223034216705_685851704_7325894_6829197_o-jpg_jpeg.rf.494fdd6720604b15b7e1a0590aea201f.jpg",
+              "train\\images\\3fd93f90-f778-4f14-8b0f-67dd0be88a06___561644d1308248087-beware-fake-registration-numbers-imported-cars-proof-pg-3-257491_10150223034216705_685851704_7325894_6829197_o-jpg_jpeg.rf.87193c51ba8d2e990b312355b6c36189.jpg",
+              "train\\images\\57e92915-935a-4a91-91f8-f3ad70040a6e___3e7fd381-0ae5-4421-8a70-279ee0ec1c61_847071203_1_1080x720_nissan-terrano-xv-d-thp-premium-110-ps-2015-diesel-ghaziabad_jpg.rf.d1bc6a9106bf1697936089b3e17221bc.jpg",
+              "train\\images\\57e92915-935a-4a91-91f8-f3ad70040a6e___3e7fd381-0ae5-4421-8a70-279ee0ec1c61_847071203_1_1080x720_nissan-terrano-xv-d-thp-premium-110-ps-2015-diesel-ghaziabad_jpg.rf.ddcb7fee35241951ff2e708c9e8b952d.jpg",
+              "train\\images\\8625b831-13a1-4b7d-9466-826cd6d36c67___1304650d1414861991-number-plates-merchandise-canvas-ink-gurgaon-edit-closed-10471269_1537317779842156_5063668061078329632_n-jpg_jpeg.rf.5e4cb91a1ab0634b0b14266d3b126883.jpg",
+              "train\\images\\8625b831-13a1-4b7d-9466-826cd6d36c67___1304650d1414861991-number-plates-merchandise-canvas-ink-gurgaon-edit-closed-10471269_1537317779842156_5063668061078329632_n-jpg_jpeg.rf.8adacd40083b867bac73a81fc2be52be.jpg"
+            ]
+          },
+          "yaml": {
+            "data.yaml": {
+              "train": "../train/images",
+              "val": "../valid/images",
+              "test": "../test/images",
+              "nc": 1,
+              "names": [
+                "IndianNumberPlate"
+              ],
+              "roboflow": {
+                "workspace": "quobotic",
+                "project": "indian-number-plate",
+                "version": 3,
+                "license": "CC BY 4.0",
+                "url": "https://universe.roboflow.com/quobotic/indian-number-plate/dataset/3"
+              }
+            }
+          }
+        }
+      ],
+      "status": "PRESENT"
     },
     "test_videos": {
       "path": "TRACEVISION_DATA\\raw\\test_videos",

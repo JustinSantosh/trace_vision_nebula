@@ -17,3 +17,6 @@ __pycache__/
 *.pyc
 .env
 .venv/
+# OCR eval crops + plate-text ground truth (real plates, source licence unstated) - rebuild with build_ocr_eval_set.py
+TRACEVISION_DATA/processed/ocr_evaluation/*/crops/
+TRACEVISION_DATA/processed/ocr_evaluation/*/ground_truth.csv
