@@ -1,1 +1,4 @@
 clip_id,source,source_url,licence,country,camera_id,target_vehicle_id,first_frame,last_frame,timestamp_first,vehicle_bbox_first_frame,plate_bbox_first_frame,plate_text_truth,unreadable_positions,plate_readability,colour,vehicle_type,make,model,in_registry,cross_camera_group_id,notes,registry_plate_full
+clip01,own footage (team filmed),,own,IN,cam_moving_01,clip01_v01,,,,,,,,,,,,,,,,
+clip01,own footage (team filmed),,own,IN,cam_moving_01,clip01_v02,,,,,,,,,,,,,,,,
+clip01,own footage (team filmed),,own,IN,cam_moving_01,clip01_v03,,,,,,,,,,,,,,,,

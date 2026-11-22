@@ -1,1 +1,2 @@
 clip_id,file,duration_s,width,height,fps,source,source_url,licence,country,camera_id,time_of_day,scenarios_covered,notes
+clip01,clip01.mp4,32.6,478,850,30.0,own footage (team filmed),,own,IN,cam_moving_01,"day, hazy",moving camera (dashcam-style); same vehicle over many frames; two-wheelers; partly occluded plate,"WhatsApp copy (478x850 portrait, ~1.5 Mbit/s) - original file requested; filmed from a moving car, not a fixed CCTV view"
