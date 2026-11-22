@@ -10,7 +10,7 @@
 | Does it install and run on our Windows laptop? | **Yes**, on CPU. PaddlePaddle 3.3.1 plus a few `ppocr` dependencies (tqdm, rapidfuzz, lmdb, shapely, pyclipper, scikit-image). |
 | **Per-character probabilities?** | **Yes.** The CTC head gives a softmax over 64 classes at each of 40 timesteps. PaddleOCR's `CTCLabelDecode` already computes a probability per character and then averages them. Our script keeps the **probability of every emitted character plus its top-3 alternatives**, written to `char_probs.jsonl`. **The B1 fallback is not needed.** |
 | Accuracy | Full 965 unique plates: **81.5% exact, 4.4% CER**. Standard-format labels only: **86.0% / 3.1%**. Two-row plates: 60.5%. At mean char prob ≥ 0.99: **97.1%** (61% of plates). |
-| **CPU latency** | **About 3.8 s per crop** (median over 965; p95 3.9 s). **Too slow for video on CPU.** See "Latency" below. |
+| **Latency** | **GPU (RTX 3050, `paddlepaddle-gpu` 3.3.1 cu126): median 15 ms, p95 53 ms per crop.** That is fast enough for video. The CPU build takes about 3.8 s per crop, which is too slow (see Finding 2). |
 | Official preprocessing | **It has a bug that drops characters.** Use `--preprocess paddle`. See below. |
 
 ## Finding 1: the official `test.py` preprocessing drops characters
@@ -50,6 +50,17 @@ So the CPU itself is not slow. Some backbone operator in Paddle 3.3.1's Windows 
 2. **Colab GPU** for the benchmark. It doesn't help the live demo unless the app runs there.
 3. **Reduce calls:** OCR only the best 3–5 frames per vehicle track (sharpness or plate-size ranking). Even at 4 s each, that is 12–20 s per vehicle. Acceptable for an offline investigator report, not for real time.
 4. *Untested:* export to ONNX (`paddle2onnx`) and run with `onnxruntime` on CPU.
+
+## Finding 3: on the GPU, the latency problem is solved
+
+`paddlepaddle-gpu==3.3.1` (CUDA 12.6 wheel, driver 581.86 / CUDA 13.0) installed on 2026-11-22 with approval. It replaces the CPU build. `paddle.utils.run_check()` passes on the RTX 3050 (compute capability 8.6).
+
+| Run | Median | p95 | Exact | CER |
+|---|---|---|---|---|
+| CPU, 965 plates | 3,800 ms | 3,876 ms | 81.45% | 4.39% |
+| **GPU, 965 plates** | **15.4 ms** | **53.3 ms** | 81.45% | 4.40% |
+
+The accuracy is the same. Only 1 of the 965 predictions differs, and it is a very low-confidence read (min char prob 0.31): `AP2D1014` on CPU against `AP32D1014` on GPU, where the label is `AP2D4014`. That is floating-point noise around a near-tie. GPU outputs are in `processed/ocr_evaluation/zenitsu09/awiros_full_paddle_gpu/`.
 
 ## Full benchmark: zenitsu09, 965 unique plates (`eval_primary = 1`, `--preprocess paddle`)
 
@@ -98,7 +109,7 @@ Taking only reads with a mean probability of at least 0.95 keeps 785 plates (81%
 # 20-crop smoke test (both preprocessing modes)
 python TRACEVISION_DATA/scripts/awiros_feasibility_check.py --gt TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/ground_truth.csv --out TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/awiros_smoke20_paddle --sample 20 --primary-only --preprocess paddle
 python TRACEVISION_DATA/scripts/awiros_feasibility_check.py --gt TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/ground_truth.csv --out TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/awiros_smoke20_official --sample 20 --primary-only --preprocess official
-# Full benchmark (about 65 min on CPU; add --device gpu once paddlepaddle-gpu is installed)
+# Full benchmark: about 20 s on the GPU (--device gpu), about 61 min on the CPU
 python TRACEVISION_DATA/scripts/awiros_feasibility_check.py --gt TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/ground_truth.csv --out TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/awiros_full_paddle --primary-only --preprocess paddle
 ```
 

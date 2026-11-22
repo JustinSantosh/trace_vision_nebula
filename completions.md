@@ -43,7 +43,7 @@ Notes:
 - **Quobotic must not be unzipped with File Explorer.** Its paths reach 280 characters and Explorer reports "Path too long" (A18). The copy in `raw/` was extracted with Python and is complete. One empty label (`valid/labels/BR9_jpg…txt`) is also empty in the zip, so it is a genuine background image.
 - `raw/` is kept byte-identical to the source zips. Renaming and cleaning happen only in `processed/`.
 
-## 4. Phase 0C: Awiros OCR feasibility (done, except the latency fix)
+## 4. Phase 0C: Awiros OCR feasibility (done)
 
 Full report: `TRACEVISION_DATA/reports/awiros_feasibility.md`. Script: `TRACEVISION_DATA/scripts/awiros_feasibility_check.py`.
 
@@ -56,7 +56,7 @@ Full report: `TRACEVISION_DATA/reports/awiros_feasibility.md`. Script: `TRACEVIS
   - two-row plates: 60.5%
   - when the mean char prob is at least 0.99, reads are **97.1% exact** (61% of plates)
   - nothing below a mean prob of 0.8 was correct, so **confidence is usable for the `?` rule and the no-match rule**
-- **Latency:** about **3.8 s per crop on CPU**. The PPHGNetV2 backbone in the Windows CPU build is the bottleneck, and batching, oneDNN and `to_static` don't help (B7, open, GPU build needed).
+- **Latency (B7 ✅):** CPU took about 3.8 s per crop, with the Windows CPU build's backbone as the bottleneck. With `paddlepaddle-gpu` 3.3.1 on the RTX 3050 it is **15 ms median / 53 ms p95**. Accuracy is the same, and the full 965-plate run takes about 20 s instead of 61 min.
 
 ## 5. Decisions made so far
 
@@ -81,4 +81,5 @@ Full report: `TRACEVISION_DATA/reports/awiros_feasibility.md`. Script: `TRACEVIS
 | 845d4ed / 92aa219 | Problem log and README progress updates |
 | 246d631 | completions.md / whatnext.md plan; problem log for Awiros progress |
 | 8c10105 | Share datasets and Awiros weights with the team (LFS, submodule); TEAM_TASKS.md |
-| (this push) | Phase 0C finished: Awiros feasibility report, full 965-plate benchmark, B7/B8 diagnosis, status docs |
+| 05633d6 | Phase 0C: Awiros feasibility report, full 965-plate benchmark, B7/B8 diagnosis, status docs |
+| (this push) | GPU Paddle build: 15 ms per crop, full benchmark re-run on GPU, B7 resolved |

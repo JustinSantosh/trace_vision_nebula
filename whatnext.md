@@ -18,7 +18,7 @@
 - [ ] `scripts/prepare_plate_detection.py`: copy `raw/plate_detection` → `processed/plate_detection` with **short hashed filenames plus `name_map.csv`** (A18), polygons converted to boxes, and a Colab-ready `data.yaml` with relative paths (A4)
 - [ ] Write the results to `reports/plate_dataset_validation.md`
 
-## 2. Phase 0C: Awiros OCR check (✅ done, one decision open)
+## 2. Phase 0C: Awiros OCR check (✅ done)
 
 - [x] Install works on Windows CPU; card samples reproduced
 - [x] **B1:** per-character probabilities plus top-3 alternatives come from the CTC head
@@ -26,7 +26,7 @@
 - [x] Full 965-plate benchmark: 81.5% exact / 4.4% CER (86.0% / 3.1% on standard labels), with splits by layout, height and confidence
 - [x] Latency measured: about 3.8 s per crop on CPU (backbone-bound)
 - [x] Report: `reports/awiros_feasibility.md`
-- [ ] **Decision (B7):** approve installing `paddlepaddle-gpu` for the RTX 3050, then re-run with `--device gpu` and record the GPU latency. If not approved: OCR only the best 3–5 frames per track, or try ONNX.
+- [x] **B7:** `paddlepaddle-gpu` installed. 15 ms per crop on the RTX 3050, same accuracy. **Always run with `--device gpu`.**
 
 ## 3. Phase 1 — models
 
@@ -67,7 +67,6 @@
 | # | Remaining piece | Blocked by | Size |
 |---|---|---|---|
 | 1 | **Test clips (5–8, including no-match vehicles and a cross-camera pair)** | Team filming (A5, A6) | 🔴 Blocks everything clip-based |
-| 2 | OCR speed: GPU Paddle build, or best-frame selection | Approval (B7) | Small |
 | 3 | 0B: plate-dataset validation and the short-name processed copy with `data.yaml` | Nothing; next coding step | Small |
 | 4 | Phase 1: plate detector fine-tune, UVH-26 vehicle type, colour classifier, tracking | Installs (C2), 0B | Medium |
 | 5 | **Phase 2 (judged): multi-frame fusion with `?`, synthetic registry, scorer with reasons, no-match threshold** | Clips for calibration | Large |

@@ -1,0 +1,110 @@
+{
+  "args": {
+    "gt": "TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/ground_truth.csv",
+    "out": "TRACEVISION_DATA/processed/ocr_evaluation/zenitsu09/awiros_smoke20_gpu",
+    "awiros_dir": "E:\\hack_a_sol\\TRACEVISION_DATA\\models\\awiros",
+    "paddleocr_dir": "E:\\hack_a_sol\\third_party\\PaddleOCR",
+    "device": "gpu",
+    "preprocess": "paddle",
+    "sample": 20,
+    "primary_only": true,
+    "seed": 0,
+    "warmup": 3
+  },
+  "model_load_s": 9.14,
+  "environment": {
+    "python": "3.12.6",
+    "paddle": "3.3.1",
+    "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "device": "gpu"
+  },
+  "unreadable": 0,
+  "latency_ms": {
+    "mean": 45.14,
+    "median": 44.03,
+    "p95": 49.79,
+    "max": 50.27
+  },
+  "per_char_probabilities_available": true,
+  "metrics": {
+    "overall": {
+      "n": 20,
+      "exact_acc": 0.8,
+      "cer": 0.0317,
+      "empty_pred": 0
+    },
+    "standard_format_only": {
+      "n": 19,
+      "exact_acc": 0.7895,
+      "cer": 0.0331,
+      "empty_pred": 0
+    },
+    "by_format_status": {
+      "nonstandard_review": {
+        "n": 1,
+        "exact_acc": 1.0,
+        "cer": 0.0,
+        "empty_pred": 0
+      },
+      "standard": {
+        "n": 19,
+        "exact_acc": 0.7895,
+        "cer": 0.0331,
+        "empty_pred": 0
+      }
+    },
+    "by_layout_guess": {
+      "single_row_derived": {
+        "n": 20,
+        "exact_acc": 0.8,
+        "cer": 0.0317,
+        "empty_pred": 0
+      }
+    },
+    "by_height_bucket": {
+      "20-39px": {
+        "n": 6,
+        "exact_acc": 0.8333,
+        "cer": 0.0179,
+        "empty_pred": 0
+      },
+      "<20px": {
+        "n": 10,
+        "exact_acc": 0.8,
+        "cer": 0.0316,
+        "empty_pred": 0
+      },
+      ">=40px": {
+        "n": 4,
+        "exact_acc": 0.75,
+        "cer": 0.0526,
+        "empty_pred": 0
+      }
+    },
+    "acc_by_mean_char_prob": {
+      "[0.8, 0.9)": {
+        "n": 2,
+        "exact_acc": 0.0,
+        "cer": 0.2,
+        "empty_pred": 0
+      },
+      "[0.9, 0.95)": {
+        "n": 3,
+        "exact_acc": 0.6667,
+        "cer": 0.04,
+        "empty_pred": 0
+      },
+      "[0.99, 1.0)": {
+        "n": 15,
+        "exact_acc": 0.9333,
+        "cer": 0.0069,
+        "empty_pred": 0
+      }
+    }
+  },
+  "error_types": {
+    "dropped_chars(pred shorter)": 2,
+    "extra_chars(pred longer)": 0,
+    "same_length_wrong": 2
+  }
+}

@@ -36,7 +36,7 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 
 ## Current facts that shape the work
 
-- **Awiros OCR works:** 9/9 model-card samples reproduced. Full benchmark on 965 unique plates: **81.5% exact / 4.4% CER**, or 86.0% / 3.1% on standard-format labels (`--preprocess paddle`; the official `test.py` preprocessing drops characters, B8). CPU latency is about 3.8 s per crop (B7). See `reports/awiros_feasibility.md`.
+- **Awiros OCR works:** 9/9 model-card samples reproduced. Full benchmark on 965 unique plates: **81.5% exact / 4.4% CER**, or 86.0% / 3.1% on standard-format labels (`--preprocess paddle`; the official `test.py` preprocessing drops characters, B8). Latency: **15 ms per crop on the GPU** (`paddlepaddle-gpu` 3.3.1 cu126), against about 3.8 s on the CPU (B7 ✅). See `reports/awiros_feasibility.md`.
 - **Per-character probabilities ARE available** from the CTC head, so multi-frame fusion can use real per-character confidence (B1 resolved).
 - ⚠️ **CPU latency is about 4 s per crop (median), with p95 at 11 s.** That is too slow for video. Run OCR on a GPU (local RTX 3050 or Colab), OCR only the best 3–5 frames per track, or both.
 - **There are no test clips yet (A5).** Everything clip-based is blocked on WS1.
@@ -65,7 +65,7 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 ## WS3 — OCR, vehicle type and colour (Phase 0C → 1) · Owner: ________
 
 - [x] Full Awiros benchmark (CPU) and report `reports/awiros_feasibility.md`. Done.
-- [ ] After `paddlepaddle-gpu` is approved and installed: re-run with `--device gpu` and record the GPU latency (B7).
+- [x] GPU build installed and benchmarked: 15 ms median per crop. Install it with `pip install paddlepaddle-gpu==3.3.1 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/` (uninstall `paddlepaddle` first).
 - [ ] Load UVH-26 and build `class_mapping.json` from the real class names (B3, B4)
 - [ ] Colour: HSV / k-means on the body crop → ~10 colour names plus a confidence score
 - [ ] Vehicle tracking with ByteTrack
