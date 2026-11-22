@@ -115,6 +115,10 @@ Full report: `TRACEVISION_DATA/reports/p3_fusion_and_matching.md`. Code in `trac
 - **26 unit tests pass.** Thresholds calibrated with a split by anchor: **held-out 62/62**, top-1 32/32. The cases are synthetic designed traps, not real-world accuracy.
 - Found and fixed **20 wrong expected outcomes** in the generated answer key (A24).
 
+## 4e. Health check (2026-11-23)
+
+Full report: `TRACEVISION_DATA/reports/health_check_2026-11-23.md`. **All 10 Phase 0 scripts, all 3 models, the 26 tests, the data and the docs check out.** Fixed along the way: 6 stale contact sheets (after the clip trim) and a reproducibility bug in the calibration report. **Owner-verified labels are in** (`test_clip_labels.csv`, 51 vehicles, 0 field errors); only the cross-camera pair is missing (A6).
+
 ## 5. Decisions
 
 All decisions, with the reason for each and their status, are in **[DECISIONS.md](DECISIONS.md)** (D1–D10 data, M1–M6 models, E1–E9 evaluation, P1–P3 process).
@@ -139,4 +143,5 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | 4b6bd57 | DECISIONS.md, status docs refreshed |
 | 74994ff | P1: vision stack, UVH-26 class mapping, two-process OCR, smoke test |
 | 1fcaf35 | P2: plate detector trained and evaluated; weights via LFS |
-| (this push) | P3: fusion + matching + tests + calibration; answer-key fix |
+| 2a29749 | P3: fusion + matching + tests + calibration; answer-key fix |
+| (this push) | Health check; contact sheets regenerated; calibration report reproducible |

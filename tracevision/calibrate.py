@@ -51,6 +51,13 @@ def correct(case, res):
     return res.decision == "no_confident_match"
 
 
+PRE_CALIBRATION = {"t_abs": 75.0, "t_margin": 5.0}   # hand-set design values before calibration
+
+
+def _with(cfg, **match_overrides):
+    c = json.loads(json.dumps(cfg)); c["match"].update(match_overrides); return c
+
+
 _RANKED = {}
 
 
@@ -109,8 +116,8 @@ def main():
            "best_calibration_balanced_accuracy": best_score, "plateau_size": len(plateau),
            "chosen": {"t_abs": t_abs, "t_margin": t_margin},
            "calibration": evaluate(cases, calib, cfg, registry), "holdout": evaluate(cases, hold, cfg, registry),
-           "before_calibration_defaults": {"t_abs": base["match"]["t_abs"], "t_margin": base["match"]["t_margin"],
-                                           "holdout": evaluate(cases, hold, base, registry)["balanced_accuracy"]}}
+           # fixed hand-set starting values (from the design), so the report is identical on every rerun
+           "before_calibration_defaults": {**PRE_CALIBRATION, "holdout": evaluate(cases, hold, _with(base, **PRE_CALIBRATION), registry)["balanced_accuracy"]}}
     REPORT.write_text(json.dumps(out, indent=2), encoding="utf-8")
     print(json.dumps({k: out[k] for k in ("chosen", "best_calibration_balanced_accuracy", "plateau_size")}))
     for s in ("calibration", "holdout"):

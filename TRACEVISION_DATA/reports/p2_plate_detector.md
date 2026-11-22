@@ -34,6 +34,8 @@
 ![clip11](figures/p2_plates_clip11.jpg)
 ![clip02](figures/p2_plates_clip02.jpg)
 
+> **Re-check 2026-11-23 after the clip trim (A25):** six clips had played their footage twice. Re-running on the trimmed clip01/02/08: 142 / 205 / 90 vehicles, 65 / 16 / 26 plates, median plate height **14 / 9.5 / 14 px**. Counts roughly halve as expected, plate sizes are unchanged, and the conclusions below still hold.
+
 **What this shows:**
 1. **Close plates are found and cropped cleanly** in daylight, at night and on two-wheelers.
 2. **Far plates are still *found*,** but at 5–14 px tall **no OCR can read them.** That's a limit of the footage, not of the detector. The WhatsApp clips are mostly in this range; clip03 is borderline.
