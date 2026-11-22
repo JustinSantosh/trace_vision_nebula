@@ -44,7 +44,25 @@
 ## Robustness on degraded variants
 *(clips with registered vehicles: clip01, 03, 04, 08, 11 × 7 variants; filled in by `python -m tracevision.robustness`)*
 
-ROBUSTNESS_TABLE
+Clips with registered vehicles (clip01, 03, 04, 08, 11): 21 labelled vehicles, 8 registered.
+
+| Variant | Registered matched | False confident matches | Plate chars correct | Plate chars `?` | **Plate chars WRONG** | Detected | Type compatible | Colour near |
+|---|---|---|---|---|---|---|---|---|
+| **original clips** | 8/8 (100%) | 0/13 (0%) | 98/104 (94%) | 6/104 (6%) | 0/104 (0%) | 18/21 (86%) | 17/18 (94%) | 9/18 (50%) |
+| gaussian blur | 1/8 (12%) | 0/13 (0%) | 23/39 (59%) | 11/39 (28%) | 5/39 (13%) | 15/21 (71%) | 13/15 (87%) | 8/15 (53%) |
+| motion blur | 1/8 (12%) | 0/13 (0%) | 10/19 (53%) | 8/19 (42%) | 1/19 (5%) | 15/21 (71%) | 14/15 (93%) | 9/15 (60%) |
+| down 480p | 1/8 (12%) | 0/13 (0%) | 19/29 (66%) | 10/29 (34%) | 0/29 (0%) | 17/21 (81%) | 16/17 (94%) | 6/17 (35%) |
+| down 360p | 1/8 (12%) | 0/13 (0%) | 14/30 (47%) | 11/30 (37%) | 5/30 (17%) | 17/21 (81%) | 15/17 (88%) | 10/17 (59%) |
+| jpeg q10 | 1/8 (12%) | 0/13 (0%) | 23/84 (27%) | 55/84 (65%) | 6/84 (7%) | 14/21 (67%) | 13/14 (93%) | 5/14 (36%) |
+| night | 1/8 (12%) | 0/13 (0%) | 27/39 (69%) | 7/39 (18%) | 5/39 (13%) | 10/21 (48%) | 9/10 (90%) | 0/10 (0%) |
+| noise | 5/8 (62%) | 0/13 (0%) | 68/94 (72%) | 26/94 (28%) | 0/94 (0%) | 16/21 (76%) | 14/16 (88%) | 9/16 (56%) |
+
+- **The safety property holds under every degradation: 0 false confident matches** (0/13 unregistered vehicles in each variant).
+- **Identification collapses on heavily degraded footage:** 1/8 registered vehicles under blur, 480p, 360p, JPEG q10 and night (5/8 with noise). Most plates fall under the 16 px or confidence bars and come out as `?` or unread, which is the honest outcome.
+- **But wrong characters do appear (up to 17% at 360p, 13% blur and night)**: on very degraded crops the OCR is sometimes *confidently* wrong, so the `?` rule (confidence ≥ 0.8) no longer catches everything. Next steps: raise the confidence bar when plate quality is low, or require agreement from ≥ 2 frames per character. Not tuned here, to avoid fitting the test set.
+- Night: detection drops to about half; colour is always `unknown` or wrong (the night rule says "too dark" or picks up tail-light glare).
+- These degradations are applied **on top of** WhatsApp-compressed copies (about 1.5 Mbit/s), so they're harsher than the same effect on original footage.
+
 
 ## How these numbers were (and weren't) obtained, honestly
 - **Some pipeline rules were diagnosed on these clips:** class-agnostic NMS, plate-based re-linking, the same-object containment rule, "too few characters → no confident match", and the colour band. Each fixes a specific, visible failure; none tunes a threshold to a label value. Still, with 51 vehicles (9 registered) **the numbers are probably optimistic** for new footage.

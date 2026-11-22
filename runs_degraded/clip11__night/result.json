@@ -1,0 +1,1035 @@
+{
+  "clip_id": "clip11__night",
+  "camera_type": "unknown",
+  "video": {
+    "fps": 30.0,
+    "width": 2160,
+    "height": 3840,
+    "frames": 282
+  },
+  "processed_at": "2026-11-23T03:32:12",
+  "config": {
+    "pipeline": {
+      "detect_every": 2,
+      "vehicle_conf": 0.25,
+      "imgsz": 640,
+      "min_track_dets": 5,
+      "min_vehicle_area_frac": 0.004,
+      "relink_gap_frames": 30,
+      "relink_max_center_dist": 1.0,
+      "candidate_frames": 8,
+      "min_frame_gap": 4,
+      "ocr_top_k": 5,
+      "colour_frames": 3,
+      "plate_link_min_known": 6
+    },
+    "plate_detector": {
+      "conf": 0.5,
+      "min_plate_height_px": 16
+    },
+    "fusion": {
+      "tau_share": 0.6,
+      "tau_prob": 0.8,
+      "min_support": 1,
+      "cross_class_weight": 0.5,
+      "use_top3": true
+    },
+    "match": {
+      "weights": {
+        "plate": 0.7,
+        "colour": 0.15,
+        "type": 0.15
+      },
+      "lookalike_cost": 0.4,
+      "min_known_for_match": 5,
+      "t_abs": 67.5,
+      "t_margin": 4.0,
+      "top_k": 5,
+      "min_plate_sim_candidate": 0.5
+    }
+  },
+  "summary": {
+    "raw_tracks": 3,
+    "kept_tracks": 2,
+    "vehicles_after_relink": 1,
+    "plates_read": 1,
+    "decisions": {
+      "match": 1
+    }
+  },
+  "timing": {
+    "detect_track_s": 5.8,
+    "plates_s": 3.9,
+    "ocr_s": 0.2,
+    "assemble_s": 0.1,
+    "total_s": 10.0
+  },
+  "vehicles": [
+    {
+      "track_id": 1,
+      "merged_track_ids": [
+        1,
+        10
+      ],
+      "first_frame": 0,
+      "last_frame": 272,
+      "first_time_s": 0.0,
+      "n_detections": 74,
+      "first_box": [
+        246,
+        1678,
+        2082,
+        3215
+      ],
+      "track": [
+        [
+          0,
+          246,
+          1678,
+          2082,
+          3215
+        ],
+        [
+          2,
+          246,
+          1511,
+          2082,
+          3048
+        ],
+        [
+          4,
+          246,
+          1632,
+          2082,
+          3169
+        ],
+        [
+          6,
+          246,
+          1527,
+          2082,
+          3064
+        ],
+        [
+          8,
+          246,
+          1491,
+          2082,
+          3029
+        ],
+        [
+          10,
+          109,
+          1480,
+          1945,
+          3018
+        ],
+        [
+          12,
+          61,
+          1478,
+          1898,
+          3015
+        ],
+        [
+          14,
+          46,
+          1478,
+          1882,
+          3015
+        ],
+        [
+          16,
+          42,
+          1479,
+          1878,
+          3016
+        ],
+        [
+          18,
+          41,
+          1479,
+          1878,
+          3017
+        ],
+        [
+          20,
+          172,
+          1480,
+          2008,
+          3018
+        ],
+        [
+          22,
+          92,
+          1481,
+          1929,
+          3019
+        ],
+        [
+          24,
+          63,
+          1482,
+          1899,
+          3019
+        ],
+        [
+          26,
+          180,
+          1482,
+          2016,
+          3020
+        ],
+        [
+          28,
+          225,
+          1483,
+          2061,
+          3020
+        ],
+        [
+          30,
+          114,
+          1483,
+          1950,
+          3021
+        ],
+        [
+          52,
+          54,
+          1484,
+          1890,
+          3022
+        ],
+        [
+          54,
+          52,
+          1485,
+          1889,
+          3023
+        ],
+        [
+          56,
+          52,
+          1485,
+          1888,
+          3023
+        ],
+        [
+          58,
+          52,
+          1485,
+          1888,
+          3023
+        ],
+        [
+          62,
+          52,
+          1485,
+          1888,
+          3023
+        ],
+        [
+          64,
+          53,
+          1485,
+          1889,
+          3023
+        ],
+        [
+          66,
+          53,
+          1485,
+          1889,
+          3023
+        ],
+        [
+          68,
+          53,
+          1485,
+          1889,
+          3023
+        ],
+        [
+          70,
+          53,
+          1485,
+          1889,
+          3023
+        ],
+        [
+          80,
+          229,
+          1661,
+          2065,
+          3198
+        ],
+        [
+          82,
+          346,
+          1677,
+          2160,
+          3215
+        ],
+        [
+          84,
+          389,
+          1683,
+          2160,
+          3220
+        ],
+        [
+          86,
+          311,
+          1557,
+          2123,
+          3095
+        ],
+        [
+          102,
+          264,
+          1672,
+          2080,
+          3209
+        ],
+        [
+          104,
+          258,
+          1546,
+          2077,
+          3083
+        ],
+        [
+          106,
+          255,
+          1504,
+          2077,
+          3042
+        ],
+        [
+          108,
+          254,
+          1616,
+          2077,
+          3154
+        ],
+        [
+          110,
+          253,
+          1658,
+          2078,
+          3196
+        ],
+        [
+          112,
+          252,
+          1674,
+          2078,
+          3212
+        ],
+        [
+          114,
+          251,
+          1680,
+          2079,
+          3217
+        ],
+        [
+          116,
+          251,
+          1681,
+          2079,
+          3219
+        ],
+        [
+          118,
+          123,
+          1682,
+          1953,
+          3220
+        ],
+        [
+          120,
+          202,
+          1682,
+          2032,
+          3219
+        ],
+        [
+          122,
+          105,
+          1681,
+          1936,
+          3219
+        ],
+        [
+          124,
+          195,
+          1681,
+          2027,
+          3218
+        ],
+        [
+          126,
+          230,
+          1680,
+          2061,
+          3218
+        ],
+        [
+          128,
+          243,
+          1680,
+          2075,
+          3218
+        ],
+        [
+          130,
+          247,
+          1680,
+          2080,
+          3217
+        ],
+        [
+          132,
+          249,
+          1680,
+          2082,
+          3217
+        ],
+        [
+          134,
+          249,
+          1679,
+          2082,
+          3217
+        ],
+        [
+          136,
+          249,
+          1679,
+          2082,
+          3216
+        ],
+        [
+          138,
+          249,
+          1806,
+          2083,
+          3343
+        ],
+        [
+          140,
+          249,
+          1853,
+          2083,
+          3391
+        ],
+        [
+          142,
+          249,
+          1871,
+          2083,
+          3408
+        ],
+        [
+          144,
+          248,
+          1877,
+          2083,
+          3414
+        ],
+        [
+          146,
+          248,
+          1878,
+          2083,
+          3415
+        ],
+        [
+          148,
+          248,
+          1878,
+          2082,
+          3415
+        ],
+        [
+          150,
+          248,
+          1877,
+          2082,
+          3415
+        ],
+        [
+          152,
+          248,
+          1876,
+          2082,
+          3414
+        ],
+        [
+          154,
+          248,
+          1876,
+          2082,
+          3413
+        ],
+        [
+          156,
+          247,
+          1875,
+          2082,
+          3412
+        ],
+        [
+          158,
+          247,
+          1874,
+          2082,
+          3412
+        ],
+        [
+          160,
+          120,
+          1874,
+          1956,
+          3411
+        ],
+        [
+          164,
+          63,
+          1873,
+          1899,
+          3411
+        ],
+        [
+          166,
+          52,
+          1873,
+          1888,
+          3410
+        ],
+        [
+          168,
+          48,
+          1872,
+          1884,
+          3410
+        ],
+        [
+          170,
+          175,
+          1872,
+          2010,
+          3409
+        ],
+        [
+          172,
+          96,
+          1872,
+          1931,
+          3409
+        ],
+        [
+          174,
+          66,
+          1871,
+          1902,
+          3409
+        ],
+        [
+          176,
+          182,
+          1871,
+          2017,
+          3408
+        ],
+        [
+          180,
+          234,
+          1871,
+          2069,
+          3408
+        ],
+        [
+          248,
+          54,
+          1678,
+          1890,
+          3215
+        ],
+        [
+          256,
+          54,
+          1678,
+          1890,
+          3215
+        ],
+        [
+          258,
+          54,
+          1678,
+          1890,
+          3215
+        ],
+        [
+          260,
+          54,
+          1678,
+          1890,
+          3215
+        ],
+        [
+          264,
+          54,
+          1678,
+          1890,
+          3215
+        ],
+        [
+          270,
+          54,
+          1843,
+          1891,
+          3381
+        ],
+        [
+          272,
+          54,
+          1867,
+          1891,
+          3405
+        ]
+      ],
+      "type": {
+        "label": "truck",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.438
+      },
+      "colour": {
+        "label": "unknown",
+        "confidence": 0.0,
+        "per_frame": [
+          "black",
+          "black",
+          "black"
+        ],
+        "note": "too dark to judge colour"
+      },
+      "plate": {
+        "status": "read",
+        "fused": "KA53MH3895",
+        "unknown_positions": [],
+        "positions": [
+          {
+            "pos": 1,
+            "char": "K",
+            "confidence": 0.9982,
+            "share": 1.0,
+            "support": 8,
+            "best_candidate": "K",
+            "frames": [
+              24,
+              56,
+              52,
+              264,
+              62,
+              12,
+              256,
+              272
+            ]
+          },
+          {
+            "pos": 2,
+            "char": "A",
+            "confidence": 1.0,
+            "share": 1.0,
+            "support": 8,
+            "best_candidate": "A",
+            "frames": [
+              24,
+              56,
+              52,
+              264,
+              62,
+              12,
+              256,
+              272
+            ]
+          },
+          {
+            "pos": 3,
+            "char": "5",
+            "confidence": 0.9997,
+            "share": 1.0,
+            "support": 8,
+            "best_candidate": "5",
+            "frames": [
+              24,
+              56,
+              52,
+              264,
+              62,
+              12,
+              256,
+              272
+            ]
+          },
+          {
+            "pos": 4,
+            "char": "3",
+            "confidence": 0.9494,
+            "share": 0.9998,
+            "support": 8,
+            "best_candidate": "3",
+            "frames": [
+              24,
+              56,
+              52,
+              264,
+              62,
+              12,
+              256,
+              272
+            ]
+          },
+          {
+            "pos": 5,
+            "char": "M",
+            "confidence": 0.9994,
+            "share": 0.9996,
+            "support": 8,
+            "best_candidate": "M",
+            "frames": [
+              24,
+              56,
+              52,
+              264,
+              62,
+              12,
+              256,
+              272
+            ]
+          },
+          {
+            "pos": 6,
+            "char": "H",
+            "confidence": 0.9979,
+            "share": 0.9996,
+            "support": 8,
+            "best_candidate": "H",
+            "frames": [
+              24,
+              56,
+              52,
+              264,
+              62,
+              12,
+              256,
+              272
+            ]
+          },
+          {
+            "pos": 7,
+            "char": "3",
+            "confidence": 1.0,
+            "share": 1.0,
+            "support": 8,
+            "best_candidate": "3",
+            "frames": [
+              24,
+              56,
+              52,
+              264,
+              62,
+              12,
+              256,
+              272
+            ]
+          },
+          {
+            "pos": 8,
+            "char": "8",
+            "confidence": 1.0,
+            "share": 1.0,
+            "support": 8,
+            "best_candidate": "8",
+            "frames": [
+              24,
+              56,
+              52,
+              264,
+              62,
+              12,
+              256,
+              272
+            ]
+          },
+          {
+            "pos": 9,
+            "char": "9",
+            "confidence": 1.0,
+            "share": 1.0,
+            "support": 8,
+            "best_candidate": "9",
+            "frames": [
+              24,
+              56,
+              52,
+              264,
+              62,
+              12,
+              256,
+              272
+            ]
+          },
+          {
+            "pos": 10,
+            "char": "5",
+            "confidence": 0.9999,
+            "share": 0.9999,
+            "support": 8,
+            "best_candidate": "5",
+            "frames": [
+              24,
+              56,
+              52,
+              264,
+              62,
+              12,
+              256,
+              272
+            ]
+          }
+        ],
+        "warnings": [],
+        "per_frame_reads": [
+          {
+            "frame": 24,
+            "text": "KA53MH3895",
+            "height_px": 153,
+            "quality": 0.839,
+            "char_probs": [
+              0.9861,
+              1.0,
+              0.9994,
+              0.9996,
+              0.9993,
+              0.9999,
+              0.9999,
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "frame": 56,
+            "text": "KA53MH3895",
+            "height_px": 158,
+            "quality": 0.836,
+            "char_probs": [
+              1.0,
+              0.9999,
+              0.9997,
+              0.9998,
+              0.9999,
+              0.9998,
+              1.0,
+              1.0,
+              1.0,
+              0.9998
+            ]
+          },
+          {
+            "frame": 52,
+            "text": "KA53MH3895",
+            "height_px": 154,
+            "quality": 0.834,
+            "char_probs": [
+              1.0,
+              0.9999,
+              0.9995,
+              0.9999,
+              0.9997,
+              0.9853,
+              1.0,
+              1.0,
+              1.0,
+              0.9999
+            ]
+          },
+          {
+            "frame": 264,
+            "text": "KA53MH3895",
+            "height_px": 161,
+            "quality": 0.832,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9999,
+              0.9968,
+              0.9982,
+              0.9997,
+              1.0,
+              1.0,
+              1.0,
+              0.9997
+            ]
+          },
+          {
+            "frame": 62,
+            "text": "KA53MH3895",
+            "height_px": 155,
+            "quality": 0.825,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9999,
+              0.5995,
+              0.9998,
+              0.9999,
+              1.0,
+              1.0,
+              1.0,
+              0.9998
+            ]
+          },
+          {
+            "frame": 12,
+            "text": "KA53MH3895",
+            "height_px": 156,
+            "quality": 0.824,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9994,
+              0.9995,
+              0.9995,
+              0.9999,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "frame": 256,
+            "text": "KA53MH3895",
+            "height_px": 164,
+            "quality": 0.814,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9996,
+              0.9997,
+              0.9993,
+              0.999,
+              1.0,
+              1.0,
+              1.0,
+              0.9999
+            ]
+          },
+          {
+            "frame": 272,
+            "text": "KA53MH3895",
+            "height_px": 161,
+            "quality": 0.813,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9999,
+              0.9994,
+              0.9997,
+              0.9997,
+              1.0,
+              1.0,
+              1.0,
+              0.9999
+            ]
+          }
+        ],
+        "plates_detected": 13
+      },
+      "decision": "match",
+      "decision_reason": "best match score 82.4, clear of the next candidate",
+      "candidates": [
+        {
+          "rank": 1,
+          "synthetic_vehicle_id": "SV144143",
+          "registration_number": "KA53MH3895",
+          "match_score": 82.4,
+          "plate_score": 1.0,
+          "colour_score": null,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 10 of 10 readable characters match exactly",
+            "colour not compared (unknown)",
+            "type conflict: observed truck, registry SUV"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SV117951",
+          "registration_number": "KA53MH3890",
+          "match_score": 75.5,
+          "plate_score": 0.81,
+          "colour_score": null,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from KA53MH3890 (edit cost 1.0)",
+            "colour not compared (unknown)",
+            "type compatible: observed truck, registry van"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SV258008",
+          "registration_number": "KA53MH3896",
+          "match_score": 66.7,
+          "plate_score": 0.81,
+          "colour_score": null,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from KA53MH3896 (edit cost 1.0)",
+            "colour not compared (unknown)",
+            "type conflict: observed truck, registry SUV"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SV106580",
+          "registration_number": "KA53MH0890",
+          "match_score": 52.7,
+          "plate_score": 0.64,
+          "colour_score": null,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 8 of 10 readable characters match exactly",
+            "plate differs from KA53MH0890 (edit cost 2.0)",
+            "colour not compared (unknown)",
+            "type conflict: observed truck, registry SUV"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SV161201",
+          "registration_number": "KA53MH8855",
+          "match_score": 52.7,
+          "plate_score": 0.64,
+          "colour_score": null,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 8 of 10 readable characters match exactly",
+            "plate differs from KA53MH8855 (edit cost 2.0)",
+            "colour not compared (unknown)",
+            "type conflict: observed truck, registry SUV"
+          ]
+        }
+      ]
+    }
+  ],
+  "note": "match_score is a heuristic ranking score, not a probability. '?' marks characters that could not be read."
+}

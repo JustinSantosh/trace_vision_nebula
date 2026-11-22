@@ -140,7 +140,7 @@ Full report: `TRACEVISION_DATA/reports/p6_evaluation.md`. Run with `python -m tr
 - **Plate characters: 85% correct, 15% `?`, 0% wrong** (132 characters). Exact plate 7/10.
 - Type 68% exact / 93% compatible; colour 25% exact / 55% near (weakest, C8).
 - CCTV-style clips: all vehicles found, no plate large enough to read, so every answer is correctly "no confident match".
-- Robustness on 7 degradations (blur, 360p, JPEG, night, noise): see the report.
+- **Robustness** (7 degradations on 5 clips): **0 false identifications in every variant**; identification drops to 1/8 under strong blur, downscaling, JPEG and night (5/8 with noise); wrong plate characters appear on very degraded crops (up to 17% at 360p, C10).
 - **All phases P1–P6 are done.** Owner actions are in **[NEEDS.md](NEEDS.md)**; README rewritten for submission.
 
 ## 5. Decisions
@@ -174,4 +174,5 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | 5be951d | P5: report (HTML/PDF) + FastAPI app; 11 clip reports |
 | c5290a5 | P6 part 1: evaluation vs labels; same-object containment rule |
 | 32a50d2 | README for submission; NEEDS.md; robustness script |
-| (this push) | P6 done: evaluation report, robustness sweep, docs final |
+| a6e3719 | P6 docs |
+| (this push) | P6 done: robustness sweep results; final docs |

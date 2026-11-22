@@ -28,11 +28,15 @@ From `python -m tracevision.evaluate` → `TRACEVISION_DATA/reports/p6_evaluatio
 | Colour exact / near (white≈silver≈grey) | 25% / 55% | | |
 | Processing time | **4–19 s per clip** on an RTX 3050 laptop GPU (clips are 4–30 s long) | | |
 
+**Robustness** (same clips blurred, downscaled to 480p/360p, JPEG q10, night, noise; `python -m tracevision.robustness`):
+**0 false identifications under every degradation**, but identification drops to 1/8 registered vehicles under strong blur, downscaling, compression or night, and **some wrong plate characters appear (up to 17% at 360p)**. Details: `TRACEVISION_DATA/reports/p6_evaluation.md`.
+
 **How to read these numbers:**
 - The system **prefers `?` to a wrong character**, and **no vehicle outside the registry was ever "identified"**. Those are the properties an investigator needs most.
 - On the CCTV-style clips **every plate is under 16 px**, so the system correctly answers "no confident match". It identifies type and colour, not the plate.
 - **Colour** is the weakest part: a simple heuristic that struggles with white versus grey versus silver in haze.
 - The test set is small (51 vehicles, 9 registered) and mostly ground-level footage (see the limitations below).
+- On heavily degraded footage the "never a wrong character" property weakens (see Robustness above).
 
 ## How it works
 ```mermaid
@@ -107,3 +111,4 @@ Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.p
 - **Colour** is a heuristic (25% exact). **Car versus SUV** is often confused (types are compatible 93% of the time).
 - **Cross-camera re-identification** (bonus) isn't evaluated yet: the two-position car pair hasn't been filmed (see NEEDS.md).
 - Most clips are WhatsApp copies (about 1.5 Mbit/s), which costs plate detail.
+- On strongly degraded footage (360p, heavy blur, night) the OCR can be confidently wrong (up to 17% wrong characters at 360p). A stricter confidence bar for low-quality plates is the next fix.
