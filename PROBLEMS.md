@@ -1,9 +1,24 @@
 # TRACEVISION AI — Phase 0 Problem Log
 
-**Last updated:** 2026-11-22 (after the D1/D2 replacement downloads)
+**Last updated:** 2026-11-22 (Quobotic extraction verified, zenitsu09 OCR set built)
 **Severity:** 🔴 Blocker (stops a phase) · 🟠 High (risks the demo or the results) · 🟡 Medium (workaround exists) · ⚪ Low / note
 
 Evidence for every item is in `TRACEVISION_DATA/reports/`.
+
+## Progress so far
+
+| Step | State |
+|---|---|
+| 0A Audit, coverage matrix, licence report | ✅ Done |
+| Replace the empty D1/D2 repos | ✅ D1 → Roboflow **Quobotic v3** (b8iqo rejected as synthetic). D2 → **zenitsu09** now, witvix pending. |
+| Quobotic v3 downloaded and extracted | ✅ All 5,151 files match the zip CRC (0 missing, 0 corrupt, 0 extra). Real scenes. |
+| zenitsu09 OCR evaluation set | ✅ 1,709 crops → 965 unique plates, `ground_truth.csv` built (local only) |
+| 0B Plate-detection validation + Colab `data.yaml` | ⏳ Next (`validate_plate_dataset.py`, `prepare_plate_detection.py`) |
+| 0C Awiros feasibility check | ⏳ Not started (dependency install approved) |
+| witvix (harder OCR test) | ⏳ Waiting for the team (access form) |
+| 0D Test clips | ⏳ Waiting for the team (no clips yet) |
+
+**Open blockers right now:** A5 (no test clips) and A6 (no cross-camera pair). Everything else has a workaround in hand.
 
 ---
 
@@ -27,7 +42,7 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`.
 | A15 | 🟡 | Quobotic v3 contains consecutive video frames (`video*_NNNN.jpg`) that may sit across splits. Images are also stretched to 640×640, which distorts the plate's aspect ratio. Its train split is flip-augmented, so it contains mirrored plates. | Test mAP may be inflated by near-duplicates. The stretch differs from CCTV frames. | `validate_plate_dataset.py` reports near-duplicates across splits (it does not fix them). Use the ultralytics default letterboxing at inference. | Open |
 | A16 | 🟡 | zenitsu09 crops come from the same images as Quobotic. | They are not independent of the detector data. | Never use zenitsu09 for end-to-end detector+OCR evaluation. Use it only for the standalone Awiros OCR benchmark. | Note |
 | A17 | 🟡 | Reading the zenitsu09 parquet file needs `pyarrow`, which is not installed. | The OCR ground truth cannot be built yet. | Installed pyarrow 26.0.1 (approved). | Resolved |
-| A18 | 🟠 | **Quobotic filenames are up to ~233 characters**, so full paths reach 280 characters. Windows has `LongPathsEnabled = 0`, so File Explorer extraction fails ("Path too long") and normal Python `open()` cannot read 10 train files (5 photos × 2 augmented copies). | Explorer could not extract the zip. The audit reported those 10 files as missing or corrupt, which is false: they read fine through the `\\?\` long-path prefix. Ultralytics on Windows would silently miss them. | Extracted with Python using the long-path prefix (all 5,151 files, CRC OK). `prepare_plate_detection.py` will build a processed copy with **short hashed filenames plus a name map** (originals untouched). The alternative is for the user to enable long paths in Windows (a system setting I won't change). Not an issue on Colab/Linux. | Open: fix in 0B |
+| A18 | 🟠 | **Quobotic filenames are up to ~233 characters**, so full paths reach 280 characters. Windows has `LongPathsEnabled = 0`, so File Explorer extraction fails ("Path too long") and normal Python `open()` cannot read 10 train files (5 photos × 2 augmented copies). | Explorer could not extract the zip. The audit reported those 10 files as missing or corrupt, which is false: they read fine through the `\\?\` long-path prefix. Ultralytics on Windows would silently miss them. **Do not use File Explorer for this zip; click Cancel on its "Path too long" dialog** (Skip would drop the file). Extracted with Python using the long-path prefix, then **re-extracted and checked file by file against the zip: 5,151/5,151 CRC match, 0 missing, 0 extra.** `prepare_plate_detection.py` will build a processed copy with **short hashed filenames plus a name map** (originals untouched). The alternative is for the user to enable long paths in Windows (a system setting I won't change). Not an issue on Colab/Linux. | Extraction resolved. Short-name copy: open, fix in 0B |
 | A19 | 🟡 | Quobotic labels mix boxes (2,319 lines) with **polygon** lines (275 lines with 11–29 fields). | Ultralytics detect converts polygons to boxes, but the mix should be reported. | `validate_plate_dataset.py` reports the counts and converts to boxes only in the processed copy. | Open |
 | A20 | 🟡 | zenitsu09 OCR labels: **112 of 1,709 (82 of 965 unique plates) fail both plate regexes**. Examples: `TERRANO` (a car-model badge, not a plate), `MH4705851` (likely a missing letter), `KL01KLKL01`, `MHD1CV9311` (D vs 0). 364 of the 965 primary crops are under 20 px tall. | Ground-truth errors would count against Awiros unfairly. Tiny crops lower the scores. | Flagged as `nonstandard_review` (not rejected). Report CER both with and without flagged rows, and by crop height. Optional manual review of the 82. | Open |
 | A11 | ⚪ | Two `.mp4` files sit in `~/Downloads` (`DS.mp4` and `original-5adf…mp4`). They are outside the working folder and were not inspected. | They may be intended test clips. | If so, move them into `raw/test_videos/` and record their source and licence. | Team to confirm |
@@ -48,7 +63,7 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`.
 | # | Severity | Problem | Impact | Proposed fix | Status |
 |---|---|---|---|---|---|
 | C1 | 🟡 | **FFprobe and FFmpeg are not installed.** | Codec and duration come from OpenCV headers, which are less reliable. FFmpeg-based degradation is unavailable. | `winget install Gyan.FFmpeg` (needs approval). OpenCV covers frame extraction for now. | Open |
-| C2 | 🟡 | `huggingface_hub`, `ultralytics`, `torch`, `paddlepaddle`, `paddleocr`, `safetensors` and `imagehash` are not installed. | Model download, inference and the near-duplicate check cannot run yet. | Install when each phase starts (each install needs approval, except the Awiros dependencies, which are already approved). | Open |
+| C2 | 🟡 | `huggingface_hub`, `ultralytics`, `torch`, `paddlepaddle`, `paddleocr`, `safetensors` and `imagehash` are not installed. (`pyarrow` 26.0.1 is now installed.) | Model download, inference and the near-duplicate check cannot run yet. | Install when each phase starts (each install needs approval, except the Awiros dependencies, which are already approved). | Open |
 | C3 | ⚪ | Running the audit with `python -I` drops the user site-packages (Pillow, OpenCV, PyYAML). In the first version this made every image look corrupt. | Images were wrongly reported as corrupt. | **Fixed:** the script now stops with an error when a dependency is missing. Run it without `-I`, or install the packages system-wide. | Fixed |
 | C4 | ⚪ | The OpenCV video fallback cannot report codec names reliably (it gives a FourCC such as `FMP4`). | The codec column in the audit is approximate. | Install FFprobe. | Linked to C1 |
 
@@ -58,8 +73,8 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`.
 |---|---|---|
 | Vehicle detection | Partial | A5 |
 | Vehicle type | Partial | A5, B3, B4 |
-| Indian plate detection | 🔴 Blocked | A1 |
-| Indian OCR benchmark | 🔴 Blocked | A2 (smoke test possible) |
+| Indian plate detection | Partial: Quobotic v3 in hand, validation pending (0B) | A15, A18, A19 |
+| Indian OCR benchmark | Partial: zenitsu09 ground truth built (965 plates); Awiros not yet run | B1, B2, A20 |
 | Multi-frame recovery | Missing | A5, B1 |
 | Vehicle colour | Missing | A5 |
 | Registry ranking | Missing | A5, then Phase 0F |
@@ -71,6 +86,6 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`.
 
 | # | Severity | Risk | Mitigation |
 |---|---|---|---|
-| E1 | 🟠 | The 4-hour Phase 0 budget is at risk because two of the three core datasets are missing. | Decide on A1 and A2 within the first hour. Do not hunt for perfect data. |
+| E1 | 🟠 | The 4-hour Phase 0 budget was hit by the empty D1/D2 repos and the rejected b8iqo download. | D1/D2 are now replaced. Do not hunt for more data; move to 0B/0C. |
 | E2 | 🟠 | Hand-labelling time for the clips is not yet allocated. | Limit it to 5–8 clips at first, with bounding boxes on the first frame only. |
 | E3 | 🟡 | Real plates appear in the test clips, which is a privacy concern. | Keep raw clips and crops out of this repo (see `.gitignore`). The registry stays synthetic, with evaluation-seed entries clearly marked. |

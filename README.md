@@ -2,7 +2,7 @@
 
 Hack-A-Sol 5.0, Track 02, AIML-01: vehicle identification and traceability from CCTV footage.
 
-## Status: Phase 0A (dataset audit) is complete. Several items are blocked; see [PROBLEMS.md](PROBLEMS.md).
+## Status: Phase 0A is done; D1/D2 have been replaced (Quobotic v3, zenitsu09) and the OCR eval set is built. Next: 0B validation. See the progress table in [PROBLEMS.md](PROBLEMS.md).
 
 - `TRACEVISION_DATA/reports/`: audit, coverage matrix and licence report
 - `TRACEVISION_DATA/models/model_dependencies.md`: pretrained models used (UVH-26, Awiros ANPR OCR, YOLOv8n)
@@ -14,7 +14,7 @@ The original D1/D2 Hugging Face repos are empty; see [PROBLEMS.md](PROBLEMS.md) 
 
 | # | Dataset | Put it in | How |
 |---|---|---|---|
-| 1 | [Roboflow Quobotic v3](https://universe.roboflow.com/quobotic/indian-number-plate/dataset/3) (b8iqo was rejected as synthetic; see PROBLEMS.md A14) | `TRACEVISION_DATA/raw/plate_detection/` | Download Dataset → **YOLOv8** → unzip as-is. Don't rename anything or re-split. **Still to do.** |
+| 1 ✅ | [Roboflow Quobotic v3](https://universe.roboflow.com/quobotic/indian-number-plate/dataset/3) (b8iqo was rejected as synthetic; see PROBLEMS.md A14) | `TRACEVISION_DATA/raw/plate_detection/` | Download Dataset → **YOLOv8**. **Don't unzip with File Explorer** (paths over 260 characters fail); it was extracted with Python and verified against the zip CRC. Done. |
 | 2 | [witvix/indian-truck-license-plates-sample](https://huggingface.co/datasets/witvix/indian-truck-license-plates-sample) | `TRACEVISION_DATA/raw/ocr_corpus/witvix/` | Fill in the HF access form, then download the repo. |
 | 3 ✅ | [zenitsu09/indian-number-plate](https://huggingface.co/datasets/zenitsu09/indian-number-plate) | `TRACEVISION_DATA/raw/ocr_corpus/zenitsu09/` | Download `data/train-*.parquet` (6 MB) from the dataset's Files tab. |
 
