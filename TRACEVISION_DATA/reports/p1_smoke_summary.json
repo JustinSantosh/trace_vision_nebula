@@ -1,0 +1,30 @@
+{
+  "clip02": {
+    "frames_processed": 123,
+    "ms_per_frame": 48.3,
+    "tracks_total": 137,
+    "tracks_ge5": 96,
+    "types_of_tracks_ge5": {
+      "car": 34,
+      "auto_rickshaw": 24,
+      "motorcycle/scooter": 28,
+      "truck": 4,
+      "bus": 2,
+      "SUV": 4
+    },
+    "longest_track_detections": 123
+  },
+  "clip01": {
+    "frames_processed": 489,
+    "ms_per_frame": 13.3,
+    "tracks_total": 118,
+    "tracks_ge5": 52,
+    "types_of_tracks_ge5": {
+      "motorcycle/scooter": 5,
+      "car": 29,
+      "SUV": 12,
+      "truck": 6
+    },
+    "longest_track_detections": 218
+  }
+}

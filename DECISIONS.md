@@ -28,7 +28,8 @@
 | M3 | 2026-11-22 | **Install `paddlepaddle-gpu` 3.3.1 (cu126)** in place of the CPU build, and always run OCR with `--device gpu` | The CPU build took 3.8 s per crop, the GPU 15 ms, with the same accuracy. Approved by the user. | B7 | ✅ |
 | M4 | 2026-11-22 | Use the **mean / min per-character probability** as the OCR confidence for the `?` rule and for no-match | Mean ≥ 0.99 gives 97.1% exact; below 0.8 nothing was correct | `reports/awiros_feasibility.md` | ✅ |
 | M5 | 2026-11-22 | Accept the AGPL-3.0 licence of the Ultralytics models for the hackathon and disclose it in the README | The non-AGPL alternatives cost time | B6 | ✅ |
-| M6 | 2026-11-22 | Map UVH-26 Two-wheeler → `motorcycle/scooter` (ambiguous) and Three-wheeler → `auto_rickshaw`. Don't invent a split. | The model can't separate them | B4 | ⏳ applied in Phase 1 |
+| M6 | 2026-11-22 | Map UVH-26 Two-wheeler → `motorcycle/scooter` (ambiguous) and Three-wheeler → `auto_rickshaw`. Don't invent a split. | The model can't separate them | B4 | ✅ applied in `models/class_mapping.json` (2026-11-23): MUV → SUV, LCV → truck, tempo-traveller → van |
+| M7 | 2026-11-23 | **OCR (Paddle/Awiros) runs in a separate worker process**; detection and tracking (torch/YOLO) run in the main process. Both use the same GPU. | The two libraries ship conflicting cuDNN 9 DLLs on Windows and can't be loaded together (tested both import orders). The worker design was tested: about 15 ms per crop, YOLO unaffected. | C5, `reports/p1_vision_stack.md` | ✅ |
 
 ## Evaluation, clips and registry
 

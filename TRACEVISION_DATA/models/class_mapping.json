@@ -1,0 +1,28 @@
+{
+  "_about": "Maps UVH-26 YOLOv11-S class ids/names (read from the loaded model on 2026-11-23, not from the card) to the TRACEVISION vehicle_type vocabulary. Judgement calls are marked and listed in DECISIONS.md (M6).",
+  "model": {
+    "file": "TRACEVISION_DATA/models/weights/UVH-26-MV-YOLOv11-S.pt",
+    "source": "huggingface.co/iisc-aim/UVH-26 (weights/YOLOv11-S/UVH-26-MV-YOLOv11-S.pt)",
+    "sha256_prefix": "12dbeb8f6fa207d1",
+    "train_imgsz": 640,
+    "licence": "card: Apache-2.0; Ultralytics YOLO runtime: AGPL-3.0 (PROBLEMS B6)"
+  },
+  "vocabulary": ["car", "SUV", "motorcycle", "scooter", "auto_rickshaw", "bus", "truck", "van", "bicycle", "other", "unknown"],
+  "mapping": {
+    "0":  {"uvh26": "Hatchback",       "type": "car"},
+    "1":  {"uvh26": "Sedan",           "type": "car"},
+    "2":  {"uvh26": "SUV",             "type": "SUV"},
+    "3":  {"uvh26": "MUV",             "type": "SUV",   "judgement": "MUV/MPV (e.g. 7-seaters) has no own class in our vocabulary; mapped to SUV. Matching treats car<->SUV as compatible (half credit)."},
+    "4":  {"uvh26": "Bus",             "type": "bus"},
+    "5":  {"uvh26": "Truck",           "type": "truck"},
+    "6":  {"uvh26": "Three-wheeler",   "type": "auto_rickshaw", "judgement": "UVH-26 has no auto-rickshaw class; Three-wheeler also covers e-rickshaws and goods three-wheelers (PROBLEMS B4)."},
+    "7":  {"uvh26": "Two-wheeler",     "type": "motorcycle/scooter", "ambiguous": ["motorcycle", "scooter"], "judgement": "UVH-26 cannot separate motorcycle from scooter. Reported as 'motorcycle/scooter'; counts as correct against either label and matches either in the registry. No split is invented (PROBLEMS B4)."},
+    "8":  {"uvh26": "LCV",             "type": "truck", "judgement": "Light commercial vehicle (small goods carriers, pickups) mapped to truck."},
+    "9":  {"uvh26": "Mini-bus",        "type": "bus"},
+    "10": {"uvh26": "tempo-traveller", "type": "van",   "judgement": "Passenger tempo-traveller mapped to van."},
+    "11": {"uvh26": "bicycle",         "type": "bicycle"},
+    "12": {"uvh26": "Van",             "type": "van"},
+    "13": {"uvh26": "Others",          "type": "other"}
+  },
+  "compatible_types": [["car", "SUV"], ["motorcycle", "scooter"], ["bus", "van"], ["truck", "van"]]
+}

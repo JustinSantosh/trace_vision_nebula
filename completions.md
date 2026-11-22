@@ -90,6 +90,15 @@ Full report: `TRACEVISION_DATA/reports/awiros_feasibility.md`. Script: `TRACEVIS
   - nothing below a mean prob of 0.8 was correct, so **confidence is usable for the `?` rule and the no-match rule**
 - **Latency (B7 ✅):** CPU took about 3.8 s per crop, with the Windows CPU build's backbone as the bottleneck. With `paddlepaddle-gpu` 3.3.1 on the RTX 3050 it is **15 ms median / 53 ms p95**. Accuracy is the same, and the full 965-plate run takes about 20 s instead of 61 min.
 
+## 4b. Phase 1, step P1: vision stack (done 2026-11-23, approved)
+
+Full report: `TRACEVISION_DATA/reports/p1_vision_stack.md`.
+- torch 2.14.1+cu126, ultralytics 8.4.216 and lap are installed, and CUDA runs on the RTX 3050.
+- **UVH-26 YOLOv11-S** is downloaded and its checksum verified. Its **real classes are 14** (the card omits `Others`), so B3 is resolved. `models/class_mapping.json` maps them to our vocabulary (DECISIONS M6).
+- **torch and Paddle can't share a process on Windows** because their cuDNN DLLs differ. The OCR worker-process design is tested (about 15 ms per crop on the same GPU) (C5, M7).
+- **Smoke test** on clip02 and clip01: dense detection and tracking work (96 and 52 tracks). Two issues are found and planned for: track fragmentation and wrong types on edge-cut vehicles (C6).
+- Test clips clip01–09 are on GitHub (LFS) with contact sheets. The labelling guide is step by step, and PIPELINE.md is written.
+
 ## 5. Decisions
 
 All decisions, with the reason for each and their status, are in **[DECISIONS.md](DECISIONS.md)** (D1–D10 data, M1–M6 models, E1–E9 evaluation, P1–P3 process).
@@ -111,4 +120,5 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | 2ffccc7 | GPU Paddle build: 15 ms per crop, full benchmark re-run on GPU, B7 resolved |
 | dfc44a5 | Phase 0B: plate-dataset validation + processed training copy |
 | 097c073 | Phase 0D–0F scripts, blank label template, starter synthetic registry and test cases |
-| (this push) | DECISIONS.md, status docs refreshed |
+| 4b6bd57 | DECISIONS.md, status docs refreshed |
+| (this push) | P1: vision stack, UVH-26 class mapping, two-process OCR, smoke test |

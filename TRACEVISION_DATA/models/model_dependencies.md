@@ -1,4 +1,6 @@
-# Model Dependencies (none downloaded yet)
+# Model Dependencies
+
+**Status 2026-11-23:** Awiros (in the repo, LFS) and UVH-26 YOLOv11-S (in `models/weights/`, git-ignored; sha256 `12dbeb8f6fa207d1…`) are downloaded and running on GPU. YOLOv8n will be fetched by ultralytics in P2. torch and Paddle must run in **separate processes** (PROBLEMS C5).
 
 | Model | Repo / file | Size | Install deps | Notes |
 |---|---|---|---|---|
