@@ -67,8 +67,8 @@ Read `TRACEVISION_DATA/evaluation/LABELING_GUIDE.md` first. All scripts are buil
 ## WS2 — Plate detector data and training (Phase 0B → 1) · Owner: ________
 
 - [x] Validation + processed copy done (Phase 0B). See `reports/plate_dataset_validation.md`.
-- [ ] Fine-tune YOLOv8n with **`data=<absolute path>/TRACEVISION_DATA/processed/plate_detection/data.yaml`** (never `raw/`). Use Colab or the RTX 3050 (`pip install ultralytics`, and the CUDA build of torch).
-- [ ] Report mAP50 on the **official test** AND on **`leakage_free_test.txt`** (106 images). 37% of the official test comes from videos that are also in train (A15).
+- [x] YOLOv8n fine-tuned (P2): `models/weights/plate_yolov8n_quobotic.pt` (LFS). Leakage-free test mAP50 0.995. See `reports/p2_plate_detector.md`.
+- [x] Reported on both the official and the leakage-free test (A15)
 - [ ] Never crop train plates for OCR: train contains mirrored copies (A21).
 
 **Done when:** `best.pt` is on the team drive and the mAP is recorded in `reports/`.

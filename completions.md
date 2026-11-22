@@ -99,6 +99,14 @@ Full report: `TRACEVISION_DATA/reports/p1_vision_stack.md`.
 - **Smoke test** on clip02 and clip01: dense detection and tracking work (96 and 52 tracks). Two issues are found and planned for: track fragmentation and wrong types on edge-cut vehicles (C6).
 - Test clips clip01–09 are on GitHub (LFS) with contact sheets. The labelling guide is step by step, and PIPELINE.md is written.
 
+## 4c. Phase 1, step P2: plate detector (done 2026-11-23, approved)
+
+Full report: `TRACEVISION_DATA/reports/p2_plate_detector.md`.
+- YOLOv8n fine-tuned on Quobotic: 60 epochs in 24 min on the RTX 3050.
+- **Leakage-free test: P 0.991, R 0.980, mAP50 0.995, mAP50-95 0.754** (official test: 0.995 / 0.788). Leakage barely affects detection.
+- On our clips: close plates are found and cropped cleanly (day, night, two-wheelers). Far plates are found but only 5–14 px tall, so they're unreadable (C7). False detections are all low-confidence, so the threshold is 0.5 and plates under 16 px aren't OCR'd (M8).
+- Weights `models/weights/plate_yolov8n_quobotic.pt` are shared via Git LFS.
+
 ## 5. Decisions
 
 All decisions, with the reason for each and their status, are in **[DECISIONS.md](DECISIONS.md)** (D1–D10 data, M1–M6 models, E1–E9 evaluation, P1–P3 process).
@@ -121,4 +129,5 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | dfc44a5 | Phase 0B: plate-dataset validation + processed training copy |
 | 097c073 | Phase 0D–0F scripts, blank label template, starter synthetic registry and test cases |
 | 4b6bd57 | DECISIONS.md, status docs refreshed |
-| (this push) | P1: vision stack, UVH-26 class mapping, two-process OCR, smoke test |
+| 74994ff | P1: vision stack, UVH-26 class mapping, two-process OCR, smoke test |
+| (this push) | P2: plate detector trained and evaluated; weights via LFS |

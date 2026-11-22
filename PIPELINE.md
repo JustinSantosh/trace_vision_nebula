@@ -1,6 +1,6 @@
 # TRACEVISION AI — Pipeline Design (Phase 1–3)
 
-**Status:** P1 done (approved 2026-11-23). **P2 onwards waits for the owner's approval** (see §10). Updated 2026-11-23.
+**Status:** P1 and P2 done (approved 2026-11-23). **P3 onwards waits for the owner's approval** (see §10). Updated 2026-11-23.
 Problem: **AIML-01 Vehicle Identification and Traceability from CCTV Footage**. Related: [DECISIONS.md](DECISIONS.md) · [PROBLEMS.md](PROBLEMS.md) · [whatnext.md](whatnext.md) · [TEAM_TASKS.md](TEAM_TASKS.md)
 
 ---
@@ -52,7 +52,7 @@ One clip runs as a **batch job**: there's no real-time requirement. Every stage 
 | 2 | **Vehicle detection + type** ✅ P1 | frame → boxes, class, detector confidence | **UVH-26 YOLOv11-S** (Indian vehicles). Classes are mapped to our vocabulary through `class_mapping.json`, built from the model's **real** class names (B3). Two-wheeler → `motorcycle/scooter` (ambiguous), Three-wheeler → `auto_rickshaw` (B4). | ultralytics | ✅ Running (P1). `class_mapping.json` done. |
 | 3 | **Tracking** | per-frame boxes → track IDs | **ByteTrack** (built into ultralytics). Tracks shorter than 5 detections are dropped. **Re-link fragmented tracks** (same type, overlapping time, agreeing plate characters) before fusion (C6). Type = vote over the track weighted by detector confidence, **leaving out boxes that touch the frame edge**. | ultralytics | — |
 | 4 | **Best-frame selection** | track → K best frames (default 5) | Rank frames by: plate box size (from stage 5), plate sharpness (Laplacian variance), detector confidence, and not cut off at the frame edge. Keep frames ≥ 3 apart so they aren't near-duplicates. | new | — |
-| 5 | **Plate detection** | vehicle crop → plate box(es) | **YOLOv8n fine-tuned** on `processed/plate_detection` (Quobotic, 2,069 train images) on the RTX 3050. Run on the **vehicle crop** (upscaled), not the full frame, so small plates become bigger. Report mAP50 on the official and leakage-free test (A15). | ultralytics | Training needs approval |
+| 5 | **Plate detection** ✅ P2 | vehicle crop → plate box(es) | **YOLOv8n fine-tuned** on `processed/plate_detection` (Quobotic, 2,069 train images) on the RTX 3050. Run on the **vehicle crop** (upscaled), not the full frame, so small plates become bigger. Report mAP50 on the official and leakage-free test (A15). **Trained (P2): mAP50 0.995 on the leakage-free test. Confidence ≥ 0.5; plates under 16 px are reported unreadable (M8).** | ultralytics | ✅ `plate_yolov8n_quobotic.pt` |
 | 6 | **Plate OCR** | plate crop → text + **per-character probability + top-3** | **Awiros**, `--device gpu`, **always `prep_paddle`** (B8), **in a separate OCR worker process** (torch and Paddle can't share a process on Windows: C5, DECISIONS M7). 15 ms per crop. **Two-row plates** (60.5% exact today): if the crop's aspect ratio is under 2.2, also try splitting it into 2 rows, OCR each row, join them, and keep whichever has the higher mean char prob. *To be tested on zenitsu09's two-row slice before adopting.* | `awiros_feasibility_check.py` | ✅ Works |
 | 7 | **Multi-frame fusion** (judged) | K OCR reads → one plate with per-position confidence or `?` | See §4 | new | — |
 | 8 | **Colour** | best vehicle crops → colour + confidence | See §5 | new | — |
@@ -193,7 +193,7 @@ evaluation/eval.py # computes §8 tables from runs/ + labels
 | Step | Work | Needs your approval for | Output |
 |---|---|---|---|
 | **P1** ✅ | Done 2026-11-23: torch 2.14.1+cu126, ultralytics, lap, UVH-26 YOLOv11-S, `class_mapping.json`, smoke test on clip01/02, two-process OCR. See `reports/p1_vision_stack.md`. | Approved | Detector and tracker running |
-| **P2** | Fine-tune **YOLOv8n** on the plate data, about 50 epochs, roughly 1–2 h on the RTX 3050 (estimate) | Training run | `best.pt`, mAP report |
+| **P2** ✅ | Done 2026-11-23: YOLOv8n, 60 epochs in 24 min. Leakage-free test mAP50 0.995 / mAP50-95 0.754. Checked on 6 clips. See `reports/p2_plate_detector.md`. | Approved | `models/weights/plate_yolov8n_quobotic.pt` (LFS) |
 | **P3** | `fuse.py` + `match.py` + unit tests against the 124 registry cases | Nothing | Tested judged algorithms |
 | **P4** | `pipeline.py` end to end on all clips → `result.json` | Nothing | First results |
 | **P5** | Report + FastAPI + UI | Install `fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool | Demo app, one report per clip |

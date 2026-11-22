@@ -39,3 +39,9 @@ TRACEVISION_DATA/raw/test_videos/clip1[0-9].mp4
 !TRACEVISION_DATA/processed/test_video_frames/*/contact_sheet_fps2.jpg
 !TRACEVISION_DATA/processed/test_video_frames/frames_index.csv
 !TRACEVISION_DATA/processed/test_video_frames/clips_meta.json
+# Training runs (weights and plots): only the report is shared
+TRACEVISION_DATA/models/plate_detector_runs/
+# Our fine-tuned plate detector is shared with the team (Git LFS, 6.5 MB)
+!TRACEVISION_DATA/models/weights/
+TRACEVISION_DATA/models/weights/*
+!TRACEVISION_DATA/models/weights/plate_yolov8n_quobotic.pt

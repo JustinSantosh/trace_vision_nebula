@@ -1,0 +1,51 @@
+{
+  "weights": "TRACEVISION_DATA/models/weights/plate_yolov8n_quobotic.pt",
+  "map": {
+    "official_test": {
+      "images": 169,
+      "precision": 0.9941,
+      "recall": 0.9873,
+      "mAP50": 0.9948,
+      "mAP50_95": 0.7883
+    },
+    "leakage_free_test": {
+      "images": 106,
+      "precision": 0.9906,
+      "recall": 0.9797,
+      "mAP50": 0.9945,
+      "mAP50_95": 0.754
+    }
+  },
+  "clips": {
+    "clip01": {
+      "vehicles_checked": 285,
+      "plates_found": 134,
+      "plate_height_px_median": 13.0
+    },
+    "clip03": {
+      "vehicles_checked": 172,
+      "plates_found": 106,
+      "plate_height_px_median": 20.5
+    },
+    "clip08": {
+      "vehicles_checked": 173,
+      "plates_found": 51,
+      "plate_height_px_median": 13.0
+    },
+    "clip10": {
+      "vehicles_checked": 35,
+      "plates_found": 24,
+      "plate_height_px_median": 151.0
+    },
+    "clip11": {
+      "vehicles_checked": 27,
+      "plates_found": 28,
+      "plate_height_px_median": 164.5
+    },
+    "clip02": {
+      "vehicles_checked": 393,
+      "plates_found": 25,
+      "plate_height_px_median": 9.0
+    }
+  }
+}

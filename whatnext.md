@@ -48,9 +48,9 @@
 
 ## 3. Phase 1 — models
 
-- [ ] Fine-tune the **YOLOv8n plate detector** on `processed/plate_detection` (Colab, or the local RTX 3050)
 - [x] **P1 done:** UVH-26 loaded on GPU, `class_mapping.json` built from the real 14 classes, ByteTrack smoke-tested, OCR worker process designed and tested (see `reports/p1_vision_stack.md`)
-- [ ] **P2 (needs approval):** fine-tune the YOLOv8n plate detector
+- [x] **P2 done:** YOLOv8n plate detector, leakage-free mAP50 0.995. Plates under 16 px are reported unreadable (see `reports/p2_plate_detector.md`)
+- [ ] **P3 (needs approval):** `fuse.py` + `match.py` + unit tests against the 124 registry cases
 - [ ] **Colour classifier:** HSV / k-means on the vehicle body crop (excluding glass and road), mapped to about 10 named colours, with a confidence score
 - [ ] Vehicle tracking across frames (ByteTrack via ultralytics)
 

@@ -30,6 +30,7 @@
 | M5 | 2026-11-22 | Accept the AGPL-3.0 licence of the Ultralytics models for the hackathon and disclose it in the README | The non-AGPL alternatives cost time | B6 | ✅ |
 | M6 | 2026-11-22 | Map UVH-26 Two-wheeler → `motorcycle/scooter` (ambiguous) and Three-wheeler → `auto_rickshaw`. Don't invent a split. | The model can't separate them | B4 | ✅ applied in `models/class_mapping.json` (2026-11-23): MUV → SUV, LCV → truck, tempo-traveller → van |
 | M7 | 2026-11-23 | **OCR (Paddle/Awiros) runs in a separate worker process**; detection and tracking (torch/YOLO) run in the main process. Both use the same GPU. | The two libraries ship conflicting cuDNN 9 DLLs on Windows and can't be loaded together (tested both import orders). The worker design was tested: about 15 ms per crop, YOLO unaffected. | C5, `reports/p1_vision_stack.md` | ✅ |
+| M8 | 2026-11-23 | Plate detector settings: **confidence ≥ 0.5**; run it on the **vehicle crop upscaled to 640 px**; **plates under 16 px tall are not OCR'd** and are reported unreadable (`?` / `none`). Report the **leakage-free** test score. | P2: false detections all had confidence 0.26–0.47; plates under about 15 px can't be read; leakage changes only mAP50-95 | `reports/p2_plate_detector.md`, C7, A15 | ✅ |
 
 ## Evaluation, clips and registry
 
