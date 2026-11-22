@@ -1,25 +1,30 @@
-# Raw data, frames, crops and model weights stay local (size, licences, real plates)
+# Raw data stays local by default; the datasets the team needs are un-ignored below
 TRACEVISION_DATA/raw/**
 !TRACEVISION_DATA/raw/**/
 !TRACEVISION_DATA/raw/**/.gitkeep
+# Shared with the team (decided 2026-11-22): Quobotic v3 plate detection + zenitsu09 OCR parquet
+!TRACEVISION_DATA/raw/plate_detection/**
+!TRACEVISION_DATA/raw/ocr_corpus/zenitsu09/**
+# Rejected synthetic b8iqo set stays local
+TRACEVISION_DATA/raw/_rejected/
 TRACEVISION_DATA/processed/test_video_frames/**
+!TRACEVISION_DATA/processed/test_video_frames/.gitkeep
 TRACEVISION_DATA/processed/plate_crops/**
+!TRACEVISION_DATA/processed/plate_crops/.gitkeep
 TRACEVISION_DATA/models/weights/
 *.pt
 *.pth
-*.safetensors
 *.onnx
+# Model weights: only the Awiros OCR weights are shared (Apache-2.0, via Git LFS)
+*.safetensors
+!TRACEVISION_DATA/models/awiros/model.safetensors
 *.mp4
 *.avi
 *.mov
 *.mkv
-# Third-party repo clones (PaddleOCR for Awiros) and model-card sample plate images
-third_party/
+# Model-card sample plate images
 TRACEVISION_DATA/models/awiros/samples/
 __pycache__/
 *.pyc
 .env
 .venv/
-# OCR eval crops + plate-text ground truth (real plates, source licence unstated) - rebuild with build_ocr_eval_set.py
-TRACEVISION_DATA/processed/ocr_evaluation/*/crops/
-TRACEVISION_DATA/processed/ocr_evaluation/*/ground_truth.csv

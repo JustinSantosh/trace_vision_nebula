@@ -2,7 +2,9 @@
 
 Hack-A-Sol 5.0, Track 02, AIML-01: vehicle identification and traceability from CCTV footage.
 
-## Status: Phase 0A is done; D1/D2 have been replaced (Quobotic v3, zenitsu09) and the OCR eval set is built. Next: 0B validation. See the progress table in [PROBLEMS.md](PROBLEMS.md).
+## Status: Phase 0A is done, the datasets are in the repo, and Awiros OCR is working (0C part done). **Team: start with [TEAM_TASKS.md](TEAM_TASKS.md)** (setup and workstreams). Also see [completions.md](completions.md), [whatnext.md](whatnext.md) and [PROBLEMS.md](PROBLEMS.md).
+
+Clone with `git config --global core.longpaths true`, `git lfs install` and then `git clone --recurse-submodules …`.
 
 - `TRACEVISION_DATA/reports/`: audit, coverage matrix and licence report
 - `TRACEVISION_DATA/models/model_dependencies.md`: pretrained models used (UVH-26, Awiros ANPR OCR, YOLOv8n)
@@ -20,7 +22,12 @@ The original D1/D2 Hugging Face repos are empty; see [PROBLEMS.md](PROBLEMS.md) 
 
 After the downloads, the next steps are: re-run the audit → `validate_plate_dataset.py` (including the near-duplicate check across Quobotic's splits) → Colab `data.yaml` + OCR `ground_truth.csv` → Awiros feasibility check.
 
-Raw data, video frames, plate crops and model weights are deliberately **not** committed. This is because of their size, their licences and the real number plates they contain.
+**Committed (team decision, 2026-11-22):**
+- Quobotic v3 (`raw/plate_detection/`, CC BY 4.0, credit: [Quobotic on Roboflow Universe](https://universe.roboflow.com/quobotic/indian-number-plate/dataset/3))
+- the zenitsu09 parquet, OCR crops and `ground_truth.csv` (no stated licence; internal evaluation only)
+- the Awiros weights (Apache-2.0, Git LFS)
+
+**Not committed:** test clips, video frames, other model weights and the rejected b8iqo set. See PROBLEMS.md E6.
 
 ### Run the audit
 ```
