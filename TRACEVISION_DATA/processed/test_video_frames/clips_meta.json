@@ -1,0 +1,214 @@
+{
+  "args": {
+    "videos": [
+      "TRACEVISION_DATA/raw/test_videos"
+    ],
+    "out": "TRACEVISION_DATA/processed/test_video_frames",
+    "fps": [
+      1.0,
+      2.0
+    ],
+    "dedupe": 2,
+    "max_seconds": null
+  },
+  "clips": [
+    {
+      "clip_id": "clip01",
+      "file": "TRACEVISION_DATA\\raw\\test_videos\\clip01.mp4",
+      "native_fps": 30.0,
+      "frame_count_header": 978,
+      "frames_read": 978,
+      "width": 478,
+      "height": 850,
+      "duration_s": 32.6,
+      "kept": {
+        "1": 33,
+        "2": 65
+      },
+      "skipped_near_duplicate": {
+        "1": 0,
+        "2": 1
+      }
+    },
+    {
+      "clip_id": "clip02",
+      "file": "TRACEVISION_DATA\\raw\\test_videos\\clip02.mp4",
+      "native_fps": 30.0,
+      "frame_count_header": 246,
+      "frames_read": 246,
+      "width": 478,
+      "height": 850,
+      "duration_s": 8.2,
+      "kept": {
+        "1": 9,
+        "2": 17
+      },
+      "skipped_near_duplicate": {
+        "1": 0,
+        "2": 0
+      }
+    },
+    {
+      "clip_id": "clip03",
+      "file": "TRACEVISION_DATA\\raw\\test_videos\\clip03.mp4",
+      "native_fps": 30.0,
+      "frame_count_header": 553,
+      "frames_read": 553,
+      "width": 720,
+      "height": 1280,
+      "duration_s": 18.43,
+      "kept": {
+        "1": 19,
+        "2": 37
+      },
+      "skipped_near_duplicate": {
+        "1": 0,
+        "2": 0
+      }
+    },
+    {
+      "clip_id": "clip04",
+      "file": "TRACEVISION_DATA\\raw\\test_videos\\clip04.mp4",
+      "native_fps": 30.0,
+      "frame_count_header": 770,
+      "frames_read": 770,
+      "width": 478,
+      "height": 850,
+      "duration_s": 25.67,
+      "kept": {
+        "1": 26,
+        "2": 48
+      },
+      "skipped_near_duplicate": {
+        "1": 0,
+        "2": 4
+      }
+    },
+    {
+      "clip_id": "clip05",
+      "file": "TRACEVISION_DATA\\raw\\test_videos\\clip05.mp4",
+      "native_fps": 30.0,
+      "frame_count_header": 986,
+      "frames_read": 986,
+      "width": 478,
+      "height": 850,
+      "duration_s": 32.87,
+      "kept": {
+        "1": 33,
+        "2": 66
+      },
+      "skipped_near_duplicate": {
+        "1": 0,
+        "2": 0
+      }
+    },
+    {
+      "clip_id": "clip06",
+      "file": "TRACEVISION_DATA\\raw\\test_videos\\clip06.mp4",
+      "native_fps": 29.941,
+      "frame_count_header": 1020,
+      "frames_read": 1020,
+      "width": 478,
+      "height": 850,
+      "duration_s": 34.07,
+      "kept": {
+        "1": 35,
+        "2": 69
+      },
+      "skipped_near_duplicate": {
+        "1": 0,
+        "2": 0
+      }
+    },
+    {
+      "clip_id": "clip07",
+      "file": "TRACEVISION_DATA\\raw\\test_videos\\clip07.mp4",
+      "native_fps": 30.0,
+      "frame_count_header": 497,
+      "frames_read": 497,
+      "width": 720,
+      "height": 1280,
+      "duration_s": 16.57,
+      "kept": {
+        "1": 17,
+        "2": 34
+      },
+      "skipped_near_duplicate": {
+        "1": 0,
+        "2": 0
+      }
+    },
+    {
+      "clip_id": "clip08",
+      "file": "TRACEVISION_DATA\\raw\\test_videos\\clip08.mp4",
+      "native_fps": 30.0,
+      "frame_count_header": 1110,
+      "frames_read": 1110,
+      "width": 478,
+      "height": 850,
+      "duration_s": 37.0,
+      "kept": {
+        "1": 37,
+        "2": 74
+      },
+      "skipped_near_duplicate": {
+        "1": 0,
+        "2": 0
+      }
+    },
+    {
+      "clip_id": "clip09",
+      "file": "TRACEVISION_DATA\\raw\\test_videos\\clip09.mp4",
+      "native_fps": 30.0,
+      "frame_count_header": 909,
+      "frames_read": 909,
+      "width": 720,
+      "height": 1280,
+      "duration_s": 30.3,
+      "kept": {
+        "1": 31,
+        "2": 61
+      },
+      "skipped_near_duplicate": {
+        "1": 0,
+        "2": 0
+      }
+    },
+    {
+      "clip_id": "clip10",
+      "file": "TRACEVISION_DATA\\raw\\test_videos\\clip10.mp4",
+      "native_fps": 30.0,
+      "frame_count_header": 564,
+      "frames_read": 564,
+      "width": 3840,
+      "height": 2160,
+      "duration_s": 18.8,
+      "kept": {
+        "1": 19,
+        "2": 38
+      },
+      "skipped_near_duplicate": {
+        "1": 0,
+        "2": 0
+      }
+    },
+    {
+      "clip_id": "clip11",
+      "file": "TRACEVISION_DATA\\raw\\test_videos\\clip11.mp4",
+      "native_fps": 30.0,
+      "frame_count_header": 282,
+      "frames_read": 282,
+      "width": 2160,
+      "height": 3840,
+      "duration_s": 9.4,
+      "kept": {
+        "1": 9,
+        "2": 14
+      },
+      "skipped_near_duplicate": {
+        "1": 1,
+        "2": 5
+      }
+    }
+  ]
+}

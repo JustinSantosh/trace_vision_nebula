@@ -28,3 +28,14 @@ __pycache__/
 *.pyc
 .env
 .venv/
+# Test clips shared with the team for labelling (2026-11-23): own footage clip01-09 via Git LFS.
+# clip10-11 are Pexels stock: NOT re-hosted (Pexels licence); download them from the links in evaluation/clips.csv.
+!TRACEVISION_DATA/raw/test_videos/
+!TRACEVISION_DATA/raw/test_videos/*
+!TRACEVISION_DATA/raw/test_videos/clip0[1-9].mp4
+TRACEVISION_DATA/raw/test_videos/clip1[0-9].mp4
+# Labelling aids: contact sheets + frame index (frames themselves are regenerated with extract_test_video_frames.py)
+!TRACEVISION_DATA/processed/test_video_frames/**/
+!TRACEVISION_DATA/processed/test_video_frames/*/contact_sheet_fps2.jpg
+!TRACEVISION_DATA/processed/test_video_frames/frames_index.csv
+!TRACEVISION_DATA/processed/test_video_frames/clips_meta.json
