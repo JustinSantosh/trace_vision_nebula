@@ -195,6 +195,22 @@ def inspect_ocr(root: Path, max_images: int | None):
     return res
 
 
+def inspect_parquet(root: Path, files):
+    """Schema + row counts for parquet shards (needs pyarrow; reports clearly if absent)."""
+    out = {"type": "parquet", "shards": []}
+    try:
+        import pyarrow.parquet as pq
+    except ImportError:
+        out["error"] = "pyarrow not installed - schema/rows not inspected"
+        out["shards"] = [{"file": str(f.relative_to(root)), "size_mb": round(f.stat().st_size / 1e6, 2)} for f in files]
+        return out
+    for f in files:
+        m = pq.ParquetFile(f)
+        out["shards"].append({"file": str(f.relative_to(root)), "rows": m.metadata.num_rows,
+                              "columns": m.schema_arrow.names, "size_mb": round(f.stat().st_size / 1e6, 2)})
+    return out
+
+
 def inspect_videos(root: Path):
     vids = sorted(p for p in root.rglob("*") if p.suffix.lower() in VID_EXT)
     out = {"type": "videos", "count": len(vids), "probe_tool": "ffprobe" if shutil.which("ffprobe") else "opencv",
@@ -209,7 +225,7 @@ def inspect_videos(root: Path):
 
 
 def inspect_dir(d: Path, max_images: int | None):
-    files = [p for p in d.rglob("*") if p.is_file()]
+    files = [p for p in d.rglob("*") if p.is_file() and p.name != ".gitkeep"]
     summary = {"path": str(d), "files": len(files),
                "bytes": sum(p.stat().st_size for p in files),
                "extensions": dict(Counter(p.suffix.lower() for p in files).most_common(10)),
@@ -225,6 +241,9 @@ def inspect_dir(d: Path, max_images: int | None):
         summary["components"].append(inspect_ocr(d, max_images))
     if any(p.suffix.lower() in VID_EXT for p in files):
         summary["components"].append(inspect_videos(d))
+    pq = [p for p in files if p.suffix.lower() == ".parquet"]
+    if pq:
+        summary["components"].append(inspect_parquet(d, pq))
     if not summary["components"]:
         loose = [p for p in files if p.suffix.lower() in IMG_EXT]
         summary["components"].append({"type": "loose_images", "count": len(loose)})

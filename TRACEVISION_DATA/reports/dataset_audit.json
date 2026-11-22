@@ -1,18 +1,105 @@
 {
-  "root": "TRACEVISION_DATA/raw",
+  "root": "E:\\hack_a_sol\\TRACEVISION_DATA\\raw",
   "tools": {
     "ffprobe": null,
     "python": "3.12.6"
   },
   "inputs": {
+    "_rejected": {
+      "path": "TRACEVISION_DATA\\raw\\_rejected",
+      "files": 4992,
+      "bytes": 100060152,
+      "extensions": {
+        ".txt": 2497,
+        ".jpg": 2494,
+        ".yaml": 1
+      },
+      "sources_note": [],
+      "components": [
+        {
+          "type": "yolo_detection",
+          "splits": {
+            "test": {
+              "images": 372,
+              "checked": 372,
+              "sizes": {
+                "640x640": 372
+              },
+              "boxes": 370,
+              "empty_labels": 0,
+              "missing_labels": 0
+            },
+            "train": {
+              "images": 1750,
+              "checked": 1750,
+              "sizes": {
+                "640x640": 1750
+              },
+              "boxes": 1704,
+              "empty_labels": 3,
+              "missing_labels": 0
+            },
+            "val": {
+              "images": 372,
+              "checked": 372,
+              "sizes": {
+                "640x640": 372
+              },
+              "boxes": 368,
+              "empty_labels": 3,
+              "missing_labels": 0
+            }
+          },
+          "class_ids": {
+            "0": 2442
+          },
+          "issues": {
+            "bad_field_count": 57
+          },
+          "examples": {},
+          "yaml": {
+            "b8iqo_synthetic\\data.yaml": {
+              "train": "../train/images",
+              "val": "../valid/images",
+              "test": "../test/images",
+              "nc": 1,
+              "names": [
+                "NumberPlate"
+              ],
+              "roboflow": {
+                "workspace": "indian-number-plate-dataset",
+                "project": "indian-number-plate-recognition-b8iqo",
+                "version": 3,
+                "license": "CC BY 4.0",
+                "url": "https://universe.roboflow.com/indian-number-plate-dataset/indian-number-plate-recognition-b8iqo/dataset/3"
+              }
+            }
+          }
+        }
+      ],
+      "status": "PRESENT"
+    },
     "ocr_corpus": {
       "path": "TRACEVISION_DATA\\raw\\ocr_corpus",
-      "files": 0,
-      "bytes": 0,
-      "extensions": {},
+      "files": 1,
+      "bytes": 5924512,
+      "extensions": {
+        ".parquet": 1
+      },
       "sources_note": [],
-      "components": [],
-      "status": "EMPTY"
+      "components": [
+        {
+          "type": "parquet",
+          "shards": [
+            {
+              "file": "zenitsu09\\train-00000-of-00001.parquet",
+              "size_mb": 5.92
+            }
+          ],
+          "error": "pyarrow not installed - schema/rows not inspected"
+        }
+      ],
+      "status": "PRESENT"
     },
     "plate_detection": {
       "path": "TRACEVISION_DATA\\raw\\plate_detection",
