@@ -1,7 +1,7 @@
 # TRACEVISION AI — What Is Done
 
 Hack-A-Sol 5.0 · Track 02 AIML · **AIML-01 Vehicle Identification and Traceability from CCTV Footage**
-**Last updated:** 2026-11-22
+**Last updated:** 2026-11-23
 
 Open problems are in [PROBLEMS.md](PROBLEMS.md). Next steps are in [whatnext.md](whatnext.md). Decisions are in [DECISIONS.md](DECISIONS.md).
 
@@ -144,4 +144,5 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | 74994ff | P1: vision stack, UVH-26 class mapping, two-process OCR, smoke test |
 | 1fcaf35 | P2: plate detector trained and evaluated; weights via LFS |
 | 2a29749 | P3: fusion + matching + tests + calibration; answer-key fix |
-| (this push) | Health check; contact sheets regenerated; calibration report reproducible |
+| 4cbbc07 | Health check; contact sheets regenerated; calibration report reproducible |
+| (this push) | Project docs synced to the current state (README, whatnext, TEAM_TASKS) |

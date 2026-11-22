@@ -1,96 +1,57 @@
 # TRACEVISION AI — What Next
 
-**Last updated:** 2026-11-22 · What is already done is in [completions.md](completions.md). Problem IDs (A5, B1, …) refer to [PROBLEMS.md](PROBLEMS.md). Decisions are in [DECISIONS.md](DECISIONS.md).
+**Last updated:** 2026-11-23 · Done work: [completions.md](completions.md) · Problems: [PROBLEMS.md](PROBLEMS.md) · Decisions: [DECISIONS.md](DECISIONS.md) · Pipeline design: [PIPELINE.md](PIPELINE.md) · Team workstreams: [TEAM_TASKS.md](TEAM_TASKS.md)
 
-**Where we are:** Phase 0 is done except the parts that need clips. The only blocker is **the team's test clips and hand labels**. Every script that processes them is built and tested.
+**Where we are:**
+- **Phase 0 (data):** done, except the **cross-camera pair** (A6) and the Phase 0 runs that need final labels (0E variants, 0F registry re-seed, final report).
+- **Built and tested:** the vision stack (P1), the plate detector (P2) and the two judged algorithms (P3). The health check passed on 2026-11-23.
+- **Next build step:** P4, the end-to-end pipeline. It **waits for the owner's approval.**
 
-## 0. Team actions — unblock these first
+## 0. Team and owner actions
 
-| Priority | Action | Unblocks |
+| Priority | Action | Status / unblocks |
 |---|---|---|
-| 🔴 1 | **Film 6–8 clips of 8–15 s** (5 s minimum) into `TRACEVISION_DATA/raw/test_videos/` as `clip01.mp4`, `clip02.mp4`, … Film from a high, distant, CCTV-like angle (balcony or stairs, 5–15 m from the road), in landscape at 1080p, held steady. Cover: a clear daylight plate, a blurred or moving plate, a partly blocked plate, a motorcycle or scooter, an auto-rickshaw, a truck or bus, several vehicles in one frame, and dusk or night if possible. Then follow TEAM_TASKS WS1 steps 1–6 (DECISIONS E2, A5). **Status 2026-11-23:** 6 clips in (2 fixed CCTV-style, 4 moving). **Revised 2026-11-23:** 11 clips in (2 fixed CCTV-style, 9 moving). No more raised clips will be added, and the demo uses ground-level clips (DECISIONS E10, risk E7). Remaining: the two-position car pair and hand labels. | Every clip-based phase, the demo and the per-clip reports |
-| 🔴 2 | **Include at least 2 vehicles that will NOT be in the registry**, to test no-match handling. | No-match must-have |
-| 🟠 3 | **Cross-camera pair:** film the same vehicle from two phone positions (A6). | Bonus: cross-camera tracking |
-| ✅ 3b | **Labels done 2026-11-23:** the owner verified all 51 draft rows and they are saved as `evaluation/test_clip_labels.csv` (E11, A23). The validator reports 0 warnings and 1 error: the cross-camera pair (item 3) is still missing. When it is filmed, label that car in both clips with the same `cross_camera_group_id`, `in_registry = yes` and its real plate in `registry_plate_full`. | 0D–0F, all clip metrics |
-| 🟠 3c | **Decide on the repo's visibility.** It is public and holds real plates (E6 / DECISIONS D10). | Privacy |
-| 🟡 4 | Check the two `.mp4` files in `~/Downloads` (`DS.mp4` and `original-5adf….mp4`). If they are test clips, move them into `raw/test_videos/` (A11). | A5 |
-| ⚪ 5 | Optional: fill in the witvix Hugging Face access form for a harder OCR test (A2). | Out-of-domain OCR score |
+| ✅ | **Test clips:** 11 Indian clips (clip01–11). 2 fixed CCTV-style (clip02, 06), 9 moving, including a night clip (clip11) and trucks (clip10). No more raised clips by team decision (E10, risk E7). | Done |
+| ✅ | **Hand labels:** owner verified all 51 vehicles → `evaluation/test_clip_labels.csv`. 0 field errors (E11, A23). | Done |
+| 🟠 1 | **Cross-camera pair:** film one car (yours) from **2 different spots** as 2 clips (send the original files, not WhatsApp). Label it in both with the same `cross_camera_group_id`, `in_registry = yes` and the real plate in `registry_plate_full`. | Clears the last label error. Needed for the cross-camera bonus and the Phase 0 report (A6). |
+| 🟡 2 | **More `in_registry = yes` vehicles** with readable plates: only 9 of 51 are `yes`, so positive-match evaluation on real clips is thin. | Stronger P6 match metrics |
+| 🟠 3 | **Repo visibility:** the repo is public and holds real plates and clips (E6 / D10). | Privacy decision |
+| 🟡 4 | `~/Downloads/DS.mp4` and `original-5adf….mp4` were never checked (A11). | Optional |
+| ⚪ 5 | witvix access form for a harder OCR test (A2) | Optional |
 
-## 1. Phase 0B: plate-detection data prep (✅ done)
+## 1. Phase 0 (data): status
+- [x] 0A audit · 0B plate data (validated, short-name copy, `data.yaml`) · 0C Awiros check (81.5% exact, GPU 15 ms per crop)
+- [x] 0D: 11 clips, frames, contact sheets, template, guide; labels verified (51 vehicles)
+- [x] All 10 spec scripts exist and pass a smoke run (health check 2026-11-23)
+- [ ] **0E:** run `degrade_clips.py` on the labelled clips, then the team marks `readable_after_degradation` for the ~25% review sample. *Can run now.*
+- [ ] **0F:** regenerate the registry from the real labels (`generate_synthetic_registry.py`), so the 9 `yes` vehicles become `evaluation_seed` rows with decoys. *Can run now; re-run after the car pair.*
+- [ ] **0D/0E:** `multi_frame_sequences.json` and `cross_camera_ground_truth.csv` are written once the label validator shows 0 errors (needs the car pair).
+- [ ] **Final Phase 0 report** (after the car pair)
 
-- [x] `scripts/validate_plate_dataset.py`: integrity, boxes against polygons, plate sizes, leakage across splits (built-in dHash, so `imagehash` was not needed)
-- [x] `scripts/prepare_plate_detection.py` → `processed/plate_detection/`: short names, `name_map.csv`, boxes only, `data.yaml`, leakage-free eval lists
-- [x] `reports/plate_dataset_validation.md`
-- [ ] First step of Phase 1: open `data.yaml` with Ultralytics (not installed yet)
+## 2. Build steps (PIPELINE.md §10)
+- [x] **P1** vision stack: torch + ultralytics on GPU, UVH-26 (14 classes) + `class_mapping.json`, OCR in a separate worker process (C5). `reports/p1_vision_stack.md`
+- [x] **P2** plate detector: YOLOv8n, **leakage-free mAP50 0.995**; plates under 16 px are reported unreadable (M8). `reports/p2_plate_detector.md`
+- [x] **P3** judged algorithms: **multi-frame fusion** (`?` instead of guesses) + **registry matching** (match score, reasons, match / ambiguous / no-match), 26 tests, calibrated (held-out 62/62 on synthetic cases). `reports/p3_fusion_and_matching.md`
+- [ ] **P4 (needs approval):** `tracevision/pipeline.py`, running clip → detect → track (with re-linking, C6) → best frames → plate detect → OCR worker → fuse → colour → match → `runs/<job>/result.json`, on all 11 clips. Includes the **colour estimator** (PIPELINE §5).
+- [ ] **P5 (needs approval for installs):** FastAPI + investigator UI + **HTML/PDF report for every clip** (`fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool).
+- [ ] **P6:** evaluation on the labels, split by camera type (E10): plate character accuracy, **`?` rate against wrong-character rate**, type and colour accuracy, top-1/top-5, no-match precision, robustness on degraded variants, speed. Re-check the matcher thresholds on clip cases.
 
-## 2. Phase 0C: Awiros OCR check (✅ done)
+## 3. Submission
+- [ ] README: architecture diagram, how to run, models and licences (Quobotic CC BY 4.0 credit, AGPL for Ultralytics: B6), honest note on camera types (E7)
+- [ ] Demo video (include one CCTV-style clip showing "no confident match") and slides
+- [ ] Stretch: cross-camera re-ID (A6), make/model (only with verified labels)
 
-- [x] Install works on Windows CPU; card samples reproduced
-- [x] **B1:** per-character probabilities plus top-3 alternatives come from the CTC head
-- [x] **B8:** official preprocessing bug found; we use `prep_paddle`
-- [x] Full 965-plate benchmark: 81.5% exact / 4.4% CER (86.0% / 3.1% on standard labels), with splits by layout, height and confidence
-- [x] Latency measured: about 3.8 s per crop on CPU (backbone-bound)
-- [x] Report: `reports/awiros_feasibility.md`
-- [x] **B7:** `paddlepaddle-gpu` installed. 15 ms per crop on the RTX 3050, same accuracy. **Always run with `--device gpu`.**
-
-## 2b. Phase 0D–0F tooling (✅ built and tested on a fixture; waiting for clips)
-
-- [x] `extract_test_video_frames.py`, `create_test_clip_template.py`, `validate_test_labels.py`, `degrade_clips.py`, `generate_synthetic_registry.py`, so all 10 spec scripts now exist
-- [x] Blank template plus `LABELING_GUIDE.md` in `evaluation/`
-- [x] Starter synthetic registry (334 records) and 124 registry test cases, so the matcher can be built now
-- [ ] **Team:** clips → labels → validate → degrade → regenerate the registry (TEAM_TASKS WS1 steps 1–6)
-- [ ] Final Phase 0 report, after the clips are labelled
-
-## 2c. Pipeline design
-
-- [x] **[PIPELINE.md](PIPELINE.md)**: stages, the fusion and matching algorithms, the result schema, evaluation, code layout and execution steps P1–P6. **Execution waits for the owner's approval.**
-- [x] Clips clip01–09 shared on GitHub (LFS) with contact sheets. Labelling guide updated with step-by-step instructions for the team.
-
-## 3. Phase 1 — models
-
-- [x] **P1 done:** UVH-26 loaded on GPU, `class_mapping.json` built from the real 14 classes, ByteTrack smoke-tested, OCR worker process designed and tested (see `reports/p1_vision_stack.md`)
-- [x] **P2 done:** YOLOv8n plate detector, leakage-free mAP50 0.995. Plates under 16 px are reported unreadable (see `reports/p2_plate_detector.md`)
-- [x] **P3 done:** fusion + matching built, 26 tests pass, thresholds calibrated (held-out 62/62 on synthetic cases). See `reports/p3_fusion_and_matching.md`
-- [ ] **P4 (needs approval):** `pipeline.py` end to end on all clips → `result.json` (re-extract frames for the 6 trimmed clips first, A25)
-- [ ] **Colour classifier:** HSV / k-means on the vehicle body crop (excluding glass and road), mapped to about 10 named colours, with a confidence score
-- [ ] Vehicle tracking across frames (ByteTrack via ultralytics)
-
-## 4. Phase 2 — our own algorithm (judged deliverable)
-
-- [ ] **Multi-frame plate fusion:** pick the sharpest frames → OCR each one → align to the Indian plate pattern (`SS NN XX NNNN`, plus BH series) → confidence-weighted vote per position → below the threshold, output `?`. **Never fill in a guess.**
-- [ ] **Synthetic registry** in `TRACEVISION_DATA/registry/` (CSV with ~500–2,000 rows): plate, colour, type, make/model, synthetic owner. Include the vehicles from our clips that should match, plus near-miss decoys (same partial plate, different colour or type).
-- [ ] **Scorer:** a wildcard-aware plate similarity with partial credit for look-alike characters (0/O/D, 8/B, 1/I, 5/S, 2/Z), weighted with colour and type scores into one confidence. Each candidate gets a **human-readable reasons list**.
-- [ ] **No-match threshold:** calibrate it on the clips. If the top score is below the threshold, output "no confident match".
-- [ ] Unit tests for the scorer (wildcards, look-alikes, ties, empty plate)
-
-## 5. Phase 3 — app and report
-
-- [ ] Backend (FastAPI): upload clip → pipeline → JSON result
-- [ ] Investigator UI: upload, progress, the frames used, the per-frame characters, and a top-5 table with reasons
-- [ ] **Report** (HTML → PDF): the frames used, the characters per frame with confidence, the fused plate, the top 5 with confidence and reasons, or "no confident match"
-- [ ] Generate a report for **every** test clip into `evaluation/reports/`
-
-## 6. Phase 4 — evaluation and submission
-
-- [ ] Hand-label the clips (plate text, colour, type; boxes on the first frame only, E2)
-- [ ] Metrics on our clips (the headline numbers, A13): plate character accuracy, `?` rate vs wrong-character rate, colour and type accuracy, top-1 and top-5 hit rate, and no-match precision
-- [ ] README: architecture diagram, how to run, models and licences (B6)
-- [ ] Demo video and slides
-- [ ] Stretch goals: cross-camera re-identification (A6), make/model recognition (only if labels can be verified)
-
-## Environment installs still needed (C1, C2)
-
-`ultralytics`, `torch` (CUDA build for the RTX 3050), `imagehash`, `fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool (e.g. `weasyprint` or `playwright`), and FFmpeg (`winget install Gyan.FFmpeg`).
+## Installs still needed
+`fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool (P5). Optional: FFmpeg (C1). *(Done: torch 2.14.1+cu126, ultralytics, lap, paddlepaddle-gpu, pyarrow.)*
 
 ## What remains to finish the project (summary)
 
 | # | Remaining piece | Blocked by | Size |
 |---|---|---|---|
-| 1 | **Test clips (5–8, including no-match vehicles and a cross-camera pair)** | Team filming (A5, A6) | 🔴 Blocks everything clip-based |
-| 4 | Phase 1: plate detector fine-tune, UVH-26 vehicle type, colour classifier, tracking | Installs (C2), 0B | Medium |
-| 5 | **Phase 2 (judged): multi-frame fusion with `?`, synthetic registry, scorer with reasons, no-match threshold** | Clips for calibration | Large |
-| 6 | Phase 3: FastAPI backend, investigator UI, HTML/PDF report per clip | Phases 1–2 | Medium |
-| 7 | Phase 4: hand-labels for the clips, headline metrics, README, demo video, slides | Clips | Medium |
-| 8 | Stretch: cross-camera re-ID, make/model | A6; verified labels | Optional |
-
-Phase 0 is complete apart from 0D–0F (clips, degraded variants, registry), which wait on the clips. **Phase 1 starts only after approval.**
+| 1 | **P4 end-to-end pipeline** (+ colour, track re-linking) on all clips | Owner approval | Large |
+| 2 | **P5 app + per-clip PDF reports** | P4; install approval | Medium |
+| 3 | **P6 evaluation** (headline metrics from our clips) | P4 | Medium |
+| 4 | Phase 0 finish: 0E variants, 0F registry re-seed, final Phase 0 report | Can start now; the car pair for the final version | Small |
+| 5 | Cross-camera pair (film + label) | Team | Small |
+| 6 | README, demo video, slides | P4–P6 | Medium |
+| 7 | Stretch: cross-camera re-ID, make/model | Car pair; verified labels | Optional |
