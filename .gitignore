@@ -1,0 +1,19 @@
+# Raw data, frames, crops and model weights stay local (size, licences, real plates)
+TRACEVISION_DATA/raw/**
+!TRACEVISION_DATA/raw/**/
+!TRACEVISION_DATA/raw/**/.gitkeep
+TRACEVISION_DATA/processed/test_video_frames/**
+TRACEVISION_DATA/processed/plate_crops/**
+TRACEVISION_DATA/models/weights/
+*.pt
+*.pth
+*.safetensors
+*.onnx
+*.mp4
+*.avi
+*.mov
+*.mkv
+__pycache__/
+*.pyc
+.env
+.venv/

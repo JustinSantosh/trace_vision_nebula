@@ -1,0 +1,45 @@
+{
+  "root": "TRACEVISION_DATA/raw",
+  "tools": {
+    "ffprobe": null,
+    "python": "3.12.6"
+  },
+  "inputs": {
+    "ocr_corpus": {
+      "path": "TRACEVISION_DATA\\raw\\ocr_corpus",
+      "files": 0,
+      "bytes": 0,
+      "extensions": {},
+      "sources_note": [],
+      "components": [],
+      "status": "EMPTY"
+    },
+    "plate_detection": {
+      "path": "TRACEVISION_DATA\\raw\\plate_detection",
+      "files": 0,
+      "bytes": 0,
+      "extensions": {},
+      "sources_note": [],
+      "components": [],
+      "status": "EMPTY"
+    },
+    "test_videos": {
+      "path": "TRACEVISION_DATA\\raw\\test_videos",
+      "files": 0,
+      "bytes": 0,
+      "extensions": {},
+      "sources_note": [],
+      "components": [],
+      "status": "EMPTY"
+    },
+    "ufpr_alpr": {
+      "path": "TRACEVISION_DATA\\raw\\ufpr_alpr",
+      "files": 0,
+      "bytes": 0,
+      "extensions": {},
+      "sources_note": [],
+      "components": [],
+      "status": "EMPTY"
+    }
+  }
+}
