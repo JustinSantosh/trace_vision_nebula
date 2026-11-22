@@ -33,7 +33,7 @@
 - [x] **P2** plate detector: YOLOv8n, **leakage-free mAP50 0.995**; plates under 16 px are reported unreadable (M8). `reports/p2_plate_detector.md`
 - [x] **P3** judged algorithms: **multi-frame fusion** (`?` instead of guesses) + **registry matching** (match score, reasons, match / ambiguous / no-match), 26 tests, calibrated (held-out 62/62 on synthetic cases). `reports/p3_fusion_and_matching.md`
 - [x] **P4 done** (`reports/p4_pipeline.md`): ~~ `tracevision/pipeline.py`, running clip → detect → track (with re-linking, C6) → best frames → plate detect → OCR worker → fuse → colour → match → `runs/<job>/result.json`, on all 11 clips. Includes the **colour estimator** (PIPELINE §5).~~ 8/9 registered vehicles matched, 0 false matches.
-- [ ] **P5 (needs approval for installs):** FastAPI + investigator UI + **HTML/PDF report for every clip** (`fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool).
+- [x] **P5 done:** report (HTML + PDF) for every clip in `evaluation/reports/`, and the FastAPI app (`python -m tracevision.api`). See `reports/p5_app_and_reports.md`.
 - [ ] **P6:** evaluation on the labels, split by camera type (E10): plate character accuracy, **`?` rate against wrong-character rate**, type and colour accuracy, top-1/top-5, no-match precision, robustness on degraded variants, speed. Re-check the matcher thresholds on clip cases.
 
 ## 3. Submission

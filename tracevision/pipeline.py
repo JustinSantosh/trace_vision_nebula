@@ -339,21 +339,41 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
     return result
 
 
+class Engine:
+    """Loads every model once (OCR worker process first, then torch/YOLO) and runs clips. Use as a context manager."""
+
+    def __init__(self, cfg=None):
+        self.cfg = cfg or load_config()
+
+    def __enter__(self):
+        from .ocr_worker import OCRWorker
+        self.ocr = OCRWorker(device="gpu").__enter__()      # Paddle in its own process (M7)
+        from ultralytics import YOLO
+        self.veh = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/UVH-26-MV-YOLOv11-S.pt"))
+        self.plate = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/plate_yolov8n_quobotic.pt"))
+        self.registry = load_registry()
+        return self
+
+    def run(self, video, out_dir):
+        return run_clip(Path(video), Path(out_dir), (self.veh, self.plate), self.ocr, self.registry, self.cfg)
+
+    def __exit__(self, *exc):
+        self.ocr.__exit__(*exc)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--clips", nargs="*", default=None, help="clip ids (default: all in raw/test_videos)")
     ap.add_argument("--out", default=str(ROOT / "runs"))
+    ap.add_argument("--report", action="store_true", help="also build report.html / report.pdf")
     a = ap.parse_args()
-    cfg = load_config()
     clips = a.clips or sorted(p.stem for p in VIDEOS.glob("clip*.mp4"))
-    from .ocr_worker import OCRWorker
-    with OCRWorker(device="gpu") as ocr:                     # start Paddle first, in its own process
-        from ultralytics import YOLO
-        veh = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/UVH-26-MV-YOLOv11-S.pt"))
-        plate = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/plate_yolov8n_quobotic.pt"))
-        registry = load_registry()
+    with Engine() as eng:
         for cid in clips:
-            r = run_clip(VIDEOS / f"{cid}.mp4", Path(a.out) / cid, (veh, plate), ocr, registry, cfg)
+            r = eng.run(VIDEOS / f"{cid}.mp4", Path(a.out) / cid)
+            if a.report:
+                from .report import build
+                build(Path(a.out) / cid)
             print(cid, r["camera_type"], r["summary"], r["timing"], flush=True)
 
 

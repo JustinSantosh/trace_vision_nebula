@@ -50,3 +50,4 @@ TRACEVISION_DATA/models/weights/*
 # Pipeline run outputs (images); result.json files are shared
 runs/**/vehicles/
 runs/_last_run.log
+runs/jobs/

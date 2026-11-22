@@ -1,6 +1,6 @@
 # TRACEVISION AI — Phase 0 Problem Log
 
-**Last updated:** 2026-11-23 (P4 done: pipeline on 11 clips, 8/9 registered vehicles matched, 0 false matches. Owner approved all remaining phases.)
+**Last updated:** 2026-11-23 (P5 done: app + 11 clip reports. P4: 8/9 registered vehicles matched, 0 false matches.)
 **Severity:** 🔴 Blocker (stops a phase) · 🟠 High (risks the demo or the results) · 🟡 Medium (workaround exists) · ⚪ Low / note
 
 Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summarised in [completions.md](completions.md), the plan is in [whatnext.md](whatnext.md) and decisions are in [DECISIONS.md](DECISIONS.md).
@@ -77,7 +77,7 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | # | Severity | Problem | Impact | Proposed fix | Status |
 |---|---|---|---|---|---|
 | C1 | 🟡 | **FFprobe and FFmpeg are not installed.** | Codec and duration come from OpenCV headers, which are less reliable. FFmpeg-based degradation is unavailable. | `winget install Gyan.FFmpeg` (needs approval). OpenCV covers frame extraction for now. | Open |
-| C2 | 🟡 | `ultralytics`, `torch`, `imagehash` and the app stack (`fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool) are not installed. (`pyarrow` 26.0.1 and `paddlepaddle-gpu` 3.3.1 (cu126; it replaced the CPU build) are installed. Awiros uses the PaddleOCR repo clone, not the `paddleocr` pip package.) | Model download, inference and the near-duplicate check cannot run yet. | Install when each phase starts (each install needs approval, except the Awiros dependencies, which are already approved). | Partly resolved 2026-11-23 (P1, approved): torch 2.14.1+cu126, ultralytics 8.4.216, lap installed, CUDA working. Still to install: `fastapi`, `uvicorn`, `jinja2` and an HTML→PDF tool (P5). |
+| C2 | 🟡 | `ultralytics`, `torch`, `imagehash` and the app stack (`fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool) are not installed. (`pyarrow` 26.0.1 and `paddlepaddle-gpu` 3.3.1 (cu126; it replaced the CPU build) are installed. Awiros uses the PaddleOCR repo clone, not the `paddleocr` pip package.) | Model download, inference and the near-duplicate check cannot run yet. | Install when each phase starts (each install needs approval, except the Awiros dependencies, which are already approved). | ✅ Resolved: torch, ultralytics and lap installed (P1). fastapi, uvicorn, jinja2 and reportlab were already present (P5). |
 | C3 | ⚪ | Running the audit with `python -I` drops the user site-packages (Pillow, OpenCV, PyYAML). In the first version this made every image look corrupt. | Images were wrongly reported as corrupt. | **Fixed:** the script now stops with an error when a dependency is missing. Run it without `-I`, or install the packages system-wide. | Fixed |
 | C4 | ⚪ | The OpenCV video fallback cannot report codec names reliably (it gives a FourCC such as `FMP4`). | The codec column in the audit is approximate. | Install FFprobe. | Linked to C1 |
 | C5 | 🟠 | **torch and Paddle GPU can't share one Python process on Windows:** each ships a different cuDNN 9, and the second import fails (`WinError 127 cudnn_cnn64_9.dll`). | A single-process pipeline would crash. | **Fixed by design:** OCR runs in its own worker process (spawn plus queue), tested on the same GPU at about 15 ms per crop (DECISIONS M7, `reports/p1_vision_stack.md`). | ✅ Resolved |

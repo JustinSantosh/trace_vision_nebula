@@ -127,6 +127,12 @@ Full report: `TRACEVISION_DATA/reports/p4_pipeline.md`. Run with `python -m trac
 - **8 of 9 registered vehicles matched correctly** (one from a partial plate). **No false confident match.** CCTV-style clips correctly give "no confident match", since their plates are too small.
 - Fixed along the way: duplicate cross-class boxes, plate-sharing between overlapping vehicles, "ambiguous" with too little evidence, the colour band.
 
+## 4g. P5: app and reports (done 2026-11-23)
+
+Full report: `TRACEVISION_DATA/reports/p5_app_and_reports.md`.
+- **Per-clip report** (HTML + PDF): frames used, per-frame characters with confidence, the fused plate with `?`, type and colour, the top 5 with match scores and reasons, or "no confident match" with the reason. **11 PDFs in `TRACEVISION_DATA/evaluation/reports/`.**
+- **App:** `python -m tracevision.api` → http://127.0.0.1:8000. Upload, live progress, then the report, PDF and JSON. Tested end to end (upload of clip02, error cases).
+
 ## 5. Decisions
 
 All decisions, with the reason for each and their status, are in **[DECISIONS.md](DECISIONS.md)** (D1–D10 data, M1–M6 models, E1–E9 evaluation, P1–P3 process).
@@ -154,4 +160,5 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | 2a29749 | P3: fusion + matching + tests + calibration; answer-key fix |
 | 4cbbc07 | Health check; contact sheets regenerated; calibration report reproducible |
 | 89e4472 | Project docs synced to the current state (README, whatnext, TEAM_TASKS) |
-| (this push) | P4: end-to-end pipeline + results for 11 clips; registry re-seeded from labels |
+| 8a68a99 | P4: end-to-end pipeline + results for 11 clips; registry re-seeded from labels |
+| (this push) | P5: report (HTML/PDF) + FastAPI app; 11 clip reports |
