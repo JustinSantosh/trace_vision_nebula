@@ -1,6 +1,6 @@
 # TRACEVISION AI — Decision Log
 
-**Last updated:** 2026-11-22 · One line per decision: what was decided, why, and where the evidence lives. Problem IDs (A5, B7, …) refer to [PROBLEMS.md](PROBLEMS.md). Done work is in [completions.md](completions.md) and the plan in [whatnext.md](whatnext.md).
+**Last updated:** 2026-11-23 · One line per decision: what was decided, why, and where the evidence lives. Problem IDs (A5, B7, …) refer to [PROBLEMS.md](PROBLEMS.md). Done work is in [completions.md](completions.md) and the plan in [whatnext.md](whatnext.md).
 
 **Status:** ✅ in force · 🔁 changed (the old version is kept and struck through) · ⏳ waiting on someone
 
@@ -43,6 +43,7 @@
 | E7 | 2026-11-22 | Registry IDs are **random**, rows are shuffled, and the answer key (`registry_decoy_map.csv`) is kept in `evaluation/`. The scorer must never read it. | Stops anchor or decoy status leaking into the matcher | `generate_synthetic_registry.py` | ✅ |
 | E8 | 2026-11-22 | A starter registry (334 records, 124 test cases) is generated **before** the clips exist, and re-seeded after labelling | The matching algorithm can be built and tested now | `reports/synthetic_registry_stats.json` | ✅ |
 | E9 | 2026-11-22 | Call scores **"match score"** and never "probability" unless calibrated. Keep detector, OCR-character and match scores separate. | Spec convention | Spec | ✅ |
+| E10 | 2026-11-23 | **Moving-camera and dashcam clips are accepted** alongside fixed CCTV-style clips. The problem statement is about **CCTV**, so fixed, raised views stay the primary test. **Every metric is reported separately** for `fixed_cctv_style` and `moving_camera` (from `camera_id` in `clips.csv`), and the headline numbers come from the CCTV-style clips. Aim for at least half of the final clip set to be fixed and raised. | Moving clips give readable plates, but the judges score CCTV footage. Mixing the two would hide how the system does on the real task. | A5, A13 | ✅ |
 
 ## Process
 
