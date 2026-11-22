@@ -44,16 +44,24 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 
 ---
 
-## WS1 — Test clips and ground truth 🔴 start today  · Owner: ________
+## WS1: Test clips and ground truth 🔴 start today · Owner: ________
 
-- [ ] Film 5–10 phone clips (10–30 s each) from a high, distant, CCTV-like angle: cars, SUVs, two-wheelers, autos, trucks
-- [ ] Include blurred, partly hidden and dirty plates, plus **at least 2 vehicles that will not be put in the registry** (no-match test)
-- [ ] Film **one vehicle from two positions** (cross-camera bonus, A6)
+Read `TRACEVISION_DATA/evaluation/LABELING_GUIDE.md` first. All scripts are built and tested; the team only provides clips and labels.
+
+- [ ] Film 5–8 phone clips (10–30 s each) from a high, distant, CCTV-like angle: cars, SUVs, two-wheelers, autos, trucks/buses, and ideally one at night
+- [ ] Include blurred, partly hidden and dirty plates, plus **at least 2 vehicles that will NOT be in the registry** (no-match test)
+- [ ] Film **one vehicle from two positions** (cross-camera, A6). For your own vehicles, note the full plate (`registry_plate_full`)
 - [ ] Check `~/Downloads/DS.mp4` and `original-5adf….mp4` (A11)
-- [ ] Put the clips on the team drive and in your local `TRACEVISION_DATA/raw/test_videos/` (not in git). Create `raw/test_videos/clips.csv` with: `clip_id, file, source, licence, notes`
-- [ ] Create `evaluation/clip_ground_truth.csv` with: `clip_id, vehicle_id, plate_text (use ? for unreadable), colour, type, in_registry (y/n)`
+- [ ] Put the clips in `TRACEVISION_DATA/raw/test_videos/` (videos are git-ignored, so also share them on the team drive), then run:
+  1. `python TRACEVISION_DATA/scripts/extract_test_video_frames.py --videos TRACEVISION_DATA/raw/test_videos --out TRACEVISION_DATA/processed/test_video_frames --fps 1 2`
+  2. `python TRACEVISION_DATA/scripts/create_test_clip_template.py` → fill in `evaluation/clips.csv` (source, licence, country, camera_id)
+  3. Copy `evaluation/test_clip_labels_TEMPLATE.csv` → `evaluation/test_clip_labels.csv` and label **by hand** (`?` for unreadable characters, never guess)
+  4. `python TRACEVISION_DATA/scripts/validate_test_labels.py`, then fix what `reports/test_label_validation.md` lists until there are 0 errors. This writes `multi_frame_sequences.json` and `cross_camera_ground_truth.csv`.
+  5. `python TRACEVISION_DATA/scripts/degrade_clips.py` → fill in `readable_after_degradation` (yes / partial / no) for the rows marked `review_sample = yes` in `evaluation/difficult_cases.csv`
+  6. `python TRACEVISION_DATA/scripts/generate_synthetic_registry.py` (re-seeds the registry with the labelled vehicles)
+- [ ] Commit the CSV / JSON files and reports (not the videos)
 
-**Done when:** at least 5 clips are on the drive, both CSVs are committed, and at least 2 vehicles are marked `in_registry = n`.
+**Done when:** at least 5 clips are labelled, the validation shows 0 errors, at least 2 vehicles are `in_registry = no`, there is at least 1 cross-camera group, and the registry has been regenerated.
 
 ## WS2 — Plate detector data and training (Phase 0B → 1) · Owner: ________
 
@@ -76,9 +84,9 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 
 ## WS4 — Matching algorithm (judged deliverable; no clips needed) · Owner: ________
 
-- [ ] `registry/registry.csv`: ~1,000 synthetic Indian vehicles (`plate, colour, type, make, model, owner_synthetic`), with near-miss decoys (same partial plate, different colour or type)
+- [x] Registry: `TRACEVISION_DATA/registry/synthetic_vehicle_registry.csv` (334 fictional records, seeded) plus `evaluation/registry_test_cases.csv` (124 cases with the expected outcome across all 9 spec scenarios). **Build and test the scorer against these now.** It is re-seeded with the real clip vehicles after WS1 step 6. The scorer must never read `registry_decoy_map.csv`, which is the answer key. No owner fields exist, by design (privacy).
 - [ ] **Multi-frame fusion:** align each frame's OCR to the plate pattern (`SS NN X(XX) NNNN` and the BH series) → confidence-weighted vote per position using the Awiros per-character probabilities → output `?` below the threshold. **Never fill in a guess.**
-- [ ] **Scorer:** wildcard-aware plate match with partial credit for look-alike characters (0/O/D, 8/B, 1/I, 5/S, 2/Z), combined with colour and type weights into one confidence, plus a **reasons list** for each candidate
+- [ ] **Scorer:** wildcard-aware plate match with partial credit for look-alike characters (0/O/D, 8/B, 1/I, 5/S, 2/Z), combined with colour and type weights into one **match score** (not a probability), plus a **reasons list** for each candidate
 - [ ] Top 5 output, and **"no confident match"** below a calibrated threshold
 - [ ] Unit tests (wildcards, look-alikes, ties, all-`?` plate, empty registry)
 

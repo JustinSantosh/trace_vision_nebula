@@ -1,0 +1,59 @@
+{
+  "mode": "fictional_only",
+  "seed": 20261122,
+  "records": 334,
+  "anchors": 12,
+  "evaluation_seed_rows": 0,
+  "decoys": 72,
+  "decoy_kinds": {
+    "partial_2chars": 12,
+    "differs_only_at_unknown_positions": 12,
+    "confusable_1char": 12,
+    "same_colour_other_type": 12,
+    "similar_looking": 24
+  },
+  "test_cases": 124,
+  "scenarios": {
+    "exact_match": 12,
+    "partial_plate_match": 12,
+    "unknown_characters": 12,
+    "unknown_characters_no_colour": 12,
+    "cross_class_ocr_confusion": 12,
+    "confusable_candidates": 12,
+    "conflicting_colour": 12,
+    "similar_colour_different_type": 12,
+    "similar_looking_vehicles": 12,
+    "multiple_plausible": 12,
+    "no_matching_entry": 4
+  },
+  "outcomes": {
+    "match": 84,
+    "ambiguous": 36,
+    "no_match": 4
+  },
+  "types": {
+    "car": 99,
+    "motorcycle": 56,
+    "scooter": 50,
+    "bus": 12,
+    "auto_rickshaw": 35,
+    "van": 25,
+    "SUV": 42,
+    "truck": 15
+  },
+  "states_top10": {
+    "CG": 68,
+    "MH": 49,
+    "MP": 33,
+    "TG": 21,
+    "OD": 21,
+    "AP": 20,
+    "UP": 16,
+    "JH": 14,
+    "BH": 11,
+    "PB": 10
+  },
+  "in_registry_no_blocked": 0,
+  "skipped_unseedable": [],
+  "unique_plates": true
+}

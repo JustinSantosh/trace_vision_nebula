@@ -1,6 +1,6 @@
 # TRACEVISION AI — Phase 0 Problem Log
 
-**Last updated:** 2026-11-22 (0B done: plate-detection set validated and prepared; split leakage measured. 0C done: Awiros 81.5% exact, 15 ms/crop on GPU)
+**Last updated:** 2026-11-22 (0B and 0C done. 0D–0F scripts built and tested, starter registry generated. Waiting on clips and labels.)
 **Severity:** 🔴 Blocker (stops a phase) · 🟠 High (risks the demo or the results) · 🟡 Medium (workaround exists) · ⚪ Low / note
 
 Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summarised in [completions.md](completions.md) and the plan is in [whatnext.md](whatnext.md).
@@ -17,7 +17,9 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | 0C Awiros feasibility check | ✅ Done. On the full 965 unique plates: **81.5% exact, 4.4% CER** (86.0% / 3.1% on standard-format labels). Per-character probabilities available (B1 ✅). Official preprocessing bug found and avoided (B8 ✅). Latency solved on GPU: **15 ms median** per crop (B7 ✅). Report: `reports/awiros_feasibility.md`. |
 | Team hand-off | ✅ Datasets, weights (LFS) and PaddleOCR (submodule) pushed. Workstreams are in [TEAM_TASKS.md](TEAM_TASKS.md). |
 | witvix (harder OCR test) | ⏳ Waiting for the team (access form) |
-| 0D Test clips | ⏳ Waiting for the team (no clips yet) |
+| 0D Test clips | 🟡 Tooling done: frame extraction, blank template, `LABELING_GUIDE.md`, label validator. **Waiting for the team's clips and labels (A5).** |
+| 0E Difficult variants + multi-frame sequences | 🟡 `degrade_clips.py` and the sequence builder (in `validate_test_labels.py`) are tested on a fixture. They run once the labels pass validation. |
+| 0F Synthetic registry | 🟡 Starter registry: 334 fictional records and 124 test cases covering all 9 scenarios. Re-run after labelling to seed the clip vehicles. |
 
 | Phase 1–4 (models, own matching algorithm, app, report, evaluation) | ⏳ Planned, see [whatnext.md](whatnext.md) |
 
@@ -49,6 +51,7 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | A19 | 🟡 | Quobotic labels mix boxes (2,319 lines) with **polygon** lines (275 lines with 11–29 fields). | Ultralytics detect converts polygons to boxes, but the mix should be reported. | `validate_plate_dataset.py` reports the counts and converts to boxes only in the processed copy. | ✅ Resolved in 0B: 275 polygon lines (226/30/19) converted to enclosing boxes in `processed/` (checked visually). The box counts 2,084/339/171 match the source. |
 | A20 | 🟡 | zenitsu09 OCR labels: **112 of 1,709 (82 of 965 unique plates) fail both plate regexes**. Examples: `TERRANO` (a car-model badge, not a plate), `MH4705851` (likely a missing letter), `KL01KLKL01`, `MHD1CV9311` (D vs 0). 364 of the 965 primary crops are under 20 px tall. | Ground-truth errors would count against Awiros unfairly. Tiny crops lower the scores. | Flagged as `nonstandard_review` (not rejected). Report CER both with and without flagged rows, and by crop height. Optional manual review of the 82. | Open |
 | A21 | 🟡 | Quobotic **train contains horizontally flipped images** (Roboflow augmentation), so their plates read backwards. | Plates cropped from train would poison OCR training or evaluation. | Never crop train plates for OCR. The detector is unaffected. | Note |
+| A22 | ⚪ | The spec's label columns have no place for a vehicle's full plate when the clip shows it only partly, but the registry needs a full plate to seed that vehicle. | Partly readable vehicles that should be `in_registry = yes` could not be seeded. | Added an optional `registry_plate_full` column, filled only when the team knows the plate from outside the clip (their own vehicle). It is never inferred from video. The validator checks it against the readable characters. | Decision, documented in LABELING_GUIDE.md |
 | A11 | ⚪ | Two `.mp4` files sit in `~/Downloads` (`DS.mp4` and `original-5adf…mp4`). They are outside the working folder and were not inspected. | They may be intended test clips. | If so, move them into `raw/test_videos/` and record their source and licence. | Team to confirm |
 
 ## B. Models
@@ -83,8 +86,8 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | Indian OCR benchmark | ✅ Awiros run on 965 zenitsu09 plates: 81.5% exact / 4.4% CER (still photos, not CCTV) | A13, A20; witvix optional (A2) |
 | Multi-frame recovery | Missing (inputs ready: per-character probabilities and top-3) | A5 |
 | Vehicle colour | Missing | A5 |
-| Registry ranking | Missing | A5, then Phase 0F |
-| No-match handling | Missing | A5 (needs at least 2 vehicles not in the registry) |
+| Registry ranking | Partial: synthetic registry and 124 expected-outcome test cases ready; clip vehicles not yet seeded | A5 |
+| No-match handling | Partial: synthetic no-match and ambiguous cases ready; clip cases need ≥ 2 `in_registry = no` vehicles | A5 |
 | Cross-camera tracking | Missing | A5, A6 |
 | Make/model (bonus) | Missing | No verified labels; make no claims |
 

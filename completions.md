@@ -54,6 +54,15 @@ Report: `TRACEVISION_DATA/reports/plate_dataset_validation.md`.
   - `data.yaml` with relative paths
 - **Leakage measured, not fixed (A15):** every source video spans all 3 splits, so 37% of test comes from train videos, and dHash finds at least 18 near-duplicates. The official split is kept, and `leakage_free_{valid,test}.txt` (205 / 106) give an honest second score.
 
+## 3c. Phase 0D–0F tooling (done; waiting for clips)
+
+All 10 scripts named in the spec now exist and have run. The 5 new ones were tested end-to-end on a throwaway 2-clip fixture built from Quobotic video frames (kept in the scratchpad, never committed):
+- **`extract_test_video_frames.py`** streams one clip at a time at 1 and 2 FPS. It keeps the original frame index and timestamp and skips near-duplicate samples.
+- **`create_test_clip_template.py`** writes `clips.csv`, a **blank** `test_clip_labels_TEMPLATE.csv` (the spec's columns plus an optional `registry_plate_full`) and `LABELING_GUIDE.md`. It never fills in labels.
+- **`validate_test_labels.py`** caught all 6 planted errors. It never edits labels. Once there are 0 errors, it writes `multi_frame_sequences.json` (frame references, ground-truth visible characters and unknown positions, and empty OCR/fusion placeholders) and `cross_camera_ground_truth.csv`.
+- **`degrade_clips.py`** makes 7 seeded variants (Gaussian/motion blur, 480p/360p, JPEG q10, night, noise) into `difficult_cases.csv`. About 25% of rows are marked for a team readability check.
+- **`generate_synthetic_registry.py`** is seeded and reproducible (byte-identical reruns). Records are fictional, with random IDs. Labelled `in_registry = yes` vehicles become `evaluation_seed` rows, and `in_registry = no` vehicles are provably absent. There are decoys for all 9 spec scenarios. **The current version has no labels yet: 334 records and 124 test cases.**
+
 ## 4. Phase 0C: Awiros OCR feasibility (done)
 
 Full report: `TRACEVISION_DATA/reports/awiros_feasibility.md`. Script: `TRACEVISION_DATA/scripts/awiros_feasibility_check.py`.
@@ -94,4 +103,5 @@ Full report: `TRACEVISION_DATA/reports/awiros_feasibility.md`. Script: `TRACEVIS
 | 8c10105 | Share datasets and Awiros weights with the team (LFS, submodule); TEAM_TASKS.md |
 | 05633d6 | Phase 0C: Awiros feasibility report, full 965-plate benchmark, B7/B8 diagnosis, status docs |
 | 2ffccc7 | GPU Paddle build: 15 ms per crop, full benchmark re-run on GPU, B7 resolved |
-| (this push) | Phase 0B: plate-dataset validation + processed training copy |
+| dfc44a5 | Phase 0B: plate-dataset validation + processed training copy |
+| (this push) | Phase 0D–0F scripts, blank label template, starter synthetic registry and test cases |

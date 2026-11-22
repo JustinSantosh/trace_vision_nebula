@@ -29,6 +29,14 @@
 - [x] Report: `reports/awiros_feasibility.md`
 - [x] **B7:** `paddlepaddle-gpu` installed. 15 ms per crop on the RTX 3050, same accuracy. **Always run with `--device gpu`.**
 
+## 2b. Phase 0D–0F tooling (✅ built and tested on a fixture; waiting for clips)
+
+- [x] `extract_test_video_frames.py`, `create_test_clip_template.py`, `validate_test_labels.py`, `degrade_clips.py`, `generate_synthetic_registry.py`, so all 10 spec scripts now exist
+- [x] Blank template plus `LABELING_GUIDE.md` in `evaluation/`
+- [x] Starter synthetic registry (334 records) and 124 registry test cases, so the matcher can be built now
+- [ ] **Team:** clips → labels → validate → degrade → regenerate the registry (TEAM_TASKS WS1 steps 1–6)
+- [ ] Final Phase 0 report, after the clips are labelled
+
 ## 3. Phase 1 — models
 
 - [ ] Fine-tune the **YOLOv8n plate detector** on `processed/plate_detection` (Colab, or the local RTX 3050)
@@ -68,7 +76,6 @@
 | # | Remaining piece | Blocked by | Size |
 |---|---|---|---|
 | 1 | **Test clips (5–8, including no-match vehicles and a cross-camera pair)** | Team filming (A5, A6) | 🔴 Blocks everything clip-based |
-| 3 | 0B: plate-dataset validation and the short-name processed copy with `data.yaml` | Nothing; next coding step | Small |
 | 4 | Phase 1: plate detector fine-tune, UVH-26 vehicle type, colour classifier, tracking | Installs (C2), 0B | Medium |
 | 5 | **Phase 2 (judged): multi-frame fusion with `?`, synthetic registry, scorer with reasons, no-match threshold** | Clips for calibration | Large |
 | 6 | Phase 3: FastAPI backend, investigator UI, HTML/PDF report per clip | Phases 1–2 | Medium |
