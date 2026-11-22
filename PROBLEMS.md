@@ -1,6 +1,6 @@
 # TRACEVISION AI — Phase 0 Problem Log
 
-**Last updated:** 2026-11-23 (Health check passed: 10/10 scripts, models, tests, data. Verified labels in: 51 vehicles. Open: cross-camera pair A6.)
+**Last updated:** 2026-11-23 (P4 done: pipeline on 11 clips, 8/9 registered vehicles matched, 0 false matches. Owner approved all remaining phases.)
 **Severity:** 🔴 Blocker (stops a phase) · 🟠 High (risks the demo or the results) · 🟡 Medium (workaround exists) · ⚪ Low / note
 
 Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summarised in [completions.md](completions.md), the plan is in [whatnext.md](whatnext.md) and decisions are in [DECISIONS.md](DECISIONS.md).
@@ -81,7 +81,7 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | C3 | ⚪ | Running the audit with `python -I` drops the user site-packages (Pillow, OpenCV, PyYAML). In the first version this made every image look corrupt. | Images were wrongly reported as corrupt. | **Fixed:** the script now stops with an error when a dependency is missing. Run it without `-I`, or install the packages system-wide. | Fixed |
 | C4 | ⚪ | The OpenCV video fallback cannot report codec names reliably (it gives a FourCC such as `FMP4`). | The codec column in the audit is approximate. | Install FFprobe. | Linked to C1 |
 | C5 | 🟠 | **torch and Paddle GPU can't share one Python process on Windows:** each ships a different cuDNN 9, and the second import fails (`WinError 127 cudnn_cnn64_9.dll`). | A single-process pipeline would crash. | **Fixed by design:** OCR runs in its own worker process (spawn plus queue), tested on the same GPU at about 15 ms per crop (DECISIONS M7, `reports/p1_vision_stack.md`). | ✅ Resolved |
-| C6 | 🟡 | P1 smoke test: **tracks fragment** (one vehicle gets several IDs, worst in moving clips) and **vehicles cut off at the frame edge get the wrong type** (a half car labelled truck). | Multi-frame fusion would see fewer frames per vehicle, and type votes would be noisy. | Re-link tracks before fusion; leave edge-touching boxes out of the type vote and of best-frame selection (PIPELINE stages 3–4). | Open (P4) |
+| C6 | 🟡 | P1 smoke test: **tracks fragment** (one vehicle gets several IDs, worst in moving clips) and **vehicles cut off at the frame edge get the wrong type** (a half car labelled truck). | Multi-frame fusion would see fewer frames per vehicle, and type votes would be noisy. | Re-link tracks before fusion; leave edge-touching boxes out of the type vote and of best-frame selection (PIPELINE stages 3–4). | ✅ Resolved in P4: position and plate re-link, class-agnostic NMS, edge boxes left out of the type vote (`reports/p4_pipeline.md`). |
 | C7 | 🟡 | P2: on our WhatsApp-quality and CCTV-style clips, **most detected plates are only 5–14 px tall** (median 13 px on clip01/08, 9 px on clip02). The 4K clips give 150+ px. | Those plates can't be read by any OCR, so plate reading and matching will mostly rely on the close-up and 4K clips. | Minimum plate height of 16 px for OCR; below that, report unreadable (`?` / no confident match) and never guess (DECISIONS M8). Originals instead of WhatsApp copies would help. | Accepted (by design) |
 
 ## D. Coverage gaps (from the coverage matrix)
@@ -92,7 +92,7 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | Vehicle type | Partial: UVH-26 running on GPU, classes mapped; accuracy waits on labels | labels |
 | Indian plate detection | ✅ **Detector trained (P2): mAP50 0.995 on the leakage-free test**; works on our clips, small plates flagged unreadable (C7). Data ready: `processed/plate_detection/` (2,069/336/169). Official test is leaky; use the leakage-free list too. | A15 (reported), A13 |
 | Indian OCR benchmark | ✅ Awiros run on 965 zenitsu09 plates: 81.5% exact / 4.4% CER (still photos, not CCTV) | A13, A20; witvix optional (A2) |
-| Multi-frame recovery | Partial: **fusion built and unit-tested (P3)**; not yet run on real clip OCR (P4) | P4, labels |
+| Multi-frame recovery | ✅ Runs on all clips (P4); formal accuracy in P6 | P6 |
 | Vehicle colour | Missing | A5 |
 | Registry ranking | ✅ **Matcher built (P3):** match score + reasons + match/ambiguous/no-match; 100% on the held-out synthetic cases (designed traps, not real-world accuracy). Clip vehicles not yet seeded | labels |
 | No-match handling | Partial: synthetic no-match and ambiguous cases ready; clip cases need ≥ 2 `in_registry = no` vehicles | A5 |

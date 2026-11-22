@@ -182,7 +182,8 @@ def decide(q, colour, vtype, known, cands, cfg=None) -> MatchResult:
     if not cands:
         decision, why = "no_confident_match", "no registry vehicle is close to the observed plate"
     elif known < cfg["min_known_for_match"]:
-        decision, why = ("no_confident_match" if len(cands) < 2 else "ambiguous",
+        # too little plate evidence: this is "can't tell", not "several plausible candidates"
+        decision, why = ("no_confident_match",
                          f"only {known} plate character(s) readable; at least {cfg['min_known_for_match']} are needed for a confident match")
     elif cands[0].match_score < cfg["t_abs"]:
         decision, why = "no_confident_match", f"best match score {cands[0].match_score} is below the threshold {cfg['t_abs']}"

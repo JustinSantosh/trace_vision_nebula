@@ -119,6 +119,14 @@ Full report: `TRACEVISION_DATA/reports/p3_fusion_and_matching.md`. Code in `trac
 
 Full report: `TRACEVISION_DATA/reports/health_check_2026-11-23.md`. **All 10 Phase 0 scripts, all 3 models, the 26 tests, the data and the docs check out.** Fixed along the way: 6 stale contact sheets (after the clip trim) and a reproducibility bug in the calibration report. **Owner-verified labels are in** (`test_clip_labels.csv`, 51 vehicles, 0 field errors); only the cross-camera pair is missing (A6).
 
+## 4f. P4: end-to-end pipeline (done 2026-11-23)
+
+Full report: `TRACEVISION_DATA/reports/p4_pipeline.md`. Run with `python -m tracevision.pipeline`.
+- Clip → detect, track and re-link → best frames → plate → OCR (worker process) → fuse → type, colour → match → `runs/<clip>/result.json`. **4–18 s per clip** on the RTX 3050.
+- Registry re-seeded from the verified labels (9 evaluation-seed vehicles plus decoys; thresholds re-calibrated: 67.5 / 4).
+- **8 of 9 registered vehicles matched correctly** (one from a partial plate). **No false confident match.** CCTV-style clips correctly give "no confident match", since their plates are too small.
+- Fixed along the way: duplicate cross-class boxes, plate-sharing between overlapping vehicles, "ambiguous" with too little evidence, the colour band.
+
 ## 5. Decisions
 
 All decisions, with the reason for each and their status, are in **[DECISIONS.md](DECISIONS.md)** (D1–D10 data, M1–M6 models, E1–E9 evaluation, P1–P3 process).
@@ -145,4 +153,5 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | 1fcaf35 | P2: plate detector trained and evaluated; weights via LFS |
 | 2a29749 | P3: fusion + matching + tests + calibration; answer-key fix |
 | 4cbbc07 | Health check; contact sheets regenerated; calibration report reproducible |
-| (this push) | Project docs synced to the current state (README, whatnext, TEAM_TASKS) |
+| 89e4472 | Project docs synced to the current state (README, whatnext, TEAM_TASKS) |
+| (this push) | P4: end-to-end pipeline + results for 11 clips; registry re-seeded from labels |

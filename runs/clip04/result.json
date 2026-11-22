@@ -1,0 +1,1291 @@
+{
+  "clip_id": "clip04",
+  "camera_type": "moving_camera",
+  "video": {
+    "fps": 30.0,
+    "width": 478,
+    "height": 850,
+    "frames": 385
+  },
+  "processed_at": "2026-11-23T02:44:29",
+  "config": {
+    "pipeline": {
+      "detect_every": 2,
+      "vehicle_conf": 0.25,
+      "imgsz": 640,
+      "min_track_dets": 5,
+      "min_vehicle_area_frac": 0.004,
+      "relink_gap_frames": 30,
+      "relink_max_center_dist": 1.0,
+      "candidate_frames": 8,
+      "min_frame_gap": 4,
+      "ocr_top_k": 5,
+      "colour_frames": 3,
+      "plate_link_min_known": 6
+    },
+    "plate_detector": {
+      "conf": 0.5,
+      "min_plate_height_px": 16
+    },
+    "fusion": {
+      "tau_share": 0.6,
+      "tau_prob": 0.8,
+      "min_support": 1,
+      "cross_class_weight": 0.5,
+      "use_top3": true
+    },
+    "match": {
+      "weights": {
+        "plate": 0.7,
+        "colour": 0.15,
+        "type": 0.15
+      },
+      "lookalike_cost": 0.4,
+      "min_known_for_match": 5,
+      "t_abs": 67.5,
+      "t_margin": 4.0,
+      "top_k": 5,
+      "min_plate_sim_candidate": 0.5
+    }
+  },
+  "summary": {
+    "raw_tracks": 12,
+    "kept_tracks": 9,
+    "vehicles_after_relink": 9,
+    "plates_read": 3,
+    "decisions": {
+      "match": 2,
+      "no_confident_match": 7
+    }
+  },
+  "timing": {
+    "detect_track_s": 2.8,
+    "plates_s": 1.0,
+    "ocr_s": 0.2,
+    "assemble_s": 0.1,
+    "total_s": 4.1
+  },
+  "vehicles": [
+    {
+      "track_id": 1,
+      "merged_track_ids": [
+        1
+      ],
+      "first_frame": 0,
+      "last_frame": 142,
+      "first_time_s": 0.0,
+      "n_detections": 63,
+      "first_box": [
+        236,
+        382,
+        415,
+        535
+      ],
+      "type": {
+        "label": "SUV",
+        "vote_share": 0.821,
+        "detector_conf_mean": 0.568
+      },
+      "colour": {
+        "label": "grey",
+        "confidence": 0.612,
+        "per_frame": [
+          "grey",
+          "grey",
+          "grey"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "read",
+        "fused": "UK05D5883",
+        "unknown_positions": [],
+        "positions": [
+          {
+            "pos": 1,
+            "char": "U",
+            "confidence": 1.0,
+            "share": 1.0,
+            "support": 5,
+            "best_candidate": "U",
+            "frames": [
+              32,
+              36,
+              10,
+              40,
+              24
+            ]
+          },
+          {
+            "pos": 2,
+            "char": "K",
+            "confidence": 1.0,
+            "share": 1.0,
+            "support": 5,
+            "best_candidate": "K",
+            "frames": [
+              32,
+              36,
+              10,
+              40,
+              24
+            ]
+          },
+          {
+            "pos": 3,
+            "char": "0",
+            "confidence": 0.9998,
+            "share": 0.9999,
+            "support": 5,
+            "best_candidate": "0",
+            "frames": [
+              32,
+              36,
+              10,
+              40,
+              24
+            ]
+          },
+          {
+            "pos": 4,
+            "char": "5",
+            "confidence": 0.9997,
+            "share": 0.9999,
+            "support": 5,
+            "best_candidate": "5",
+            "frames": [
+              32,
+              36,
+              10,
+              40,
+              24
+            ]
+          },
+          {
+            "pos": 5,
+            "char": "D",
+            "confidence": 0.9639,
+            "share": 0.9805,
+            "support": 5,
+            "best_candidate": "D",
+            "frames": [
+              32,
+              36,
+              10,
+              40,
+              24
+            ]
+          },
+          {
+            "pos": 6,
+            "char": "5",
+            "confidence": 0.9997,
+            "share": 1.0,
+            "support": 5,
+            "best_candidate": "5",
+            "frames": [
+              32,
+              36,
+              10,
+              40,
+              24
+            ]
+          },
+          {
+            "pos": 7,
+            "char": "8",
+            "confidence": 0.9977,
+            "share": 0.9985,
+            "support": 5,
+            "best_candidate": "8",
+            "frames": [
+              32,
+              36,
+              10,
+              40,
+              24
+            ]
+          },
+          {
+            "pos": 8,
+            "char": "8",
+            "confidence": 0.9976,
+            "share": 0.9998,
+            "support": 5,
+            "best_candidate": "8",
+            "frames": [
+              32,
+              36,
+              10,
+              40,
+              24
+            ]
+          },
+          {
+            "pos": 9,
+            "char": "3",
+            "confidence": 0.9977,
+            "share": 0.9981,
+            "support": 5,
+            "best_candidate": "3",
+            "frames": [
+              32,
+              36,
+              10,
+              40,
+              24
+            ]
+          }
+        ],
+        "warnings": [],
+        "per_frame_reads": [
+          {
+            "frame": 32,
+            "text": "UK05D5883",
+            "height_px": 16,
+            "quality": 0.468,
+            "char_probs": [
+              0.9999,
+              1.0,
+              0.9996,
+              0.9991,
+              0.9832,
+              0.9992,
+              0.9979,
+              0.9943,
+              0.9982
+            ]
+          },
+          {
+            "frame": 36,
+            "text": "UK05D5883",
+            "height_px": 16,
+            "quality": 0.464,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9999,
+              0.9998,
+              0.9655,
+              0.9998,
+              0.9979,
+              0.9987,
+              0.9985
+            ]
+          },
+          {
+            "frame": 10,
+            "text": "UK05D5883",
+            "height_px": 16,
+            "quality": 0.462,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9999,
+              0.9999,
+              0.995,
+              0.9999,
+              0.9988,
+              0.999,
+              0.9977
+            ]
+          },
+          {
+            "frame": 40,
+            "text": "UK05D5883",
+            "height_px": 16,
+            "quality": 0.461,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9998,
+              1.0,
+              0.8915,
+              0.9999,
+              0.9994,
+              0.9991,
+              0.9982
+            ]
+          },
+          {
+            "frame": 24,
+            "text": "UK05D5883",
+            "height_px": 16,
+            "quality": 0.46,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9999,
+              0.9998,
+              0.9838,
+              0.9999,
+              0.9947,
+              0.9968,
+              0.9957
+            ]
+          }
+        ],
+        "plates_detected": 8
+      },
+      "decision": "match",
+      "decision_reason": "best match score 85.0, clear of the next candidate",
+      "candidates": [
+        {
+          "rank": 1,
+          "synthetic_vehicle_id": "SV417920",
+          "registration_number": "UK05D5883",
+          "match_score": 85.0,
+          "plate_score": 1.0,
+          "colour_score": 0.5,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 9 of 9 readable characters match exactly",
+            "colour close: observed grey, registry white",
+            "type compatible: observed SUV, registry car"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SV021818",
+          "registration_number": "UK05O5883",
+          "match_score": 78.9,
+          "plate_score": 0.913,
+          "colour_score": 0.5,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly, 1 look-alike",
+            "colour close: observed grey, registry white",
+            "type compatible: observed SUV, registry car"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SV026064",
+          "registration_number": "UK05D6883",
+          "match_score": 62.8,
+          "plate_score": 0.79,
+          "colour_score": 0.5,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly",
+            "plate differs from UK05D6883 (edit cost 1.0)",
+            "colour close: observed grey, registry white",
+            "type conflict: observed SUV, registry van"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SV064747",
+          "registration_number": "UK25D5884",
+          "match_score": 57.3,
+          "plate_score": 0.605,
+          "colour_score": 0.5,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 7 of 9 readable characters match exactly",
+            "plate differs from UK25D5884 (edit cost 2.0)",
+            "colour close: observed grey, registry white",
+            "type compatible: observed SUV, registry car"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SV566632",
+          "registration_number": "UK05D5785",
+          "match_score": 49.8,
+          "plate_score": 0.605,
+          "colour_score": 0.0,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 7 of 9 readable characters match exactly",
+            "plate differs from UK05D5785 (edit cost 2.0)",
+            "colour conflict: observed grey, registry orange",
+            "type compatible: observed SUV, registry car"
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": 2,
+      "merged_track_ids": [
+        2
+      ],
+      "first_frame": 0,
+      "last_frame": 360,
+      "first_time_s": 0.0,
+      "n_detections": 163,
+      "first_box": [
+        171,
+        400,
+        251,
+        476
+      ],
+      "type": {
+        "label": "SUV",
+        "vote_share": 0.57,
+        "detector_conf_mean": 0.636
+      },
+      "colour": {
+        "label": "grey",
+        "confidence": 0.552,
+        "per_frame": [
+          "grey",
+          "grey",
+          "grey"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "read",
+        "fused": "UP1?FT?44?",
+        "unknown_positions": [
+          4,
+          7,
+          10
+        ],
+        "positions": [
+          {
+            "pos": 1,
+            "char": "U",
+            "confidence": 0.843,
+            "share": 0.9264,
+            "support": 5,
+            "best_candidate": "U",
+            "frames": [
+              202,
+              206,
+              210,
+              186,
+              198
+            ]
+          },
+          {
+            "pos": 2,
+            "char": "P",
+            "confidence": 0.994,
+            "share": 0.9964,
+            "support": 5,
+            "best_candidate": "P",
+            "frames": [
+              202,
+              206,
+              210,
+              186,
+              198
+            ]
+          },
+          {
+            "pos": 3,
+            "char": "1",
+            "confidence": 0.9215,
+            "share": 0.9314,
+            "support": 5,
+            "best_candidate": "1",
+            "frames": [
+              202,
+              206,
+              210,
+              186,
+              198
+            ]
+          },
+          {
+            "pos": 4,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.3527,
+            "support": 5,
+            "best_candidate": "4",
+            "frames": []
+          },
+          {
+            "pos": 5,
+            "char": "F",
+            "confidence": 0.8572,
+            "share": 0.8056,
+            "support": 5,
+            "best_candidate": "F",
+            "frames": [
+              202,
+              206,
+              210,
+              198
+            ]
+          },
+          {
+            "pos": 6,
+            "char": "T",
+            "confidence": 0.8474,
+            "share": 0.9582,
+            "support": 4,
+            "best_candidate": "T",
+            "frames": [
+              206,
+              210,
+              186,
+              198
+            ]
+          },
+          {
+            "pos": 7,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.3993,
+            "support": 5,
+            "best_candidate": "9",
+            "frames": []
+          },
+          {
+            "pos": 8,
+            "char": "4",
+            "confidence": 0.8186,
+            "share": 0.8454,
+            "support": 5,
+            "best_candidate": "4",
+            "frames": [
+              202,
+              206,
+              210,
+              186,
+              198
+            ]
+          },
+          {
+            "pos": 9,
+            "char": "4",
+            "confidence": 0.9715,
+            "share": 0.9769,
+            "support": 5,
+            "best_candidate": "4",
+            "frames": [
+              202,
+              206,
+              210,
+              186,
+              198
+            ]
+          },
+          {
+            "pos": 10,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.526,
+            "support": 5,
+            "best_candidate": "4",
+            "frames": []
+          }
+        ],
+        "warnings": [
+          "reads disagree on length [9, 10]; aligned to 10 characters"
+        ],
+        "per_frame_reads": [
+          {
+            "frame": 202,
+            "text": "UP18F9444",
+            "height_px": 20,
+            "quality": 0.469,
+            "char_probs": [
+              0.7543,
+              0.9847,
+              0.8965,
+              0.3541,
+              0.6183,
+              0.5885,
+              0.9091,
+              0.9863,
+              0.9471
+            ]
+          },
+          {
+            "frame": 206,
+            "text": "UP11FT3440",
+            "height_px": 19,
+            "quality": 0.467,
+            "char_probs": [
+              0.6628,
+              0.9986,
+              0.9691,
+              0.6619,
+              0.9276,
+              0.9344,
+              0.4733,
+              0.9208,
+              0.9691,
+              0.5848
+            ]
+          },
+          {
+            "frame": 210,
+            "text": "UP18FT5444",
+            "height_px": 20,
+            "quality": 0.466,
+            "char_probs": [
+              0.9832,
+              0.9975,
+              0.9063,
+              0.6715,
+              0.9332,
+              0.788,
+              0.9554,
+              0.9478,
+              0.9892,
+              0.7229
+            ]
+          },
+          {
+            "frame": 186,
+            "text": "UP13BT5440",
+            "height_px": 19,
+            "quality": 0.465,
+            "char_probs": [
+              0.8913,
+              0.9975,
+              0.9787,
+              0.216,
+              0.724,
+              0.9357,
+              0.436,
+              0.8462,
+              0.9368,
+              0.365
+            ]
+          },
+          {
+            "frame": 198,
+            "text": "UP14FT9444",
+            "height_px": 19,
+            "quality": 0.465,
+            "char_probs": [
+              0.9246,
+              0.9918,
+              0.857,
+              0.8157,
+              0.9513,
+              0.7313,
+              0.852,
+              0.4674,
+              0.9761,
+              0.5619
+            ]
+          }
+        ],
+        "plates_detected": 8
+      },
+      "decision": "match",
+      "decision_reason": "best match score 73.6, clear of the next candidate",
+      "candidates": [
+        {
+          "rank": 1,
+          "synthetic_vehicle_id": "SV237860",
+          "registration_number": "UP16FT9444",
+          "match_score": 73.6,
+          "plate_score": 0.837,
+          "colour_score": 0.5,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 7 of 7 readable characters match exactly; 3 unreadable",
+            "colour close: observed grey, registry white",
+            "type compatible: observed SUV, registry car"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SV652690",
+          "registration_number": "UP16ZT9445",
+          "match_score": 58.0,
+          "plate_score": 0.615,
+          "colour_score": 0.5,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 6 of 7 readable characters match exactly; 3 unreadable",
+            "plate differs from UP16ZT9445 (edit cost 1.0)",
+            "colour close: observed grey, registry white",
+            "type compatible: observed SUV, registry car"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SV746304",
+          "registration_number": "UP76FT9444",
+          "match_score": 58.0,
+          "plate_score": 0.615,
+          "colour_score": 0.5,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 6 of 7 readable characters match exactly; 3 unreadable",
+            "plate differs from UP76FT9444 (edit cost 1.0)",
+            "colour close: observed grey, registry white",
+            "type compatible: observed SUV, registry car"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SV391325",
+          "registration_number": "UP16FT9458",
+          "match_score": 50.5,
+          "plate_score": 0.615,
+          "colour_score": 0.0,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 6 of 7 readable characters match exactly; 3 unreadable",
+            "plate differs from UP16FT9458 (edit cost 1.0)",
+            "colour conflict: observed grey, registry yellow",
+            "type compatible: observed SUV, registry car"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SV589688",
+          "registration_number": "UP16FT9944",
+          "match_score": 50.5,
+          "plate_score": 0.615,
+          "colour_score": 0.5,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 6 of 7 readable characters match exactly; 3 unreadable",
+            "plate differs from UP16FT9944 (edit cost 1.0)",
+            "colour close: observed grey, registry white",
+            "type conflict: observed SUV, registry bus"
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": 3,
+      "merged_track_ids": [
+        3
+      ],
+      "first_frame": 0,
+      "last_frame": 384,
+      "first_time_s": 0.0,
+      "n_detections": 188,
+      "first_box": [
+        0,
+        404,
+        98,
+        521
+      ],
+      "type": {
+        "label": "SUV",
+        "vote_share": 0.809,
+        "detector_conf_mean": 0.565
+      },
+      "colour": {
+        "label": "grey",
+        "confidence": 0.595,
+        "per_frame": [
+          "grey",
+          "grey",
+          "grey"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "read",
+        "fused": "HR55A?1605",
+        "unknown_positions": [
+          6
+        ],
+        "positions": [
+          {
+            "pos": 1,
+            "char": "H",
+            "confidence": 0.9961,
+            "share": 0.9979,
+            "support": 5,
+            "best_candidate": "H",
+            "frames": [
+              262,
+              232,
+              258,
+              228,
+              254
+            ]
+          },
+          {
+            "pos": 2,
+            "char": "R",
+            "confidence": 0.9865,
+            "share": 0.993,
+            "support": 5,
+            "best_candidate": "R",
+            "frames": [
+              262,
+              232,
+              258,
+              228,
+              254
+            ]
+          },
+          {
+            "pos": 3,
+            "char": "5",
+            "confidence": 0.9524,
+            "share": 0.82,
+            "support": 5,
+            "best_candidate": "5",
+            "frames": [
+              232,
+              258,
+              228,
+              254
+            ]
+          },
+          {
+            "pos": 4,
+            "char": "5",
+            "confidence": 0.8232,
+            "share": 0.6274,
+            "support": 5,
+            "best_candidate": "5",
+            "frames": [
+              262,
+              232,
+              228
+            ]
+          },
+          {
+            "pos": 5,
+            "char": "A",
+            "confidence": 0.9967,
+            "share": 0.9998,
+            "support": 5,
+            "best_candidate": "A",
+            "frames": [
+              262,
+              232,
+              258,
+              228,
+              254
+            ]
+          },
+          {
+            "pos": 6,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.5404,
+            "support": 5,
+            "best_candidate": "Q",
+            "frames": []
+          },
+          {
+            "pos": 7,
+            "char": "1",
+            "confidence": 0.9574,
+            "share": 0.9742,
+            "support": 5,
+            "best_candidate": "1",
+            "frames": [
+              262,
+              232,
+              258,
+              228,
+              254
+            ]
+          },
+          {
+            "pos": 8,
+            "char": "6",
+            "confidence": 0.8777,
+            "share": 0.9264,
+            "support": 5,
+            "best_candidate": "6",
+            "frames": [
+              262,
+              232,
+              258,
+              228,
+              254
+            ]
+          },
+          {
+            "pos": 9,
+            "char": "0",
+            "confidence": 0.9362,
+            "share": 0.9488,
+            "support": 5,
+            "best_candidate": "0",
+            "frames": [
+              262,
+              232,
+              258,
+              228,
+              254
+            ]
+          },
+          {
+            "pos": 10,
+            "char": "5",
+            "confidence": 0.8461,
+            "share": 0.8685,
+            "support": 5,
+            "best_candidate": "5",
+            "frames": [
+              262,
+              232,
+              258,
+              228,
+              254
+            ]
+          }
+        ],
+        "warnings": [],
+        "per_frame_reads": [
+          {
+            "frame": 262,
+            "text": "HR05AQ1605",
+            "height_px": 21,
+            "quality": 0.562,
+            "char_probs": [
+              0.9822,
+              0.9393,
+              0.578,
+              0.4846,
+              0.9849,
+              0.7439,
+              0.8028,
+              0.6202,
+              0.752,
+              0.5898
+            ]
+          },
+          {
+            "frame": 232,
+            "text": "HR55AD1605",
+            "height_px": 22,
+            "quality": 0.546,
+            "char_probs": [
+              0.9999,
+              0.9999,
+              0.9743,
+              0.9982,
+              0.9998,
+              0.6392,
+              0.998,
+              0.979,
+              0.9847,
+              0.995
+            ]
+          },
+          {
+            "frame": 258,
+            "text": "HR59AQ1605",
+            "height_px": 21,
+            "quality": 0.541,
+            "char_probs": [
+              0.9997,
+              0.9994,
+              0.9095,
+              0.4246,
+              0.9995,
+              0.7646,
+              0.995,
+              0.9367,
+              0.9572,
+              0.6709
+            ]
+          },
+          {
+            "frame": 228,
+            "text": "HR55AD1605",
+            "height_px": 22,
+            "quality": 0.538,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9981,
+              0.9993,
+              1.0,
+              0.9765,
+              0.9987,
+              0.9224,
+              0.9984,
+              0.9956
+            ]
+          },
+          {
+            "frame": 254,
+            "text": "HR59AQ1605",
+            "height_px": 21,
+            "quality": 0.531,
+            "char_probs": [
+              0.9992,
+              0.996,
+              0.9271,
+              0.5075,
+              0.9998,
+              0.7345,
+              0.999,
+              0.9405,
+              0.9969,
+              0.9912
+            ]
+          }
+        ],
+        "plates_detected": 8
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "no registry vehicle is close to the observed plate",
+      "candidates": []
+    },
+    {
+      "track_id": 4,
+      "merged_track_ids": [
+        4
+      ],
+      "first_frame": 0,
+      "last_frame": 14,
+      "first_time_s": 0.0,
+      "n_detections": 8,
+      "first_box": [
+        401,
+        381,
+        477,
+        535
+      ],
+      "type": {
+        "label": "truck",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.329
+      },
+      "colour": {
+        "label": "grey",
+        "confidence": 0.251,
+        "per_frame": [
+          "grey",
+          "grey",
+          "white"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 10,
+      "merged_track_ids": [
+        10
+      ],
+      "first_frame": 116,
+      "last_frame": 384,
+      "first_time_s": 3.87,
+      "n_detections": 134,
+      "first_box": [
+        192,
+        433,
+        240,
+        498
+      ],
+      "type": {
+        "label": "car",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.701
+      },
+      "colour": {
+        "label": "grey",
+        "confidence": 0.579,
+        "per_frame": [
+          "grey",
+          "grey",
+          "grey"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 15,
+      "merged_track_ids": [
+        15
+      ],
+      "first_frame": 150,
+      "last_frame": 174,
+      "first_time_s": 5.0,
+      "n_detections": 10,
+      "first_box": [
+        149,
+        441,
+        196,
+        488
+      ],
+      "type": {
+        "label": "car",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.443
+      },
+      "colour": {
+        "label": "grey",
+        "confidence": 0.273,
+        "per_frame": [
+          "grey",
+          "silver",
+          "grey"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 21,
+      "merged_track_ids": [
+        21
+      ],
+      "first_frame": 296,
+      "last_frame": 330,
+      "first_time_s": 9.87,
+      "n_detections": 18,
+      "first_box": [
+        0,
+        488,
+        44,
+        575
+      ],
+      "type": {
+        "label": "car",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.405
+      },
+      "colour": {
+        "label": "blue",
+        "confidence": 0.542,
+        "per_frame": [
+          "black",
+          "blue",
+          "blue"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 24,
+      "merged_track_ids": [
+        24
+      ],
+      "first_frame": 332,
+      "last_frame": 384,
+      "first_time_s": 11.07,
+      "n_detections": 24,
+      "first_box": [
+        168,
+        488,
+        219,
+        532
+      ],
+      "type": {
+        "label": "car",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.32
+      },
+      "colour": {
+        "label": "silver",
+        "confidence": 0.484,
+        "per_frame": [
+          "silver",
+          "silver",
+          "silver"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 30,
+      "merged_track_ids": [
+        30
+      ],
+      "first_frame": 352,
+      "last_frame": 384,
+      "first_time_s": 11.73,
+      "n_detections": 17,
+      "first_box": [
+        376,
+        427,
+        476,
+        536
+      ],
+      "type": {
+        "label": "bus",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.642
+      },
+      "colour": {
+        "label": "black",
+        "confidence": 0.614,
+        "per_frame": [
+          "black",
+          "black",
+          "black"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    }
+  ],
+  "note": "match_score is a heuristic ranking score, not a probability. '?' marks characters that could not be read."
+}

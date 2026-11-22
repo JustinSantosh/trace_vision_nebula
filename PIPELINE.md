@@ -1,6 +1,6 @@
 # TRACEVISION AI — Pipeline Design (Phase 1–3)
 
-**Status:** P1, P2 and P3 done (approved 2026-11-23). **P4 onwards waits for the owner's approval** (see §10). Updated 2026-11-23.
+**Status:** P1–P4 done. The owner approved all remaining phases on 2026-11-23 (see §10). Updated 2026-11-23.
 Problem: **AIML-01 Vehicle Identification and Traceability from CCTV Footage**. Related: [DECISIONS.md](DECISIONS.md) · [PROBLEMS.md](PROBLEMS.md) · [whatnext.md](whatnext.md) · [TEAM_TASKS.md](TEAM_TASKS.md)
 
 ---
@@ -195,7 +195,7 @@ evaluation/eval.py # computes §8 tables from runs/ + labels
 | **P1** ✅ | Done 2026-11-23: torch 2.14.1+cu126, ultralytics, lap, UVH-26 YOLOv11-S, `class_mapping.json`, smoke test on clip01/02, two-process OCR. See `reports/p1_vision_stack.md`. | Approved | Detector and tracker running |
 | **P2** ✅ | Done 2026-11-23: YOLOv8n, 60 epochs in 24 min. Leakage-free test mAP50 0.995 / mAP50-95 0.754. Checked on 6 clips. See `reports/p2_plate_detector.md`. | Approved | `models/weights/plate_yolov8n_quobotic.pt` (LFS) |
 | **P3** ✅ | Done 2026-11-23: `tracevision/{plates,fuse,match,calibrate}.py`, 26 unit tests, thresholds calibrated (holdout 62/62). See `reports/p3_fusion_and_matching.md`. | Approved | Tested judged algorithms |
-| **P4** | `pipeline.py` end to end on all clips → `result.json` | Nothing | First results |
+| **P4** ✅ | Done 2026-11-23: `tracevision/pipeline.py` on all 11 clips → `runs/<clip>/result.json`; 8/9 registered vehicles matched, 0 false matches. See `reports/p4_pipeline.md`. | Approved | First results |
 | **P5** | Report + FastAPI + UI | Install `fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool | Demo app, one report per clip |
 | **P6** | Evaluation on hand labels + degraded variants → final metrics | Nothing (needs the labels) | Results tables, README |
 

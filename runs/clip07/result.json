@@ -1,0 +1,329 @@
+{
+  "clip_id": "clip07",
+  "camera_type": "moving_camera",
+  "video": {
+    "fps": 30.0,
+    "width": 720,
+    "height": 1280,
+    "frames": 497
+  },
+  "processed_at": "2026-11-23T02:44:50",
+  "config": {
+    "pipeline": {
+      "detect_every": 2,
+      "vehicle_conf": 0.25,
+      "imgsz": 640,
+      "min_track_dets": 5,
+      "min_vehicle_area_frac": 0.004,
+      "relink_gap_frames": 30,
+      "relink_max_center_dist": 1.0,
+      "candidate_frames": 8,
+      "min_frame_gap": 4,
+      "ocr_top_k": 5,
+      "colour_frames": 3,
+      "plate_link_min_known": 6
+    },
+    "plate_detector": {
+      "conf": 0.5,
+      "min_plate_height_px": 16
+    },
+    "fusion": {
+      "tau_share": 0.6,
+      "tau_prob": 0.8,
+      "min_support": 1,
+      "cross_class_weight": 0.5,
+      "use_top3": true
+    },
+    "match": {
+      "weights": {
+        "plate": 0.7,
+        "colour": 0.15,
+        "type": 0.15
+      },
+      "lookalike_cost": 0.4,
+      "min_known_for_match": 5,
+      "t_abs": 67.5,
+      "t_margin": 4.0,
+      "top_k": 5,
+      "min_plate_sim_candidate": 0.5
+    }
+  },
+  "summary": {
+    "raw_tracks": 19,
+    "kept_tracks": 8,
+    "vehicles_after_relink": 6,
+    "plates_read": 0,
+    "decisions": {
+      "no_confident_match": 6
+    }
+  },
+  "timing": {
+    "detect_track_s": 4.1,
+    "plates_s": 1.2,
+    "ocr_s": 0.0,
+    "assemble_s": 0.0,
+    "total_s": 5.3
+  },
+  "vehicles": [
+    {
+      "track_id": 1,
+      "merged_track_ids": [
+        1
+      ],
+      "first_frame": 0,
+      "last_frame": 496,
+      "first_time_s": 0.0,
+      "n_detections": 248,
+      "first_box": [
+        224,
+        587,
+        271,
+        644
+      ],
+      "type": {
+        "label": "auto_rickshaw",
+        "vote_share": 0.884,
+        "detector_conf_mean": 0.677
+      },
+      "colour": {
+        "label": "orange",
+        "confidence": 0.548,
+        "per_frame": [
+          "orange",
+          "orange",
+          "orange"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 2,
+      "merged_track_ids": [
+        2,
+        28
+      ],
+      "first_frame": 0,
+      "last_frame": 496,
+      "first_time_s": 0.0,
+      "n_detections": 237,
+      "first_box": [
+        507,
+        563,
+        718,
+        735
+      ],
+      "type": {
+        "label": "SUV",
+        "vote_share": 0.96,
+        "detector_conf_mean": 0.587
+      },
+      "colour": {
+        "label": "blue",
+        "confidence": 0.539,
+        "per_frame": [
+          "blue",
+          "blue",
+          "blue"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "unreadable (plate too small: max 13 px < 16 px)",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 2
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate unreadable (plate too small: max 13 px < 16 px): cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 3,
+      "merged_track_ids": [
+        3
+      ],
+      "first_frame": 0,
+      "last_frame": 496,
+      "first_time_s": 0.0,
+      "n_detections": 244,
+      "first_box": [
+        284,
+        587,
+        355,
+        652
+      ],
+      "type": {
+        "label": "SUV",
+        "vote_share": 0.41,
+        "detector_conf_mean": 0.505
+      },
+      "colour": {
+        "label": "white",
+        "confidence": 0.334,
+        "per_frame": [
+          "silver",
+          "white",
+          "white"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 14,
+      "merged_track_ids": [
+        14,
+        42
+      ],
+      "first_frame": 118,
+      "last_frame": 384,
+      "first_time_s": 3.93,
+      "n_detections": 129,
+      "first_box": [
+        467,
+        645,
+        536,
+        714
+      ],
+      "type": {
+        "label": "car",
+        "vote_share": 0.988,
+        "detector_conf_mean": 0.526
+      },
+      "colour": {
+        "label": "silver",
+        "confidence": 0.282,
+        "per_frame": [
+          "grey",
+          "silver",
+          "silver"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 29,
+      "merged_track_ids": [
+        29
+      ],
+      "first_frame": 202,
+      "last_frame": 210,
+      "first_time_s": 6.73,
+      "n_detections": 5,
+      "first_box": [
+        641,
+        669,
+        720,
+        931
+      ],
+      "type": {
+        "label": "truck",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.42
+      },
+      "colour": {
+        "label": "silver",
+        "confidence": 0.68,
+        "per_frame": [
+          "silver",
+          "silver"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 65,
+      "merged_track_ids": [
+        65
+      ],
+      "first_frame": 476,
+      "last_frame": 496,
+      "first_time_s": 15.87,
+      "n_detections": 10,
+      "first_box": [
+        610,
+        745,
+        679,
+        804
+      ],
+      "type": {
+        "label": "car",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.495
+      },
+      "colour": {
+        "label": "grey",
+        "confidence": 0.39,
+        "per_frame": [
+          "grey",
+          "grey",
+          "grey"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    }
+  ],
+  "note": "match_score is a heuristic ranking score, not a probability. '?' marks characters that could not be read."
+}

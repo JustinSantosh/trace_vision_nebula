@@ -24,7 +24,7 @@
 - [x] 0D: 11 clips, frames, contact sheets, template, guide; labels verified (51 vehicles)
 - [x] All 10 spec scripts exist and pass a smoke run (health check 2026-11-23)
 - [ ] **0E:** run `degrade_clips.py` on the labelled clips, then the team marks `readable_after_degradation` for the ~25% review sample. *Can run now.*
-- [ ] **0F:** regenerate the registry from the real labels (`generate_synthetic_registry.py`), so the 9 `yes` vehicles become `evaluation_seed` rows with decoys. *Can run now; re-run after the car pair.*
+- [x] **0F:** registry regenerated from the real labels (9 `evaluation_seed` rows plus decoys). *Re-run after the car pair.*
 - [ ] **0D/0E:** `multi_frame_sequences.json` and `cross_camera_ground_truth.csv` are written once the label validator shows 0 errors (needs the car pair).
 - [ ] **Final Phase 0 report** (after the car pair)
 
@@ -32,7 +32,7 @@
 - [x] **P1** vision stack: torch + ultralytics on GPU, UVH-26 (14 classes) + `class_mapping.json`, OCR in a separate worker process (C5). `reports/p1_vision_stack.md`
 - [x] **P2** plate detector: YOLOv8n, **leakage-free mAP50 0.995**; plates under 16 px are reported unreadable (M8). `reports/p2_plate_detector.md`
 - [x] **P3** judged algorithms: **multi-frame fusion** (`?` instead of guesses) + **registry matching** (match score, reasons, match / ambiguous / no-match), 26 tests, calibrated (held-out 62/62 on synthetic cases). `reports/p3_fusion_and_matching.md`
-- [ ] **P4 (needs approval):** `tracevision/pipeline.py`, running clip → detect → track (with re-linking, C6) → best frames → plate detect → OCR worker → fuse → colour → match → `runs/<job>/result.json`, on all 11 clips. Includes the **colour estimator** (PIPELINE §5).
+- [x] **P4 done** (`reports/p4_pipeline.md`): ~~ `tracevision/pipeline.py`, running clip → detect → track (with re-linking, C6) → best frames → plate detect → OCR worker → fuse → colour → match → `runs/<job>/result.json`, on all 11 clips. Includes the **colour estimator** (PIPELINE §5).~~ 8/9 registered vehicles matched, 0 false matches.
 - [ ] **P5 (needs approval for installs):** FastAPI + investigator UI + **HTML/PDF report for every clip** (`fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool).
 - [ ] **P6:** evaluation on the labels, split by camera type (E10): plate character accuracy, **`?` rate against wrong-character rate**, type and colour accuracy, top-1/top-5, no-match precision, robustness on degraded variants, speed. Re-check the matcher thresholds on clip cases.
 

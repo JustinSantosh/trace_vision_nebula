@@ -1,0 +1,419 @@
+{
+  "clip_id": "clip11",
+  "camera_type": "moving_camera",
+  "video": {
+    "fps": 30.0,
+    "width": 2160,
+    "height": 3840,
+    "frames": 282
+  },
+  "processed_at": "2026-11-23T02:45:33",
+  "config": {
+    "pipeline": {
+      "detect_every": 2,
+      "vehicle_conf": 0.25,
+      "imgsz": 640,
+      "min_track_dets": 5,
+      "min_vehicle_area_frac": 0.004,
+      "relink_gap_frames": 30,
+      "relink_max_center_dist": 1.0,
+      "candidate_frames": 8,
+      "min_frame_gap": 4,
+      "ocr_top_k": 5,
+      "colour_frames": 3,
+      "plate_link_min_known": 6
+    },
+    "plate_detector": {
+      "conf": 0.5,
+      "min_plate_height_px": 16
+    },
+    "fusion": {
+      "tau_share": 0.6,
+      "tau_prob": 0.8,
+      "min_support": 1,
+      "cross_class_weight": 0.5,
+      "use_top3": true
+    },
+    "match": {
+      "weights": {
+        "plate": 0.7,
+        "colour": 0.15,
+        "type": 0.15
+      },
+      "lookalike_cost": 0.4,
+      "min_known_for_match": 5,
+      "t_abs": 67.5,
+      "t_margin": 4.0,
+      "top_k": 5,
+      "min_plate_sim_candidate": 0.5
+    }
+  },
+  "summary": {
+    "raw_tracks": 5,
+    "kept_tracks": 3,
+    "vehicles_after_relink": 2,
+    "plates_read": 1,
+    "decisions": {
+      "no_confident_match": 1,
+      "match": 1
+    }
+  },
+  "timing": {
+    "detect_track_s": 6.1,
+    "plates_s": 3.4,
+    "ocr_s": 0.1,
+    "assemble_s": 0.1,
+    "total_s": 9.8
+  },
+  "vehicles": [
+    {
+      "track_id": 1,
+      "merged_track_ids": [
+        1
+      ],
+      "first_frame": 0,
+      "last_frame": 222,
+      "first_time_s": 0.0,
+      "n_detections": 106,
+      "first_box": [
+        438,
+        1870,
+        2160,
+        3407
+      ],
+      "type": {
+        "label": "truck",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.754
+      },
+      "colour": {
+        "label": "brown",
+        "confidence": 0.531,
+        "per_frame": [
+          "brown",
+          "brown",
+          "brown"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "no own plate: the plate seen in this box belongs to the overlapping vehicle (track 2)",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 8
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no own plate: the plate seen in this box belongs to the overlapping vehicle (track 2): cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 2,
+      "merged_track_ids": [
+        2,
+        15
+      ],
+      "first_frame": 0,
+      "last_frame": 280,
+      "first_time_s": 0.0,
+      "n_detections": 86,
+      "first_box": [
+        246,
+        2830,
+        2082,
+        3840
+      ],
+      "type": {
+        "label": "truck",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.539
+      },
+      "colour": {
+        "label": "brown",
+        "confidence": 0.573,
+        "per_frame": [
+          "brown",
+          "brown",
+          "brown"
+        ],
+        "note": ""
+      },
+      "plate": {
+        "status": "read",
+        "fused": "KA53MH3895",
+        "unknown_positions": [],
+        "positions": [
+          {
+            "pos": 1,
+            "char": "K",
+            "confidence": 0.9982,
+            "share": 1.0,
+            "support": 3,
+            "best_candidate": "K",
+            "frames": [
+              226,
+              222,
+              230
+            ]
+          },
+          {
+            "pos": 2,
+            "char": "A",
+            "confidence": 0.9998,
+            "share": 0.9998,
+            "support": 3,
+            "best_candidate": "A",
+            "frames": [
+              226,
+              222,
+              230
+            ]
+          },
+          {
+            "pos": 3,
+            "char": "5",
+            "confidence": 0.9999,
+            "share": 1.0,
+            "support": 3,
+            "best_candidate": "5",
+            "frames": [
+              226,
+              222,
+              230
+            ]
+          },
+          {
+            "pos": 4,
+            "char": "3",
+            "confidence": 0.9485,
+            "share": 1.0,
+            "support": 3,
+            "best_candidate": "3",
+            "frames": [
+              226,
+              222,
+              230
+            ]
+          },
+          {
+            "pos": 5,
+            "char": "M",
+            "confidence": 0.9999,
+            "share": 1.0,
+            "support": 3,
+            "best_candidate": "M",
+            "frames": [
+              226,
+              222,
+              230
+            ]
+          },
+          {
+            "pos": 6,
+            "char": "H",
+            "confidence": 0.9999,
+            "share": 0.9999,
+            "support": 3,
+            "best_candidate": "H",
+            "frames": [
+              226,
+              222,
+              230
+            ]
+          },
+          {
+            "pos": 7,
+            "char": "3",
+            "confidence": 1.0,
+            "share": 1.0,
+            "support": 3,
+            "best_candidate": "3",
+            "frames": [
+              226,
+              222,
+              230
+            ]
+          },
+          {
+            "pos": 8,
+            "char": "8",
+            "confidence": 1.0,
+            "share": 1.0,
+            "support": 3,
+            "best_candidate": "8",
+            "frames": [
+              226,
+              222,
+              230
+            ]
+          },
+          {
+            "pos": 9,
+            "char": "9",
+            "confidence": 1.0,
+            "share": 1.0,
+            "support": 3,
+            "best_candidate": "9",
+            "frames": [
+              226,
+              222,
+              230
+            ]
+          },
+          {
+            "pos": 10,
+            "char": "5",
+            "confidence": 1.0,
+            "share": 1.0,
+            "support": 3,
+            "best_candidate": "5",
+            "frames": [
+              226,
+              222,
+              230
+            ]
+          }
+        ],
+        "warnings": [],
+        "per_frame_reads": [
+          {
+            "frame": 226,
+            "text": "KA53MH3895",
+            "height_px": 171,
+            "quality": 0.977,
+            "char_probs": [
+              0.9946,
+              1.0,
+              0.9999,
+              1.0,
+              1.0,
+              0.9999,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "frame": 222,
+            "text": "KA53MH3895",
+            "height_px": 172,
+            "quality": 0.976,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9999,
+              0.9999,
+              0.9999,
+              0.9999,
+              1.0,
+              1.0,
+              1.0,
+              0.9999
+            ]
+          },
+          {
+            "frame": 230,
+            "text": "KA53MH3895",
+            "height_px": 171,
+            "quality": 0.976,
+            "char_probs": [
+              1.0,
+              0.9993,
+              0.9999,
+              0.8455,
+              0.9999,
+              0.9999,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ],
+        "plates_detected": 3
+      },
+      "decision": "match",
+      "decision_reason": "best match score 70.0, clear of the next candidate",
+      "candidates": [
+        {
+          "rank": 1,
+          "synthetic_vehicle_id": "SV144143",
+          "registration_number": "KA53MH3895",
+          "match_score": 70.0,
+          "plate_score": 1.0,
+          "colour_score": 0.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 10 of 10 readable characters match exactly",
+            "colour conflict: observed brown, registry red",
+            "type conflict: observed truck, registry SUV"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SV117951",
+          "registration_number": "KA53MH3890",
+          "match_score": 64.2,
+          "plate_score": 0.81,
+          "colour_score": 0.0,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from KA53MH3890 (edit cost 1.0)",
+            "colour conflict: observed brown, registry red",
+            "type compatible: observed truck, registry van"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SV258008",
+          "registration_number": "KA53MH3896",
+          "match_score": 56.7,
+          "plate_score": 0.81,
+          "colour_score": 0.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from KA53MH3896 (edit cost 1.0)",
+            "colour conflict: observed brown, registry red",
+            "type conflict: observed truck, registry SUV"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SV106580",
+          "registration_number": "KA53MH0890",
+          "match_score": 44.8,
+          "plate_score": 0.64,
+          "colour_score": 0.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 8 of 10 readable characters match exactly",
+            "plate differs from KA53MH0890 (edit cost 2.0)",
+            "colour conflict: observed brown, registry red",
+            "type conflict: observed truck, registry SUV"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SV161201",
+          "registration_number": "KA53MH8855",
+          "match_score": 44.8,
+          "plate_score": 0.64,
+          "colour_score": 0.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 8 of 10 readable characters match exactly",
+            "plate differs from KA53MH8855 (edit cost 2.0)",
+            "colour conflict: observed brown, registry white",
+            "type conflict: observed truck, registry SUV"
+          ]
+        }
+      ]
+    }
+  ],
+  "note": "match_score is a heuristic ranking score, not a probability. '?' marks characters that could not be read."
+}

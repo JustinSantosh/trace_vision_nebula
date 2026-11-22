@@ -47,3 +47,6 @@ TRACEVISION_DATA/models/weights/*
 !TRACEVISION_DATA/models/weights/plate_yolov8n_quobotic.pt
 # ultralytics label caches
 *.cache
+# Pipeline run outputs (images); result.json files are shared
+runs/**/vehicles/
+runs/_last_run.log
