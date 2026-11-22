@@ -18,7 +18,7 @@ The original D1/D2 Hugging Face repos are empty; see [PROBLEMS.md](PROBLEMS.md) 
 | 2 | [witvix/indian-truck-license-plates-sample](https://huggingface.co/datasets/witvix/indian-truck-license-plates-sample) | `TRACEVISION_DATA/raw/ocr_corpus/witvix/` | Fill in the HF access form, then download the repo. |
 | 3 ✅ | [zenitsu09/indian-number-plate](https://huggingface.co/datasets/zenitsu09/indian-number-plate) | `TRACEVISION_DATA/raw/ocr_corpus/zenitsu09/` | Download `data/train-*.parquet` (6 MB) from the dataset's Files tab. |
 
-After the downloads, the next steps are: re-run the audit → `validate_plate_dataset.py` (including duplicate checks between b8iqo and Quobotic, and between Payals and zenitsu09) → Colab `data.yaml` + OCR `ground_truth.csv` → Awiros feasibility check.
+After the downloads, the next steps are: re-run the audit → `validate_plate_dataset.py` (including the near-duplicate check across Quobotic's splits) → Colab `data.yaml` + OCR `ground_truth.csv` → Awiros feasibility check.
 
 Raw data, video frames, plate crops and model weights are deliberately **not** committed. This is because of their size, their licences and the real number plates they contain.
 
