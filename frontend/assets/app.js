@@ -1,6 +1,6 @@
 ﻿"use strict";
 /* TraceVision investigator UI.
- * Three views (Cases, Cross-camera, Performance) plus a case view. Every finding shown in the middle column has its
+ * Four views (Cases, Cross-camera, Performance, Enforcement) plus a case view. Every finding shown in the middle column has its
  * backing in the side panel: the stored reads, votes, thresholds and candidate reasons it rests on. Nothing is
  * re-scored here; values come from result.json, /api/overview and /api/review as stored. */
 (() => {
@@ -9,6 +9,7 @@
   const S = {
     overview: null, review: null, route: null, result: null, files: [], cross: [], vid: null, finding: "plate",
     boxes: new Map(), req: 0, file: null, jobTimer: null, cc: { pair: null, link: null, results: {} }, perfKey: null,
+    viol: null, rec: new Map(), meta: null, enfSel: null, enfManual: false, enfFiles: {},
   };
 
   /* ---------------------------------------------------------------- helpers */
@@ -29,6 +30,14 @@
   const clock = (s) => (Number.isFinite(s) && s >= 0 ? Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0") : "—");
   const cap = (s) => String(s || "").replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase());
   const plural = (n, word) => n + " " + word + (n === 1 ? "" : "s");
+  /* JSON call that returns the error text instead of throwing (lookups, challans, reviews). */
+  async function apiCall(url, opts = {}) {
+    const r = await fetch(url, Object.assign({ cache: "no-store" }, opts));
+    let data = null;
+    try { data = await r.json(); } catch (_) { /* empty body */ }
+    return { ok: r.ok, status: r.status, data, error: data && data.detail ? data.detail : "HTTP " + r.status };
+  }
+  const inr = (n) => "₹" + Number(n || 0).toLocaleString("en-IN");
   async function getJSON(url) {
     const r = await fetch(url, { cache: "no-store" });
     if (!r.ok) throw new Error(url + " returned HTTP " + r.status);
@@ -78,12 +87,13 @@
   function route() {
     const h = location.hash.replace(/^#\/?/, "");
     const parts = h.split("/");
-    const views = ["cases", "case", "crosscam", "performance"];
+    const views = ["cases", "case", "crosscam", "performance", "enforcement"];
     let view = "cases";
     if ((parts[0] === "case" || parts[0] === "results") && parts.length === 3 &&
         ((parts[1] === "runs" && /^clip\d+$/.test(parts[2])) || (parts[1] === "jobs" && /^[0-9a-f]{12}$/i.test(parts[2])))) view = "case";
     else if (parts[0] === "crosscam") view = "crosscam";
     else if (parts[0] === "performance" || parts[0] === "insights") view = "performance";
+    else if (parts[0] === "enforcement") view = "enforcement";
     views.forEach((v) => { $("view-" + v).hidden = v !== view; });
     document.querySelectorAll(".tabs a").forEach((a) => {
       const on = a.dataset.tab === (view === "case" ? "cases" : view);
@@ -91,10 +101,11 @@
     });
     if (view !== "case") $("video").pause();
     if (view !== "crosscam") { $("va").pause(); $("vb").pause(); }
-    document.title = { cases: "Cases", case: parts[2] || "Case", crosscam: "Cross-camera", performance: "Performance" }[view] + " · TraceVision";
+    document.title = { cases: "Cases", case: parts[2] || "Case", crosscam: "Cross-camera", performance: "Performance", enforcement: "Enforcement" }[view] + " · TraceVision";
     if (view === "case") openCase(parts[1], parts[2]);
     if (view === "crosscam") openCrosscam();
     if (view === "performance") openPerformance();
+    if (view === "enforcement") openEnforcement();
     window.scrollTo(0, 0);
   }
 
@@ -237,13 +248,15 @@
     $("case-meta").textContent = "";
     $("case-links").replaceChildren();
     try {
-      const [result, files, cross] = await Promise.all([
+      const [result, files, cross, viol] = await Promise.all([
         getJSON(base + "/result.json"),
         getJSON(base + "/files").catch(() => []),
         kind === "runs" ? getJSON(base + "/crosscam").catch(() => ({ links: [] })) : { links: [] },
+        getJSON(base + "/violations").catch(() => null),
       ]);
       if (req !== S.req) return;
       S.route = { kind, id, base }; S.result = result; S.files = Array.isArray(files) ? files : []; S.cross = cross.links || [];
+      S.viol = viol;
       renderCase();
     } catch (e) {
       if (req !== S.req) return;
@@ -265,7 +278,8 @@
     const when = r.processed_at ? new Date(r.processed_at).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }) : null;
     $("case-title").textContent = r.clip_id || S.route.id;
     $("case-meta").textContent = [cap(r.camera_type || "camera unknown"), plural(vehicles.length, "vehicle"),
-      Number.isFinite(dur) ? clock(dur) + " at " + v.fps + " fps" : null, r.timing ? "analysed in " + r.timing.total_s + " s" : null, when].filter(Boolean).join(" · ");
+      Number.isFinite(dur) ? clock(dur) + " at " + v.fps + " fps" : null, r.timing ? "analysed in " + r.timing.total_s + " s" : null, when,
+      S.viol && S.viol.assessed ? "wrong-side check: " + plural(S.viol.violations.length, "suspected violation") + " in " + S.viol.checked_vehicles + " vehicles" : null].filter(Boolean).join(" · ");
     const rep = S.route.kind === "runs" ? "/runs/" + S.route.id + "/report" : "/jobs/" + S.route.id + "/report";
     $("case-links").replaceChildren(el("a", { href: rep, target: "_blank", rel: "noopener", text: "Report" }), el("a", { href: rep + ".pdf", target: "_blank", rel: "noopener", text: "PDF" }));
     $("vehicle-count").textContent = "· " + vehicles.length;
@@ -344,6 +358,10 @@
     ];
     const link = S.cross.find((l) => l.track_id === v.track_id);
     if (link) out.push({ id: "cross", label: "Other camera", value: link.other_clip + " · T" + link.other_track, meta: link.link });
+    const dir = directionOf(v);
+    if (dir) out.push({ id: "direction", label: "Direction", value: dir.vio ? "Wrong-side suspected" : dir.m.method === "head_on_pass" ? (dir.m.head_on ? "Oncoming (allowed here)" : "Nothing to flag") : "With the traffic flow",
+      meta: dir.vio ? cap(dir.vio.review.status) + " review" : dir.m.method === "head_on_pass" ? (dir.m.head_on ? "head-on pass" : "orientation checked") : "checked in " + dir.m.zone });
+    if (v.decision === "match" && top) out.push({ id: "record", label: "Vehicle record", value: "Look up " + top.registration_number, meta: "synthetic · logged" });
     return out;
   }
 
@@ -351,7 +369,7 @@
     S.finding = id;
     document.querySelectorAll(".finding").forEach((b) => b.setAttribute("aria-current", String(b.dataset.f === id)));
     const v = vehicleById(S.vid);
-    const render = { plate: evPlate, identity: evIdentity, type: evType, colour: evColour, seen: evSeen, cross: evCross }[id];
+    const render = { plate: evPlate, identity: evIdentity, type: evType, colour: evColour, seen: evSeen, cross: evCross, direction: evDirection, record: evRecord }[id];
     $("evidence").replaceChildren(...render(v).flat().filter(Boolean));
     $("evidence").scrollTop = 0;
   }
@@ -472,6 +490,344 @@
       section("Why they're linked", null, el("ul", { class: "reasons" }, ...(l.evidence || []).map((r) => el("li", { class: X.classifyReason(r), text: r })))),
       section("Pooled from both cameras", null, kv([["Plate", f.plate ? plateEl(f.plate) : null], ["Reads pooled", f.reads_pooled], ["Decision", f.decision ? tag(f.decision) : null], ["Match score", f.match_score]])),
       el("a", { class: "more", href: "#crosscam", text: "Open cross-camera view" })];
+  }
+
+  /* ---- evidence: wrong-side driving */
+  function directionOf(v) {
+    if (!S.viol || !S.viol.assessed) return null;
+    const m = (S.viol.per_vehicle || {})[String(v.track_id)];
+    if (!m) return null;
+    return { m, vio: (S.viol.violations || []).find((x) => x.track_id === v.track_id) };
+  }
+  const deg = (u) => Math.round(Math.acos(Math.max(-1, Math.min(1, u))) * 180 / Math.PI);
+  function arrow(dirv, cls) {
+    const a = Math.atan2(dirv[1], dirv[0]) * 180 / Math.PI;
+    return el("span", { class: "dir-arrow " + (cls || ""), style: "transform:rotate(" + a + "deg)", "aria-hidden": "true", text: "→" });
+  }
+  function dirs(m, bad) {
+    return el("div", { class: "dirs" },
+      el("div", null, arrow(m.allowed_direction), el("small", { text: "permitted" })),
+      el("div", null, arrow(m.observed_direction, bad ? "bad" : "good"), el("small", { text: "observed" })));
+  }
+  const reviewTag = (st) => el("span", { class: "tag " + (st === "confirmed" ? "match" : st === "pending" ? "unsure" : ""), text: cap(st) });
+  /* Head-on pass (moving camera): what the orientation check measured. */
+  function headOnNodes(m, fps) {
+    if (!m.head_on) return [kv([["Crops checked", m.samples], ["Result", "no head-on pass (front then rear not both seen)"]])];
+    return [el("div", { class: "dirs" },
+        el("div", null, el("span", { class: "dir-arrow bad", "aria-hidden": "true", text: "↓" }), el("small", { text: "front first" })),
+        el("div", null, el("span", { class: "dir-arrow", "aria-hidden": "true", text: "↑" }), el("small", { text: "then rear" }))),
+      kv([["Front seen", clock(m.front_frames[0] / fps) + " – " + clock(m.front_frames[m.front_frames.length - 1] / fps) + " (" + m.front_frames.length + " crops)"],
+        ["Rear seen", clock(m.rear_frames[0] / fps) + " – " + clock(m.rear_frames[m.rear_frames.length - 1] / fps) + " (" + m.rear_frames.length + " crops)"],
+        ["Grew while facing camera", m.growth + "×"], ["Front score (median)", pct(m.p_front_median)], ["Rear score (median)", pct(m.p_rear_median)]])];
+  }
+  function evDirection(v) {
+    const { m, vio } = directionOf(v);
+    const fps = num(S.result.video && S.result.video.fps) || 30;
+    if (m.method === "head_on_pass") {
+      const out = [evHead("Evidence · direction", vio ? "Wrong-side driving suspected" : m.head_on ? "Passed the camera head-on" : "No head-on pass",
+        vio ? "It came towards the camera facing it, then went past (its rear seen after). On this road that is against the flow. It stays a suspicion until reviewed."
+          : m.head_on ? "Front seen first, then rear: normal oncoming traffic on a two-way road." : "Front and rear were not both seen in that order, so nothing to flag.")];
+      out.push(section("Measured", "moving camera · vehicle orientation", ...headOnNodes(m, fps)));
+      out.push(section("Rule", null, el("ul", { class: "reasons" },
+        el("li", { class: "partial", text: "CLIP scores each crop: front (headlights, grille) vs rear (red tail lights, boot)" }),
+        el("li", { class: "partial", text: "flagged when the front is seen clearly while it grows at least 2×, then the rear" }),
+        el("li", { class: S.viol.layout === "one_way" ? "conflicting" : "partial", text: S.viol.layout_note || "" }))));
+      if (vio) {
+        out.push(section("Review", null, kv([["Status", reviewTag(vio.review.status)], ["Registration", vio.registration_number || "no confident match"]])),
+          el("a", { class: "more", href: "#enforcement", text: "Open the review queue" }),
+          el("button", { class: "more", type: "button", text: "Jump to where it faces the camera", onclick: () => seekFrame(m.front_frames[Math.floor(m.front_frames.length / 2)]) }),
+          el("button", { class: "more", type: "button", text: "Jump to where it has passed", onclick: () => seekFrame(m.rear_frames[Math.floor(m.rear_frames.length / 2)]) }));
+      }
+      if (S.viol.camera_description) out.push(el("p", { class: "ev-note", text: S.viol.camera_description }));
+      return out;
+    }
+    const st = S.viol.stabilisation;
+    const out = [evHead("Evidence · direction", vio ? "Wrong-side driving suspected" : "Moving with the traffic flow",
+      vio ? "Inside the " + m.zone + ", this vehicle moves against the permitted direction. It stays a suspicion until reviewed."
+        : "Inside the " + m.zone + ", this vehicle moves the permitted way.")];
+    out.push(section("Measured", "in the camera's reference view", dirs(m, vio),
+      kv([["Angle off the permitted direction", deg(m.cos_to_allowed) + "°"], ["Steps moving against the flow", pct(m.against_flow_share)],
+        ["Distance covered", pct(m.displacement_frac) + " of frame height"], ["Points in zone", m.points],
+        ["Time", clock(m.first_frame / fps) + " – " + clock(m.last_frame / fps)]])));
+    out.push(section("Rule", null, el("ul", { class: "reasons" },
+      el("li", { class: m.cos_to_allowed <= -0.5 ? "conflicting" : "supporting", text: "flagged only when more than 120° off the permitted direction" }),
+      el("li", { class: m.against_flow_share >= 0.7 ? "conflicting" : "supporting", text: "and only when at least 70% of short steps go against the flow" }),
+      st ? el("li", { class: "partial", text: "camera pan removed first (up to " + st.max_pan_px + " px; " + st.frames_usable + " of " + st.frames_sampled + " sampled frames usable)" }) : null)));
+    if (vio) {
+      out.push(section("Review", null, kv([["Status", reviewTag(vio.review.status)],
+        ["Registration", vio.registration_number || "no confident match"]])),
+        el("a", { class: "more", href: "#enforcement", text: "Open the review queue" }),
+        el("button", { class: "more", type: "button", text: "Jump to the evidence frame", onclick: () => seekFrame(vio.evidence_frames[1]) }));
+    }
+    if (S.viol.camera_description) out.push(el("p", { class: "ev-note", text: S.viol.camera_description }));
+    return out;
+  }
+
+  /* ---- evidence: vehicle record (synthetic, logged) */
+  function lookupForm(onGo, label) {
+    const reason = el("select", { class: "field", "aria-label": "Reason for this lookup (optional)" },
+      el("option", { value: "", text: "Reason (optional, logged)" }),
+      ...((S.meta && S.meta.reasons) || []).map((r) => el("option", { value: r, text: r })));
+    const msg = el("p", { class: "ev-note", role: "status" });
+    const go = el("button", { class: "btn", type: "button", text: label || "Look up", onclick: () => onGo(reason.value, msg) });
+    return el("div", { class: "lookup" }, reason, go, msg);
+  }
+  /* Fetch and show the full record for `reg` into `holder`, with the issue-challan form. `context` ties it to a case vehicle. */
+  async function loadRecord(reg, context, holder, reason, msg) {
+    if (msg) msg.textContent = "Looking up…";
+    const q = new URLSearchParams({ reason: reason || "" });
+    if (context) q.set("context", context);
+    const r = await apiCall("/api/intel/" + encodeURIComponent(reg) + "?" + q);
+    if (!r.ok) { if (msg) msg.textContent = r.error; else holder.replaceChildren(el("p", { class: "ev-note", text: r.error })); return null; }
+    S.rec.set(reg, r.data);
+    holder.replaceChildren(...recordNodes(r.data, context, () => loadRecord(reg, context, holder, "Refresh after change")));
+    return r.data;
+  }
+  /* Record holder for `reg`: the cached record, or the lookup form. `context` (runs/clip03:T1 or "") ties it to a case vehicle. */
+  function recordHolder(reg, context, note) {
+    const holder = el("div");
+    if (S.rec.has(reg)) holder.replaceChildren(...recordNodes(S.rec.get(reg), context, () => loadRecord(reg, context, holder, "Refresh after change")));
+    else holder.replaceChildren(lookupForm((reason, msg) => loadRecord(reg, context, holder, reason, msg), "Show record and challans"),
+      el("p", { class: "ev-note", text: note }));
+    return holder;
+  }
+  function evRecord(v) {
+    const reg = v.candidates.slice().sort((a, b) => a.rank - b.rank)[0].registration_number;
+    const context = S.route.kind + "/" + S.route.id + ":T" + v.track_id;
+    const head = evHead("Vehicle record · synthetic", plateEl(reg, true), "Attached because this vehicle is a confident registry match.");
+    return [head, recordHolder(reg, context, "Each lookup is written to the audit log with this case.")];
+  }
+  /* Cross-camera: a record is attached only when the plate pooled from both cameras gives a confident registry match.
+   * The lookup is tied to whichever camera's own vehicle is also a confident match to that record, so the server can check it. */
+  function ccRecord(l) {
+    const f = l.final;
+    if (!f || f.decision !== "match" || !f.registry_top1) {
+      return section("Registry history and e-challans", null, el("p", { class: "muted", text: "Not shown: the pooled plate isn't a confident registry match, so no record is attached to this vehicle." }));
+    }
+    const reg = f.registry_top1;
+    const own = (r, side) => {
+      const veh = r && (r.vehicles || []).find((x) => x.track_id === l[side].track_id);
+      const top = veh && (veh.candidates || []).slice().sort((a, b) => a.rank - b.rank)[0];
+      return veh && veh.decision === "match" && top && top.registration_number === reg ? "runs/" + l[side].clip_id + ":T" + l[side].track_id : null;
+    };
+    const context = own(S.cc.ra, "a") || own(S.cc.rb, "b") || "";
+    return el("section", { class: "ev-section" },
+      el("div", { class: "ev-kicker", text: "Vehicle record · synthetic" }),
+      el("h3", null, plateEl(reg, true)),
+      el("p", { class: "ev-summary", text: "Registration details, compliance and e-challan history for the record both cameras matched. You can issue a simulated challan from here." }),
+      recordHolder(reg, context, "Each lookup is written to the audit log" + (context ? " with " + context.replace("runs/", "") + "." : " as a cross-camera lookup.")));
+  }
+  const COMPLIANCE = { valid: ["Valid", "match"], expiring: ["Expiring", "unsure"], expired: ["Expired", "fail"], unknown: ["Unknown", ""] };
+  function compl(c) {
+    const [t, cls] = COMPLIANCE[c.state] || COMPLIANCE.unknown;
+    return el("span", null, el("span", { class: "tag " + cls, text: t }), " ", el("small", { class: "muted", text: c.until || "" }));
+  }
+  const statusTag = (s) => el("span", { class: "tag " + (s === "Paid" ? "match" : s === "Pending" ? "unsure" : ""), text: s });
+  async function cancelChallan(id, after) {
+    const r = await apiCall("/api/challans/cancel", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ challan_id: id }) });
+    if (r.ok && after) await after();
+    return r;
+  }
+  function issueForm(rec, context, after) {
+    const fines = (S.meta && S.meta.violations) || {};
+    const vio = el("select", { class: "field", "aria-label": "Violation" }, el("option", { value: "", text: "Choose a violation…" }),
+      ...Object.entries(fines).map(([k, f]) => el("option", { value: k, text: k + " · " + inr(f) })));
+    const fine = el("input", { class: "field", type: "number", min: 1, max: 100000, step: 1, placeholder: "Fine (₹)", "aria-label": "Fine in rupees" });
+    vio.addEventListener("change", () => { fine.value = fines[vio.value] || ""; });
+    const where = el("input", { class: "field", maxlength: 120, placeholder: "Location", "aria-label": "Location",
+      value: context ? context.split(":")[0].split("/")[1] + " (camera)" : "" });
+    const note = el("input", { class: "field", maxlength: 300, placeholder: "Note (optional)", "aria-label": "Note" });
+    const msg = el("p", { class: "ev-note", role: "status" });
+    const go = el("button", { class: "btn", type: "button", text: "Issue challan", onclick: async () => {
+      if (!vio.value) { msg.textContent = "Choose a violation."; vio.focus(); return; }
+      go.disabled = true;
+      const r = await apiCall("/api/challans", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ registration_number: rec.vehicle.registration_number, violation: vio.value, fine_inr: fine.value, location: where.value, note: note.value, context }) });
+      go.disabled = false;
+      if (!r.ok) { msg.textContent = r.error; return; }
+      await after();
+    } });
+    return section("Issue a challan", "simulated · never sent anywhere",
+      el("div", { class: "lookup", style: "margin-top:0" }, vio, el("div", { class: "two" }, fine, where), note, go, msg));
+  }
+  function recordNodes(rec, context, after) {
+    const v = rec.vehicle, sum = rec.challan_summary;
+    const out = [el("p", { class: "demo-banner small", text: rec.notice })];
+    out.push(el("div", { class: "rec-stats" },
+      el("div", null, el("b", { text: sum.pending }), el("span", { text: "pending challans" })),
+      el("div", null, el("b", { text: inr(sum.pending_amount_inr) }), el("span", { text: "outstanding" })),
+      el("div", null, el("b", { text: sum.total }), el("span", { text: "on record" }))));
+    out.push(section("Registered owner", null,
+      kv([["Name", rec.owner.name], ["Owner", rec.owner.type + (rec.owner.serial ? " · owner no. " + rec.owner.serial : "")]])));
+    out.push(section("Vehicle", null, kv([["Make / model", [v.manufacturer, v.model].filter(Boolean).join(" ")], ["Model year", v.model_year],
+      ["Type", v.vehicle_type], ["Class", v.vehicle_class], ["Fuel", v.fuel_type], ["Colour", cap(v.colour)], ["RTO", v.rto], ["Registered", v.registration_date]])));
+    out.push(section("Compliance", "checked against today", kv([["Registration / fitness", compl(rec.compliance.registration)],
+      ["Insurance", compl(rec.compliance.insurance)], ["PUC", compl(rec.compliance.puc)]])));
+    const t = el("table", { class: "reads challans" }, el("thead", null, el("tr", null, el("th", { text: "Violation" }), el("th", { class: "num", text: "Fine" }), el("th", { text: "Status" }))));
+    const body = el("tbody");
+    rec.challans.forEach((c) => {
+      const sim = c.source === "simulated_issued";
+      body.append(el("tr", { title: c.challan_id + " · " + c.issuing_authority + (c.note ? " · " + c.note : "") },
+        el("td", null, c.violation, sim ? el("span", { class: "tag plain sim", text: "issued here" }) : null,
+          el("small", { class: "sub", text: c.date.replace("T", " ").slice(0, 16) + " · " + c.location + " · " + c.challan_id })),
+        el("td", { class: "num", text: inr(c.fine_inr) }),
+        el("td", null, statusTag(c.status), sim && after ? el("button", { class: "more", type: "button", text: "Cancel", title: "Cancel this simulated challan",
+          onclick: () => cancelChallan(c.challan_id, after) }) : null)));
+    });
+    t.append(body);
+    out.push(section("e-Challan history", rec.challans.length ? "newest first" : null, rec.challans.length ? t : el("p", { class: "muted", text: "No challans on record." })));
+    if (after) out.push(issueForm(rec, context, after));
+    return out;
+  }
+
+  /* ---------------------------------------------------------------- enforcement */
+  const pad = (text) => el("p", { class: "muted", style: "padding:14px 16px", text });
+  async function openEnforcement() {
+    $("ws-list").replaceChildren(el("li", { class: "muted", style: "padding:12px", text: "Loading…" }));
+    let data;
+    try { data = await getJSON("/api/violations"); } catch (e) {
+      $("ws-list").replaceChildren(el("li", { class: "muted", style: "padding:12px", text: "Couldn't load violations. " + e.message })); return;
+    }
+    const as = data.assessed_clips || [];
+    $("ws-scope").textContent = "· " + plural(as.length, "clip") + " · " + as.reduce((t, c) => t + c.checked_vehicles, 0) + " vehicles checked";
+    const vs = data.violations || [];
+    await Promise.all([...new Set(vs.map((x) => x.run))].filter((r) => !S.enfFiles[r]).map(async (r) => {
+      S.enfFiles[r] = await getJSON("/data/" + r + "/files").catch(() => []);
+    }));
+    /* Pending items form the queue; reviewed ones leave it and fold into a "Reviewed" group (still reachable to reset). */
+    const pending = vs.filter((x) => x.review.status === "pending");
+    const reviewed = vs.filter((x) => x.review.status !== "pending");
+    S.enfPending = pending.map((x) => x.violation_id);
+    const row = (x) => el("li", { class: x.review.status === "pending" ? null : "reviewed-row" }, el("button", { class: "metric", type: "button", "data-k": x.violation_id, onclick: () => selectViolation(x) },
+      el("b", { class: x.registration_number ? "mono-sm" : "none", text: x.registration_number || "No plate match" }),
+      el("span", null, x.label + " · " + x.clip_id + " T" + x.track_id, el("small", { text: [cap(x.colour), x.vehicle_type, clock(x.time_s[0]) + "–" + clock(x.time_s[1])].filter(Boolean).join(" · ") })),
+      reviewTag(x.review.status)));
+    const rows = pending.map(row);
+    if (vs.length && !pending.length) rows.push(el("li", { class: "muted", style: "padding:12px 14px", text: "All caught up: every suspected violation has been reviewed." }));
+    if (reviewed.length) {
+      const toggle = el("button", { class: "group-toggle", type: "button", "aria-expanded": String(!!S.enfShowReviewed),
+        onclick: () => { S.enfShowReviewed = !S.enfShowReviewed; openEnforcement(); } },
+        (S.enfShowReviewed ? "▾ " : "▸ ") + "Reviewed (" + reviewed.length + ")");
+      rows.push(el("li", null, toggle));
+      if (S.enfShowReviewed) rows.push(...reviewed.map(row));
+    }
+    const fixedCams = as.filter((c) => c.method === "zone_direction");
+    const moving = as.filter((c) => c.method === "head_on_pass");
+    const checked = fixedCams.map((c) => el("li", null, el("a", { class: "metric", href: "#case/" + c.run },
+      el("b", { text: String(c.flagged) }),
+      el("span", null, c.clip_id + " · fixed camera", el("small", { text: c.checked_vehicles + " vehicles checked in the zone" + (c.stabilisation ? " · camera pan up to " + c.stabilisation.max_pan_px + " px removed" : "") })),
+      el("span", { class: "f-go", text: "›" }))));
+    if (moving.length) checked.push(el("li", null, el("div", { class: "metric" },
+      el("b", { text: String(moving.reduce((t, c) => t + c.flagged, 0)) }),
+      el("span", null, plural(moving.length, "moving-camera clip"), el("small", { text: moving.reduce((t, c) => t + c.checked_vehicles, 0) + " cars checked for a head-on pass (front then rear)" })),
+      el("span"))));
+    $("ws-list").replaceChildren(...rows, ...checked, el("li", { class: "muted small", style: "padding:12px",
+      text: vs.length ? "Confirm or reject each suspected violation. A confirmed one on a vehicle with a confident plate match raises a simulated challan."
+        : "No wrong-side driving found. Fixed cameras: direction in a hand-drawn zone. Moving cameras: a car seen front first, then rear." }));
+    const issued = (data.issued_challans || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+    $("issued").replaceChildren(issued.length ? el("table", { class: "cases" },
+      el("thead", null, el("tr", null, ...["Challan", "Registration", "Violation", "Fine", "Issued", ""].map((h) => el("th", { text: h })))),
+      el("tbody", null, ...issued.map((c) => el("tr", null, el("td", { class: "clip", text: c.challan_id }), el("td", null, plateEl(c.registration_number)),
+        el("td", { text: c.violation }), el("td", { class: "num", text: inr(c.fine_inr) }),
+        el("td", { class: "muted", text: (c.date || "").replace("T", " ") + (c.context ? " · " + c.context : "") }),
+        el("td", null, el("button", { class: "more", type: "button", text: "Cancel", onclick: () => cancelChallan(c.challan_id, async () => { S.rec.clear(); await openEnforcement(); }) }))))))
+      : pad("None yet. Look up a vehicle and use “Issue a challan”, or confirm a suspected violation on a matched vehicle."));
+    renderAudit();
+    const keep = vs.find((x) => x.violation_id === S.enfSel);
+    if (keep) selectViolation(keep); else if (!S.enfManual) manualLookup();
+  }
+  /* One-off note about the review just made, shown at the top of whatever the panel shows next. */
+  function flashNode() {
+    if (!S.enfFlash) return null;
+    const n = el("p", { class: "flash", role: "status", text: S.enfFlash });
+    S.enfFlash = null;
+    return n;
+  }
+  async function renderAudit() {
+    const r = await apiCall("/api/audit");
+    if (!r.ok) { $("audit").replaceChildren(pad(r.error)); return; }
+    const rows = r.data.slice(0, 40);
+    $("audit").replaceChildren(rows.length ? el("table", { class: "cases" },
+      el("thead", null, el("tr", null, ...["When", "Action", "Registration / item", "Reason / note", "Context", "Outcome"].map((h) => el("th", { text: h })))),
+      el("tbody", null, ...rows.map((e) => el("tr", null, el("td", { class: "muted", text: (e.at || "").replace("T", " ") }),
+        el("td", { text: e.action + (e.violation ? ": " + e.violation : "") }), el("td", { class: "clip", text: e.registration || e.violation_id || "" }),
+        el("td", { class: "muted", text: e.reason || e.note || "" }), el("td", { class: "muted", text: e.context || "" }), el("td", { text: e.outcome }))))) : pad("No activity yet."));
+  }
+  function manualLookup() {
+    S.enfSel = null;
+    S.enfManual = true;
+    document.querySelectorAll("#ws-list .metric").forEach((b) => b.removeAttribute("aria-current"));
+    const input = el("input", { class: "field mono", placeholder: "e.g. DL3CCY1025", "aria-label": "Registration number", maxlength: 12, autocomplete: "off", spellcheck: "false" });
+    const holder = el("div");
+    const form = lookupForm(async (reason, msg) => {
+      const reg = input.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+      if (!reg) { msg.textContent = "Type a registration number."; input.focus(); return; }
+      msg.textContent = "Looking up…";
+      const r = await apiCall("/api/intel/" + encodeURIComponent(reg) + "?" + new URLSearchParams({ reason }));
+      msg.textContent = r.ok ? "" : r.error;
+      const after = async () => {
+        const again = await apiCall("/api/intel/" + encodeURIComponent(reg) + "?" + new URLSearchParams({ reason: "Refresh after change" }));
+        if (again.ok) holder.replaceChildren(...recordNodes(again.data, "", after));
+        await openEnforcement();
+      };
+      holder.replaceChildren(...(r.ok ? recordNodes(r.data, "", after) : []));
+      renderAudit();
+    }, "Look up");
+    input.addEventListener("keydown", (e) => { if (e.key === "Enter") form.querySelector(".btn").click(); });
+    form.prepend(input);
+    $("enf-evidence").replaceChildren(...[flashNode(), ...evHead("Look up a vehicle", "Registration lookup", "Shows everything on record for a registration, and lets you issue a simulated challan for it."), form, holder].filter(Boolean));
+  }
+  function selectViolation(x) {
+    S.enfSel = x.violation_id;
+    S.enfManual = false;
+    document.querySelectorAll("#ws-list .metric").forEach((b) => b.setAttribute("aria-current", String(b.dataset.k === x.violation_id)));
+    const m = x.measurement;
+    const crops = (S.enfFiles[x.run] || []).filter((f) => f.startsWith("t" + x.track_id + "_vehicle_"));
+    const msg = el("p", { class: "ev-note", role: "status" });
+    const note = el("input", { class: "field", placeholder: "Note (optional)", maxlength: 300, "aria-label": "Review note" });
+    const act = (decision) => async () => {
+      const r = await apiCall("/api/violations/review", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ violation_id: x.violation_id, decision, note: note.value }) });
+      if (!r.ok) { msg.textContent = r.error; return; }
+      S.rec.clear();
+      const who = x.clip_id + " T" + x.track_id;
+      S.enfFlash = decision === "pending" ? who + " is back in the queue."
+        : (decision === "confirmed" ? "Confirmed " : "Rejected ") + who + ". " +
+          (r.data.challan ? "Simulated challan " + r.data.challan.challan_id + " raised." : (r.data.message || "").replace(/^(confirmed|rejected)\.\s*/i, ""));
+      if (decision !== "pending") {
+        // Move on to the next item still waiting for review (or the lookup when none are left).
+        const ids = S.enfPending || [];
+        const i = ids.indexOf(x.violation_id);
+        const next = ids.slice(i + 1).concat(ids.slice(0, Math.max(i, 0))).find((id) => id !== x.violation_id);
+        S.enfSel = next || null;
+        S.enfManual = false;
+      }
+      await openEnforcement();
+    };
+    const isPending = x.review.status === "pending";
+    $("enf-evidence").replaceChildren(...[
+      flashNode(),
+      evHead("Suspected violation", x.label, x.clip_id + " · vehicle T" + x.track_id + " · " + clock(x.time_s[0]) + "–" + clock(x.time_s[1])),
+      crops.length ? el("div", { class: "crops" }, ...crops.slice(0, 3).map((f) => el("img", { src: "/data/" + x.run + "/vehicles/" + f, alt: "Vehicle crop", style: "height:64px" }))) : null,
+      section("Vehicle", null, kv([["Plate read", x.plate ? plateEl(x.plate) : "not read"], ["Registry", x.registration_number ? plateEl(x.registration_number) : "no confident match"],
+        ["Type / colour", [x.vehicle_type, x.colour].filter(Boolean).join(" · ")]])),
+      m.method === "head_on_pass" ? section("Measured", "moving camera · head-on pass", ...headOnNodes(m, (x.time_s[1] && x.evidence_frames[2] / x.time_s[1]) || 30), el("p", { class: "ev-note", text: "Road layout: " + cap(m.layout) }))
+        : section("Measured", null, dirs(m, true), kv([["Angle off permitted", deg(m.cos_to_allowed) + "°"], ["Steps against the flow", pct(m.against_flow_share)], ["Zone", m.zone]])),
+      section("Review", null, kv([["Status", reviewTag(x.review.status)], ["Note", x.review.note]]),
+        isPending
+          ? el("div", { class: "lookup" }, note, el("div", { class: "btn-row" },
+            el("button", { class: "btn", type: "button", text: "Confirm", onclick: act("confirmed") }),
+            el("button", { class: "btn ghost", type: "button", text: "Reject", onclick: act("rejected") })), msg)
+          : el("div", { class: "lookup" }, el("p", { class: "ev-note", text: "Reviewed. It has left the queue." }),
+            el("button", { class: "btn ghost", type: "button", text: "Reset to pending", onclick: act("pending") }), msg)),
+      el("div", { class: "link-row-plain" },
+        el("a", { class: "more", href: "#case/" + x.run, text: "Open the case and play the clip" }),
+        el("button", { class: "more", type: "button", text: "Registration lookup", onclick: manualLookup })),
+    ].flat().filter(Boolean));
+  }
+
+  async function initMeta() {
+    try { S.meta = await getJSON("/api/intel/meta"); } catch (_) { S.meta = null; }
   }
 
   /* ---------------------------------------------------------------- video + overlay */
@@ -658,7 +1014,7 @@
     S.cc.ra = ra; S.cc.rb = rb;
     $("link-list").replaceChildren(...links.map((l, n) => {
       const side = (s) => el("span", { class: "side" }, s.plate ? plateEl(s.plate) : el("span", { class: "muted", text: "plate not read" }), el("small", { text: s.clip_id + " · T" + s.track_id }));
-      const strong = /confirmed|plate/.test(l.status);
+      const strong = /^confirmed/i.test(String(l.status));
       return el("li", null, el("button", { class: "link-row", type: "button", "data-n": n, onclick: () => selectLink(n) },
         side(l.a), el("span", { class: "arrow", text: "↔" }), side(l.b),
         el("span", { class: "tag " + (strong ? "match" : "unsure"), text: strong ? "Confirmed" : "Probable" }), el("span", { class: "score", text: num(l.score).toFixed(1) })));
@@ -666,21 +1022,65 @@
     if (!links.length) $("link-list").replaceChildren(el("li", { class: "muted", style: "padding:12px", text: "No links were made for this pair." }));
     const ss = pair.same_scene;
     $("cc-unlinked").textContent = ss ? "Not linked: " + plural((ss.unlinked_a || []).length, "track") + " in " + pair.clip_a + ", " + plural((ss.unlinked_b || []).length, "track") + " in " + pair.clip_b + ". " + (ss.note || "") : "";
-    if (links.length) selectLink(0); else $("cc-evidence").replaceChildren();
+    if (links.length) selectLink(0);
+    else ["cc-evidence", "detail-a", "detail-b"].forEach((id) => $(id).replaceChildren());
+  }
+  const ccVehicle = (r, tid) => (r && (r.vehicles || []).find((x) => x.track_id === tid)) || null;
+  /* What one camera saw on its own: its own track, plate reads, attributes and its own registry decision. */
+  function clipDetail(v, r, side) {
+    if (!v) return [el("p", { class: "muted small", text: side.clip_id + " T" + side.track_id + ": track details aren't available." })];
+    const fps = num(r.video && r.video.fps) || 30;
+    const p = v.plate || {};
+    const reads = (p.per_frame_reads || []).length;
+    const top = (v.candidates || []).slice().sort((a, b) => a.rank - b.rank)[0];
+    const seek = (frame) => { const vid = side === S.cc.links[S.cc.link].a ? $("va") : $("vb"); if (vid.readyState) { vid.pause(); vid.currentTime = frame / fps + 0.001; } };
+    return [
+      el("div", { class: "cd-head" }, el("span", { class: "label", text: "This camera only" }), tag(v.decision)),
+      el("div", { class: "cd-plate" }, p.fused ? plateEl(p.fused, true) : el("span", { class: "muted", text: "Plate not read" }),
+        p.fused ? el("small", { class: "muted", text: X.knownCharacters(p.fused) + " of " + p.fused.length + " characters · " + plural(reads, "frame read") }) : null),
+      kv([["Type", (v.type && v.type.label) ? v.type.label + (v.type.vote_share !== undefined ? " · " + pct(v.type.vote_share) + " of votes" : "") : "—"],
+        ["Colour", cap(v.colour && v.colour.label) || "—"],
+        ["Seen", clock(v.first_frame / fps) + " – " + clock(v.last_frame / fps) + " · " + plural(v.n_detections || 0, "detection")],
+        ["Own top record", top ? el("span", null, plateEl(top.registration_number), " ", num(top.match_score).toFixed(1)) : "none"]]),
+      v.decision_reason ? el("p", { class: "ev-note", text: cap(v.decision_reason) + "." }) : null,
+      reads ? el("button", { class: "more", type: "button", text: "Jump to its best plate frame", onclick: () => seek(p.per_frame_reads[0].frame) }) : null,
+    ];
+  }
+  /* Side by side: what each camera concluded alone, and the combined result from pooling both. */
+  function compareTable(va, vb, l, f) {
+    const cell = (x) => (x === null || x === undefined || x === "" ? el("span", { class: "muted", text: "—" }) : x);
+    const plate = (v) => (v && v.plate && v.plate.fused ? plateEl(v.plate.fused) : null);
+    const top = (v) => { const c = v && (v.candidates || []).slice().sort((a, b) => a.rank - b.rank)[0]; return c ? num(c.match_score).toFixed(1) : null; };
+    const rows = [
+      ["Plate", plate(va), plate(vb), f && f.plate ? plateEl(f.plate) : null],
+      ["Type", va && va.type && va.type.label, vb && vb.type && vb.type.label, f && f.type],
+      ["Colour", va && cap(va.colour && va.colour.label), vb && cap(vb.colour && vb.colour.label), f && cap(f.colour)],
+      ["Plate reads", va && (va.plate && va.plate.per_frame_reads || []).length, vb && (vb.plate && vb.plate.per_frame_reads || []).length, f && f.reads_pooled],
+      ["Best score", top(va), top(vb), f && f.match_score],
+      ["Decision", va && tag(va.decision), vb && tag(vb.decision), f && f.decision ? tag(f.decision) : null],
+    ];
+    return el("table", { class: "compare" },
+      el("thead", null, el("tr", null, el("th"), el("th", { text: l.a.clip_id }), el("th", { text: l.b.clip_id }), el("th", { class: "comb", text: "Combined" }))),
+      el("tbody", null, ...rows.map(([k, a, b, c]) => el("tr", null, el("th", { text: k }), el("td", null, cell(a)), el("td", null, cell(b)), el("td", { class: "comb" }, cell(c))))));
   }
   function selectLink(n) {
     S.cc.link = n;
     document.querySelectorAll(".link-row").forEach((b) => b.setAttribute("aria-current", String(Number(b.dataset.n) === n)));
     const l = S.cc.links[n];
     const f = l.final;
+    const va = ccVehicle(S.cc.ra, l.a.track_id), vb = ccVehicle(S.cc.rb, l.b.track_id);
+    $("detail-a").replaceChildren(...clipDetail(va, S.cc.ra, l.a));
+    $("detail-b").replaceChildren(...clipDetail(vb, S.cc.rb, l.b));
     $("cc-evidence").replaceChildren(...[
-      evHead("Evidence · link", el("span", null, l.a.clip_id + " T" + l.a.track_id + "  ↔  " + l.b.clip_id + " T" + l.b.track_id), cap(l.reason || l.status) + ". Link score " + num(l.score).toFixed(1) + "."),
+      evHead("Combined · both cameras", el("span", null, l.a.clip_id + " T" + l.a.track_id + "  ↔  " + l.b.clip_id + " T" + l.b.track_id), cap(l.reason || l.status) + ". Link score " + num(l.score).toFixed(1) + "."),
+      section("Each camera, and combined", null, compareTable(va, vb, l, f)),
       l.parts ? section("Agreement", null, ...Object.entries(l.parts).map(([k, v]) => barRow(cap(k), v))) : null,
       section("Why they're linked", null, el("ul", { class: "reasons" }, ...l.reasons.map((r) => el("li", { class: X.classifyReason(r), text: r })))),
-      f ? section("Registry, pooled from both cameras", null, kv([["Plate", f.plate ? plateEl(f.plate) : "—"], ["Type", f.type], ["Colour", cap(f.colour)], ["Reads pooled", f.reads_pooled],
-        ["Decision", f.decision ? tag(f.decision) : null], ["Top record", f.registry_top1 ? plateEl(f.registry_top1) : null], ["Match score", f.match_score]])) : null,
+      f ? section("Combined registry result", "both cameras' reads pooled", kv([["Decision", f.decision ? tag(f.decision) : null],
+        ["Top record", f.registry_top1 ? plateEl(f.registry_top1) : null], ["Match score", f.match_score]])) : null,
       f && f.reason ? el("p", { class: "ev-note", text: cap(f.reason) + "." }) : null,
       el("p", { class: "ev-note", text: "Link scores rank candidates; they are not probabilities. Only plate-confirmed links give an identity." }),
+      ccRecord(l),
     ].flat().filter(Boolean));
     ccSeek();
   }
@@ -780,6 +1180,7 @@
   }
 
   /* ---------------------------------------------------------------- start */
+  initMeta();
   initIntake();
   initPlayer();
   initCrosscam();

@@ -7,7 +7,7 @@
   <meta name="description" content="TraceVision: read what's there, mark what isn't. Vehicle traceability from CCTV footage, with the evidence behind every finding.">
   <title>TraceVision</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='7' width='28' height='18' rx='4' fill='%23fff' stroke='%2314161a' stroke-width='2.4'/%3E%3Crect x='7' y='12' width='4' height='8' rx='1' fill='%2314161a'/%3E%3Crect x='14' y='12' width='4' height='8' rx='1' fill='%2314161a'/%3E%3Crect x='21' y='12' width='4' height='8' rx='1' fill='%23f2c230'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="/frontend/styles.css?v=2">
+  <link rel="stylesheet" href="/frontend/styles.css?v=10">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -21,6 +21,7 @@
       <a href="#" data-tab="cases">Cases</a>
       <a href="#crosscam" data-tab="crosscam">Cross-camera</a>
       <a href="#performance" data-tab="performance">Performance</a>
+      <a href="#enforcement" data-tab="enforcement">Enforcement</a>
     </nav>
     <span class="engine" id="engine" data-state="starting" title="Analysis engine status"><i></i><span id="engine-label">Checking engine</span></span>
   </header>
@@ -130,14 +131,36 @@
       <div class="cc" id="cc" hidden>
         <div class="cc-main">
           <div class="pair-videos">
-            <figure class="mini"><figcaption id="cam-a">Camera A</figcaption><div class="stage"><video id="va" playsinline preload="metadata" muted></video><canvas id="ca"></canvas></div></figure>
-            <figure class="mini"><figcaption id="cam-b">Camera B</figcaption><div class="stage"><video id="vb" playsinline preload="metadata" muted></video><canvas id="cb"></canvas></div></figure>
+            <figure class="mini"><figcaption id="cam-a">Camera A</figcaption><div class="stage"><video id="va" playsinline preload="metadata" muted></video><canvas id="ca"></canvas></div><div class="clip-detail" id="detail-a" aria-live="polite"></div></figure>
+            <figure class="mini"><figcaption id="cam-b">Camera B</figcaption><div class="stage"><video id="vb" playsinline preload="metadata" muted></video><canvas id="cb"></canvas></div><div class="clip-detail" id="detail-b" aria-live="polite"></div></figure>
           </div>
           <h2 class="label">Links</h2>
           <ol class="link-list" id="link-list"></ol>
           <p class="muted small" id="cc-unlinked"></p>
         </div>
         <aside class="evidence" id="cc-evidence" aria-live="polite" aria-label="Link evidence"></aside>
+      </div>
+    </section>
+
+    <!-- ENFORCEMENT -->
+    <section class="view" id="view-enforcement" hidden aria-labelledby="enf-title">
+      <div class="page-head">
+        <div>
+          <h1 id="enf-title">Enforcement</h1>
+          <p class="lede">Look up any registered vehicle, see everything on record, and issue simulated challans. Suspected violations wait for review. Every lookup, challan and review is logged.</p>
+        </div>
+      </div>
+      <p class="demo-banner" role="note"><b>Synthetic demo data.</b> Owner records and e-challans are generated for this prototype. Nothing here queries VAHAN or the e-Challan system, and no challan is sent anywhere.</p>
+      <div class="perf">
+        <div class="perf-main">
+          <h2 class="label">Wrong-side driving <span id="ws-scope"></span></h2>
+          <ol class="metric-list" id="ws-list"></ol>
+          <h2 class="label">Simulated challans raised</h2>
+          <div class="table-wrap" id="issued"></div>
+          <h2 class="label" style="margin-top:32px">Audit log</h2>
+          <div class="table-wrap" id="audit"></div>
+        </div>
+        <aside class="evidence" id="enf-evidence" aria-live="polite" aria-label="Vehicle record"></aside>
       </div>
     </section>
 
@@ -164,6 +187,6 @@
   <footer class="foot"><span>tracevision</span><span>Runs locally. Evidence stays on this machine.</span></footer>
 
   <script src="/frontend/explain.js?v=2" defer></script>
-  <script src="/frontend/app.js?v=2" defer></script>
+  <script src="/frontend/app.js?v=10" defer></script>
 </body>
 </html>

@@ -75,7 +75,7 @@ flowchart LR
   - thresholds calibrated on held-out synthetic cases
 - 26 unit tests: `python -m pytest tests`
 
-Match score is a **heuristic ranking score, not a probability**. The **registry is synthetic**: fictional records, plus the team's own test vehicles as `evaluation_seed` rows, and **no owner data at all**.
+Match score is a **heuristic ranking score, not a probability**. The **registry is synthetic**: fictional records, plus the team's own test vehicles as `evaluation_seed` rows, and **no owner data at all** (the enforcement demo's owner and challan records are separate synthetic files, see below).
 
 ## Run it
 **Setup (Windows, NVIDIA GPU):**
@@ -125,6 +125,12 @@ Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.p
 
 **Score** (`python -m tracevision.crosscam --evaluate`, labels tied to tracks one-to-one by box position): **5 of 5 checkable groups correct, 0 wrong links.** Without the pair declaration (open world, `python -m tracevision.crosscam clipA clipB`) only plate evidence links, and appearance alone is unreliable across viewpoints (C12).
 
+## Enforcement add-on (synthetic demo data)
+Open the **Enforcement** tab, or the **Vehicle record** and **Direction** findings in a case.
+- **Vehicle record:** press **Look up** on a vehicle with a **confident** registry match (or type a registration in the Enforcement tab) to see everything on record: make, model, class, fuel, RTO, registration / insurance / PUC validity, registered owner, and e-challan history with the pending amount. **Issue a challan** for that vehicle from the same panel (violation, fine, location, note) and cancel it if needed; issued challans are simulated and never sent anywhere. Every lookup, challan and review is logged (audit log in the Enforcement tab). Data: `python TRACEVISION_DATA/scripts/generate_vehicle_intel.py` (seeded; 334 owner records, 434 challans; every vehicle the demo can match has 2-4 challans, one pending). **Not** a VAHAN / e-Challan lookup (DECISIONS E17).
+- **Wrong-side driving, fixed cameras** (clip02, clip06): Hand-drawn zones with a permitted direction (`TRACEVISION_DATA/cameras/camera_rules.json`); camera pan is removed first. A flagged vehicle waits to be confirmed or rejected; a confirmed flag on a matched vehicle raises a **simulated** challan that is never sent anywhere. Result on our footage: **54 vehicles checked, 0 flagged** (no wrong-side event was filmed); the rule flags clip02's real tracks when they are replayed backwards (unit test). `python -m tracevision.violations` prints the per-clip check (DECISIONS E18).
+- **Wrong-side driving, moving cameras:** a car seen **front first while it closes in, then rear** has passed the camera head-on (CLIP scores each crop headlights-and-grille vs tail-lights-and-boot). On a road declared one-way in `camera_rules.json` that is wrong-side driving; on a two-way road it is normal oncoming traffic. Tested on one downloaded clip (`TRACEVISION_DATA/raw/wrongside/ws01.mp4`, Delhi flyover; upload it in the app to reproduce): the wrong-way SUV is flagged and nothing else is; 0 flags on our other moving clips (214 cars over 31 clips). One positive example, so this shows the method works, not a detection rate (DECISIONS E19). `python -m tracevision.violations --orient --jobs` computes the orientation for stored clips.
+
 ## Data and models
 | What | Source | Licence |
 |---|---|---|
@@ -139,5 +145,6 @@ Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.p
 - **Small test set:** 51 vehicles and 9 registered. Several pipeline rules were diagnosed on these clips, so the numbers may be optimistic.
 - **Colour** uses CLIP zero-shot (64% exact, 75% near). It answers `unknown` at night and still slips on dark or warm-lit vehicles. **Car versus SUV** is often confused (types are compatible 93% of the time).
 - **Cross-camera re-identification** (bonus, `python -m tracevision.crosscam --pairs`) links vehicles **by plate**; generic CLIP appearance across viewpoints is unreliable (the same parking lot's background dominates), so appearance-only links need a very high similarity and were never made on our pairs. On the declared parking pairs: 5 of 5 checkable groups linked correctly, 0 wrong (see the cross-camera section).
+- **Enforcement add-on:** all owner and challan data is synthetic, and there is no login: anyone using the app can look up and issue challans. Wrong-side driving was never filmed by us: the fixed-camera rule is validated by replaying real tracks backwards, and the moving-camera rule on one downloaded clip. The moving-camera rule needs the road layout declared, and it checks cars only.
 - Most clips are WhatsApp copies (about 1.5 Mbit/s), which costs plate detail.
 - On strongly degraded footage (360p, heavy blur, night) the OCR can be confidently wrong (up to 17% wrong characters at 360p). A stricter confidence bar for low-quality plates is the next fix.

@@ -1,0 +1,335 @@
+synthetic_vehicle_id,registration_number,owner_name,owner_type,owner_name_masked,owner_serial,vehicle_class,fuel_type,rto_code,rto_name,registration_date,registration_valid_until,insurance_valid_until,puc_valid_until,synthetic
+SV597545,GA14UK9949,Joseph Gupta,Individual,J••••• G••••,3,LMV (Motor Car),Diesel,GA-14,"RTO GA-14, Goa",2025-04-12,2040-04-12,2027-06-03,2027-03-06,true
+SV843240,DL9CAZ8556,Deepa Yadav,Individual,D•••• Y••••,1,LMV (Motor Car),CNG,DL-09,"RTO DL-09, Delhi",2008-07-16,2023-07-16,2027-01-11,2026-02-25,true
+SV820371,RJ34P3451,Nikhil Verma,Individual,N••••• V••••,1,MCWG (Motorcycle with gear),Petrol,RJ-34,"RTO RJ-34, Rajasthan",2011-10-09,2026-10-09,2026-05-24,2026-12-26,true
+SV590969,CG01GM9135,Hasdeo Goods Movers,Firm,H••••• G•••• M•••••,1,HGV (Heavy Goods Vehicle),Diesel,CG-01,"RTO CG-01, Chhattisgarh",2023-01-18,2027-01-18,2027-03-15,2027-05-15,true
+SV608837,CG25YW2171,Maria Iyer,Individual,M•••• I•••,1,LMV (Motor Car),Petrol,CG-25,"RTO CG-25, Chhattisgarh",2012-10-01,2027-10-01,2027-10-29,2026-12-15,true
+SV486610,DL15ED7108,Sunita Deshmukh,Individual,S••••• D•••••••,1,LMV (Motor Car),Petrol,DL-15,"RTO DL-15, Delhi",2016-03-01,2031-03-01,2027-07-21,2027-02-25,true
+SV319219,CG11VR1842,Riya Sharma,Individual,R••• S•••••,1,LMV (Motor Car),CNG,CG-11,"RTO CG-11, Chhattisgarh",2024-01-07,2039-01-07,2027-10-03,2026-05-08,true
+SV261469,24BH0483F,Vivaan Nair,Individual,V••••• N•••,1,LMV (Motor Car),Petrol,BH,Bharat series (BH) registration,2011-01-09,2026-01-09,2027-03-23,2027-05-10,true
+SV683973,GA05W4295,Ishita Sharma,Individual,I••••• S•••••,2,MCWG (Motorcycle with gear),Electric,GA-05,"RTO GA-05, Goa",2021-10-14,2036-10-14,2026-10-12,2026-11-02,true
+SV632373,CG14MU2529,Rohan Dewangan,Individual,R•••• D•••••••,1,LMV (Motor Car),Diesel,CG-14,"RTO CG-14, Chhattisgarh",2025-01-16,2040-01-16,2026-12-11,2027-04-25,true
+SV928469,CG19MN7069,Suresh Nair,Individual,S••••• N•••,1,LMV (Motor Car),Petrol,CG-19,"RTO CG-19, Chhattisgarh",2012-08-05,2027-08-05,2027-05-25,2026-12-20,true
+SV911900,GJ30AV6993,Shalini Sahu,Individual,S•••••• S•••,1,LMV (Motor Car),Electric,GJ-30,"RTO GJ-30, Gujarat",2008-08-04,2023-08-04,2027-06-16,2026-07-19,true
+SV654217,OD09DN8653,Venkat Agrawal,Individual,V••••• A••••••,1,LMV (Motor Car / Omni),Diesel,OD-09,"RTO OD-09, Odisha",2018-04-08,2033-04-08,2027-07-02,2026-08-29,true
+SV419227,DL27TW0261,Pooja Verma,Individual,P•••• V••••,1,LMV (Motor Car),Electric,DL-27,"RTO DL-27, Delhi",2014-10-19,2029-10-19,2027-03-05,2026-02-15,true
+SV722959,UP34N8379,Rohan Joshi,Individual,R•••• J••••,1,LMV (Motor Car),Electric,UP-34,"RTO UP-34, Uttar Pradesh",2012-08-16,2027-08-16,2027-04-17,2027-05-10,true
+SV349583,CG13SP7341,Vivaan Chandrakar,Individual,V••••• C•••••••••,1,MCWG (Motorcycle with gear),Petrol,CG-13,"RTO CG-13, Raigarh",2023-06-10,2038-06-10,2026-06-08,2027-02-22,true
+SV943813,CG17DG5490,Neha Saxena,Individual,N••• S•••••,1,LMV (Motor Car),Petrol,CG-17,"RTO CG-17, Chhattisgarh",2014-03-14,2029-03-14,2027-07-11,2027-03-11,true
+SV457882,TG29SM4419,Neha Reddy,Individual,N••• R••••,1,LMV (Motor Car),Petrol,TG-29,"RTO TG-29, Telangana",2025-09-17,2040-09-17,2026-05-12,2027-01-15,true
+SV793292,CG04NL3024,Aarav Khan,Individual,A•••• K•••,1,LMV (Motor Car),Petrol,CG-04,"RTO CG-04, Raipur",2024-04-18,2039-04-18,2027-06-23,2027-03-22,true
+SV735194,UP14GP5487,Karan Pillai,Individual,K•••• P•••••,1,LMV (Motor Car),Petrol,UP-14,"RTO UP-14, Uttar Pradesh",2010-02-13,2025-02-13,2027-08-06,2027-01-24,true
+SV608825,OD28DX9184,Pranav Naidu,Individual,P••••• N••••,1,LMV (Motor Car),CNG,OD-28,"RTO OD-28, Odisha",2008-01-14,2023-01-14,2027-05-04,2027-02-13,true
+SV107783,TG11B6137,Riya Sharma,Individual,R••• S•••••,1,MCWG (Motorcycle with gear),Petrol,TG-11,"RTO TG-11, Telangana",2014-01-04,2029-01-04,2027-10-11,2027-01-08,true
+SV329715,AP06C9994,Ishaan Tiwari,Individual,I••••• T•••••,2,LMV (Motor Car),Diesel,AP-06,"RTO AP-06, Andhra Pradesh",2011-06-05,2026-06-05,2027-01-03,2026-10-21,true
+SV439349,GA10L3396,Kavya Baghel,Individual,K•••• B•••••,1,LMV (Motor Car),Electric,GA-10,"RTO GA-10, Goa",2024-04-13,2039-04-13,2027-02-25,2027-03-14,true
+SV652690,UP16ZT9445,Farhan Fernandes,Individual,F••••• F••••••••,1,LMV (Motor Car),Petrol,UP-16,"RTO UP-16, Uttar Pradesh",2020-11-14,2035-11-14,2027-02-27,2026-12-25,true
+SV627569,UK23U8092,Sunita Patel,Individual,S••••• P••••,2,LMV (Motor Car),Petrol,UK-23,"RTO UK-23, Uttarakhand",2018-04-14,2033-04-14,2026-12-20,2027-03-12,true
+SV699643,AP03F9400,Sabri Passenger Services,Firm,S•••• P•••••••• S•••••••,1,HGV (Heavy Goods Vehicle),Diesel,AP-03,"RTO AP-03, Andhra Pradesh",2025-05-20,2027-05-20,2027-09-02,2026-12-10,true
+SV115970,AP33EE6145,Aarav Banerjee,Individual,A•••• B•••••••,1,LMV (Motor Car / Omni),Petrol,AP-33,"RTO AP-33, Andhra Pradesh",2014-07-18,2029-07-18,2027-06-21,2027-05-06,true
+SV726648,UK14G2826,Manish Naidu,Individual,M••••• N••••,1,LMV (Motor Car),Petrol,UK-14,"RTO UK-14, Uttarakhand",2013-11-20,2028-11-20,2027-03-13,2026-12-14,true
+SV547749,CG03YB3225,Zoya Joshi,Individual,Z••• J••••,1,LMV (Motor Car),Petrol,CG-03,"RTO CG-03, Chhattisgarh",2024-02-05,2039-02-05,2027-01-10,2026-07-16,true
+SV982914,OD32MC0789,Kabir Sinha,Individual,K•••• S••••,1,"MCWOG (Scooter, without gear)",Electric,OD-32,"RTO OD-32, Odisha",2020-10-08,2035-10-08,2026-12-24,2027-02-05,true
+SV477386,26BH1965NU,Ayesha Patel,Individual,A••••• P••••,1,LMV (Motor Car),Petrol,BH,Bharat series (BH) registration,2014-12-15,2029-12-15,2026-07-13,2027-03-27,true
+SV644276,AP21CL6598,Pooja Dewangan,Individual,P•••• D•••••••,2,LMV (Motor Car),CNG,AP-21,"RTO AP-21, Andhra Pradesh",2014-07-05,2029-07-05,2027-06-19,2027-03-25,true
+SV003353,DL25ZY9964,Sunita Pillai,Individual,S••••• P•••••,2,LMV (Motor Car),Petrol,DL-25,"RTO DL-25, Delhi",2023-05-05,2038-05-05,2027-05-21,2027-03-05,true
+SV123967,MH14R8912,Diya Dewangan,Individual,D••• D•••••••,2,LMV (Motor Car),Petrol,MH-14,"RTO MH-14, Maharashtra",2012-05-20,2027-05-20,2027-10-04,2027-02-20,true
+SV572767,CG15W3111,Meera Pillai,Individual,M•••• P•••••,1,LMV (Motor Car),Petrol,CG-15,"RTO CG-15, Chhattisgarh",2008-12-10,2023-12-10,2027-06-15,2027-05-22,true
+SV119347,PB34SB1302,Indravati Transport Co.,Firm,I•••••••• T•••••••• C••,1,HGV (Heavy Goods Vehicle),Diesel,PB-34,"RTO PB-34, Punjab",2014-03-02,2028-03-02,2027-02-01,2027-04-16,true
+SV524415,AP30MS8458,Vivaan Fernandes,Individual,V••••• F••••••••,1,LMV (Motor Car),CNG,AP-30,"RTO AP-30, Andhra Pradesh",2009-06-01,2024-06-01,2027-04-07,2026-12-23,true
+SV723397,MP32BN6463,Ayesha Mishra,Individual,A••••• M•••••,2,LMV (Motor Car),Diesel,MP-32,"RTO MP-32, Madhya Pradesh",2024-05-19,2039-05-19,2027-06-20,2027-02-03,true
+SV144143,KA53MH3895,Vivaan Pillai,Individual,V••••• P•••••,1,LMV (Motor Car),Diesel,KA-53,"RTO KA-53, Karnataka",2020-04-08,2035-04-08,2027-08-24,2026-02-13,true
+SV772795,UP29BP3519,Siddharth Fernandes,Individual,S•••••••• F••••••••,1,MCWG (Motorcycle with gear),Electric,UP-29,"RTO UP-29, Uttar Pradesh",2014-07-18,2029-07-18,2027-08-22,2027-03-31,true
+SV524766,DL01XM3163,Yash Das,Individual,Y••• D••,2,LMV (Motor Car),Petrol,DL-01,"RTO DL-01, Delhi",2019-08-17,2034-08-17,2027-09-23,2027-02-06,true
+SV102725,CG30LT0025,Karan Dewangan,Individual,K•••• D•••••••,1,"MCWOG (Scooter, without gear)",Electric,CG-30,"RTO CG-30, Chhattisgarh",2013-07-16,2028-07-16,2027-08-16,2027-01-14,true
+SV882380,DL3EAH1004,Pooja Pillai,Individual,P•••• P•••••,2,LMV (Motor Car),Petrol,DL-03,"RTO DL-03, Delhi",2022-11-02,2037-11-02,2026-08-01,2027-03-25,true
+SV964860,AP15BM5867,Arjun Deshmukh,Individual,A•••• D•••••••,1,LMV (Motor Car),Petrol,AP-15,"RTO AP-15, Andhra Pradesh",2022-09-26,2037-09-26,2027-10-05,2026-12-17,true
+SV005875,TG07HJ9293,Aditi Gill,Individual,A•••• G•••,2,MCWG (Motorcycle with gear),Petrol,TG-07,"RTO TG-07, Telangana",2022-10-15,2037-10-15,2027-04-05,2027-04-07,true
+SV510889,25BH4516S,Neha Iyer,Individual,N••• I•••,1,MCWG (Motorcycle with gear),Petrol,BH,Bharat series (BH) registration,2013-03-13,2028-03-13,2027-08-26,2027-01-20,true
+SV451560,CG25PL7451,Aarav Nair,Individual,A•••• N•••,2,LMV (Motor Car),Diesel,CG-25,"RTO CG-25, Chhattisgarh",2011-07-09,2026-07-09,2026-12-19,2026-08-26,true
+SV195992,JH23B5941,Diya Sahu,Individual,D••• S•••,2,LMV (Motor Car / Omni),Petrol,JH-23,"RTO JH-23, Jharkhand",2020-09-05,2035-09-05,2027-10-12,2027-04-15,true
+SV064186,CG07UZ3583,Suresh Joshi,Individual,S••••• J••••,2,LMV (Motor Car),Diesel,CG-07,"RTO CG-07, Durg",2013-09-25,2028-09-25,2025-12-16,2026-09-27,true
+SV397144,UP31AU0194,Siddharth Iyer,Individual,S•••••••• I•••,3,"MCWOG (Scooter, without gear)",Petrol,UP-31,"RTO UP-31, Uttar Pradesh",2019-12-15,2034-12-15,2027-01-13,2027-01-18,true
+SV304462,TG26CB1736,Gurpreet Patel,Individual,G••••••• P••••,1,MCWG (Motorcycle with gear),Petrol,TG-26,"RTO TG-26, Telangana",2024-08-18,2039-08-18,2027-04-20,2027-03-10,true
+SV608687,AP06KR8815,Kharun City Travels,Firm,K••••• C••• T••••••,2,HGV (Heavy Goods Vehicle),Diesel,AP-06,"RTO AP-06, Andhra Pradesh",2025-06-16,2027-06-16,2027-03-28,2027-03-20,true
+SV001324,CG08MT0792,Rahul Thakur,Individual,R•••• T•••••,1,LMV (Motor Car),Petrol,CG-08,"RTO CG-08, Rajnandgaon",2008-10-18,2023-10-18,2027-07-03,2027-04-19,true
+SV364902,KL30UZ9874,Vivaan Mishra,Individual,V••••• M•••••,1,LMV (Motor Car),Petrol,KL-30,"RTO KL-30, Kerala",2011-07-20,2026-07-20,2026-08-09,2027-04-27,true
+SV182418,CG04NL4029,Deepa Kulkarni,Individual,D•••• K•••••••,1,LMV (Motor Car),CNG,CG-04,"RTO CG-04, Raipur",2012-01-27,2027-01-27,2027-06-05,2027-05-22,true
+SV234828,BR35WS4960,Rahul Qureshi,Individual,R•••• Q••••••,1,LMV (Motor Car / Omni),Diesel,BR-35,"RTO BR-35, Bihar",2024-01-15,2039-01-15,2027-04-12,2026-05-11,true
+SV087027,KA09BT1928,Lakshmi Kulkarni,Individual,L•••••• K•••••••,2,"MCWOG (Scooter, without gear)",Petrol,KA-09,"RTO KA-09, Karnataka",2014-01-25,2029-01-25,2027-09-24,2026-02-14,true
+SV889115,UK24FC8279,Arjun Agrawal,Individual,A•••• A••••••,1,"MCWOG (Scooter, without gear)",Petrol,UK-24,"RTO UK-24, Uttarakhand",2011-08-25,2026-08-25,2027-10-23,2027-03-29,true
+SV618657,DL9CAZ8756,Pooja Singh,Individual,P•••• S••••,2,"LMV 3-Wheeler (Passenger, Transport)",Electric,DL-09,"RTO DL-09, Delhi",2009-02-01,2027-02-01,2027-02-06,2026-12-28,true
+SV925278,JH30EP5281,Lakshmi Qureshi,Individual,L•••••• Q••••••,1,"LMV 3-Wheeler (Passenger, Transport)",CNG,JH-30,"RTO JH-30, Jharkhand",2009-09-11,2027-09-11,2027-01-11,2026-04-07,true
+SV818768,HP14CV1168,Ayesha Chandrakar,Individual,A••••• C•••••••••,1,LMV (Motor Car),Petrol,HP-14,"RTO HP-14, Himachal Pradesh",2008-10-08,2023-10-08,2027-06-17,2027-01-25,true
+SV581252,DL8CAH1084,Suresh Reddy,Individual,S••••• R••••,1,LMV (Motor Car),Electric,DL-08,"RTO DL-08, Delhi",2018-10-09,2033-10-09,2027-06-20,2027-04-25,true
+SV944909,UP15FS1538,Aditi Thakur,Individual,A•••• T•••••,1,LMV (Motor Car),Diesel,UP-15,"RTO UP-15, Uttar Pradesh",2008-05-28,2023-05-28,2027-07-14,2027-03-09,true
+SV779855,MH14CU4186,Vivaan Gupta,Individual,V••••• G••••,1,LMV (Motor Car),Diesel,MH-14,"RTO MH-14, Maharashtra",2009-02-26,2024-02-26,2027-08-08,2026-12-08,true
+SV862017,CG00NL3021,Ishaan Sharma,Individual,I••••• S•••••,1,LMV (Motor Car),Diesel,CG-00,"RTO CG-00, Chhattisgarh",2017-04-26,2032-04-26,2027-09-16,2027-05-12,true
+SV064747,UK25D5884,Yash Pillai,Individual,Y••• P•••••,1,LMV (Motor Car),CNG,UK-25,"RTO UK-25, Uttarakhand",2014-10-04,2029-10-04,2025-11-18,2027-05-05,true
+SV457965,DL3CCY1025,Manish Tiwari,Individual,M••••• T•••••,1,LMV (Motor Car),Petrol,DL-03,"RTO DL-03, Delhi",2023-05-27,2038-05-27,2027-02-23,2026-12-14,true
+SV011548,GJ34DW4163,Rohan Dewangan,Individual,R•••• D•••••••,1,LMV (Motor Car),Diesel,GJ-34,"RTO GJ-34, Gujarat",2012-08-01,2027-08-01,2027-02-04,2027-03-02,true
+SV106821,JH14NU0475,Farhan Iyer,Individual,F••••• I•••,1,LMV (Motor Car),Petrol,JH-14,"RTO JH-14, Jharkhand",2024-12-11,2039-12-11,2026-05-02,2026-02-11,true
+SV921886,AS25RL6305,Zoya Qureshi,Individual,Z••• Q••••••,1,LMV (Motor Car),Petrol,AS-25,"RTO AS-25, Assam",2015-08-27,2030-08-27,2027-06-10,2026-04-10,true
+SV484116,UP35BR8448,Abhishek Nair,Individual,A••••••• N•••,1,LMV (Motor Car),Petrol,UP-35,"RTO UP-35, Uttar Pradesh",2013-10-26,2028-10-26,2027-07-08,2027-01-06,true
+SV734519,JH31VJ6445,Siddharth Khan,Individual,S•••••••• K•••,2,LMV (Motor Car),Petrol,JH-31,"RTO JH-31, Jharkhand",2017-11-20,2032-11-20,2025-11-26,2026-08-31,true
+SV943253,CG03A4093,Zoya Thakur,Individual,Z••• T•••••,2,LMV (Motor Car),CNG,CG-03,"RTO CG-03, Chhattisgarh",2008-12-27,2023-12-27,2026-07-18,2027-03-04,true
+SV783941,AP26XU7101,Nikhil Mishra,Individual,N••••• M•••••,1,LMV (Motor Car),CNG,AP-26,"RTO AP-26, Andhra Pradesh",2009-09-04,2024-09-04,2027-09-23,2026-07-25,true
+SV341263,BR14X1211,Diya Gill,Individual,D••• G•••,1,LMV (Motor Car),Petrol,BR-14,"RTO BR-14, Bihar",2015-06-27,2030-06-27,2027-03-23,2026-12-26,true
+SV168098,PB12HY4045,Ayesha Das,Individual,A••••• D••,1,LMV (Motor Car),Petrol,PB-12,"RTO PB-12, Punjab",2024-07-18,2039-07-18,2027-10-28,2026-12-28,true
+SV734130,UK34R3018,Shivnath Roadways,Firm,S••••••• R•••••••,2,HGV (Heavy Goods Vehicle),Diesel,UK-34,"RTO UK-34, Uttarakhand",2018-11-02,2026-11-02,2027-08-05,2027-04-10,true
+SV125459,AP06FC3912,Ananya Iyer,Individual,A••••• I•••,1,LMV (Motor Car),Petrol,AP-06,"RTO AP-06, Andhra Pradesh",2020-07-24,2035-07-24,2026-09-22,2026-08-28,true
+SV686932,24BH9413NN,Neha Gill,Individual,N••• G•••,1,LMV (Motor Car),Petrol,BH,Bharat series (BH) registration,2023-12-27,2038-12-27,2026-10-15,2027-04-04,true
+SV737232,TG20D9842,Venkat Sahu,Individual,V••••• S•••,1,MCWG (Motorcycle with gear),Petrol,TG-20,"RTO TG-20, Telangana",2023-05-01,2038-05-01,2026-07-30,2027-01-31,true
+SV676353,AS07N9065,Payal Dewangan,Individual,P•••• D•••••••,1,"LMV 3-Wheeler (Passenger, Transport)",CNG,AS-07,"RTO AS-07, Assam",2013-07-10,2027-07-10,2027-04-03,2027-02-09,true
+SV231738,OD29YL5415,Neha Mishra,Individual,N••• M•••••,1,"MCWOG (Scooter, without gear)",Petrol,OD-29,"RTO OD-29, Odisha",2013-12-22,2028-12-22,2027-10-09,2026-12-05,true
+SV285565,JH11TD7006,Kavya Qureshi,Individual,K•••• Q••••••,1,LMV (Motor Car),CNG,JH-11,"RTO JH-11, Jharkhand",2021-11-10,2036-11-10,2027-04-01,2027-01-08,true
+SV562499,DL9CAZ8656,Sneha Verma,Individual,S•••• V••••,1,LMV (Motor Car),Petrol,DL-09,"RTO DL-09, Delhi",2025-11-22,2040-11-22,2027-06-10,2027-04-03,true
+SV695747,UP08X8227,Rahul Patel,Individual,R•••• P••••,1,LMV (Motor Car),Diesel,UP-08,"RTO UP-08, Uttar Pradesh",2009-11-04,2024-11-04,2027-07-27,2027-04-08,true
+SV223931,CG20ZZ7167,Riya Chandrakar,Individual,R••• C•••••••••,1,LMV (Motor Car),Diesel,CG-20,"RTO CG-20, Chhattisgarh",2023-09-06,2038-09-06,2026-08-04,2027-04-26,true
+SV521397,MH05D0535,Aditi Gill,Individual,A•••• G•••,1,MCWG (Motorcycle with gear),Petrol,MH-05,"RTO MH-05, Maharashtra",2012-11-16,2027-11-16,2027-09-07,2027-02-07,true
+SV576297,AP06E7389,Vivaan Baghel,Individual,V••••• B•••••,1,LMV (Motor Car),Petrol,AP-06,"RTO AP-06, Andhra Pradesh",2025-01-02,2040-01-02,2026-03-28,2027-03-20,true
+SV027637,PB18FT1540,Kabir Sahu,Individual,K•••• S•••,1,MCWG (Motorcycle with gear),Petrol,PB-18,"RTO PB-18, Punjab",2018-12-22,2033-12-22,2026-12-08,2027-02-03,true
+SV093856,CG05LL0300,Tushar Sinha,Individual,T••••• S••••,2,LMV (Motor Car),Diesel,CG-05,"RTO CG-05, Chhattisgarh",2017-04-24,2032-04-24,2027-04-30,2027-01-02,true
+SV699852,MH09Y6507,Gurpreet Das,Individual,G••••••• D••,1,MCWG (Motorcycle with gear),Petrol,MH-09,"RTO MH-09, Maharashtra",2009-11-14,2024-11-14,2027-04-23,2027-05-08,true
+SV567976,CG21F1981,Ishita Nair,Individual,I••••• N•••,2,"LMV 3-Wheeler (Passenger, Transport)",Electric,CG-21,"RTO CG-21, Chhattisgarh",2024-06-01,2026-06-01,2027-09-14,2027-03-08,true
+SV240956,HP12UW0569,Aditya Nair,Individual,A••••• N•••,1,LMV (Motor Car),Petrol,HP-12,"RTO HP-12, Himachal Pradesh",2024-09-20,2039-09-20,2027-03-31,2027-02-18,true
+SV679162,UP08S7617,Ayesha Fernandes,Individual,A••••• F••••••••,1,LMV (Motor Car),CNG,UP-08,"RTO UP-08, Uttar Pradesh",2009-10-20,2024-10-20,2026-12-30,2027-05-03,true
+SV287071,CG04NL3022,Sabri Passenger Services,Firm,S•••• P•••••••• S•••••••,3,HPV (Heavy Passenger Vehicle),CNG,CG-04,"RTO CG-04, Raipur",2023-07-16,2027-07-16,2027-02-16,2026-05-07,true
+SV264827,CG14SV6970,Kabir Chandrakar,Individual,K•••• C•••••••••,1,LMV (Motor Car),Diesel,CG-14,"RTO CG-14, Chhattisgarh",2013-01-21,2028-01-21,2027-05-03,2027-01-03,true
+SV044242,CG74MW3529,Bhavna Joshi,Individual,B••••• J••••,1,LMV (Motor Car),Diesel,CG-74,"RTO CG-74, Chhattisgarh",2019-10-11,2034-10-11,2027-04-27,2027-01-21,true
+SV407525,DL3CCY1080,Imran Saxena,Individual,I•••• S•••••,2,LMV (Motor Car),Diesel,DL-03,"RTO DL-03, Delhi",2025-02-15,2040-02-15,2025-10-31,2026-05-21,true
+SV058869,GJ24UG1206,Kharun City Travels,Firm,K••••• C••• T••••••,1,HGV (Heavy Goods Vehicle),Diesel,GJ-24,"RTO GJ-24, Gujarat",2025-06-17,2027-06-17,2027-04-10,2027-05-13,true
+SV890979,MP02MB7698,Farhan Qureshi,Individual,F••••• Q••••••,1,"LMV 3-Wheeler (Passenger, Transport)",Electric,MP-02,"RTO MP-02, Madhya Pradesh",2013-09-13,2027-09-13,2026-04-22,2026-05-02,true
+SV302777,CG11DM6570,Zoya Sahu,Individual,Z••• S•••,3,"MCWOG (Scooter, without gear)",Electric,CG-11,"RTO CG-11, Chhattisgarh",2012-09-01,2027-09-01,2027-08-13,2027-01-30,true
+SV148711,CG14MW7524,Riya Kulkarni,Individual,R••• K•••••••,1,LMV (Motor Car),Petrol,CG-14,"RTO CG-14, Chhattisgarh",2016-05-04,2031-05-04,2025-11-13,2027-05-12,true
+SV349991,WB27JF6523,Arjun Das,Individual,A•••• D••,1,"MCWOG (Scooter, without gear)",Petrol,WB-27,"RTO WB-27, West Bengal",2024-01-27,2039-01-27,2027-07-03,2026-12-30,true
+SV564211,DL3CCK2474,Aarav Yadav,Individual,A•••• Y••••,1,"MCWOG (Scooter, without gear)",Electric,DL-03,"RTO DL-03, Delhi",2012-03-05,2027-03-05,2026-01-22,2027-03-28,true
+SV096632,CG05DU2889,Diya Khan,Individual,D••• K•••,1,MCWG (Motorcycle with gear),Petrol,CG-05,"RTO CG-05, Chhattisgarh",2014-06-14,2029-06-14,2026-04-20,2027-05-20,true
+SV861092,AP27EH4143,Harleen Das,Individual,H•••••• D••,1,LMV (Motor Car),Petrol,AP-27,"RTO AP-27, Andhra Pradesh",2019-03-05,2034-03-05,2027-06-27,2027-01-24,true
+SV191897,UP32AA8404,Aditi Singh,Individual,A•••• S••••,2,MCWG (Motorcycle with gear),Petrol,UP-32,"RTO UP-32, Uttar Pradesh",2012-10-14,2027-10-14,2026-05-19,2026-04-04,true
+SV654888,AP29JZ6266,Venkat Fernandes,Individual,V••••• F••••••••,2,"MCWOG (Scooter, without gear)",Petrol,AP-29,"RTO AP-29, Andhra Pradesh",2018-06-10,2033-06-10,2027-03-21,2027-02-27,true
+SV151591,RJ12ES7563,Kavya Gupta,Individual,K•••• G••••,3,LMV (Motor Car / Omni),Petrol,RJ-12,"RTO RJ-12, Rajasthan",2016-03-10,2031-03-10,2027-05-07,2027-03-07,true
+SV533841,MP13N9412,Siddharth Dewangan,Individual,S•••••••• D•••••••,1,LMV (Motor Car),Diesel,MP-13,"RTO MP-13, Madhya Pradesh",2025-01-18,2040-01-18,2027-08-02,2027-03-18,true
+SV611012,DL3CCY2495,Venkat Patel,Individual,V••••• P••••,1,LMV (Motor Car),Electric,DL-03,"RTO DL-03, Delhi",2015-05-21,2030-05-21,2027-03-09,2026-06-27,true
+SV947138,GJ32YE9958,Suresh Nair,Individual,S••••• N•••,1,LMV (Motor Car),Diesel,GJ-32,"RTO GJ-32, Gujarat",2025-12-02,2040-12-02,2027-04-21,2026-08-15,true
+SV213024,26BH7639Z,Vivaan Banerjee,Individual,V••••• B•••••••,1,"MCWOG (Scooter, without gear)",Petrol,BH,Bharat series (BH) registration,2016-07-26,2031-07-26,2027-03-16,2026-05-14,true
+SV211114,HR31GM2892,Aarav Agrawal,Individual,A•••• A••••••,1,LMV (Motor Car),Petrol,HR-31,"RTO HR-31, Haryana",2012-02-07,2027-02-07,2027-02-17,2026-12-14,true
+SV670784,TN13XC7199,Kabir Thakur,Individual,K•••• T•••••,1,LMV (Motor Car),Petrol,TN-13,"RTO TN-13, Tamil Nadu",2014-05-01,2029-05-01,2027-05-02,2026-04-11,true
+SV877527,TG04Y3560,Aditi Pillai,Individual,A•••• P•••••,1,LMV (Motor Car),Diesel,TG-04,"RTO TG-04, Telangana",2012-04-24,2027-04-24,2027-09-07,2027-04-06,true
+SV491229,UP14CP5085,Suresh Qureshi,Individual,S••••• Q••••••,1,LMV (Motor Car),Petrol,UP-14,"RTO UP-14, Uttar Pradesh",2019-04-02,2034-04-02,2027-05-09,2026-12-14,true
+SV804673,DL24HH0597,Nisha Qureshi,Individual,N•••• Q••••••,1,LMV (Motor Car),Electric,DL-24,"RTO DL-24, Delhi",2024-08-07,2039-08-07,2027-09-18,2026-12-18,true
+SV207526,CG04DK1278,Nikhil Patel,Individual,N••••• P••••,2,"MCWOG (Scooter, without gear)",Petrol,CG-04,"RTO CG-04, Raipur",2016-03-28,2031-03-28,2027-08-26,2027-02-05,true
+SV544850,UP21Y0928,Shivnath Roadways,Firm,S••••••• R•••••••,1,HPV (Heavy Passenger Vehicle),CNG,UP-21,"RTO UP-21, Uttar Pradesh",2023-09-14,2027-09-14,2027-03-21,2027-02-23,true
+SV035023,TG03E9829,Lakshmi Mishra,Individual,L•••••• M•••••,1,LMV (Motor Car / Omni),Petrol,TG-03,"RTO TG-03, Telangana",2015-12-15,2030-12-15,2027-09-12,2026-12-25,true
+SV566632,UK05D5785,Deepa Sharma,Individual,D•••• S•••••,1,LMV (Motor Car),Petrol,UK-05,"RTO UK-05, Uttarakhand",2012-12-22,2027-12-22,2027-08-21,2027-02-28,true
+SV656079,22BH1590M,Meera Thakur,Individual,M•••• T•••••,1,LMV (Motor Car),Petrol,BH,Bharat series (BH) registration,2014-08-22,2029-08-22,2027-03-06,2026-02-11,true
+SV854303,AP25FJ0002,Farhan Verma,Individual,F••••• V••••,1,MCWG (Motorcycle with gear),Petrol,AP-25,"RTO AP-25, Andhra Pradesh",2017-10-13,2032-10-13,2027-03-21,2027-01-03,true
+SV117951,KA53MH3890,Aditi Fernandes,Individual,A•••• F••••••••,1,LMV (Motor Car / Omni),CNG,KA-53,"RTO KA-53, Karnataka",2011-04-14,2026-04-14,2027-09-13,2027-01-24,true
+SV831680,MP29P7058,Tushar Yadav,Individual,T••••• Y••••,3,MCWG (Motorcycle with gear),Petrol,MP-29,"RTO MP-29, Madhya Pradesh",2024-02-21,2039-02-21,2027-09-30,2027-03-08,true
+SV600085,TN15WT4398,Maria Verma,Individual,M•••• V••••,2,"LMV 3-Wheeler (Passenger, Transport)",CNG,TN-15,"RTO TN-15, Tamil Nadu",2009-09-27,2027-09-27,2027-10-25,2026-12-13,true
+SV403610,TG04MV2332,Yash Qureshi,Individual,Y••• Q••••••,1,LMV (Motor Car),Diesel,TG-04,"RTO TG-04, Telangana",2011-07-16,2026-07-16,2027-08-03,2027-04-19,true
+SV509600,DL8CAH1092,Aditya Naidu,Individual,A••••• N••••,1,LMV (Motor Car),Petrol,DL-08,"RTO DL-08, Delhi",2022-12-03,2037-12-03,2026-12-10,2027-01-31,true
+SV026064,UK05D6883,Rohan Mishra,Individual,R•••• M•••••,3,LMV (Motor Car / Omni),Petrol,UK-05,"RTO UK-05, Uttarakhand",2024-10-19,2039-10-19,2027-04-18,2027-05-15,true
+SV986046,DL8CAH1004,Pooja Qureshi,Individual,P•••• Q••••••,1,LMV (Motor Car),Diesel,DL-08,"RTO DL-08, Delhi",2024-08-23,2039-08-23,2027-04-03,2026-04-19,true
+SV825792,AP15ZV7969,Vivaan Das,Individual,V••••• D••,1,LMV (Motor Car / Omni),Petrol,AP-15,"RTO AP-15, Andhra Pradesh",2011-05-18,2026-05-18,2027-10-06,2026-07-20,true
+SV679195,CG25UC5211,Ayesha Gill,Individual,A••••• G•••,1,MCWG (Motorcycle with gear),Petrol,CG-25,"RTO CG-25, Chhattisgarh",2010-12-14,2025-12-14,2027-09-28,2027-02-17,true
+SV407918,UP06F1941,Aditi Gill,Individual,A•••• G•••,1,MCWG (Motorcycle with gear),Petrol,UP-06,"RTO UP-06, Uttar Pradesh",2015-02-27,2030-02-27,2026-09-25,2027-03-10,true
+SV161457,CG10N1679,Deepa Sharma,Individual,D•••• S•••••,3,LMV (Motor Car),Diesel,CG-10,"RTO CG-10, Bilaspur",2019-08-21,2034-08-21,2027-09-27,2027-03-28,true
+SV037967,UP37AA8404,Nisha Agrawal,Individual,N•••• A••••••,2,MCWG (Motorcycle with gear),Petrol,UP-37,"RTO UP-37, Uttar Pradesh",2009-08-23,2024-08-23,2027-06-22,2027-04-23,true
+SV746304,UP76FT9444,Aditi Kulkarni,Individual,A•••• K•••••••,1,LMV (Motor Car),Diesel,UP-76,"RTO UP-76, Uttar Pradesh",2015-03-22,2030-03-22,2027-03-13,2027-03-04,true
+SV535843,UK16UG0920,Gurpreet Verma,Individual,G••••••• V••••,1,MCWG (Motorcycle with gear),Petrol,UK-16,"RTO UK-16, Uttarakhand",2023-04-15,2038-04-15,2027-09-28,2026-05-13,true
+SV742687,KL18AV8118,Karan Patel,Individual,K•••• P••••,1,"MCWOG (Scooter, without gear)",Petrol,KL-18,"RTO KL-18, Kerala",2016-12-08,2031-12-08,2027-09-24,2026-08-07,true
+SV003513,AS21CW5385,Tushar Mishra,Individual,T••••• M•••••,2,MCWG (Motorcycle with gear),Petrol,AS-21,"RTO AS-21, Assam",2017-09-25,2032-09-25,2027-04-10,2027-01-17,true
+SV991535,AP22PG5838,Rohan Gill,Individual,R•••• G•••,1,LMV (Motor Car),Petrol,AP-22,"RTO AP-22, Andhra Pradesh",2020-09-11,2035-09-11,2027-06-06,2027-01-25,true
+SV193194,AP34CG9878,Zoya Baghel,Individual,Z••• B•••••,1,LMV (Motor Car),CNG,AP-34,"RTO AP-34, Andhra Pradesh",2018-03-13,2033-03-13,2027-06-06,2027-02-21,true
+SV417920,UK05D5883,Ananya Qureshi,Individual,A••••• Q••••••,1,LMV (Motor Car),CNG,UK-05,"RTO UK-05, Uttarakhand",2024-08-15,2039-08-15,2027-01-23,2026-06-09,true
+SV568675,CG22LZ2857,Imran Qureshi,Individual,I•••• Q••••••,3,LMV (Motor Car),Diesel,CG-22,"RTO CG-22, Chhattisgarh",2015-10-28,2030-10-28,2027-09-14,2027-01-06,true
+SV369736,AP23DJ3834,Zoya Naidu,Individual,Z••• N••••,2,MCWG (Motorcycle with gear),Petrol,AP-23,"RTO AP-23, Andhra Pradesh",2019-07-28,2034-07-28,2026-03-24,2027-01-28,true
+SV382048,UP33DW7825,Riya Sinha,Individual,R••• S••••,1,LMV (Motor Car),CNG,UP-33,"RTO UP-33, Uttar Pradesh",2010-05-13,2025-05-13,2027-08-30,2026-07-30,true
+SV544355,CG23NL4261,Sneha Tiwari,Individual,S•••• T•••••,1,LMV (Motor Car),Diesel,CG-23,"RTO CG-23, Chhattisgarh",2015-03-21,2030-03-21,2026-06-07,2027-04-28,true
+SV191347,DL3CCK2175,Rahul Baghel,Individual,R•••• B•••••,1,LMV (Motor Car),Diesel,DL-03,"RTO DL-03, Delhi",2025-03-21,2040-03-21,2027-06-17,2026-12-11,true
+SV935636,RJ18AM7984,Deepa Yadav,Individual,D•••• Y••••,2,MCWG (Motorcycle with gear),Petrol,RJ-18,"RTO RJ-18, Rajasthan",2022-04-11,2037-04-11,2027-06-21,2026-08-17,true
+SV681123,UP01TR3235,Nisha Deshmukh,Individual,N•••• D•••••••,1,LMV (Motor Car),Electric,UP-01,"RTO UP-01, Uttar Pradesh",2017-03-07,2032-03-07,2027-04-14,2027-01-31,true
+SV122364,UP37AA8406,Mahanadi Logistics,Firm,M••••••• L••••••••,1,HGV (Heavy Goods Vehicle),Diesel,UP-37,"RTO UP-37, Uttar Pradesh",2021-05-06,2027-05-06,2027-06-15,2026-12-28,true
+SV877009,BR35DW8196,Bhavna Naidu,Individual,B••••• N••••,2,LMV (Motor Car),Diesel,BR-35,"RTO BR-35, Bihar",2012-08-03,2027-08-03,2027-03-15,2027-01-12,true
+SV531783,GJ30R8148,Suresh Sinha,Individual,S••••• S••••,2,MCWG (Motorcycle with gear),Petrol,GJ-30,"RTO GJ-30, Gujarat",2019-08-24,2034-08-24,2027-08-21,2027-05-15,true
+SV931285,UK09AW8959,Ayesha Dewangan,Individual,A••••• D•••••••,1,LMV (Motor Car),Electric,UK-09,"RTO UK-09, Uttarakhand",2024-10-12,2039-10-12,2027-02-08,2027-02-07,true
+SV728731,DL04GJ8224,Maria Pillai,Individual,M•••• P•••••,1,LMV (Motor Car),Diesel,DL-04,"RTO DL-04, Delhi",2019-06-24,2034-06-24,2027-10-18,2027-04-28,true
+SV161201,KA53MH8855,Neha Joshi,Individual,N••• J••••,1,LMV (Motor Car),Electric,KA-53,"RTO KA-53, Karnataka",2024-06-27,2039-06-27,2027-08-23,2027-02-21,true
+SV563626,CG13AK0501,Manish Das,Individual,M••••• D••,2,MCWG (Motorcycle with gear),Petrol,CG-13,"RTO CG-13, Raigarh",2024-05-28,2039-05-28,2027-09-30,2027-03-14,true
+SV424753,MP09LL4440,Lakshmi Sinha,Individual,L•••••• S••••,2,LMV (Motor Car),Diesel,MP-09,"RTO MP-09, Madhya Pradesh",2023-12-10,2038-12-10,2026-10-19,2027-01-11,true
+SV161772,CG15WS6047,Nikhil Agrawal,Individual,N••••• A••••••,2,"LMV 3-Wheeler (Passenger, Transport)",Electric,CG-15,"RTO CG-15, Chhattisgarh",2011-05-27,2027-05-27,2026-12-11,2027-05-01,true
+SV237860,UP16FT9444,Sneha Reddy,Individual,S•••• R••••,3,LMV (Motor Car),Petrol,UP-16,"RTO UP-16, Uttar Pradesh",2019-09-22,2034-09-22,2027-02-15,2027-03-24,true
+SV106580,KA53MH0890,Pranav Qureshi,Individual,P••••• Q••••••,2,LMV (Motor Car),Diesel,KA-53,"RTO KA-53, Karnataka",2019-07-17,2034-07-17,2027-08-09,2027-03-23,true
+SV766113,CG11PA9762,Shivnath Roadways,Firm,S••••••• R•••••••,3,HPV (Heavy Passenger Vehicle),Diesel,CG-11,"RTO CG-11, Chhattisgarh",2016-05-09,2026-05-09,2026-06-13,2027-02-17,true
+SV616055,PB11U1842,Zoya Baghel,Individual,Z••• B•••••,1,LMV (Motor Car / Omni),CNG,PB-11,"RTO PB-11, Punjab",2022-10-06,2037-10-06,2027-02-01,2027-03-21,true
+SV489390,AS19S6055,Devansh Qureshi,Individual,D•••••• Q••••••,1,LMV (Motor Car),CNG,AS-19,"RTO AS-19, Assam",2016-09-10,2031-09-10,2026-03-03,2027-01-27,true
+SV963425,AP29TA2957,Imran Saxena,Individual,I•••• S•••••,3,LMV (Motor Car),Petrol,AP-29,"RTO AP-29, Andhra Pradesh",2022-12-09,2037-12-09,2027-02-03,2027-02-18,true
+SV132475,CG04DK7570,Lakshmi Naidu,Individual,L•••••• N••••,1,MCWG (Motorcycle with gear),Petrol,CG-04,"RTO CG-04, Raipur",2008-09-24,2023-09-24,2027-10-20,2026-12-11,true
+SV603116,KL19HT7165,Deepa Singh,Individual,D•••• S••••,1,"LMV 3-Wheeler (Passenger, Transport)",Electric,KL-19,"RTO KL-19, Kerala",2019-08-26,2027-08-26,2027-04-19,2027-04-04,true
+SV976857,HR22MG6537,Yash Mishra,Individual,Y••• M•••••,2,MCWG (Motorcycle with gear),Petrol,HR-22,"RTO HR-22, Haryana",2019-07-13,2034-07-13,2027-08-29,2026-12-18,true
+SV045759,CG15ZA7261,Rahul Das,Individual,R•••• D••,1,MCWG (Motorcycle with gear),Petrol,CG-15,"RTO CG-15, Chhattisgarh",2011-10-25,2026-10-25,2027-02-11,2027-01-28,true
+SV667961,MH06FP3874,Kharun City Travels,Firm,K••••• C••• T••••••,1,HGV (Heavy Goods Vehicle),Diesel,MH-06,"RTO MH-06, Maharashtra",2017-11-26,2027-11-26,2027-05-23,2027-01-21,true
+SV988008,AS08AZ0907,Manish Qureshi,Individual,M••••• Q••••••,1,LMV (Motor Car / Omni),Petrol,AS-08,"RTO AS-08, Assam",2015-08-19,2030-08-19,2027-10-13,2027-02-18,true
+SV272927,CG24EF9636,Lakshmi Singh,Individual,L•••••• S••••,2,MCWG (Motorcycle with gear),Petrol,CG-24,"RTO CG-24, Chhattisgarh",2015-02-22,2030-02-22,2027-07-14,2026-03-02,true
+SV372204,MP14Y8315,Siddharth Joshi,Individual,S•••••••• J••••,1,"MCWOG (Scooter, without gear)",Petrol,MP-14,"RTO MP-14, Madhya Pradesh",2010-03-09,2025-03-09,2027-06-27,2027-04-12,true
+SV209609,DL07Y0978,Abhishek Qureshi,Individual,A••••••• Q••••••,2,LMV (Motor Car),Electric,DL-07,"RTO DL-07, Delhi",2017-12-07,2032-12-07,2026-07-07,2026-08-13,true
+SV595990,OD08KP0614,Yash Joshi,Individual,Y••• J••••,1,LMV (Motor Car),Electric,OD-08,"RTO OD-08, Odisha",2025-08-02,2040-08-02,2027-02-21,2027-03-20,true
+SV088321,TG15SG4113,Meera Sinha,Individual,M•••• S••••,1,LMV (Motor Car),Petrol,TG-15,"RTO TG-15, Telangana",2018-04-02,2033-04-02,2026-03-23,2027-01-11,true
+SV483074,DL8CCY1025,Devansh Nair,Individual,D•••••• N•••,2,LMV (Motor Car),Electric,DL-08,"RTO DL-08, Delhi",2017-07-13,2032-07-13,2025-11-06,2026-06-18,true
+SV411949,AS12SN1986,Lakshmi Saxena,Individual,L•••••• S•••••,1,LMV (Motor Car),CNG,AS-12,"RTO AS-12, Assam",2018-06-26,2033-06-26,2027-03-17,2026-12-26,true
+SV855011,CG30UP6409,Joseph Agrawal,Individual,J••••• A••••••,1,MCWG (Motorcycle with gear),Petrol,CG-30,"RTO CG-30, Chhattisgarh",2011-07-02,2026-07-02,2027-09-30,2026-02-02,true
+SV085495,MH26DR1775,Payal Sahu,Individual,P•••• S•••,2,LMV (Motor Car),Diesel,MH-26,"RTO MH-26, Maharashtra",2015-12-24,2030-12-24,2027-06-10,2027-03-28,true
+SV796073,CG04UE0723,Karan Verma,Individual,K•••• V••••,1,"MCWOG (Scooter, without gear)",Electric,CG-04,"RTO CG-04, Raipur",2021-05-28,2036-05-28,2026-01-17,2027-04-23,true
+SV294936,UP36KA8404,Sneha Thakur,Individual,S•••• T•••••,1,MCWG (Motorcycle with gear),Petrol,UP-36,"RTO UP-36, Uttar Pradesh",2011-04-11,2026-04-11,2027-09-05,2026-10-20,true
+SV621728,KL35AJ7243,Sunita Das,Individual,S••••• D••,3,"MCWOG (Scooter, without gear)",Electric,KL-35,"RTO KL-35, Kerala",2020-10-13,2035-10-13,2027-10-21,2026-11-15,true
+SV897683,UP01MM3080,Pranav Sinha,Individual,P••••• S••••,1,LMV (Motor Car / Omni),Petrol,UP-01,"RTO UP-01, Uttar Pradesh",2021-09-23,2036-09-23,2027-07-06,2027-05-22,true
+SV519066,UP34KP5085,Deepa Singh,Individual,D•••• S••••,1,LMV (Motor Car),Petrol,UP-34,"RTO UP-34, Uttar Pradesh",2017-01-16,2032-01-16,2026-11-09,2026-04-30,true
+SV181349,CG19NN2952,Manish Banerjee,Individual,M••••• B•••••••,2,MCWG (Motorcycle with gear),Petrol,CG-19,"RTO CG-19, Chhattisgarh",2012-09-26,2027-09-26,2027-06-08,2026-12-30,true
+SV935830,PB11WA8531,Kabir Deshmukh,Individual,K•••• D•••••••,1,LMV (Motor Car),Petrol,PB-11,"RTO PB-11, Punjab",2017-03-22,2032-03-22,2027-10-13,2027-04-16,true
+SV098781,HR21B0182,Pranav Pillai,Individual,P••••• P•••••,2,LMV (Motor Car),Electric,HR-21,"RTO HR-21, Haryana",2020-11-25,2035-11-25,2027-01-24,2026-09-16,true
+SV287253,UK20TX6407,Rahul Chandrakar,Individual,R•••• C•••••••••,1,LMV (Motor Car),CNG,UK-20,"RTO UK-20, Uttarakhand",2008-05-14,2023-05-14,2027-03-01,2027-02-04,true
+SV926202,CG20UT9417,Sabri Passenger Services,Firm,S•••• P•••••••• S•••••••,1,HPV (Heavy Passenger Vehicle),CNG,CG-20,"RTO CG-20, Chhattisgarh",2010-07-06,2026-07-06,2027-02-17,2026-03-09,true
+SV294156,GJ07X8456,Kavya Chandrakar,Individual,K•••• C•••••••••,1,LMV (Motor Car),Diesel,GJ-07,"RTO GJ-07, Gujarat",2009-10-16,2024-10-16,2027-06-22,2027-03-10,true
+SV106396,DL3CCK5477,Vivaan Joshi,Individual,V••••• J••••,3,LMV (Motor Car),Petrol,DL-03,"RTO DL-03, Delhi",2022-11-22,2037-11-22,2027-06-01,2027-04-21,true
+SV981491,TG19YT4440,Ayesha Tiwari,Individual,A••••• T•••••,1,MCWG (Motorcycle with gear),Petrol,TG-19,"RTO TG-19, Telangana",2010-01-08,2025-01-08,2027-05-27,2027-04-15,true
+SV725030,CG14T2936,Gurpreet Gupta,Individual,G••••••• G••••,1,LMV (Motor Car),CNG,CG-14,"RTO CG-14, Chhattisgarh",2019-05-04,2034-05-04,2027-05-27,2027-03-28,true
+SV886552,CG29GS7128,Sabri Passenger Services,Firm,S•••• P•••••••• S•••••••,1,HGV (Heavy Goods Vehicle),Diesel,CG-29,"RTO CG-29, Chhattisgarh",2016-01-24,2028-01-24,2026-10-17,2027-01-13,true
+SV993774,CG22LE6079,Nisha Verma,Individual,N•••• V••••,2,MCWG (Motorcycle with gear),Petrol,CG-22,"RTO CG-22, Chhattisgarh",2024-05-26,2039-05-26,2027-04-17,2026-02-01,true
+SV500714,CG08Z6879,Maria Das,Individual,M•••• D••,1,LMV (Motor Car),CNG,CG-08,"RTO CG-08, Rajnandgaon",2023-05-24,2038-05-24,2027-10-11,2027-03-10,true
+SV425998,DL22LP5280,Kabir Sinha,Individual,K•••• S••••,1,LMV (Motor Car),Petrol,DL-22,"RTO DL-22, Delhi",2012-06-19,2027-06-19,2026-12-26,2027-03-10,true
+SV797124,PB33FW8793,Neha Gupta,Individual,N••• G••••,1,LMV (Motor Car),CNG,PB-33,"RTO PB-33, Punjab",2020-05-16,2035-05-16,2027-09-11,2026-09-29,true
+SV443097,HR02VD6210,Aarav Fernandes,Individual,A•••• F••••••••,1,LMV (Motor Car),Petrol,HR-02,"RTO HR-02, Haryana",2010-12-09,2025-12-09,2026-01-07,2026-12-23,true
+SV799448,UP23ET9997,Ishaan Gupta,Individual,I••••• G••••,1,MCWG (Motorcycle with gear),Petrol,UP-23,"RTO UP-23, Uttar Pradesh",2013-12-02,2028-12-02,2027-07-12,2027-02-27,true
+SV574834,CG14MW3519,Riya Gupta,Individual,R••• G••••,1,"MCWOG (Scooter, without gear)",Petrol,CG-14,"RTO CG-14, Chhattisgarh",2023-05-21,2038-05-21,2027-01-27,2027-05-03,true
+SV706856,MH02RR2099,Aditya Khan,Individual,A••••• K•••,2,MCWG (Motorcycle with gear),Electric,MH-02,"RTO MH-02, Maharashtra",2022-08-21,2037-08-21,2027-03-07,2027-01-24,true
+SV263859,UP12NK6970,Yash Saxena,Individual,Y••• S•••••,2,HPV (Heavy Passenger Vehicle),Electric,UP-12,"RTO UP-12, Uttar Pradesh",2018-11-27,2026-11-27,2027-07-28,2026-04-24,true
+SV589688,UP16FT9944,Shivnath Roadways,Firm,S••••••• R•••••••,2,HPV (Heavy Passenger Vehicle),CNG,UP-16,"RTO UP-16, Uttar Pradesh",2010-09-19,2026-09-19,2027-06-19,2027-04-23,true
+SV196909,GA14KV5327,Lakshmi Pillai,Individual,L•••••• P•••••,2,LMV (Motor Car),Electric,GA-14,"RTO GA-14, Goa",2012-02-25,2027-02-25,2027-06-30,2027-04-04,true
+SV583718,TG22J1888,Sneha Baghel,Individual,S•••• B•••••,1,LMV (Motor Car),Diesel,TG-22,"RTO TG-22, Telangana",2012-11-15,2027-11-15,2027-09-13,2027-03-06,true
+SV542884,MP23B6657,Manish Singh,Individual,M••••• S••••,1,LMV (Motor Car),Petrol,MP-23,"RTO MP-23, Madhya Pradesh",2023-01-26,2038-01-26,2026-10-07,2027-01-14,true
+SV600863,RJ01PE9215,Arjun Khan,Individual,A•••• K•••,2,"MCWOG (Scooter, without gear)",Petrol,RJ-01,"RTO RJ-01, Rajasthan",2020-06-15,2035-06-15,2027-09-24,2026-07-18,true
+SV889265,MP16H4408,Harleen Das,Individual,H•••••• D••,1,"MCWOG (Scooter, without gear)",Petrol,MP-16,"RTO MP-16, Madhya Pradesh",2008-10-23,2023-10-23,2026-05-16,2027-04-21,true
+SV223965,MH24HK7957,Ishita Reddy,Individual,I••••• R••••,3,LMV (Motor Car),Electric,MH-24,"RTO MH-24, Maharashtra",2023-02-01,2038-02-01,2027-01-22,2027-02-15,true
+SV906308,HR22B3675,Aarav Verma,Individual,A•••• V••••,1,MCWG (Motorcycle with gear),Petrol,HR-22,"RTO HR-22, Haryana",2024-01-23,2039-01-23,2027-06-15,2027-01-27,true
+SV766068,TG05ED3745,Tushar Thakur,Individual,T••••• T•••••,1,LMV (Motor Car),Petrol,TG-05,"RTO TG-05, Telangana",2024-08-06,2039-08-06,2027-09-05,2026-12-11,true
+SV071264,RJ24K0650,Sabri Passenger Services,Firm,S•••• P•••••••• S•••••••,2,HPV (Heavy Passenger Vehicle),Diesel,RJ-24,"RTO RJ-24, Rajasthan",2008-01-02,2028-01-02,2025-10-26,2027-03-30,true
+SV005955,JH35JC3482,Rahul Banerjee,Individual,R•••• B•••••••,1,LMV (Motor Car),Electric,JH-35,"RTO JH-35, Jharkhand",2015-06-05,2030-06-05,2027-01-08,2027-05-17,true
+SV984666,CG14MW3529,Sunita Baghel,Individual,S••••• B•••••,1,LMV (Motor Car),Petrol,CG-14,"RTO CG-14, Chhattisgarh",2019-07-01,2034-07-01,2027-04-24,2027-04-07,true
+SV417194,OD29W4816,Neha Naidu,Individual,N••• N••••,1,"LMV 3-Wheeler (Passenger, Transport)",CNG,OD-29,"RTO OD-29, Odisha",2021-08-28,2027-08-28,2027-05-06,2026-12-30,true
+SV373913,CG30NP5389,Farhan Naidu,Individual,F••••• N••••,2,LMV (Motor Car),Petrol,CG-30,"RTO CG-30, Chhattisgarh",2017-07-14,2032-07-14,2027-02-24,2027-02-17,true
+SV249670,MH14NT5296,Ananya Mishra,Individual,A••••• M•••••,1,LMV (Motor Car),Petrol,MH-14,"RTO MH-14, Maharashtra",2008-06-06,2023-06-06,2027-08-02,2027-01-31,true
+SV811202,JH20GP3761,Imran Naidu,Individual,I•••• N••••,2,MCWG (Motorcycle with gear),Petrol,JH-20,"RTO JH-20, Jharkhand",2013-07-23,2028-07-23,2027-08-04,2027-02-06,true
+SV756109,UP09VD0495,Bhavna Iyer,Individual,B••••• I•••,1,LMV (Motor Car),Petrol,UP-09,"RTO UP-09, Uttar Pradesh",2011-05-14,2026-05-14,2026-09-02,2027-03-03,true
+SV668002,MH28D4112,Ishaan Kulkarni,Individual,I••••• K•••••••,1,LMV (Motor Car),Petrol,MH-28,"RTO MH-28, Maharashtra",2018-04-17,2033-04-17,2027-01-29,2027-05-13,true
+SV752571,MH30HE6822,Aarav Qureshi,Individual,A•••• Q••••••,1,LMV (Motor Car),Petrol,MH-30,"RTO MH-30, Maharashtra",2021-05-09,2036-05-09,2027-07-23,2026-11-06,true
+SV800826,UK28HF5839,Aditi Banerjee,Individual,A•••• B•••••••,1,LMV (Motor Car),Diesel,UK-28,"RTO UK-28, Uttarakhand",2023-04-10,2038-04-10,2027-10-22,2027-05-15,true
+SV473533,MH14LJ4071,Kabir Singh,Individual,K•••• S••••,1,MCWG (Motorcycle with gear),Petrol,MH-14,"RTO MH-14, Maharashtra",2019-06-26,2034-06-26,2026-03-24,2027-05-01,true
+SV500305,DL3CCY1022,Diya Tiwari,Individual,D••• T•••••,2,HPV (Heavy Passenger Vehicle),Diesel,DL-03,"RTO DL-03, Delhi",2015-07-14,2027-07-14,2026-02-14,2027-01-15,true
+SV393735,DL29PB8961,Ayesha Patel,Individual,A••••• P••••,1,LMV (Motor Car),Electric,DL-29,"RTO DL-29, Delhi",2019-04-07,2034-04-07,2027-06-02,2026-07-10,true
+SV783676,UP16YF6950,Pooja Saxena,Individual,P•••• S•••••,3,LMV (Motor Car),Petrol,UP-16,"RTO UP-16, Uttar Pradesh",2020-10-17,2035-10-17,2025-12-23,2027-01-05,true
+SV021938,MP25M0924,Deepa Verma,Individual,D•••• V••••,2,"MCWOG (Scooter, without gear)",Petrol,MP-25,"RTO MP-25, Madhya Pradesh",2023-10-23,2038-10-23,2027-10-18,2027-01-19,true
+SV717133,24BH3131RT,Siddharth Qureshi,Individual,S•••••••• Q••••••,1,MCWG (Motorcycle with gear),Petrol,BH,Bharat series (BH) registration,2009-12-04,2024-12-04,2025-10-21,2027-05-07,true
+SV991163,CG26WF4282,Payal Singh,Individual,P•••• S••••,1,LMV (Motor Car),Petrol,CG-26,"RTO CG-26, Chhattisgarh",2013-11-04,2028-11-04,2027-05-15,2026-02-26,true
+SV428160,TG17WG8887,Vivaan Pillai,Individual,V••••• P•••••,1,LMV (Motor Car),Petrol,TG-17,"RTO TG-17, Telangana",2021-07-06,2036-07-06,2026-06-25,2027-05-12,true
+SV536242,AP25CS9563,Neha Thakur,Individual,N••• T•••••,1,"MCWOG (Scooter, without gear)",Petrol,AP-25,"RTO AP-25, Andhra Pradesh",2014-03-16,2029-03-16,2027-06-11,2027-03-03,true
+SV712037,CG13PM8232,Ayesha Sahu,Individual,A••••• S•••,1,LMV (Motor Car),Petrol,CG-13,"RTO CG-13, Raigarh",2012-10-01,2027-10-01,2027-07-02,2026-09-18,true
+SV146190,MP23JJ1581,Yash Yadav,Individual,Y••• Y••••,1,LMV (Motor Car),Electric,MP-23,"RTO MP-23, Madhya Pradesh",2025-12-06,2040-12-06,2027-04-25,2027-02-02,true
+SV618633,23BH0237XC,Pooja Thakur,Individual,P•••• T•••••,2,LMV (Motor Car),Electric,BH,Bharat series (BH) registration,2014-02-27,2029-02-27,2027-08-24,2026-12-13,true
+SV826698,WB29FE8252,Meera Banerjee,Individual,M•••• B•••••••,3,LMV (Motor Car),Diesel,WB-29,"RTO WB-29, West Bengal",2021-10-21,2036-10-21,2027-07-27,2027-04-04,true
+SV450149,CG25SM5383,Arjun Agrawal,Individual,A•••• A••••••,1,MCWG (Motorcycle with gear),Petrol,CG-25,"RTO CG-25, Chhattisgarh",2017-12-05,2032-12-05,2027-04-26,2027-05-18,true
+SV266991,HP35DZ1023,Sabri Passenger Services,Firm,S•••• P•••••••• S•••••••,1,HGV (Heavy Goods Vehicle),Diesel,HP-35,"RTO HP-35, Himachal Pradesh",2014-11-06,2026-11-06,2027-02-26,2027-01-15,true
+SV255991,DL06WP1573,Diya Nair,Individual,D••• N•••,1,LMV (Motor Car),Diesel,DL-06,"RTO DL-06, Delhi",2020-12-05,2035-12-05,2027-06-03,2027-05-14,true
+SV651900,KL28GZ6344,Arpa Freight Carriers,Firm,A••• F•••••• C•••••••,1,HGV (Heavy Goods Vehicle),Diesel,KL-28,"RTO KL-28, Kerala",2020-08-03,2026-08-03,2027-03-01,2026-09-14,true
+SV205176,CG10C3491,Aditya Gill,Individual,A••••• G•••,1,"LMV 3-Wheeler (Passenger, Transport)",Electric,CG-10,"RTO CG-10, Bilaspur",2012-03-13,2028-03-13,2026-03-24,2027-04-21,true
+SV439256,UP24R4682,Gurpreet Mishra,Individual,G••••••• M•••••,1,"LMV 3-Wheeler (Passenger, Transport)",LPG,UP-24,"RTO UP-24, Uttar Pradesh",2008-08-08,2026-08-08,2027-02-22,2027-05-20,true
+SV035409,JH08L5710,Ishita Khan,Individual,I••••• K•••,1,"LMV 3-Wheeler (Passenger, Transport)",CNG,JH-08,"RTO JH-08, Jharkhand",2020-12-11,2026-12-11,2026-02-28,2027-02-04,true
+SV047551,KA06NN4948,Arjun Sharma,Individual,A•••• S•••••,1,LMV (Motor Car),Petrol,KA-06,"RTO KA-06, Karnataka",2008-02-11,2023-02-11,2027-09-25,2027-02-25,true
+SV155048,CG24ZE0718,Joseph Yadav,Individual,J••••• Y••••,2,"MCWOG (Scooter, without gear)",Petrol,CG-24,"RTO CG-24, Chhattisgarh",2015-07-06,2030-07-06,2027-01-22,2026-07-28,true
+SV829747,TN34SW1360,Bhavna Sharma,Individual,B••••• S•••••,2,LMV (Motor Car),Electric,TN-34,"RTO TN-34, Tamil Nadu",2017-12-28,2032-12-28,2026-11-11,2026-12-12,true
+SV802644,MP12YR3889,Nikhil Pillai,Individual,N••••• P•••••,1,MCWG (Motorcycle with gear),Petrol,MP-12,"RTO MP-12, Madhya Pradesh",2011-08-13,2026-08-13,2027-02-19,2026-03-21,true
+SV532962,PB14SU0299,Hasdeo Goods Movers,Firm,H••••• G•••• M•••••,1,HPV (Heavy Passenger Vehicle),Diesel,PB-14,"RTO PB-14, Punjab",2009-07-05,2027-07-05,2027-01-27,2026-09-28,true
+SV835033,CG24W2555,Ishaan Agrawal,Individual,I••••• A••••••,1,LMV (Motor Car),Diesel,CG-24,"RTO CG-24, Chhattisgarh",2008-04-25,2023-04-25,2027-09-02,2027-01-09,true
+SV703819,OD14MX5661,Sunita Thakur,Individual,S••••• T•••••,1,"MCWOG (Scooter, without gear)",Petrol,OD-14,"RTO OD-14, Odisha",2025-03-10,2040-03-10,2027-04-27,2027-01-01,true
+SV593961,JH20DR4400,Shalini Agrawal,Individual,S•••••• A••••••,2,LMV (Motor Car),Diesel,JH-20,"RTO JH-20, Jharkhand",2014-05-28,2029-05-28,2027-10-09,2027-01-03,true
+SV391325,UP16FT9458,Suresh Verma,Individual,S••••• V••••,1,LMV (Motor Car),Petrol,UP-16,"RTO UP-16, Uttar Pradesh",2011-10-07,2026-10-07,2026-07-10,2027-05-02,true
+SV730871,DL02YV0440,Abhishek Fernandes,Individual,A••••••• F••••••••,1,LMV (Motor Car),Petrol,DL-02,"RTO DL-02, Delhi",2017-10-24,2032-10-24,2026-01-30,2027-03-26,true
+SV696709,TG32CZ4803,Nikhil Gupta,Individual,N••••• G••••,1,LMV (Motor Car),Petrol,TG-32,"RTO TG-32, Telangana",2008-09-20,2023-09-20,2027-09-13,2027-04-04,true
+SV878730,DL7MAZ8556,Rohan Yadav,Individual,R•••• Y••••,1,LMV (Motor Car),Petrol,DL-07,"RTO DL-07, Delhi",2021-10-14,2036-10-14,2027-03-15,2027-01-21,true
+SV044315,MP24YX0318,Aditi Iyer,Individual,A•••• I•••,1,"MCWOG (Scooter, without gear)",Petrol,MP-24,"RTO MP-24, Madhya Pradesh",2009-06-26,2024-06-26,2026-07-07,2027-04-20,true
+SV229092,CG26HE5107,Manish Reddy,Individual,M••••• R••••,2,"LMV 3-Wheeler (Passenger, Transport)",CNG,CG-26,"RTO CG-26, Chhattisgarh",2018-10-21,2026-10-21,2027-03-14,2026-12-31,true
+SV656881,DL3CCK2475,Tanvi Deshmukh,Individual,T•••• D•••••••,1,LMV (Motor Car),Diesel,DL-03,"RTO DL-03, Delhi",2020-11-10,2035-11-10,2027-08-03,2027-04-10,true
+SV313430,RJ17UY9545,Aditya Mishra,Individual,A••••• M•••••,2,LMV (Motor Car),Petrol,RJ-17,"RTO RJ-17, Rajasthan",2021-10-27,2036-10-27,2026-05-13,2026-03-26,true
+SV658848,MP10ME1576,Neha Tiwari,Individual,N••• T•••••,1,MCWG (Motorcycle with gear),Petrol,MP-10,"RTO MP-10, Madhya Pradesh",2023-02-09,2038-02-09,2027-01-28,2026-12-28,true
+SV773226,MH14DB2773,Zoya Baghel,Individual,Z••• B•••••,1,LMV (Motor Car),Petrol,MH-14,"RTO MH-14, Maharashtra",2024-05-26,2039-05-26,2027-04-19,2027-01-25,true
+SV243824,HR16DD2508,Suresh Khan,Individual,S••••• K•••,1,MCWG (Motorcycle with gear),Petrol,HR-16,"RTO HR-16, Haryana",2015-11-06,2030-11-06,2027-03-21,2027-04-23,true
+SV178500,HP12HK3828,Kabir Gupta,Individual,K•••• G••••,1,HGV (Heavy Goods Vehicle),Diesel,HP-12,"RTO HP-12, Himachal Pradesh",2014-11-20,2026-11-20,2027-09-10,2027-01-29,true
+SV346087,DL9CAZ8580,Kavya Deshmukh,Individual,K•••• D•••••••,1,LMV (Motor Car),Petrol,DL-09,"RTO DL-09, Delhi",2015-11-15,2030-11-15,2025-11-01,2026-06-13,true
+SV793845,UP15VN7310,Kabir Gupta,Individual,K•••• G••••,2,LMV (Motor Car),CNG,UP-15,"RTO UP-15, Uttar Pradesh",2024-10-01,2039-10-01,2027-04-20,2026-12-10,true
+SV957926,TG07HF6539,Kabir Joshi,Individual,K•••• J••••,1,LMV (Motor Car),Diesel,TG-07,"RTO TG-07, Telangana",2017-06-09,2032-06-09,2025-11-11,2027-01-09,true
+SV870776,OD15GR2212,Pooja Agrawal,Individual,P•••• A••••••,1,"MCWOG (Scooter, without gear)",Electric,OD-15,"RTO OD-15, Odisha",2012-01-15,2027-01-15,2027-08-07,2026-07-17,true
+SV725737,CG04DK1578,Suresh Mishra,Individual,S••••• M•••••,1,MCWG (Motorcycle with gear),Petrol,CG-04,"RTO CG-04, Raipur",2021-04-14,2036-04-14,2026-02-06,2027-03-25,true
+SV980550,TG22RB6063,Tanvi Pillai,Individual,T•••• P•••••,1,LMV (Motor Car),CNG,TG-22,"RTO TG-22, Telangana",2010-06-20,2025-06-20,2027-04-11,2027-04-12,true
+SV164026,BR03SJ4413,Sabri Passenger Services,Firm,S•••• P•••••••• S•••••••,1,HPV (Heavy Passenger Vehicle),Diesel,BR-03,"RTO BR-03, Bihar",2014-04-21,2028-04-21,2027-05-04,2026-08-12,true
+SV784595,JH16BH2882,Sneha Khan,Individual,S•••• K•••,1,LMV (Motor Car),Petrol,JH-16,"RTO JH-16, Jharkhand",2015-09-19,2030-09-19,2027-03-01,2027-03-05,true
+SV828648,TG20DS6444,Payal Gupta,Individual,P•••• G••••,2,"MCWOG (Scooter, without gear)",Electric,TG-20,"RTO TG-20, Telangana",2016-07-07,2031-07-07,2027-01-20,2026-03-03,true
+SV379601,PB03WF3013,Rahul Dewangan,Individual,R•••• D•••••••,1,LMV (Motor Car),CNG,PB-03,"RTO PB-03, Punjab",2011-07-20,2026-07-20,2027-02-01,2026-10-23,true
+SV005257,DL3CTY1825,Aditi Deshmukh,Individual,A•••• D•••••••,1,LMV (Motor Car),Diesel,DL-03,"RTO DL-03, Delhi",2014-09-25,2029-09-25,2026-12-14,2027-03-15,true
+SV061408,JH28C7167,Shivnath Roadways,Firm,S••••••• R•••••••,2,HGV (Heavy Goods Vehicle),Diesel,JH-28,"RTO JH-28, Jharkhand",2019-07-22,2027-07-22,2027-01-15,2027-04-04,true
+SV882554,TN30YC5296,Payal Verma,Individual,P•••• V••••,1,LMV (Motor Car),CNG,TN-30,"RTO TN-30, Tamil Nadu",2024-12-19,2039-12-19,2027-03-29,2027-04-30,true
+SV944846,OD22J3038,Zoya Agrawal,Individual,Z••• A••••••,1,MCWG (Motorcycle with gear),Petrol,OD-22,"RTO OD-22, Odisha",2022-09-12,2037-09-12,2027-10-28,2027-05-16,true
+SV359382,OD06WM5201,Nisha Nair,Individual,N•••• N•••,1,"MCWOG (Scooter, without gear)",Electric,OD-06,"RTO OD-06, Odisha",2016-06-27,2031-06-27,2026-12-19,2027-05-21,true
+SV423983,MH35VM4657,Sneha Singh,Individual,S•••• S••••,1,"MCWOG (Scooter, without gear)",Petrol,MH-35,"RTO MH-35, Maharashtra",2014-11-28,2029-11-28,2027-04-10,2026-02-13,true
+SV297227,CG04DK1928,Ishita Naidu,Individual,I••••• N••••,1,MCWG (Motorcycle with gear),Petrol,CG-04,"RTO CG-04, Raipur",2024-05-14,2039-05-14,2027-09-12,2027-03-31,true
+SV021818,UK05O5883,Ishita Patel,Individual,I••••• P••••,1,LMV (Motor Car),Diesel,UK-05,"RTO UK-05, Uttarakhand",2020-03-04,2035-03-04,2027-03-24,2027-03-10,true
+SV506149,PB13SJ7127,Harleen Khan,Individual,H•••••• K•••,2,LMV (Motor Car),Diesel,PB-13,"RTO PB-13, Punjab",2024-01-06,2039-01-06,2027-02-20,2027-03-28,true
+SV455077,JH34TS3222,Venkat Sahu,Individual,V••••• S•••,2,LMV (Motor Car),Diesel,JH-34,"RTO JH-34, Jharkhand",2017-12-22,2032-12-22,2027-05-16,2027-01-20,true
+SV992057,UP14GP5081,Mahanadi Logistics,Firm,M••••••• L••••••••,1,HPV (Heavy Passenger Vehicle),Diesel,UP-14,"RTO UP-14, Uttar Pradesh",2019-06-14,2027-06-14,2027-06-25,2026-09-14,true
+SV160315,AP24ZF0487,Neha Naidu,Individual,N••• N••••,2,MCWG (Motorcycle with gear),Petrol,AP-24,"RTO AP-24, Andhra Pradesh",2009-03-14,2024-03-14,2026-01-30,2027-04-05,true
+SV683636,GJ30TX0612,Pooja Iyer,Individual,P•••• I•••,1,MCWG (Motorcycle with gear),Petrol,GJ-30,"RTO GJ-30, Gujarat",2011-04-23,2026-04-23,2027-06-11,2027-05-02,true
+SV397809,OD15B1486,Deepa Chandrakar,Individual,D•••• C•••••••••,2,MCWG (Motorcycle with gear),Petrol,OD-15,"RTO OD-15, Odisha",2017-11-12,2032-11-12,2025-11-15,2027-03-23,true
+SV735559,UP37AA3405,Devansh Patel,Individual,D•••••• P••••,2,MCWG (Motorcycle with gear),Petrol,UP-37,"RTO UP-37, Uttar Pradesh",2015-01-04,2030-01-04,2027-03-04,2026-06-12,true
+SV655191,MP12SM8583,Deepa Chandrakar,Individual,D•••• C•••••••••,1,"MCWOG (Scooter, without gear)",Electric,MP-12,"RTO MP-12, Madhya Pradesh",2023-08-19,2038-08-19,2027-04-19,2026-09-29,true
+SV814907,CG01NL3024,Neha Iyer,Individual,N••• I•••,3,LMV (Motor Car),Diesel,CG-01,"RTO CG-01, Chhattisgarh",2013-04-22,2028-04-22,2026-02-04,2027-05-12,true
+SV963114,UP34PK7222,Shivnath Roadways,Firm,S••••••• R•••••••,2,HPV (Heavy Passenger Vehicle),Diesel,UP-34,"RTO UP-34, Uttar Pradesh",2023-09-22,2027-09-22,2027-08-25,2027-02-16,true
+SV045228,UK16CW4752,Sabri Passenger Services,Firm,S•••• P•••••••• S•••••••,1,HGV (Heavy Goods Vehicle),Diesel,UK-16,"RTO UK-16, Uttarakhand",2019-12-24,2027-12-24,2027-10-22,2027-02-21,true
+SV950896,UP14GP5085,Neha Iyer,Individual,N••• I•••,1,LMV (Motor Car),Petrol,UP-14,"RTO UP-14, Uttar Pradesh",2017-02-18,2032-02-18,2027-07-29,2027-02-17,true
+SV990323,CG16LF6186,Deepa Tiwari,Individual,D•••• T•••••,1,LMV (Motor Car),Petrol,CG-16,"RTO CG-16, Chhattisgarh",2016-01-15,2031-01-15,2027-02-14,2027-01-29,true
+SV315800,DL8CAH1064,Rahul Yadav,Individual,R•••• Y••••,1,LMV (Motor Car),Diesel,DL-08,"RTO DL-08, Delhi",2017-06-06,2032-06-06,2027-09-01,2027-04-17,true
+SV575223,MP03JW6481,Ishaan Deshmukh,Individual,I••••• D•••••••,1,MCWG (Motorcycle with gear),Electric,MP-03,"RTO MP-03, Madhya Pradesh",2013-04-07,2028-04-07,2027-01-31,2027-02-06,true
+SV621338,JH06R4148,Abhishek Naidu,Individual,A••••••• N••••,1,"LMV 3-Wheeler (Passenger, Transport)",Electric,JH-06,"RTO JH-06, Jharkhand",2017-11-16,2027-11-16,2026-12-14,2026-02-05,true
+SV733987,KA24ZY1066,Arjun Singh,Individual,A•••• S••••,1,LMV (Motor Car),Diesel,KA-24,"RTO KA-24, Karnataka",2012-08-03,2027-08-03,2027-08-08,2026-06-08,true
+SV378109,22BH4541MP,Suresh Agrawal,Individual,S••••• A••••••,1,LMV (Motor Car),Diesel,BH,Bharat series (BH) registration,2022-02-20,2037-02-20,2026-12-11,2027-04-09,true
+SV735813,CG28J4125,Tushar Gupta,Individual,T••••• G••••,1,LMV (Motor Car),Diesel,CG-28,"RTO CG-28, Chhattisgarh",2016-03-14,2031-03-14,2027-04-27,2027-03-11,true
+SV312442,WB11B4264,Neha Saxena,Individual,N••• S•••••,1,MCWG (Motorcycle with gear),Petrol,WB-11,"RTO WB-11, West Bengal",2014-12-18,2029-12-18,2027-02-09,2026-10-07,true
+SV616642,26BH4508U,Nisha Gupta,Individual,N•••• G••••,2,LMV (Motor Car),Diesel,BH,Bharat series (BH) registration,2018-05-28,2033-05-28,2026-03-18,2026-03-16,true
+SV527320,DL15FU7620,Neha Kulkarni,Individual,N••• K•••••••,1,HGV (Heavy Goods Vehicle),Diesel,DL-15,"RTO DL-15, Delhi",2011-08-25,2027-08-25,2026-08-02,2026-12-24,true
+SV666770,JH13JE8836,Rahul Mishra,Individual,R•••• M•••••,1,LMV (Motor Car / Omni),Petrol,JH-13,"RTO JH-13, Jharkhand",2019-05-25,2034-05-25,2026-01-13,2026-03-20,true
+SV206308,JH31KJ8802,Sneha Mishra,Individual,S•••• M•••••,1,LMV (Motor Car),Petrol,JH-31,"RTO JH-31, Jharkhand",2019-02-07,2034-02-07,2027-05-14,2027-04-01,true
+SV704535,DL07CU4609,Deepa Yadav,Individual,D•••• Y••••,1,LMV (Motor Car),Petrol,DL-07,"RTO DL-07, Delhi",2018-03-23,2033-03-23,2026-12-26,2027-02-25,true
+SV058942,MH34KA3569,Suresh Kulkarni,Individual,S••••• K•••••••,1,LMV (Motor Car / Omni),Petrol,MH-34,"RTO MH-34, Maharashtra",2009-03-01,2024-03-01,2027-03-03,2026-06-24,true
+SV192628,TN28RS6607,Karan Chandrakar,Individual,K•••• C•••••••••,1,LMV (Motor Car / Omni),Petrol,TN-28,"RTO TN-28, Tamil Nadu",2012-06-09,2027-06-09,2027-05-11,2027-01-14,true
+SV064477,OD16ES2330,Hasdeo Goods Movers,Firm,H••••• G•••• M•••••,2,HPV (Heavy Passenger Vehicle),Diesel,OD-16,"RTO OD-16, Odisha",2010-10-27,2026-10-27,2026-10-30,2027-03-09,true
+SV332686,GJ23WR9504,Kabir Patel,Individual,K•••• P••••,1,LMV (Motor Car),Diesel,GJ-23,"RTO GJ-23, Gujarat",2013-09-19,2028-09-19,2027-05-01,2027-01-10,true
+SV676854,MP29VL7347,Nikhil Pillai,Individual,N••••• P•••••,1,LMV (Motor Car),Petrol,MP-29,"RTO MP-29, Madhya Pradesh",2016-10-02,2031-10-02,2027-08-25,2027-03-28,true
+SV261456,TG32PA8938,Pooja Baghel,Individual,P•••• B•••••,3,MCWG (Motorcycle with gear),Petrol,TG-32,"RTO TG-32, Telangana",2016-01-22,2031-01-22,2027-02-17,2027-01-14,true
+SV024953,AS28DG4929,Tushar Dewangan,Individual,T••••• D•••••••,1,"LMV 3-Wheeler (Passenger, Transport)",Electric,AS-28,"RTO AS-28, Assam",2022-09-19,2026-09-19,2027-01-09,2027-02-27,true
+SV163823,TG17RF5742,Maria Sinha,Individual,M•••• S••••,1,LMV (Motor Car),Petrol,TG-17,"RTO TG-17, Telangana",2012-06-08,2027-06-08,2027-07-26,2026-12-11,true
+SV880311,TG33HD0952,Payal Deshmukh,Individual,P•••• D•••••••,1,"MCWOG (Scooter, without gear)",Petrol,TG-33,"RTO TG-33, Telangana",2019-09-22,2034-09-22,2027-03-12,2026-07-25,true
+SV258008,KA53MH3896,Abhishek Agrawal,Individual,A••••••• A••••••,1,LMV (Motor Car),Diesel,KA-53,"RTO KA-53, Karnataka",2023-04-26,2038-04-26,2027-07-10,2026-06-22,true
+SV316802,25BH6170ZS,Mahanadi Logistics,Firm,M••••••• L••••••••,1,HPV (Heavy Passenger Vehicle),CNG,BH,Bharat series (BH) registration,2013-02-12,2027-02-12,2027-10-14,2027-01-31,true
+SV873861,CG04DH1578,Tushar Sharma,Individual,T••••• S•••••,1,MCWG (Motorcycle with gear),Petrol,CG-04,"RTO CG-04, Raipur",2022-10-20,2037-10-20,2027-07-21,2026-12-10,true
+SV188279,JH34ZD3129,Kavya Gupta,Individual,K•••• G••••,1,MCWG (Motorcycle with gear),Petrol,JH-34,"RTO JH-34, Jharkhand",2024-08-19,2039-08-19,2027-04-22,2026-12-16,true
+SV495819,MP25RL8759,Ananya Naidu,Individual,A••••• N••••,2,LMV (Motor Car),Diesel,MP-25,"RTO MP-25, Madhya Pradesh",2015-02-02,2030-02-02,2027-03-16,2027-04-11,true
+SV091775,KA11SY3092,Rahul Agrawal,Individual,R•••• A••••••,2,"MCWOG (Scooter, without gear)",Petrol,KA-11,"RTO KA-11, Karnataka",2023-10-07,2038-10-07,2027-05-06,2026-02-09,true
+SV340854,CG23JK8013,Vivaan Kulkarni,Individual,V••••• K•••••••,1,LMV (Motor Car),Diesel,CG-23,"RTO CG-23, Chhattisgarh",2021-02-20,2036-02-20,2027-04-02,2027-02-08,true
+SV833657,KA15UJ0361,Vivaan Agrawal,Individual,V••••• A••••••,1,MCWG (Motorcycle with gear),Petrol,KA-15,"RTO KA-15, Karnataka",2022-04-21,2037-04-21,2027-02-13,2026-12-06,true
+SV551538,TG28WN0503,Rahul Thakur,Individual,R•••• T•••••,1,"MCWOG (Scooter, without gear)",Petrol,TG-28,"RTO TG-28, Telangana",2018-10-08,2033-10-08,2027-05-08,2027-01-07,true
+SV617942,TG01SZ7317,Shivnath Roadways,Firm,S••••••• R•••••••,1,HGV (Heavy Goods Vehicle),Diesel,TG-01,"RTO TG-01, Telangana",2011-10-20,2027-10-20,2026-12-25,2027-05-06,true
+SV545732,UP29VJ2468,Zoya Banerjee,Individual,Z••• B•••••••,2,LMV (Motor Car),Petrol,UP-29,"RTO UP-29, Uttar Pradesh",2016-11-28,2031-11-28,2027-01-06,2026-10-21,true
+SV095104,MP13HM7216,Karan Deshmukh,Individual,K•••• D•••••••,1,LMV (Motor Car),Petrol,MP-13,"RTO MP-13, Madhya Pradesh",2025-03-25,2040-03-25,2027-10-04,2027-01-21,true
+SV428987,PB12AG8124,Rahul Naidu,Individual,R•••• N••••,2,LMV (Motor Car),CNG,PB-12,"RTO PB-12, Punjab",2010-10-01,2025-10-01,2027-09-07,2027-03-03,true
+SV241350,OD11V2173,Aditi Naidu,Individual,A•••• N••••,1,LMV (Motor Car),CNG,OD-11,"RTO OD-11, Odisha",2025-03-22,2040-03-22,2027-03-02,2026-02-25,true
+SV597097,HP15D6018,Ishita Baghel,Individual,I••••• B•••••,2,LMV (Motor Car),Petrol,HP-15,"RTO HP-15, Himachal Pradesh",2009-02-24,2024-02-24,2027-01-21,2027-03-31,true
+SV900061,UP30F9935,Ananya Joshi,Individual,A••••• J••••,3,LMV (Motor Car),Diesel,UP-30,"RTO UP-30, Uttar Pradesh",2021-08-08,2036-08-08,2027-07-30,2027-03-01,true
+SV461017,CG05KB6686,Ananya Thakur,Individual,A••••• T•••••,1,LMV (Motor Car),Electric,CG-05,"RTO CG-05, Chhattisgarh",2025-04-28,2040-04-28,2026-08-19,2027-04-09,true
