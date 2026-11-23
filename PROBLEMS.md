@@ -105,6 +105,8 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | No-match handling | ✅ **0/42 false confident matches** on unregistered clip vehicles | — |
 | Cross-camera tracking | Missing | A5, A6 |
 | Make/model (bonus) | Missing | No verified labels; make no claims |
+| Wrong-side driving (add-on) | 🟡 Built (E18, E19). Fixed cameras: 0 false flags on 54 vehicles, positive case only by replaying tracks backwards. Moving cameras: one downloaded positive clip, 0 false flags on 214 cars | More filmed clips (whatnext §4 #8) |
+| Owner / e-challan data (add-on) | ✅ Synthetic only, shown for confident matches (E17) | Real data needs government authorisation |
 
 ## E. Process risks
 
@@ -117,3 +119,4 @@ Evidence for every item is in `TRACEVISION_DATA/reports/`. Done work is summaris
 | E5 | 🟡 | The PaddleOCR clone and the Awiros sample images were untracked. | PaddleOCR is now a git submodule; the sample images are git-ignored. |
 | E6 | 🟠 | **Team decision 2026-11-22: the datasets are pushed to the PUBLIC repo** (Quobotic, zenitsu09 parquet and crops, `ground_truth.csv`, Awiros weights via LFS). This publishes real plates, and zenitsu09 has no stated licence. Git LFS has a free quota of 1 GB of bandwidth per month (about 7 full clones). | Licence and privacy exposure. LFS downloads may stop if the quota is used up. | Credit Quobotic (CC BY 4.0) in the README. Make the repo private, or remove the zenitsu09 files, if anyone objects. If LFS runs out, download the weights from HF `Awiros/anpr-ocr`. Test clips stay out of git. | 🔴 Open: owner decision (NEEDS 1). Now also includes the owner's own parking clips clip12–19. |
 | E7 | 🟡 | **Most test clips are ground-level or moving (9 of 11), while the problem statement says CCTV.** The team decided not to add raised clips, and the demo uses ground-level clips (DECISIONS E10). | Judges may question fit with the problem statement, and plates in real CCTV are smaller than in our moving clips, so plate accuracy may look better than it would on CCTV. | Report results separately for CCTV-style (clip02, 06) and moving clips. Keep clip02 and clip06 in the evaluation and show one of them in the demo. Say so in the README and slides. Use `degrade_clips.py` (360p, blur) to show behaviour on poorer footage. | Accepted risk |
+| E8 | 🟡 | **`ws01.mp4` is a downloaded social-media clip (not own footage, licence unknown) committed to the public repo**, showing a real plate next to an accusation of wrong-side driving (owner's choice, DECISIONS E20). | Copyright and privacy exposure. | Source note in `TRACEVISION_DATA/raw/wrongside/README.md`. The plate isn't given a fake owner. Remove the file (and its LFS object) if the uploader or the vehicle owner objects. | Accepted risk (owner) |

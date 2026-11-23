@@ -5,7 +5,7 @@
 ## 🔴 Must do before submission
 
 ### 1. Decide the repo's visibility (1 min)
-- The GitHub repo is **public** and contains real number plates: your clips (clip01–09, clip12–19), the Quobotic and zenitsu09 photos, and your own vehicles' plates in the registry (`evaluation_seed` rows).
+- The GitHub repo is **public** and contains real number plates: your clips (clip01–09, clip12–19), the Quobotic and zenitsu09 photos, and your own vehicles' plates in the registry (`evaluation_seed` rows). Since 2026-11-23 it also holds the downloaded wrong-side clip `ws01.mp4` (someone else's video, licence unknown; DECISIONS E20).
 - **Options:** make it **private** (Settings → Danger Zone → Change visibility) and add teammates and judges as collaborators, or keep it public on purpose.
 - **Why:** privacy (PROBLEMS E6, DECISIONS D10). Claude won't change account settings for you.
 
@@ -37,7 +37,9 @@
 6. **Pexels credit:** open the clip10/11 links in `evaluation/clips.csv`, check they're the right videos, and note the creator names for the README credits.
 7. **`~/Downloads/DS.mp4` and `original-5adf….mp4`** were never checked (PROBLEMS A11). Tell Claude if they're relevant.
 8. **witvix** truck-plate dataset (Hugging Face access form) for a harder OCR test (PROBLEMS A2).
-9. Fill in the **Owner** names in `TEAM_TASKS.md`.
+9. Fill in the **Owner** names in `TEAM_TASKS.md` (now including WS6, the enforcement add-on).
+10. **Film 2–3 wrong-side clips** (a fixed camera if possible; never stage anything unsafe) so the wrong-side check has more than one real example ([ENFORCEMENT.md](ENFORCEMENT.md) §4).
+11. Before demoing on a machine, **upload `TRACEVISION_DATA/raw/wrongside/ws01.mp4` once as `ws01.mp4`** on the GPU machine. Uploaded results aren't in git.
 
 ## ✅ Done (no action needed)
 - Cross-camera clips **clip12–19** filmed (4 pairs), labelled (AI draft, owner-verified) and linked (PROBLEMS A6).

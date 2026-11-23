@@ -13,6 +13,7 @@ Open problems are in [PROBLEMS.md](PROBLEMS.md). Next steps are in [whatnext.md]
 | P1–P6: models, fusion + matching, pipeline, app + reports, evaluation | ✅ Done. **14/15 registered vehicles matched, 0/46 false identifications (+0/6), 0/252 wrong plate characters**, 61/67 vehicles found, type 77% exact / 95% compatible, colour 59% exact |
 | Video viewer, live playback, cross-camera panel | ✅ Done |
 | Cross-camera re-identification (bonus) | ✅ Declared cross-angled pairs linked jointly with pooled evidence: **5 of 5 checkable groups correct, 0 wrong** (M16) |
+| **Enforcement add-on** (synthetic owner records + e-challans, simulated challans, wrong-side driving with review, audit log) | ✅ Done. Guide: [ENFORCEMENT.md](ENFORCEMENT.md); decisions E17–E20 |
 | Owner actions: repo visibility, demo video + slides | ⏳ [NEEDS.md](NEEDS.md) |
 
 **Latest work (2026-11-23, after P6), in order:**
@@ -25,6 +26,13 @@ Open problems are in [PROBLEMS.md](PROBLEMS.md). Next steps are in [whatnext.md]
 - **Fair evaluation (E13, E14, C14):** vehicles whose full plate nobody knows reported separately; one-to-one label ↔ vehicle association (removed 2 fake false matches).
 - **Cross-camera re-ID (M14, M16):** plate-led open-world linking; for declared cross-angled pairs, joint linking (plate-confirmed → duplicate folding → one-to-one pairing → elimination) with the plate re-fused over both cameras' reads. Shown in the viewer with a ⇄ badge and a link to the other clip.
 - **clip08_v02 / v03:** owner confirmed the system's plate reads; labels updated (E15).
+- **UI redesign:** four tabs (Cases, Cross-camera, Performance, Enforcement); findings list plus an evidence panel for each finding.
+- **Enforcement add-on (E17–E20, [ENFORCEMENT.md](ENFORCEMENT.md)):**
+  - **Vehicle records:** synthetic owner and e-challan data for all 334 registry vehicles (434 challans; every matchable vehicle has 2–4, one pending), shown only for a **confident match**, in the case view, in Cross-camera, and as a typed lookup.
+  - **Simulated challans** issued and cancelled from any record. **Audit log** of every lookup, challan and review.
+  - **Wrong-side driving, fixed cameras:** hand-drawn zones with camera-pan removal; clip02 / clip06: 54 vehicles, 0 flagged (positive case tested by replaying tracks backwards).
+  - **Wrong-side driving, moving cameras:** a CLIP front-then-rear head-on pass on a road declared one-way. On the downloaded clip `ws01.mp4` the wrong-way SUV is flagged; 0 other flags over 214 cars in 31 clips.
+  - **Review queue:** confirm / reject, and a confirmed flag on a matched vehicle raises a simulated challan. 63 tests.
 
 ## 1. Problem statement understood (AIML-01)
 
@@ -192,4 +200,9 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | 571beb6 | One-to-one evaluation association (C14) |
 | 1af02dc | clip08 plates confirmed by the owner |
 | f0a3b08 / 0ae9b02 / ee4e3b7 | Declared cross-angled pairs: joint linking + pooled evidence; viewer cross-camera panel |
-| (this push) | Docs brought up to date |
+| (earlier push) | Docs brought up to date |
+| 52f483e / d1a6420 | UI: vehicle record and e-challans in the cross-camera view; each clip's own details and the combined result |
+| 5e05858 / 005475d / 626a5c3 | Enforcement add-on: synthetic records + e-challans, issuing challans, fixed-camera wrong-side check |
+| dad8c11 / b89fb6d | Moving-camera wrong-side check (head-on pass); test clip ws01.mp4 via LFS |
+| 46f598e / e0a45b3 | Reviewed violations leave the queue; PR #3 merged |
+| (this push) | Team docs for the enforcement add-on (ENFORCEMENT.md, demo guide, architecture, status docs) |
