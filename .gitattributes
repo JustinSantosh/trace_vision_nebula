@@ -4,3 +4,9 @@ TRACEVISION_DATA/raw/** -text
 TRACEVISION_DATA/processed/** -text
 TRACEVISION_DATA/raw/test_videos/*.mp4 filter=lfs diff=lfs merge=lfs -text
 TRACEVISION_DATA/models/weights/plate_yolov8n_quobotic.pt filter=lfs diff=lfs merge=lfs -text
+
+# GitHub language statistics: generated per-clip reports (HTML with embedded images) are output, not source code
+runs/** linguist-generated=true
+runs_degraded/** linguist-generated=true
+TRACEVISION_DATA/evaluation/reports/** linguist-generated=true
+TRACEVISION_DATA/reports/** linguist-documentation=true
