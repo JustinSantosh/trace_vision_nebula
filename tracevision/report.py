@@ -60,16 +60,19 @@ def _prob_colour(p):
 
 # ------------------------------------------------------------------ HTML
 CSS = """
-:root{--ink:#1f2933;--muted:#5f6b7a;--line:#d5dbe3;--bg:#fff;--head:#eef2f8;--accent:#1d4ed8;--ok:#15803d;--warn:#b45309;--bad:#b91c1c}
-@media (prefers-color-scheme: dark){:root{--ink:#e5e9f0;--muted:#a3adbb;--line:#3b4252;--bg:#14171c;--head:#1f2430;--accent:#7aa2ff}}
-body{font-family:Segoe UI,system-ui,sans-serif;color:var(--ink);background:var(--bg);margin:0 auto;max-width:1100px;padding:16px;line-height:1.45}
-h1{margin:.2em 0}h2{margin:1.4em 0 .4em;border-bottom:1px solid var(--line);padding-bottom:4px}.muted{color:var(--muted)}
-table{border-collapse:collapse;width:100%;margin:.4em 0}th,td{border:1px solid var(--line);padding:4px 6px;vertical-align:top;text-align:left;font-size:14px}
-th{background:var(--head)}.plate{font-family:Consolas,monospace;font-size:22px;letter-spacing:2px;font-weight:700}
-.q{color:var(--bad)}.chip{display:inline-block;padding:2px 8px;border-radius:10px;font-weight:600;font-size:13px}
-.match{background:#dcfce7;color:#14532d}.ambiguous{background:#fef3c7;color:#78350f}.no_confident_match{background:#fee2e2;color:#7f1d1d}
-.card{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:12px 0}.imgs img{max-height:120px;margin:2px;border:1px solid var(--line)}
-.grid td{font-family:Consolas,monospace;text-align:center;min-width:22px}.small{font-size:12px}
+:root{color-scheme:light dark;--ink:#1d2932;--muted:#52616e;--line:#d2dce2;--bg:#f5f7f7;--surface:#fff;--head:#edf2f3;--accent:#286f68;--ok:#236b4a;--warn:#805b1c;--bad:#8d3f47;--unknown:#765c24}
+@media (prefers-color-scheme:dark){:root{--ink:#edf2f5;--muted:#a5b1bc;--line:#34424c;--bg:#0d1218;--surface:#151e28;--head:#1b2632;--accent:#94ddd1;--ok:#9bd8b3;--warn:#e4b76d;--bad:#e17e83;--unknown:#e4c47e}}
+*{box-sizing:border-box}body{font-family:"Segoe UI Variable",Segoe UI,system-ui,sans-serif;color:var(--ink);background:var(--bg);margin:0 auto;max-width:1240px;padding:32px;line-height:1.55}
+h1{margin:0 0 8px;font-size:clamp(26px,4vw,36px);line-height:1.15;letter-spacing:-.03em}h2{margin:32px 0 12px;border-bottom:1px solid var(--line);padding-bottom:9px;font-size:21px;line-height:1.3}.muted{color:var(--muted)}
+body>div:first-of-type{line-height:1.65}p{margin:12px 0}.small{font-size:13px}
+table{border-collapse:collapse;width:100%;margin:10px 0 18px;background:var(--surface)}th,td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left;font-size:13px;line-height:1.45}
+th{background:var(--head);font-size:12px;font-weight:650}tr:nth-child(even) td{background:color-mix(in srgb,var(--surface) 92%,var(--head))}.plate{font-family:Consolas,"Cascadia Mono",monospace;font-size:22px;letter-spacing:2px;font-weight:700;font-variant-numeric:tabular-nums}
+.q{color:var(--unknown);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}.chip{display:inline-block;padding:4px 9px;border:1px solid currentColor;border-radius:5px;font-weight:700;font-size:12px;letter-spacing:.035em}
+.match{background:color-mix(in srgb,var(--ok) 12%,var(--surface));color:var(--ok)}.ambiguous{background:color-mix(in srgb,var(--warn) 13%,var(--surface));color:var(--warn)}.no_confident_match{background:color-mix(in srgb,var(--bad) 12%,var(--surface));color:var(--bad)}
+.card{border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:14px 0;background:var(--surface);break-inside:avoid}.imgs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.imgs img{max-width:min(240px,100%);max-height:180px;object-fit:contain;margin:0;border:1px solid var(--line);border-radius:5px;background:var(--bg)}
+.grid td{font-family:Consolas,"Cascadia Mono",monospace;text-align:center;min-width:30px;font-variant-numeric:tabular-nums}.card>div{margin:7px 0}
+@media(max-width:700px){body{padding:18px 14px}.card{padding:13px}.grid-wrap{overflow-x:auto}table{min-width:560px}h2{font-size:19px}}
+@media print{:root{color-scheme:light}body{max-width:none;padding:0;background:#fff;color:#111}h1,h2{break-after:avoid}.card{background:#fff;box-shadow:none}.card,.imgs,table{break-inside:avoid}a{color:inherit}th{background:#edf2f3!important}.muted{color:#46525c}}
 """
 
 

@@ -4,6 +4,7 @@
   const byId = (id) => document.getElementById(id);
   const state = {
     overview: null,
+    sampleClips: [],
     limits: null,
     engineStatus: "starting",
     selectedFile: null,
@@ -196,71 +197,116 @@
 
   function renderSamples(clips) {
     const grid = byId("sample-grid");
-    const empty = byId("samples-empty");
     if (!grid) return;
+    state.sampleClips = Array.isArray(clips) ? clips.slice() : [];
+    renderFilteredSamples();
+  }
+
+  function renderFilteredSamples() {
+    const grid = byId("sample-grid");
+    if (!grid) return;
+    const query = String(byId("sample-search") && byId("sample-search").value || "").trim().toLowerCase();
+    const filter = byId("sample-filter") ? byId("sample-filter").value : "all";
+    const sort = byId("sample-sort") ? byId("sample-sort").value : "recent";
+    let clips = state.sampleClips.filter((clip) => {
+      const matchesQuery = !query || (String(clip.clip_id || "") + " " + formatCameraType(clip.camera_type) + " " + String(clip.processed_at || "")).toLowerCase().includes(query);
+      const matchesFilter = filter === "video" ? Boolean(clip.has_video)
+        : filter === "report" ? Boolean(clip.has_report)
+          : filter === "match" ? Number(clip.match_count) > 0
+            : filter === "abstained" ? Number(clip.no_match_count) > 0
+              : true;
+      return matchesQuery && matchesFilter;
+    });
+    const clipNumber = (clip) => Number(String(clip.clip_id || "").match(/\d+/)?.[0] || 0);
+    const countValue = (value) => Number.isFinite(Number(value)) ? Number(value) : -1;
+    const compareChronology = (a, b, newestFirst) => {
+      const left = String(a.processed_at || "");
+      const right = String(b.processed_at || "");
+      if (left && right) {
+        const order = left.localeCompare(right);
+        if (order) return newestFirst ? -order : order;
+      } else if (left || right) {
+        return left ? -1 : 1;
+      }
+      return newestFirst ? clipNumber(b) - clipNumber(a) : clipNumber(a) - clipNumber(b);
+    };
+    clips.sort((a, b) => {
+      if (sort === "oldest") return compareChronology(a, b, false);
+      if (sort === "vehicles") return countValue(b.vehicle_count) - countValue(a.vehicle_count) || clipNumber(a) - clipNumber(b);
+      if (sort === "matches") return countValue(b.match_count) - countValue(a.match_count) || countValue(b.vehicle_count) - countValue(a.vehicle_count);
+      return compareChronology(a, b, true);
+    });
+
     grid.replaceChildren();
-    const list = Array.isArray(clips) ? clips : [];
-    setText("sample-count", list.length + (list.length === 1 ? " stored result" : " stored results"));
-    if (empty) empty.hidden = list.length > 0;
-    list.forEach((clip) => {
-      const card = document.createElement("article");
-      card.className = "sample-card panel";
-      const art = document.createElement("div");
-      art.className = "sample-art";
-      art.setAttribute("aria-hidden", "true");
-      const frame = document.createElement("div");
-      frame.className = "sample-art-frame";
-      const artId = document.createElement("span");
-      artId.className = "sample-art-id";
-      artId.textContent = "STORED EVIDENCE / " + clip.clip_id;
+    const empty = byId("samples-empty");
+    if (empty) {
+      empty.hidden = clips.length > 0;
+      empty.textContent = state.sampleClips.length
+        ? "No stored results match these filters. Clear filters to see all available results."
+        : "No stored result files were found in runs/.";
+    }
+    const countText = clips.length === state.sampleClips.length
+      ? clips.length + (clips.length === 1 ? " stored investigation" : " stored investigations")
+      : clips.length + " of " + state.sampleClips.length + " investigations";
+    setText("sample-count", countText);
+
+    clips.forEach((clip) => {
+      const row = document.createElement("article");
+      row.className = "sample-row panel";
+      const identity = document.createElement("div");
+      identity.className = "sample-identity";
+      const clipId = document.createElement("h3");
+      clipId.textContent = clip.clip_id;
       const camera = document.createElement("span");
       camera.className = "sample-camera";
       camera.textContent = formatCameraType(clip.camera_type);
-      art.append(frame, artId, camera);
+      identity.append(clipId, camera);
 
-      const body = document.createElement("div");
-      body.className = "sample-body";
-      const titleRow = document.createElement("div");
-      titleRow.className = "sample-title-row";
-      const title = document.createElement("h3");
-      title.textContent = clip.clip_id;
-      const stored = document.createElement("span");
-      stored.className = "sample-stored";
-      stored.textContent = "STORED RESULT";
-      titleRow.append(title, stored);
-
-      const data = document.createElement("div");
-      data.className = "sample-data";
-      [
-        ["VEHICLES", clip.vehicle_count],
-        ["MATCH", clip.match_count],
-        ["NO CONFIDENT MATCH", clip.no_match_count],
-      ].forEach((item) => {
-        const entry = document.createElement("span");
-        entry.append(document.createTextNode(item[0]));
-        const value = document.createElement("b");
-        value.textContent = item[1] == null ? "—" : String(item[1]);
-        entry.appendChild(value);
-        data.appendChild(entry);
+      const stats = document.createElement("div");
+      stats.className = "sample-stats";
+      [["Vehicles", clip.vehicle_count], ["Matches", clip.match_count], ["No confident match", clip.no_match_count]].forEach(([label, value]) => {
+        const item = document.createElement("div");
+        const name = document.createElement("span");
+        name.textContent = label;
+        const amount = document.createElement("b");
+        amount.textContent = value == null ? "—" : String(value);
+        item.append(name, amount);
+        stats.appendChild(item);
       });
 
-      const open = document.createElement("a");
-      open.className = "sample-open";
+      const meta = document.createElement("div");
+      meta.className = "sample-meta";
+      const availability = document.createElement("span");
+      availability.className = "sample-availability";
+      availability.textContent = clip.has_video ? "Video available" : clip.has_report ? "Report available · no video" : "Result data only";
+      const time = document.createElement("small");
+      time.textContent = clip.processed_at ? String(clip.processed_at).replace("T", " ") : "Processing time not recorded";
+      meta.append(availability, time);
+
+      const action = document.createElement("div");
+      action.className = "sample-action";
       if (clip.has_video) {
+        const open = document.createElement("a");
+        open.className = "sample-open";
         open.href = "/#results/runs/" + encodeURIComponent(clip.clip_id);
-        open.innerHTML = "Open stored result <span aria-hidden=\"true\">↗</span>";
+        open.textContent = "Open result";
+        open.setAttribute("aria-label", "Open stored result for " + clip.clip_id);
+        action.appendChild(open);
       } else if (clip.has_report) {
+        const open = document.createElement("a");
+        open.className = "sample-open";
         open.href = "/runs/" + encodeURIComponent(clip.clip_id) + "/report";
-        open.innerHTML = "Open stored report <span aria-hidden=\"true\">↗</span>";
+        open.textContent = "Open report";
+        open.setAttribute("aria-label", "Open stored report for " + clip.clip_id);
+        action.appendChild(open);
       } else {
-        open.href = "#samples-title";
-        open.setAttribute("aria-disabled", "true");
-        open.textContent = "Stored media unavailable";
+        const unavailable = document.createElement("span");
+        unavailable.className = "sample-unavailable";
+        unavailable.textContent = "No review media";
+        action.appendChild(unavailable);
       }
-      open.setAttribute("aria-label", "Open stored analysis for " + clip.clip_id);
-      body.append(titleRow, data, open);
-      card.append(art, body);
-      grid.appendChild(card);
+      row.append(identity, stats, meta, action);
+      grid.appendChild(row);
     });
   }
 
@@ -285,19 +331,21 @@
     };
     const crosscam = data.crosscam_evaluation;
     const withVideo = clips.filter((clip) => clip.has_video).length;
-    const items = [
+    const primaryItems = [
       { label: "Clips analysed", value: clips.length, note: withVideo + " with video on this machine" },
       { label: "Vehicles tracked", value: sum("vehicle_count"), note: "after track re-linking" },
-      { label: "Plates read", value: sum("plates_read"), note: "fused from several frames" },
       { label: "Registry matches", value: sum("match_count"), note: "confident decisions", tone: "good" },
-      { label: "Ambiguous", value: sum("ambiguous_count"), note: "top two too close", tone: "warn" },
       { label: "No confident match", value: sum("no_match_count"), note: "system abstained", tone: "muted" },
+    ];
+    const secondaryItems = [
+      { label: "Plates read", value: sum("plates_read"), note: "fused from several frames" },
+      { label: "Ambiguous", value: sum("ambiguous_count"), note: "top candidates too close", tone: "warn" },
       { label: "Cross-camera links", value: crosscam && Number.isFinite(Number(crosscam.system_links_total)) ? crosscam.system_links_total : null,
         note: crosscam ? crosscam.correct_links + "/" + crosscam.groups + " reference groups correct" : "no pair evaluation found", tone: "link" },
     ];
-    items.forEach((item) => {
+    const addCells = (container, items, secondary) => items.forEach((item) => {
       const cell = document.createElement("div");
-      cell.className = "ops-cell" + (item.tone ? " tone-" + item.tone : "");
+      cell.className = "ops-cell" + (secondary ? " ops-cell-secondary" : "") + (item.tone ? " tone-" + item.tone : "");
       const label = document.createElement("span");
       label.textContent = item.label;
       const value = document.createElement("b");
@@ -305,8 +353,15 @@
       const note = document.createElement("small");
       note.textContent = item.value === null || item.value === undefined ? "not recorded" : item.note;
       cell.append(label, value, note);
-      strip.appendChild(cell);
+      container.appendChild(cell);
     });
+    const primary = document.createElement("div");
+    primary.className = "ops-primary";
+    const secondary = document.createElement("div");
+    secondary.className = "ops-secondary";
+    addCells(primary, primaryItems, false);
+    addCells(secondary, secondaryItems, true);
+    strip.replaceChildren(primary, secondary);
     const latest = clips.map((clip) => clip.processed_at).filter(Boolean).sort().pop();
     setText("ops-source", "runs/ · " + clips.length + " result files" + (latest ? " · latest " + String(latest).replace("T", " ") : ""));
   }
@@ -2309,6 +2364,16 @@
     byId("demo-banner-dismiss").addEventListener("click", () => {
       state.demoResultClip = null;
       byId("demo-result-banner").hidden = true;
+    });
+    byId("sample-search").addEventListener("input", renderFilteredSamples);
+    byId("sample-filter").addEventListener("change", renderFilteredSamples);
+    byId("sample-sort").addEventListener("change", renderFilteredSamples);
+    byId("sample-reset").addEventListener("click", () => {
+      byId("sample-search").value = "";
+      byId("sample-filter").value = "all";
+      byId("sample-sort").value = "recent";
+      renderFilteredSamples();
+      byId("sample-search").focus();
     });
     document.querySelectorAll("[data-close-dialog]").forEach((button) => button.addEventListener("click", () => {
       const dialog = button.closest("dialog");
