@@ -1,0 +1,25 @@
+{
+  "clips": [
+    "clip01",
+    "clip02",
+    "clip03",
+    "clip04",
+    "clip05",
+    "clip06",
+    "clip07",
+    "clip08",
+    "clip09",
+    "clip10",
+    "clip11"
+  ],
+  "n_pos": 129,
+  "n_neg": 3944,
+  "pos_median": 0.9565370678901672,
+  "neg_median": 0.8742583990097046,
+  "pos_p10": 0.9051898956298828,
+  "neg_p90": 0.9387913942337036,
+  "neg_p99": 0.9651032996177673,
+  "pos_min": 0.7625669240951538,
+  "neg_max": 0.9831174612045288,
+  "note": "appearance_sim = clip((cos - neg_median) / (pos_median - neg_median), 0, 1). Calibrated on clips 01-11 only (same track early vs late crops = positives; different vehicles in the same clip = negatives)."
+}

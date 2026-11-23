@@ -95,11 +95,28 @@ python -m tracevision.api                    # app: open http://127.0.0.1:8000, 
 python -m tracevision.pipeline --report      # batch: every clip in TRACEVISION_DATA/raw/test_videos -> runs/<clip>/
 python -m tracevision.evaluate               # metrics against evaluation/test_clip_labels.csv
 python -m tracevision.robustness             # same metrics on blurred / 360p / night / noisy variants
+python -m tracevision.crosscam --pairs        # cross-camera links for the parking pairs (clip12-19)
 python -m pytest tests                       # unit tests
 ```
 Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.pdf`.
 
 > **Windows notes:** torch and Paddle can't share one process (conflicting cuDNN), so OCR runs in its own worker process automatically. Anything that trains or validates with ultralytics must run from a `.py` file, not from stdin.
+
+## Cross-camera re-identification (bonus)
+`python -m tracevision.crosscam clip12 clip13` (or `--pairs` for every camera pair in `clips.csv`) links each vehicle in one clip to the same vehicle in another, or says **no link**. Evidence: **plate** (symmetric wildcard / look-alike similarity on ≥ 5 characters both clips read; clearly different plates **veto** a link), **CLIP appearance** (calibrated on clips 01–11 only), type and colour. A link must be a **mutual best match** with a clear margin; plate-agreeing candidates rank above appearance-only ones; appearance-only links need a CLIP cosine above 99% of different-vehicle pairs. Output: `runs/crosscam/<a>__<b>.json` with a link score (not a probability) and reasons.
+
+On our 4 parking pairs (clip12–19, labels pending):
+
+| Pair (clips) | Vehicle | System result | Evidence |
+|---|---|---|---|
+| 1 (clip12 ↔ clip13) | sedan `CG04NL3024` | **linked** (90.3) | plate + appearance |
+| 2 (clip14 ↔ clip15) | dark SUV | **linked** (81.1): `??0S9584` ↔ `CG04QS9584` | plate + appearance |
+| 2 | white SUV | no link: plate unread in the 2nd view, looks not distinctive | — |
+| 3 (clip16 ↔ clip17) | motorcycle | **linked** (70.7): `CG04DK1578` ↔ `??????K1578` | plate + appearance |
+| 3 | scooter, plate hidden | no link: appearance only, not distinctive | — |
+| 4 (clip18 ↔ clip19) | scooter, no plate | no link: appearance only; detector typed it "truck" in clip19 | — |
+
+**3 plate-supported links, 0 wrong links (by the plates; formal scoring needs the labels). Hidden-plate and no-plate vehicles are not linked:** whole-vehicle CLIP similarity overlaps heavily between same and different vehicles (calibration: 10% of same-vehicle pairs score below 0.905, 10% of different-vehicle pairs above 0.939), so the system says "no link" instead of guessing. A dedicated vehicle re-ID model would be the next step.
 
 ## Data and models
 | What | Source | Licence |
@@ -114,6 +131,6 @@ Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.p
 - **Footage:** 9 of the 11 clips are ground-level or dashcam and only 2 are CCTV-style. The problem statement is CCTV, so results are always reported separately (DECISIONS E10, PROBLEMS E7). On real CCTV, plates are often too small to read. The system then says so, rather than guessing.
 - **Small test set:** 51 vehicles and 9 registered. Several pipeline rules were diagnosed on these clips, so the numbers may be optimistic.
 - **Colour** uses CLIP zero-shot (64% exact, 75% near). It answers `unknown` at night and still slips on dark or warm-lit vehicles. **Car versus SUV** is often confused (types are compatible 93% of the time).
-- **Cross-camera re-identification** (bonus) isn't evaluated yet: the two-position car pair hasn't been filmed (see NEEDS.md).
+- **Cross-camera re-identification** (bonus, `python -m tracevision.crosscam --pairs`) links vehicles **by plate**; generic CLIP appearance across viewpoints is unreliable (the same parking lot's background dominates), so appearance-only links need a very high similarity and were never made on our pairs. Formal scoring waits for the labels of clip12–19.
 - Most clips are WhatsApp copies (about 1.5 Mbit/s), which costs plate detail.
 - On strongly degraded footage (360p, heavy blur, night) the OCR can be confidently wrong (up to 17% wrong characters at 360p). A stricter confidence bar for low-quality plates is the next fix.

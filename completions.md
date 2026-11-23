@@ -12,12 +12,14 @@ Open problems are in [PROBLEMS.md](PROBLEMS.md). Next steps are in [whatnext.md]
 | Phase 0 data (0A–0F) | ✅ Done, except the cross-camera car pair (A6) and the final Phase 0 report |
 | P1–P6: models, fusion + matching, pipeline, app + reports, evaluation | ✅ Done (8/9 matched, 0/42 false matches, 0/132 wrong plate characters) |
 | Video viewer + live playback, phantom-box fix, CLIP colour | ✅ Done (see below) |
+| Cross-camera pairs (clip12–19) + re-ID | ✅ Built: 3 plate-supported links, 0 wrong; labels for clip12–19 pending |
 | Owner actions: car pair, repo visibility, demo video + slides | ⏳ [NEEDS.md](NEEDS.md) |
 
 **Latest (2026-11-23, after P6):**
 - **Annotated video viewer** (`/viewer/runs/clipNN` or **▶ Open video viewer** after an upload): the clip plays with tracked boxes, a side panel shows each vehicle's picked plate frames, per-frame reads, the fused plate and the top 5 with reasons.
 - **Live playback** (on by default): the analysis is revealed in step with the video, as box → each plate read → "checking registry" → MATCH or no confident match, narrated in a live feed. It replays the finished analysis; nothing is recomputed.
 - **Phantom boxes fixed (C11, M12):** UVH-26 sometimes boxed empty road or sky as a "Truck". Large tracks are now confirmed by COCO YOLOv8n. 13 phantoms were removed from our clips, and all metrics are unchanged.
+- **Cross-camera re-ID (A6, M14):** 4 pairs filmed in our parking (clip12–19). `python -m tracevision.crosscam --pairs` links 3 vehicles by plate with 0 wrong links; hidden-plate and no-plate vehicles get "no link" because appearance alone isn't reliable (C12).
 - **Colour by CLIP zero-shot (C8, M13):** **64% exact / 75% near** (was 27% / 57%). Matching is unchanged.
 
 ---|---|

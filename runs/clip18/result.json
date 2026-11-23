@@ -1,0 +1,305 @@
+{
+  "clip_id": "clip18",
+  "camera_type": "moving_camera",
+  "video": {
+    "fps": 49.74911192907431,
+    "width": 848,
+    "height": 478,
+    "frames": 129
+  },
+  "processed_at": "2026-11-23T11:14:46",
+  "config": {
+    "pipeline": {
+      "detect_every": 2,
+      "vehicle_conf": 0.25,
+      "imgsz": 640,
+      "min_track_dets": 5,
+      "min_vehicle_area_frac": 0.004,
+      "relink_gap_frames": 30,
+      "relink_max_center_dist": 1.0,
+      "candidate_frames": 8,
+      "min_frame_gap": 4,
+      "ocr_top_k": 5,
+      "colour_frames": 3,
+      "verify_large_frac": 0.1,
+      "verify_samples": 6,
+      "verify_min_iou": 0.3,
+      "verify_min_share": 0.34,
+      "plate_link_min_known": 6
+    },
+    "plate_detector": {
+      "conf": 0.5,
+      "min_plate_height_px": 16
+    },
+    "fusion": {
+      "tau_share": 0.6,
+      "tau_prob": 0.8,
+      "min_support": 1,
+      "cross_class_weight": 0.5,
+      "use_top3": true
+    },
+    "match": {
+      "weights": {
+        "plate": 0.7,
+        "colour": 0.15,
+        "type": 0.15
+      },
+      "lookalike_cost": 0.4,
+      "min_known_for_match": 5,
+      "t_abs": 67.5,
+      "t_margin": 4.0,
+      "top_k": 5,
+      "min_plate_sim_candidate": 0.5
+    },
+    "colour": {
+      "method": "clip"
+    }
+  },
+  "summary": {
+    "raw_tracks": 2,
+    "kept_tracks": 2,
+    "dropped_unverified_large": [
+      {
+        "track_id": 5,
+        "confirmed": "0/6",
+        "median_area_frac": 0.296,
+        "frames": [
+          22,
+          56
+        ],
+        "sample": {
+          "frame": 40,
+          "box": [
+            494,
+            101,
+            848,
+            441
+          ],
+          "type": "truck"
+        }
+      }
+    ],
+    "vehicles_after_relink": 1,
+    "plates_read": 0,
+    "decisions": {
+      "no_confident_match": 1
+    }
+  },
+  "timing": {
+    "detect_track_s": 1.4,
+    "plates_s": 0.2,
+    "ocr_s": 0.0,
+    "assemble_s": 0.0,
+    "total_s": 2.2
+  },
+  "vehicles": [
+    {
+      "track_id": 7,
+      "merged_track_ids": [
+        7
+      ],
+      "first_frame": 72,
+      "last_frame": 128,
+      "first_time_s": 1.45,
+      "n_detections": 23,
+      "first_box": [
+        258,
+        47,
+        453,
+        284
+      ],
+      "track": [
+        [
+          72,
+          258,
+          47,
+          453,
+          284
+        ],
+        [
+          74,
+          269,
+          49,
+          461,
+          283
+        ],
+        [
+          76,
+          268,
+          53,
+          455,
+          279
+        ],
+        [
+          84,
+          288,
+          80,
+          457,
+          283
+        ],
+        [
+          90,
+          272,
+          105,
+          508,
+          397
+        ],
+        [
+          92,
+          275,
+          108,
+          512,
+          408
+        ],
+        [
+          94,
+          277,
+          107,
+          511,
+          411
+        ],
+        [
+          96,
+          277,
+          107,
+          510,
+          416
+        ],
+        [
+          100,
+          280,
+          108,
+          506,
+          415
+        ],
+        [
+          102,
+          297,
+          121,
+          509,
+          417
+        ],
+        [
+          104,
+          311,
+          137,
+          507,
+          414
+        ],
+        [
+          106,
+          317,
+          140,
+          505,
+          410
+        ],
+        [
+          108,
+          315,
+          134,
+          506,
+          410
+        ],
+        [
+          110,
+          318,
+          137,
+          503,
+          407
+        ],
+        [
+          112,
+          319,
+          139,
+          502,
+          410
+        ],
+        [
+          114,
+          305,
+          122,
+          495,
+          405
+        ],
+        [
+          116,
+          298,
+          116,
+          489,
+          405
+        ],
+        [
+          118,
+          308,
+          125,
+          496,
+          412
+        ],
+        [
+          120,
+          303,
+          116,
+          494,
+          408
+        ],
+        [
+          122,
+          311,
+          126,
+          496,
+          410
+        ],
+        [
+          124,
+          304,
+          115,
+          492,
+          408
+        ],
+        [
+          126,
+          300,
+          110,
+          490,
+          407
+        ],
+        [
+          128,
+          300,
+          110,
+          488,
+          407
+        ]
+      ],
+      "type": {
+        "label": "motorcycle/scooter",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.521
+      },
+      "colour": {
+        "label": "green",
+        "confidence": 0.261,
+        "per_frame": [
+          "green",
+          "grey",
+          "green"
+        ],
+        "note": "CLIP zero-shot",
+        "method": "clip"
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    }
+  ],
+  "note": "match_score is a heuristic ranking score, not a probability. '?' marks characters that could not be read."
+}

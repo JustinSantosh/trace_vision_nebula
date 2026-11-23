@@ -1,0 +1,99 @@
+{
+  "clip_a": "clip12",
+  "clip_b": "clip13",
+  "settings": {
+    "min_known": 5,
+    "plate_veto": 0.6,
+    "lookalike_cost": 0.4,
+    "n_crops": 6,
+    "w_plate": {
+      "plate": 0.6,
+      "appearance": 0.25,
+      "type": 0.075,
+      "colour": 0.075
+    },
+    "w_noplate": {
+      "appearance": 0.7,
+      "type": 0.15,
+      "colour": 0.15
+    },
+    "t_link": 70.0,
+    "t_margin": 8.0,
+    "appearance_only_min": "neg_p99"
+  },
+  "calibration": {
+    "clips": [
+      "clip01",
+      "clip02",
+      "clip03",
+      "clip04",
+      "clip05",
+      "clip06",
+      "clip07",
+      "clip08",
+      "clip09",
+      "clip10",
+      "clip11"
+    ],
+    "n_pos": 129,
+    "n_neg": 3944,
+    "pos_median": 0.9565370678901672,
+    "neg_median": 0.8742583990097046,
+    "pos_p10": 0.9051898956298828,
+    "neg_p90": 0.9387913942337036,
+    "neg_p99": 0.9651032996177673,
+    "pos_min": 0.7625669240951538,
+    "neg_max": 0.9831174612045288,
+    "note": "appearance_sim = clip((cos - neg_median) / (pos_median - neg_median), 0, 1). Calibrated on clips 01-11 only (same track early vs late crops = positives; different vehicles in the same clip = negatives)."
+  },
+  "links": [
+    {
+      "clip_id": "clip12",
+      "track_id": 1,
+      "type": "SUV",
+      "colour": "white",
+      "plate": "CG04NL3024",
+      "decision": "link",
+      "decision_reason": "link score 90.3, clear of the next candidate, mutual best match (plate + appearance)",
+      "linked_to": {
+        "clip_id": "clip13",
+        "track_id": 1,
+        "link_score": 90.3,
+        "evidence": "plate + appearance",
+        "parts": {
+          "appearance": 0.914,
+          "plate": 1.0,
+          "type": 0.0,
+          "colour": 1.0
+        },
+        "reasons": [
+          "plates agree: CG04NL3024 vs CG04NL3024 (similarity 1.00 on 10 readable characters)",
+          "appearance similarity 0.91 (CLIP cosine 0.949)",
+          "type SUV vs truck (0.0)",
+          "colour white vs white (1.0)"
+        ]
+      },
+      "candidates": [
+        {
+          "clip_id": "clip13",
+          "track_id": 1,
+          "link_score": 90.3,
+          "evidence": "plate + appearance",
+          "parts": {
+            "appearance": 0.914,
+            "plate": 1.0,
+            "type": 0.0,
+            "colour": 1.0
+          },
+          "reasons": [
+            "plates agree: CG04NL3024 vs CG04NL3024 (similarity 1.00 on 10 readable characters)",
+            "appearance similarity 0.91 (CLIP cosine 0.949)",
+            "type SUV vs truck (0.0)",
+            "colour white vs white (1.0)"
+          ]
+        }
+      ]
+    }
+  ],
+  "note": "link_score is a heuristic ranking score, not a probability. Plate vetoes are never overridden by looks."
+}

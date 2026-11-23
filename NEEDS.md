@@ -4,6 +4,10 @@
 
 ## 🔴 Must do before submission
 
+### 0. Label the cross-camera clips clip12–19 (about 20 min)
+- Fill `TRACEVISION_DATA/evaluation/labels_clip12-19_TODO.csv` (one row per vehicle, identified by position; contact sheets in `processed/test_video_frames/clipNN/`). Same `cross_camera_group_id` for the same vehicle in both clips of a pair; `registry_plate_full` for your own vehicles whose plate is hidden or missing.
+- **Then Claude:** merges into `test_clip_labels.csv`, validates, re-seeds the registry, re-runs pipeline + reports + evaluation, and scores the cross-camera links formally.
+
 ### 1. Film the cross-camera car pair (about 15 min)
 - **What:** film **one car you own** passing by, from **2 clearly different spots** (e.g. a footbridge and the roadside), as **2 clips of 8–15 s**, landscape, 1080p, held steady. Include some other traffic. **Send the original files** (USB / Google Drive / WhatsApp *"send as document"*), not normal WhatsApp video.
 - **Then:** put them in `TRACEVISION_DATA/raw/test_videos/` and tell Claude. It will check, rename (clip12, clip13), extract frames and make contact sheets. **Label them** with the same `cross_camera_group_id` (e.g. `X1`), `in_registry = yes`, and the car's real plate in `registry_plate_full`.
