@@ -16,9 +16,9 @@
 - **Why:** privacy (PROBLEMS E6, DECISIONS D10). Claude won't change account settings for you.
 
 ### 3. Check the demo, then record the demo video and make slides
-- **Run the app:** `python -m tracevision.api` → open http://127.0.0.1:8000 → upload a clip → open the report.
+- **Run the app:** `python -m tracevision.api` → wait about 3–4 min for "Models ready." → open http://127.0.0.1:8000 → upload a clip → **▶ Open video viewer** → **Play**. Live playback shows box → plate reads → "checking registry" → MATCH or no confident match. Widen the window so the live feed sits beside the video.
 - **Suggested demo flow (3–4 min):**
-  1. Upload **clip03**: a registered car is matched (`DL3CCY1025`, score 100) with reasons. Show the per-frame characters and the fused plate.
+  1. Upload **clip03** (or open its stored viewer from the home page): a registered car is matched (`DL3CCY1025`, score 100) with reasons. Show the per-frame characters and the fused plate.
   2. Show **clip04**: a match from a **partial plate** (`UP1?FT?44?` → `UP16FT9444`). That's the `?` rule plus wildcard matching.
   3. Show **clip02 or clip06** (CCTV-style): plates too small → **"no confident match"**, never guessed. Type and colour are still reported.
   4. Show an unregistered car with a fully read plate → "no confident match" (no false identification).

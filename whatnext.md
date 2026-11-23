@@ -6,6 +6,7 @@
 - **Phase 0 (data):** done, except the **cross-camera pair** (A6) and the Phase 0 runs that need final labels (0E variants, 0F registry re-seed, final report).
 - **Built and tested:** the vision stack (P1), the plate detector (P2) and the two judged algorithms (P3). The health check passed on 2026-11-23.
 - **All build phases P1–P6 are done** (2026-11-23 overnight). **What's left is owner actions: [NEEDS.md](NEEDS.md)** (car pair, repo visibility, demo video and slides).
+- **Since then:** video viewer with live playback, phantom-box fix (C11), CLIP colour 64% exact (C8). Details in [completions.md](completions.md).
 
 ## 0. Team and owner actions
 
@@ -37,12 +38,12 @@
 - [x] **P6 done:** evaluation vs labels + robustness sweep (`reports/p6_evaluation.md`): 8/9 matched, 0/42 false matches, 0/132 wrong plate characters.
 
 ## 3. Submission
-- [ ] README: architecture diagram, how to run, models and licences (Quobotic CC BY 4.0 credit, AGPL for Ultralytics: B6), honest note on camera types (E7)
-- [ ] Demo video (include one CCTV-style clip showing "no confident match") and slides
+- [x] README: architecture diagram, how to run, models and licences (Quobotic CC BY 4.0 credit, AGPL for Ultralytics: B6), honest note on camera types (E7)
+- [ ] Demo video (use the **video viewer with live playback**; include one CCTV-style clip showing "no confident match") and slides
 - [ ] Stretch: cross-camera re-ID (A6), make/model (only with verified labels)
 
 ## Installs still needed
-`fastapi`, `uvicorn`, `jinja2`, an HTML→PDF tool (P5). Optional: FFmpeg (C1). *(Done: torch 2.14.1+cu126, ultralytics, lap, paddlepaddle-gpu, pyarrow.)*
+None required: everything is in the README install line (torch 2.14.1+cu126, ultralytics, paddlepaddle-gpu, fastapi, reportlab, **open_clip_torch**, …). Optional: FFmpeg (C1).
 
 ## What remains to finish the project (summary)
 
@@ -52,4 +53,4 @@
 | 2 | Repo visibility decision | Owner | 1 min |
 | 3 | Demo video and slides (demo flow in NEEDS.md) | Owner (Claude can draft slides) | Medium |
 | 4 | Optional: more `in_registry = yes` vehicles; originals instead of WhatsApp copies; review the degraded sample; check 2 unverifiable plate reads | Owner | Small |
-| 5 | Optional improvements: a trained colour classifier (C8), better car/SUV typing (C9), more CCTV-style clips (E7) | Team | Medium |
+| 5 | Optional improvements: better car/SUV typing (C9), stricter OCR confidence on low-quality plates (C10), more CCTV-style clips (E7), a real-time "live mode" that analyses while playing (would need re-evaluation) | Team | Medium |

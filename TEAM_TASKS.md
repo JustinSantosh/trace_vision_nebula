@@ -46,6 +46,7 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 - **11 test clips and 51 owner-verified labelled vehicles** are in. Most plates in the WhatsApp-quality and CCTV-style clips are under 16 px, so they're reported unreadable (C7).
 - **Windows:** anything that trains or validates with ultralytics must run from a `.py` file, not from stdin (it hangs otherwise).
 - **All phases P1–P6 done (2026-11-23):** pipeline, app (`python -m tracevision.api`), reports for all clips, evaluation. **What's left: [NEEDS.md](NEEDS.md).**
+- **Since then:** video viewer with live playback (`/viewer/runs/clipNN`), phantom-box fix (C11), CLIP colour **64% exact** (C8). Install `open_clip_torch` too (README install line); the CLIP weights (~580 MB) download on first run.
 
 ---
 

@@ -34,7 +34,7 @@ From `python -m tracevision.evaluate` → `TRACEVISION_DATA/reports/p6_evaluatio
 **How to read these numbers:**
 - The system **prefers `?` to a wrong character**, and **no vehicle outside the registry was ever "identified"**. Those are the properties an investigator needs most.
 - On the CCTV-style clips **every plate is under 16 px**, so the system correctly answers "no confident match". It identifies type and colour, not the plate.
-- **Colour** is the weakest part: a simple heuristic that struggles with white versus grey versus silver in haze.
+- **Colour** uses CLIP zero-shot: 64% exact, 75% near. It's still the least reliable attribute (dark or warm-lit vehicles).
 - The test set is small (51 vehicles, 9 registered) and mostly ground-level footage (see the limitations below).
 - On heavily degraded footage the "never a wrong character" property weakens (see Robustness above).
 
@@ -42,18 +42,19 @@ From `python -m tracevision.evaluate` → `TRACEVISION_DATA/reports/p6_evaluatio
 ```mermaid
 flowchart LR
   A[Clip] --> B[UVH-26 detect<br/>+ ByteTrack]
-  B --> C[Re-link tracks<br/>position, then plate]
+  B --> V[Large boxes confirmed<br/>by COCO YOLOv8n]
+  V --> C[Re-link tracks<br/>position, then plate]
   C --> D[Best frames<br/>per vehicle]
   D --> E[Plate detector<br/>YOLOv8n fine-tuned]
   E --> F[Awiros OCR<br/>own GPU process]
   F --> G[Multi-frame fusion<br/>vote per position, '?' rule]
   C --> H[Type vote]
-  D --> I[Colour]
+  D --> I[Colour<br/>CLIP zero-shot]
   G --> J[Registry matching<br/>match score + reasons]
   H --> J
   I --> J
   J --> K[Top 5 or<br/>'no confident match']
-  K --> L[Report HTML/PDF · App]
+  K --> L[Report HTML/PDF · App<br/>video viewer, live playback]
 ```
 **The two judged algorithms (our own)** are in `tracevision/`:
 - **`fuse.py`, multi-frame plate fusion:**
