@@ -7,7 +7,7 @@
   <meta name="description" content="TraceVision: read what's there, mark what isn't. Vehicle traceability from CCTV footage, with the evidence behind every finding.">
   <title>TraceVision</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='7' width='28' height='18' rx='4' fill='%23fff' stroke='%2314161a' stroke-width='2.4'/%3E%3Crect x='7' y='12' width='4' height='8' rx='1' fill='%2314161a'/%3E%3Crect x='14' y='12' width='4' height='8' rx='1' fill='%2314161a'/%3E%3Crect x='21' y='12' width='4' height='8' rx='1' fill='%23f2c230'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="/frontend/styles.css?v=6">
+  <link rel="stylesheet" href="/frontend/styles.css?v=7">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -131,8 +131,8 @@
       <div class="cc" id="cc" hidden>
         <div class="cc-main">
           <div class="pair-videos">
-            <figure class="mini"><figcaption id="cam-a">Camera A</figcaption><div class="stage"><video id="va" playsinline preload="metadata" muted></video><canvas id="ca"></canvas></div></figure>
-            <figure class="mini"><figcaption id="cam-b">Camera B</figcaption><div class="stage"><video id="vb" playsinline preload="metadata" muted></video><canvas id="cb"></canvas></div></figure>
+            <figure class="mini"><figcaption id="cam-a">Camera A</figcaption><div class="stage"><video id="va" playsinline preload="metadata" muted></video><canvas id="ca"></canvas></div><div class="clip-detail" id="detail-a" aria-live="polite"></div></figure>
+            <figure class="mini"><figcaption id="cam-b">Camera B</figcaption><div class="stage"><video id="vb" playsinline preload="metadata" muted></video><canvas id="cb"></canvas></div><div class="clip-detail" id="detail-b" aria-live="polite"></div></figure>
           </div>
           <h2 class="label">Links</h2>
           <ol class="link-list" id="link-list"></ol>
@@ -187,6 +187,6 @@
   <footer class="foot"><span>tracevision</span><span>Runs locally. Evidence stays on this machine.</span></footer>
 
   <script src="/frontend/explain.js?v=2" defer></script>
-  <script src="/frontend/app.js?v=7" defer></script>
+  <script src="/frontend/app.js?v=8" defer></script>
 </body>
 </html>

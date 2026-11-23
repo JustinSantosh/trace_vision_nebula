@@ -944,7 +944,7 @@
     S.cc.ra = ra; S.cc.rb = rb;
     $("link-list").replaceChildren(...links.map((l, n) => {
       const side = (s) => el("span", { class: "side" }, s.plate ? plateEl(s.plate) : el("span", { class: "muted", text: "plate not read" }), el("small", { text: s.clip_id + " · T" + s.track_id }));
-      const strong = /confirmed|plate/.test(l.status);
+      const strong = /^confirmed/i.test(String(l.status));
       return el("li", null, el("button", { class: "link-row", type: "button", "data-n": n, onclick: () => selectLink(n) },
         side(l.a), el("span", { class: "arrow", text: "↔" }), side(l.b),
         el("span", { class: "tag " + (strong ? "match" : "unsure"), text: strong ? "Confirmed" : "Probable" }), el("span", { class: "score", text: num(l.score).toFixed(1) })));
@@ -952,19 +952,62 @@
     if (!links.length) $("link-list").replaceChildren(el("li", { class: "muted", style: "padding:12px", text: "No links were made for this pair." }));
     const ss = pair.same_scene;
     $("cc-unlinked").textContent = ss ? "Not linked: " + plural((ss.unlinked_a || []).length, "track") + " in " + pair.clip_a + ", " + plural((ss.unlinked_b || []).length, "track") + " in " + pair.clip_b + ". " + (ss.note || "") : "";
-    if (links.length) selectLink(0); else $("cc-evidence").replaceChildren();
+    if (links.length) selectLink(0);
+    else ["cc-evidence", "detail-a", "detail-b"].forEach((id) => $(id).replaceChildren());
+  }
+  const ccVehicle = (r, tid) => (r && (r.vehicles || []).find((x) => x.track_id === tid)) || null;
+  /* What one camera saw on its own: its own track, plate reads, attributes and its own registry decision. */
+  function clipDetail(v, r, side) {
+    if (!v) return [el("p", { class: "muted small", text: side.clip_id + " T" + side.track_id + ": track details aren't available." })];
+    const fps = num(r.video && r.video.fps) || 30;
+    const p = v.plate || {};
+    const reads = (p.per_frame_reads || []).length;
+    const top = (v.candidates || []).slice().sort((a, b) => a.rank - b.rank)[0];
+    const seek = (frame) => { const vid = side === S.cc.links[S.cc.link].a ? $("va") : $("vb"); if (vid.readyState) { vid.pause(); vid.currentTime = frame / fps + 0.001; } };
+    return [
+      el("div", { class: "cd-head" }, el("span", { class: "label", text: "This camera only" }), tag(v.decision)),
+      el("div", { class: "cd-plate" }, p.fused ? plateEl(p.fused, true) : el("span", { class: "muted", text: "Plate not read" }),
+        p.fused ? el("small", { class: "muted", text: X.knownCharacters(p.fused) + " of " + p.fused.length + " characters · " + plural(reads, "frame read") }) : null),
+      kv([["Type", (v.type && v.type.label) ? v.type.label + (v.type.vote_share !== undefined ? " · " + pct(v.type.vote_share) + " of votes" : "") : "—"],
+        ["Colour", cap(v.colour && v.colour.label) || "—"],
+        ["Seen", clock(v.first_frame / fps) + " – " + clock(v.last_frame / fps) + " · " + plural(v.n_detections || 0, "detection")],
+        ["Own top record", top ? el("span", null, plateEl(top.registration_number), " ", num(top.match_score).toFixed(1)) : "none"]]),
+      v.decision_reason ? el("p", { class: "ev-note", text: cap(v.decision_reason) + "." }) : null,
+      reads ? el("button", { class: "more", type: "button", text: "Jump to its best plate frame", onclick: () => seek(p.per_frame_reads[0].frame) }) : null,
+    ];
+  }
+  /* Side by side: what each camera concluded alone, and the combined result from pooling both. */
+  function compareTable(va, vb, l, f) {
+    const cell = (x) => (x === null || x === undefined || x === "" ? el("span", { class: "muted", text: "—" }) : x);
+    const plate = (v) => (v && v.plate && v.plate.fused ? plateEl(v.plate.fused) : null);
+    const top = (v) => { const c = v && (v.candidates || []).slice().sort((a, b) => a.rank - b.rank)[0]; return c ? num(c.match_score).toFixed(1) : null; };
+    const rows = [
+      ["Plate", plate(va), plate(vb), f && f.plate ? plateEl(f.plate) : null],
+      ["Type", va && va.type && va.type.label, vb && vb.type && vb.type.label, f && f.type],
+      ["Colour", va && cap(va.colour && va.colour.label), vb && cap(vb.colour && vb.colour.label), f && cap(f.colour)],
+      ["Plate reads", va && (va.plate && va.plate.per_frame_reads || []).length, vb && (vb.plate && vb.plate.per_frame_reads || []).length, f && f.reads_pooled],
+      ["Best score", top(va), top(vb), f && f.match_score],
+      ["Decision", va && tag(va.decision), vb && tag(vb.decision), f && f.decision ? tag(f.decision) : null],
+    ];
+    return el("table", { class: "compare" },
+      el("thead", null, el("tr", null, el("th"), el("th", { text: l.a.clip_id }), el("th", { text: l.b.clip_id }), el("th", { class: "comb", text: "Combined" }))),
+      el("tbody", null, ...rows.map(([k, a, b, c]) => el("tr", null, el("th", { text: k }), el("td", null, cell(a)), el("td", null, cell(b)), el("td", { class: "comb" }, cell(c))))));
   }
   function selectLink(n) {
     S.cc.link = n;
     document.querySelectorAll(".link-row").forEach((b) => b.setAttribute("aria-current", String(Number(b.dataset.n) === n)));
     const l = S.cc.links[n];
     const f = l.final;
+    const va = ccVehicle(S.cc.ra, l.a.track_id), vb = ccVehicle(S.cc.rb, l.b.track_id);
+    $("detail-a").replaceChildren(...clipDetail(va, S.cc.ra, l.a));
+    $("detail-b").replaceChildren(...clipDetail(vb, S.cc.rb, l.b));
     $("cc-evidence").replaceChildren(...[
-      evHead("Evidence · link", el("span", null, l.a.clip_id + " T" + l.a.track_id + "  ↔  " + l.b.clip_id + " T" + l.b.track_id), cap(l.reason || l.status) + ". Link score " + num(l.score).toFixed(1) + "."),
+      evHead("Combined · both cameras", el("span", null, l.a.clip_id + " T" + l.a.track_id + "  ↔  " + l.b.clip_id + " T" + l.b.track_id), cap(l.reason || l.status) + ". Link score " + num(l.score).toFixed(1) + "."),
+      section("Each camera, and combined", null, compareTable(va, vb, l, f)),
       l.parts ? section("Agreement", null, ...Object.entries(l.parts).map(([k, v]) => barRow(cap(k), v))) : null,
       section("Why they're linked", null, el("ul", { class: "reasons" }, ...l.reasons.map((r) => el("li", { class: X.classifyReason(r), text: r })))),
-      f ? section("Registry, pooled from both cameras", null, kv([["Plate", f.plate ? plateEl(f.plate) : "—"], ["Type", f.type], ["Colour", cap(f.colour)], ["Reads pooled", f.reads_pooled],
-        ["Decision", f.decision ? tag(f.decision) : null], ["Top record", f.registry_top1 ? plateEl(f.registry_top1) : null], ["Match score", f.match_score]])) : null,
+      f ? section("Combined registry result", "both cameras' reads pooled", kv([["Decision", f.decision ? tag(f.decision) : null],
+        ["Top record", f.registry_top1 ? plateEl(f.registry_top1) : null], ["Match score", f.match_score]])) : null,
       f && f.reason ? el("p", { class: "ev-note", text: cap(f.reason) + "." }) : null,
       el("p", { class: "ev-note", text: "Link scores rank candidates; they are not probabilities. Only plate-confirmed links give an identity." }),
       ccRecord(l),
