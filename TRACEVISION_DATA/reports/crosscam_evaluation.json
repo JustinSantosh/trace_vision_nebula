@@ -2,10 +2,10 @@
   "summary": {
     "groups": 7,
     "correct_links": 1,
-    "missed": 2,
+    "missed": 4,
     "wrong_links_on_groups": 0,
-    "not_tracked": 4,
-    "system_links_total": 3,
+    "not_tracked": 2,
+    "system_links_total": 2,
     "system_links_joining_different_labelled_vehicles": 0
   },
   "groups": [
@@ -45,7 +45,7 @@
       "clip_b": "clip17",
       "a": "clip16_v01",
       "b": "clip17_v01",
-      "outcome": "not tracked at the labelled frame",
+      "outcome": "no link (missed)",
       "plate_a": "????????14",
       "plate_b": "CG0???????"
     },
@@ -55,7 +55,7 @@
       "clip_b": "clip17",
       "a": "clip16_v02",
       "b": "clip17_v02",
-      "outcome": "not tracked at the labelled frame",
+      "outcome": "no link (missed)",
       "plate_a": "CG04DK1578",
       "plate_b": "CG04DK1578"
     },

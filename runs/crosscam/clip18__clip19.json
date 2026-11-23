@@ -54,23 +54,51 @@
       "colour": "green",
       "plate": "",
       "decision": "no_link",
-      "decision_reason": "best link score 43.9 is below 70.0",
+      "decision_reason": "appearance only and not distinctive enough (CLIP cosine 0.952 < 0.965, the 99th percentile of different-vehicle pairs)",
       "linked_to": null,
       "candidates": [
         {
           "clip_id": "clip19",
           "track_id": 1,
-          "link_score": 43.9,
+          "link_score": 80.9,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
-            "appearance": 0.627,
+            "appearance": 0.941,
+            "type": 1.0,
+            "colour": 0.0
+          },
+          "reasons": [
+            "appearance similarity 0.94 (CLIP cosine 0.952)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+            "colour green vs grey (0.0)"
+          ]
+        }
+      ]
+    },
+    {
+      "clip_id": "clip18",
+      "track_id": 100004,
+      "type": "bicycle",
+      "colour": "green",
+      "plate": "",
+      "decision": "no_link",
+      "decision_reason": "best link score 0.0 is below 70.0",
+      "linked_to": null,
+      "candidates": [
+        {
+          "clip_id": "clip19",
+          "track_id": 1,
+          "link_score": 0.0,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.0,
             "type": 0.0,
             "colour": 0.0
           },
           "reasons": [
-            "appearance similarity 0.63 (CLIP cosine 0.926)",
-            "type motorcycle/scooter vs truck (0.0)",
-            "colour green vs black (0.0)"
+            "appearance similarity 0.00 (CLIP cosine 0.823)",
+            "type bicycle vs motorcycle/scooter (0.0)",
+            "colour green vs grey (0.0)"
           ]
         }
       ]

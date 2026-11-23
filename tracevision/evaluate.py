@@ -43,6 +43,26 @@ def associate(label, vehicles, scale=1.0, window=4):
     return (best, round(best_iou, 3)) if best_iou >= 0.3 else (None, round(best_iou, 3))
 
 
+def assign_clip(labels, vehicles, scale=1.0, window=4, min_iou=0.3):
+    """ONE-TO-ONE association for one clip (E14): every (label, system vehicle) pair with IoU >= min_iou at the
+    label's first frame (+-window) is ranked by IoU and assigned greedily, so a system vehicle can belong to at most
+    one labelled vehicle. Box position only, never plate. Returns {target_vehicle_id: (vehicle, iou)}."""
+    pairs = []
+    for lab in labels:
+        f0 = int(lab["first_frame"])
+        lb = [float(x) * scale for x in lab["vehicle_bbox_first_frame"].split(",")]
+        for v in vehicles:
+            o = max((iou(lb, box) for fr, *box in v.get("track", []) if abs(fr - f0) <= window), default=0.0)
+            if o >= min_iou:
+                pairs.append((o, lab["target_vehicle_id"], v["track_id"], v))
+    out, used_l, used_v = {}, set(), set()
+    for o, tid, vid, v in sorted(pairs, key=lambda p: -p[0]):
+        if tid in used_l or vid in used_v:
+            continue
+        out[tid] = (v, round(o, 3)); used_l.add(tid); used_v.add(vid)
+    return out
+
+
 def align_chars(truth, pred):
     """Edit-distance alignment; returns list of (truth_char, pred_char or None) for every truth position."""
     n, m = len(truth), len(pred)
@@ -71,7 +91,7 @@ def evaluate(runs: Path, labels_path=LABELS, clip_filter=None, scale_of=None):
     labels = [r for r in csv.DictReader(open(labels_path, encoding="utf-8")) if r.get("target_vehicle_id")]
     reg = load_registry()
     reg_by_plate = {r["registration_number"]: r["synthetic_vehicle_id"] for r in reg}
-    rows = []
+    rows, assigned = [], {}
     for lab in labels:
         cid = lab["clip_id"]
         if clip_filter and cid not in clip_filter:
@@ -80,7 +100,10 @@ def evaluate(runs: Path, labels_path=LABELS, clip_filter=None, scale_of=None):
         if not rp.exists():
             continue
         res = json.loads(rp.read_text(encoding="utf-8"))
-        v, ov = associate(lab, res["vehicles"], scale=(scale_of or {}).get(cid, 1.0))
+        if cid not in assigned:
+            clip_labels = [l for l in labels if l["clip_id"] == cid]
+            assigned[cid] = assign_clip(clip_labels, res["vehicles"], scale=(scale_of or {}).get(cid, 1.0))
+        v, ov = assigned[cid].get(lab["target_vehicle_id"], (None, 0.0))
         truth = normalise(lab["plate_text_truth"])
         row = {"clip_id": cid, "target": lab["target_vehicle_id"], "camera": res["camera_type"], "found": v is not None, "iou": ov,
                "label_type": lab["vehicle_type"], "label_colour": lab["colour"], "readability": lab["plate_readability"],

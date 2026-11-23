@@ -49,131 +49,236 @@
   "links": [
     {
       "clip_id": "clip16",
-      "track_id": 24,
+      "track_id": 100001,
       "type": "motorcycle/scooter",
-      "colour": "red",
-      "plate": "CG???",
+      "colour": "brown",
+      "plate": "CG04DK1578",
       "decision": "no_link",
-      "decision_reason": "best link score 30.0 is below 70.0",
+      "decision_reason": "best link score 70.0 is below 70.0",
       "linked_to": null,
       "candidates": [
         {
           "clip_id": "clip17",
-          "track_id": 19,
-          "link_score": 30.0,
-          "evidence": "appearance only (weaker evidence)",
-          "parts": {
-            "appearance": 0.0,
-            "type": 1.0,
-            "colour": 1.0
-          },
-          "reasons": [
-            "appearance similarity 0.00 (CLIP cosine 0.856)",
-            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
-            "colour red vs red (1.0)"
-          ]
-        },
-        {
-          "clip_id": "clip17",
-          "track_id": 1,
-          "link_score": 17.6,
-          "evidence": "appearance only (weaker evidence)",
-          "parts": {
-            "appearance": 0.0,
-            "type": 1.0
-          },
-          "reasons": [
-            "appearance similarity 0.00 (CLIP cosine 0.864)",
-            "type motorcycle/scooter vs motorcycle/scooter (1.0)"
-          ]
-        },
-        {
-          "clip_id": "clip17",
           "track_id": 16,
-          "link_score": 17.6,
-          "evidence": "appearance only (weaker evidence)",
-          "parts": {
-            "appearance": 0.0,
-            "type": 1.0
-          },
-          "reasons": [
-            "appearance similarity 0.00 (CLIP cosine 0.856)",
-            "type motorcycle/scooter vs motorcycle/scooter (1.0)"
-          ]
-        }
-      ]
-    },
-    {
-      "clip_id": "clip16",
-      "track_id": 31,
-      "type": "motorcycle/scooter",
-      "colour": "brown",
-      "plate": "CG04DK1578",
-      "decision": "link",
-      "decision_reason": "link score 70.7, clear of the next candidate, mutual best match (plate + appearance)",
-      "linked_to": {
-        "clip_id": "clip17",
-        "track_id": 14,
-        "link_score": 70.7,
-        "evidence": "plate + appearance",
-        "parts": {
-          "appearance": 0.128,
-          "plate": 1.0,
-          "type": 1.0,
-          "colour": 0.0
-        },
-        "reasons": [
-          "plates agree: CG04DK1578 vs ??????K1578 (similarity 1.00 on 5 readable characters)",
-          "appearance similarity 0.13 (CLIP cosine 0.885)",
-          "type motorcycle/scooter vs motorcycle/scooter (1.0)",
-          "colour brown vs green (0.0)"
-        ]
-      },
-      "candidates": [
-        {
-          "clip_id": "clip17",
-          "track_id": 14,
-          "link_score": 70.7,
+          "link_score": 70.0,
           "evidence": "plate + appearance",
           "parts": {
-            "appearance": 0.128,
+            "appearance": 0.099,
             "plate": 1.0,
             "type": 1.0,
             "colour": 0.0
           },
           "reasons": [
-            "plates agree: CG04DK1578 vs ??????K1578 (similarity 1.00 on 5 readable characters)",
-            "appearance similarity 0.13 (CLIP cosine 0.885)",
+            "plates agree: CG04DK1578 vs ??0??K1578 (similarity 1.00 on 6 readable characters)",
+            "appearance similarity 0.10 (CLIP cosine 0.882)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+            "colour brown vs blue (0.0)"
+          ]
+        },
+        {
+          "clip_id": "clip17",
+          "track_id": 14,
+          "link_score": 43.8,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.412,
+            "type": 1.0,
+            "colour": 0.0
+          },
+          "reasons": [
+            "appearance similarity 0.41 (CLIP cosine 0.908)",
             "type motorcycle/scooter vs motorcycle/scooter (1.0)",
             "colour brown vs green (0.0)"
           ]
         },
         {
           "clip_id": "clip17",
-          "track_id": 16,
-          "link_score": 18.1,
+          "track_id": 19,
+          "link_score": 32.9,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
-            "appearance": 0.005,
+            "appearance": 0.042,
+            "type": 1.0,
+            "colour": 1.0
+          },
+          "reasons": [
+            "appearance similarity 0.04 (CLIP cosine 0.878)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+            "colour brown vs brown (1.0)"
+          ]
+        }
+      ]
+    },
+    {
+      "clip_id": "clip16",
+      "track_id": 100002,
+      "type": "motorcycle/scooter",
+      "colour": "red",
+      "plate": "CG04PB6426",
+      "decision": "no_link",
+      "decision_reason": "best link score 34.6 is below 70.0",
+      "linked_to": null,
+      "candidates": [
+        {
+          "clip_id": "clip17",
+          "track_id": 1,
+          "link_score": 34.6,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.206,
             "type": 1.0
           },
           "reasons": [
-            "appearance similarity 0.01 (CLIP cosine 0.875)",
+            "appearance similarity 0.21 (CLIP cosine 0.891)",
             "type motorcycle/scooter vs motorcycle/scooter (1.0)"
           ]
         },
         {
           "clip_id": "clip17",
-          "track_id": 1,
-          "link_score": 17.6,
+          "track_id": 19,
+          "link_score": 34.1,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.273,
+            "type": 1.0,
+            "colour": 0.0
+          },
+          "reasons": [
+            "appearance similarity 0.27 (CLIP cosine 0.897)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+            "colour red vs brown (0.0)"
+          ]
+        },
+        {
+          "clip_id": "clip17",
+          "track_id": 14,
+          "link_score": 15.0,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
             "appearance": 0.0,
+            "type": 1.0,
+            "colour": 0.0
+          },
+          "reasons": [
+            "appearance similarity 0.00 (CLIP cosine 0.872)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+            "colour red vs green (0.0)"
+          ]
+        }
+      ]
+    },
+    {
+      "clip_id": "clip16",
+      "track_id": 100003,
+      "type": "motorcycle/scooter",
+      "colour": "brown",
+      "plate": "?????????",
+      "decision": "ambiguous",
+      "decision_reason": "top two candidates within 8.0 (92.0 vs 89.0)",
+      "linked_to": null,
+      "candidates": [
+        {
+          "clip_id": "clip17",
+          "track_id": 19,
+          "link_score": 92.0,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.886,
+            "type": 1.0,
+            "colour": 1.0
+          },
+          "reasons": [
+            "appearance similarity 0.89 (CLIP cosine 0.947)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+            "colour brown vs brown (1.0)"
+          ]
+        },
+        {
+          "clip_id": "clip17",
+          "track_id": 1,
+          "link_score": 89.0,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.866,
             "type": 1.0
           },
           "reasons": [
-            "appearance similarity 0.00 (CLIP cosine 0.867)",
+            "appearance similarity 0.87 (CLIP cosine 0.946)",
             "type motorcycle/scooter vs motorcycle/scooter (1.0)"
+          ]
+        },
+        {
+          "clip_id": "clip17",
+          "track_id": 16,
+          "link_score": 72.3,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.819,
+            "type": 1.0,
+            "colour": 0.0
+          },
+          "reasons": [
+            "appearance similarity 0.82 (CLIP cosine 0.942)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+            "colour brown vs blue (0.0)"
+          ]
+        }
+      ]
+    },
+    {
+      "clip_id": "clip16",
+      "track_id": 24,
+      "type": "motorcycle/scooter",
+      "colour": "red",
+      "plate": "CG???",
+      "decision": "no_link",
+      "decision_reason": "best link score 44.5 is below 70.0",
+      "linked_to": null,
+      "candidates": [
+        {
+          "clip_id": "clip17",
+          "track_id": 1,
+          "link_score": 44.5,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.326,
+            "type": 1.0
+          },
+          "reasons": [
+            "appearance similarity 0.33 (CLIP cosine 0.901)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)"
+          ]
+        },
+        {
+          "clip_id": "clip17",
+          "track_id": 16,
+          "link_score": 38.0,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.329,
+            "type": 1.0,
+            "colour": 0.0
+          },
+          "reasons": [
+            "appearance similarity 0.33 (CLIP cosine 0.901)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+            "colour red vs blue (0.0)"
+          ]
+        },
+        {
+          "clip_id": "clip17",
+          "track_id": 14,
+          "link_score": 31.3,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.233,
+            "type": 1.0,
+            "colour": 0.0
+          },
+          "reasons": [
+            "appearance similarity 0.23 (CLIP cosine 0.893)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+            "colour red vs green (0.0)"
           ]
         }
       ]

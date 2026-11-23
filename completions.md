@@ -10,7 +10,7 @@ Open problems are in [PROBLEMS.md](PROBLEMS.md). Next steps are in [whatnext.md]
 | Part | State |
 |---|---|
 | Phase 0 data (0A–0F) | ✅ Done, except the cross-camera car pair (A6) and the final Phase 0 report |
-| P1–P6: models, fusion + matching, pipeline, app + reports, evaluation | ✅ Done. 19 clips / 67 vehicles: 11/15 matched, 0/46 false matches, 0/181 wrong plate characters |
+| P1–P6: models, fusion + matching, pipeline, app + reports, evaluation | ✅ Done. 19 clips / 67 vehicles: **14/15 matched, 0/46 false matches, 0/234 wrong plate characters**, 61/67 found (two-detector ensemble, M15) |
 | Video viewer + live playback, phantom-box fix, CLIP colour | ✅ Done (see below) |
 | Cross-camera pairs (clip12–19) + re-ID | ✅ Labelled (owner-verified) and scored: 1 verified correct, 2 missed, 4 not checkable, 0 wrong links |
 | Owner actions: car pair, repo visibility, demo video + slides | ⏳ [NEEDS.md](NEEDS.md) |

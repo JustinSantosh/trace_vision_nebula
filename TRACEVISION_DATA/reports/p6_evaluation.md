@@ -55,6 +55,19 @@ Remaining 12 errors are scattered (black→white ×2, black→red, black→green
 | Type compatible / colour exact | 93% / 64% | 90% / 60% |
 New misses: clip15 white SUV (plate unreadable there), clip17 motorcycle (plate read as `???????`), clip16 motorcycle (tracked only from about frame 126; the label is at frame 0). Close-up parked two-wheelers (clip16–19) are tracked late or not at all at the labelled frame: 5 of 9 not found (C12).
 
+### Update 2026-11-23 (later): two-detector ensemble (M15) and one-to-one evaluation (E14)
+Owner-reported failures on the parking clips (Honda Amaze typed "truck", hidden-plate Activa not boxed, plate-less scooter "truck") came from **UVH-26 being out of domain on close-up, ground-level footage** (confidence 0.1–0.3, wrong classes) while COCO YOLOv8n saw them at 0.7–0.9 (C13). A COCO tracking pass now adds type votes / missed frames to UVH-26 tracks and adds confident COCO-only tracks; COCO overrides the type only when UVH-26 is unsure (< 0.5; set after an override turned a clip02 CCTV SUV into "bus").
+The evaluation now links labels to system vehicles **one-to-one** (E14): before, one system vehicle could be counted for two labels, which turned 2 correct identifications (clip07 `DL8CAH1004`, clip17 `CG04DK1578`) into fake "false matches" for the neighbouring labelled vehicle.
+| | Before (19 clips) | **After** |
+|---|---|---|
+| Detected and tracked | 52/67 | **61/67** |
+| Type exact / compatible | 67% / 90% | **77% / 95%** |
+| Registered matched | 11/15 | **14/15** |
+| False confident matches | 0/46 | **0/46** |
+| Wrong plate characters | 0/181 | **0/234** |
+| Colour exact | 60% | 59% |
+Colour: centre-cropped variants were tested (full 69% / shrink10 65% / shrink20 59% / shrink30 53% exact on 51 vehicles) and rejected.
+
 ## Error analysis
 - **Missed vehicles (7):** 4 have plates humans also marked `none`: far, tiny vehicles (about 30–60 px boxes, under the 0.4% minimum-area filter) or trucks cut off at the 4K frame edge. The other 3 are partly visible (an SUV behind others, a corner scooter, an edge truck).
 - **Type (14 wrong):** 9 are **car → SUV** and 3 are SUV → car. UVH-26 separates Hatchback / Sedan / SUV / MUV, and compact SUVs and MPVs seen from behind confuse it. Since car and SUV are *compatible* in matching, these cost half credit, not a match. 1 truck → auto, 1 car → truck, 1 SUV → truck (at night).

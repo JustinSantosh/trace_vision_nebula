@@ -54,22 +54,22 @@
       "colour": "white",
       "plate": "CG04NL3024",
       "decision": "link",
-      "decision_reason": "link score 90.3, clear of the next candidate, mutual best match (plate + appearance)",
+      "decision_reason": "link score 96.2, clear of the next candidate, mutual best match (plate + appearance)",
       "linked_to": {
         "clip_id": "clip13",
         "track_id": 1,
-        "link_score": 90.3,
+        "link_score": 96.2,
         "evidence": "plate + appearance",
         "parts": {
-          "appearance": 0.914,
+          "appearance": 1.0,
           "plate": 1.0,
-          "type": 0.0,
+          "type": 0.5,
           "colour": 1.0
         },
         "reasons": [
           "plates agree: CG04NL3024 vs CG04NL3024 (similarity 1.00 on 10 readable characters)",
-          "appearance similarity 0.91 (CLIP cosine 0.949)",
-          "type SUV vs truck (0.0)",
+          "appearance similarity 1.00 (CLIP cosine 0.977)",
+          "type SUV vs car (0.5)",
           "colour white vs white (1.0)"
         ]
       },
@@ -77,19 +77,111 @@
         {
           "clip_id": "clip13",
           "track_id": 1,
-          "link_score": 90.3,
+          "link_score": 96.2,
           "evidence": "plate + appearance",
           "parts": {
-            "appearance": 0.914,
+            "appearance": 1.0,
             "plate": 1.0,
-            "type": 0.0,
+            "type": 0.5,
             "colour": 1.0
           },
           "reasons": [
             "plates agree: CG04NL3024 vs CG04NL3024 (similarity 1.00 on 10 readable characters)",
-            "appearance similarity 0.91 (CLIP cosine 0.949)",
-            "type SUV vs truck (0.0)",
+            "appearance similarity 1.00 (CLIP cosine 0.977)",
+            "type SUV vs car (0.5)",
             "colour white vs white (1.0)"
+          ]
+        },
+        {
+          "clip_id": "clip13",
+          "track_id": 100002,
+          "link_score": 22.5,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.0,
+            "type": 0.5,
+            "colour": 1.0
+          },
+          "reasons": [
+            "appearance similarity 0.00 (CLIP cosine 0.804)",
+            "type SUV vs car (0.5)",
+            "colour white vs white (1.0)"
+          ]
+        },
+        {
+          "clip_id": "clip13",
+          "track_id": 100004,
+          "link_score": 22.5,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.0,
+            "type": 0.5,
+            "colour": 1.0
+          },
+          "reasons": [
+            "appearance similarity 0.00 (CLIP cosine 0.872)",
+            "type SUV vs car (0.5)",
+            "colour white vs white (1.0)"
+          ]
+        }
+      ]
+    },
+    {
+      "clip_id": "clip12",
+      "track_id": 100005,
+      "type": "bicycle",
+      "colour": "grey",
+      "plate": "",
+      "decision": "no_link",
+      "decision_reason": "best link score 7.5 is below 70.0",
+      "linked_to": null,
+      "candidates": [
+        {
+          "clip_id": "clip13",
+          "track_id": 1,
+          "link_score": 7.5,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.0,
+            "type": 0.0,
+            "colour": 0.5
+          },
+          "reasons": [
+            "appearance similarity 0.00 (CLIP cosine 0.655)",
+            "type bicycle vs car (0.0)",
+            "colour grey vs white (0.5)"
+          ]
+        },
+        {
+          "clip_id": "clip13",
+          "track_id": 100002,
+          "link_score": 7.5,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.0,
+            "type": 0.0,
+            "colour": 0.5
+          },
+          "reasons": [
+            "appearance similarity 0.00 (CLIP cosine 0.861)",
+            "type bicycle vs car (0.0)",
+            "colour grey vs white (0.5)"
+          ]
+        },
+        {
+          "clip_id": "clip13",
+          "track_id": 100004,
+          "link_score": 7.5,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.0,
+            "type": 0.0,
+            "colour": 0.5
+          },
+          "reasons": [
+            "appearance similarity 0.00 (CLIP cosine 0.798)",
+            "type bicycle vs car (0.0)",
+            "colour grey vs white (0.5)"
           ]
         }
       ]

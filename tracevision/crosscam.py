@@ -295,7 +295,7 @@ def evaluate_links(pairs):
     Each labelled vehicle is associated with a system track by BOX POSITION ONLY (tracevision.evaluate.associate,
     as in P6), never by plate. Per ground-truth group: correct link / missed (no link) / wrong link / not tracked.
     Every system link is also checked: wrong = it joins two tracks that belong to different labelled vehicles."""
-    from .evaluate import associate
+    from .evaluate import assign_clip
     labels = {r["target_vehicle_id"]: r for r in csv.DictReader(open(ROOT / "TRACEVISION_DATA/evaluation/test_clip_labels.csv", encoding="utf-8"))}
     gt = list(csv.DictReader(open(ROOT / "TRACEVISION_DATA/evaluation/cross_camera_ground_truth.csv", encoding="utf-8")))
     groups = {}
@@ -306,12 +306,10 @@ def evaluate_links(pairs):
         res = json.loads((RUNS / "crosscam" / f"{ca}__{cb}.json").read_text(encoding="utf-8"))
         va = json.loads((RUNS / ca / "result.json").read_text(encoding="utf-8"))["vehicles"]
         vb = json.loads((RUNS / cb / "result.json").read_text(encoding="utf-8"))["vehicles"]
-        track_of = {}                                       # target_vehicle_id -> system track id
-        for tid, lab in labels.items():
-            if lab["clip_id"] in (ca, cb):
-                v, _ = associate(lab, va if lab["clip_id"] == ca else vb)
-                if v:
-                    track_of[tid] = v["track_id"]
+        track_of = {}                                       # target_vehicle_id -> system track id (one-to-one, E14)
+        for cid, vs in ((ca, va), (cb, vb)):
+            for tid, (v, _) in assign_clip([l for l in labels.values() if l["clip_id"] == cid], vs).items():
+                track_of[tid] = v["track_id"]
         label_of = {(labels[t]["clip_id"], k): t for t, k in track_of.items()}
         group_of = {t: g for g, m in groups.items() for t in m.values()}
         link_of = {l["track_id"]: (l["linked_to"]["track_id"] if l["linked_to"] else None) for l in res["links"]}
