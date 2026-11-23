@@ -7,7 +7,7 @@
     "height": 3840,
     "frames": 282
   },
-  "processed_at": "2026-11-23T09:33:13",
+  "processed_at": "2026-11-23T09:45:39",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -50,6 +50,9 @@
       "t_margin": 4.0,
       "top_k": 5,
       "min_plate_sim_candidate": 0.5
+    },
+    "colour": {
+      "method": "clip"
     }
   },
   "summary": {
@@ -63,11 +66,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 6.8,
-    "plates_s": 3.3,
-    "ocr_s": 0.1,
-    "assemble_s": 0.1,
-    "total_s": 16.2
+    "detect_track_s": 6.9,
+    "plates_s": 3.5,
+    "ocr_s": 0.2,
+    "assemble_s": 0.3,
+    "total_s": 17.1
   },
   "vehicles": [
     {
@@ -1439,14 +1442,15 @@
         "detector_conf_mean": 0.658
       },
       "colour": {
-        "label": "brown",
-        "confidence": 0.531,
+        "label": "red",
+        "confidence": 0.808,
         "per_frame": [
-          "brown",
-          "brown",
-          "brown"
+          "red",
+          "red",
+          "red"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "read",
@@ -1784,19 +1788,19 @@
         "plates_detected": 11
       },
       "decision": "match",
-      "decision_reason": "best match score 70.0, clear of the next candidate",
+      "decision_reason": "best match score 85.0, clear of the next candidate",
       "candidates": [
         {
           "rank": 1,
           "synthetic_vehicle_id": "SV144143",
           "registration_number": "KA53MH3895",
-          "match_score": 70.0,
+          "match_score": 85.0,
           "plate_score": 1.0,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
             "plate: 10 of 10 readable characters match exactly",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type conflict: observed truck, registry SUV"
           ]
         },
@@ -1804,14 +1808,14 @@
           "rank": 2,
           "synthetic_vehicle_id": "SV117951",
           "registration_number": "KA53MH3890",
-          "match_score": 64.2,
+          "match_score": 79.2,
           "plate_score": 0.81,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.5,
           "reasons": [
             "plate: 9 of 10 readable characters match exactly",
             "plate differs from KA53MH3890 (edit cost 1.0)",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type compatible: observed truck, registry van"
           ]
         },
@@ -1819,14 +1823,14 @@
           "rank": 3,
           "synthetic_vehicle_id": "SV258008",
           "registration_number": "KA53MH3896",
-          "match_score": 56.7,
+          "match_score": 71.7,
           "plate_score": 0.81,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
             "plate: 9 of 10 readable characters match exactly",
             "plate differs from KA53MH3896 (edit cost 1.0)",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type conflict: observed truck, registry SUV"
           ]
         },
@@ -1834,14 +1838,14 @@
           "rank": 4,
           "synthetic_vehicle_id": "SV106580",
           "registration_number": "KA53MH0890",
-          "match_score": 44.8,
+          "match_score": 59.8,
           "plate_score": 0.64,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
             "plate: 8 of 10 readable characters match exactly",
             "plate differs from KA53MH0890 (edit cost 2.0)",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type conflict: observed truck, registry SUV"
           ]
         },
@@ -1856,7 +1860,7 @@
           "reasons": [
             "plate: 8 of 10 readable characters match exactly",
             "plate differs from KA53MH8855 (edit cost 2.0)",
-            "colour conflict: observed brown, registry white",
+            "colour conflict: observed red, registry white",
             "type conflict: observed truck, registry SUV"
           ]
         }

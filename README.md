@@ -25,7 +25,7 @@ From `python -m tracevision.evaluate` → `TRACEVISION_DATA/reports/p6_evaluatio
 | Exact plate (fully readable labels) | 7/10 | 7/10 | — |
 | Vehicles detected and tracked | 44/51 | 30/37 | 14/14 |
 | Type exact / compatible (car≈SUV) | 68% / 93% | 60% / 93% | 86% / 93% |
-| Colour exact / near (white≈silver≈grey) | 27% / 57% | | |
+| Colour exact / near (white≈silver≈grey) | 64% / 75% (CLIP zero-shot; was 27% / 57% with the hue rule) | | |
 | Processing time | **4–19 s per clip** on an RTX 3050 laptop GPU (clips are 4–30 s long) | | |
 
 **Robustness** (same clips blurred, downscaled to 480p/360p, JPEG q10, night, noise; `python -m tracevision.robustness`):
@@ -80,7 +80,7 @@ git clone --recurse-submodules https://github.com/JustinSantosh/trace_vision_neb
 cd trace_vision_nebula
 python -m pip install torch==2.14.1+cu126 torchvision --index-url https://download.pytorch.org/whl/cu126
 python -m pip install paddlepaddle-gpu==3.3.1 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/
-python -m pip install ultralytics lap fastapi uvicorn python-multipart jinja2 reportlab pyyaml pandas rapidfuzz safetensors tqdm lmdb shapely pyclipper scikit-image pyarrow
+python -m pip install ultralytics lap fastapi uvicorn python-multipart jinja2 reportlab pyyaml pandas rapidfuzz safetensors tqdm lmdb shapely pyclipper scikit-image pyarrow open_clip_torch   # CLIP ViT-B/32 weights (~580 MB) download on first run
 ```
 **UVH-26 weights:** download `weights/YOLOv11-S/UVH-26-MV-YOLOv11-S.pt` from [huggingface.co/iisc-aim/UVH-26](https://huggingface.co/iisc-aim/UVH-26) into `TRACEVISION_DATA/models/weights/`. The plate detector and Awiros weights come with the repo (Git LFS).
 
@@ -112,7 +112,7 @@ Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.p
 ## Limitations (honest)
 - **Footage:** 9 of the 11 clips are ground-level or dashcam and only 2 are CCTV-style. The problem statement is CCTV, so results are always reported separately (DECISIONS E10, PROBLEMS E7). On real CCTV, plates are often too small to read. The system then says so, rather than guessing.
 - **Small test set:** 51 vehicles and 9 registered. Several pipeline rules were diagnosed on these clips, so the numbers may be optimistic.
-- **Colour** is a heuristic (27% exact). **Car versus SUV** is often confused (types are compatible 93% of the time).
+- **Colour** uses CLIP zero-shot (64% exact, 75% near). It answers `unknown` at night and still slips on dark or warm-lit vehicles. **Car versus SUV** is often confused (types are compatible 93% of the time).
 - **Cross-camera re-identification** (bonus) isn't evaluated yet: the two-position car pair hasn't been filmed (see NEEDS.md).
 - Most clips are WhatsApp copies (about 1.5 Mbit/s), which costs plate detail.
 - On strongly degraded footage (360p, heavy blur, night) the OCR can be confidently wrong (up to 17% wrong characters at 360p). A stricter confidence bar for low-quality plates is the next fix.

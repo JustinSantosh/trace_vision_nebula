@@ -22,7 +22,7 @@
 | Readable labelled plates the system didn't read | 2/16 (12%) | | |
 | Plates humans marked unreadable but the system read | 2/28 (7%): **unverifiable**, see below | | |
 | Type exact / compatible | 30/44 (68%) / 41/44 (93%) | 60% / 93% | 86% / 93% |
-| Colour exact / near | 12/44 (27%) / 25/44 (57%) | | |
+| Colour exact / near | **28/44 (64%) / 33/44 (75%)** with CLIP (was 12/44 / 25/44 with the hue rule) | | |
 | Colour answered `unknown` | 4/44 (9%) | | |
 
 ### What the numbers mean
@@ -33,6 +33,15 @@
 
 ### Update 2026-11-23: phantom-box fix (PROBLEMS C11, DECISIONS M12)
 UVH-26 sometimes reports a frame-wide "Truck" over empty road, sky, sign boards or barriers. Large tracks are now cross-checked with COCO YOLOv8n; **13 phantom tracks were removed from 6 of the 11 clips** (every one checked by eye: road, sky, signs, barriers; real trucks such as the clip10 tanker are kept). Re-evaluated: **every detection, plate and matching metric is unchanged** (44/51 detected, 8/9 matched, 0/42 false matches, 0/132 wrong characters). Colour moved from 11 to 12 exact (one labelled vehicle is no longer linked to a phantom box). The robustness table below was produced before this fix and was not re-run.
+
+### Update 2026-11-23: CLIP colour (PROBLEMS C8, DECISIONS M13)
+The hue/k-means colour rule was replaced by **CLIP ViT-B/32 zero-shot** (OpenAI weights via open_clip): each vehicle's best crops are compared with fixed prompts ("a photo of a white car", "a gray SUV seen from behind", …) over the 10 colour names; the "too dark → unknown" rule is kept. **Nothing was tuned on these labels** (the prompts, colour list and night rule were fixed before evaluating).
+| | Hue rule | CLIP |
+|---|---|---|
+| Colour exact | 12/44 (27%) | **28/44 (64%)** |
+| Colour near | 25/44 (57%) | **33/44 (75%)** |
+| Moving / fixed CCTV-style (exact) | 30% / 21% | 67% / 57% |
+Remaining 12 errors are scattered (black→white ×2, black→red, black→green, white→silver/green/yellow, silver→grey/white/yellow, yellow→brown, grey→white); no systematic haze failure any more. Detection, plate and matching metrics are unchanged (8/9 matched, 0/42 false matches, 0/132 wrong characters). Cost: ~15 ms per vehicle on the RTX 3050. The colour lines of the robustness table below are from the old rule.
 
 ## Error analysis
 - **Missed vehicles (7):** 4 have plates humans also marked `none`: far, tiny vehicles (about 30–60 px boxes, under the 0.4% minimum-area filter) or trucks cut off at the 4K frame edge. The other 3 are partly visible (an SUV behind others, a corner scooter, an edge truck).

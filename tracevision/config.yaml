@@ -26,6 +26,9 @@ pipeline:
   verify_min_share: 0.34     # ... in at least this share of the sampled frames, else the track is dropped (logged)
   plate_link_min_known: 6    # merge tracks whose fused plates agree on >= this many readable characters (and never disagree)
 
+colour:
+  method: clip              # clip = CLIP ViT-B/32 zero-shot (M13); heuristic = k-means + hue rules (fallback)
+
 plate_detector:
   conf: 0.5               # DECISIONS M8
   min_plate_height_px: 16 # below this the plate is reported unreadable, never OCR'd (M8)

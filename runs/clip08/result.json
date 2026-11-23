@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 555
   },
-  "processed_at": "2026-11-23T09:31:54",
+  "processed_at": "2026-11-23T09:44:36",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -50,6 +50,9 @@
       "t_margin": 4.0,
       "top_k": 5,
       "min_plate_sim_candidate": 0.5
+    },
+    "colour": {
+      "method": "clip"
     }
   },
   "summary": {
@@ -84,11 +87,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 9.4,
-    "plates_s": 1.1,
-    "ocr_s": 0.3,
+    "detect_track_s": 3.8,
+    "plates_s": 1.0,
+    "ocr_s": 0.2,
     "assemble_s": 0.2,
-    "total_s": 12.3
+    "total_s": 6.0
   },
   "vehicles": [
     {
@@ -1164,14 +1167,15 @@
         "detector_conf_mean": 0.66
       },
       "colour": {
-        "label": "blue",
-        "confidence": 0.423,
+        "label": "white",
+        "confidence": 0.481,
         "per_frame": [
-          "blue",
-          "blue",
-          "blue"
+          "white",
+          "white",
+          "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "unreadable (plate too small: max 10 px < 16 px)",
@@ -1258,14 +1262,15 @@
         "detector_conf_mean": 0.311
       },
       "colour": {
-        "label": "blue",
-        "confidence": 0.594,
+        "label": "black",
+        "confidence": 0.374,
         "per_frame": [
-          "blue",
-          "blue",
-          "blue"
+          "black",
+          "black",
+          "black"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -1612,13 +1617,14 @@
       },
       "colour": {
         "label": "black",
-        "confidence": 0.315,
+        "confidence": 0.366,
         "per_frame": [
-          "blue",
+          "black",
           "black",
           "black"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -1706,13 +1712,14 @@
       },
       "colour": {
         "label": "black",
-        "confidence": 0.355,
+        "confidence": 0.611,
         "per_frame": [
-          "blue",
+          "black",
           "black",
           "black"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -3150,14 +3157,15 @@
         "detector_conf_mean": 0.506
       },
       "colour": {
-        "label": "blue",
-        "confidence": 0.551,
+        "label": "grey",
+        "confidence": 0.289,
         "per_frame": [
-          "blue",
-          "blue",
-          "blue"
+          "grey",
+          "grey",
+          "grey"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -5115,14 +5123,15 @@
         "detector_conf_mean": 0.522
       },
       "colour": {
-        "label": "blue",
-        "confidence": 0.128,
+        "label": "grey",
+        "confidence": 0.331,
         "per_frame": [
-          "blue",
-          "silver",
+          "white",
+          "white",
           "grey"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -5650,14 +5659,15 @@
         "detector_conf_mean": 0.68
       },
       "colour": {
-        "label": "blue",
-        "confidence": 0.546,
+        "label": "white",
+        "confidence": 0.388,
         "per_frame": [
-          "blue",
-          "blue",
-          "blue"
+          "white",
+          "white",
+          "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "read",
@@ -5891,19 +5901,19 @@
         "plates_detected": 8
       },
       "decision": "match",
-      "decision_reason": "best match score 73.9, clear of the next candidate",
+      "decision_reason": "best match score 88.9, clear of the next candidate",
       "candidates": [
         {
           "rank": 1,
           "synthetic_vehicle_id": "SV950896",
           "registration_number": "UP14GP5085",
-          "match_score": 73.9,
+          "match_score": 88.9,
           "plate_score": 0.949,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.5,
           "reasons": [
             "plate: 9 of 9 readable characters match exactly; 1 unreadable",
-            "colour conflict: observed blue, registry white",
+            "colour white matches",
             "type compatible: observed SUV, registry car"
           ]
         },
@@ -5911,19 +5921,49 @@
           "rank": 2,
           "synthetic_vehicle_id": "SV491229",
           "registration_number": "UP14CP5085",
-          "match_score": 60.0,
+          "match_score": 75.0,
           "plate_score": 0.75,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.5,
           "reasons": [
             "plate: 8 of 9 readable characters match exactly; 1 unreadable",
             "plate differs from UP14CP5085 (edit cost 1.0)",
-            "colour conflict: observed blue, registry white",
+            "colour white matches",
             "type compatible: observed SUV, registry car"
           ]
         },
         {
           "rank": 3,
+          "synthetic_vehicle_id": "SV992057",
+          "registration_number": "UP14GP5081",
+          "match_score": 67.5,
+          "plate_score": 0.75,
+          "colour_score": 1.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly; 1 unreadable",
+            "plate differs from UP14GP5081 (edit cost 1.0)",
+            "colour white matches",
+            "type conflict: observed SUV, registry bus"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SV519066",
+          "registration_number": "UP34KP5085",
+          "match_score": 62.7,
+          "plate_score": 0.574,
+          "colour_score": 1.0,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 7 of 9 readable characters match exactly; 1 unreadable",
+            "plate differs from UP34KP5085 (edit cost 2.0)",
+            "colour white matches",
+            "type compatible: observed SUV, registry car"
+          ]
+        },
+        {
+          "rank": 5,
           "synthetic_vehicle_id": "SV735194",
           "registration_number": "UP14GP5487",
           "match_score": 60.0,
@@ -5933,37 +5973,7 @@
           "reasons": [
             "plate: 8 of 9 readable characters match exactly; 1 unreadable",
             "plate differs from UP14GP5487 (edit cost 1.0)",
-            "colour conflict: observed blue, registry yellow",
-            "type compatible: observed SUV, registry car"
-          ]
-        },
-        {
-          "rank": 4,
-          "synthetic_vehicle_id": "SV992057",
-          "registration_number": "UP14GP5081",
-          "match_score": 52.5,
-          "plate_score": 0.75,
-          "colour_score": 0.0,
-          "type_score": 0.0,
-          "reasons": [
-            "plate: 8 of 9 readable characters match exactly; 1 unreadable",
-            "plate differs from UP14GP5081 (edit cost 1.0)",
-            "colour conflict: observed blue, registry white",
-            "type conflict: observed SUV, registry bus"
-          ]
-        },
-        {
-          "rank": 5,
-          "synthetic_vehicle_id": "SV519066",
-          "registration_number": "UP34KP5085",
-          "match_score": 47.7,
-          "plate_score": 0.574,
-          "colour_score": 0.0,
-          "type_score": 0.5,
-          "reasons": [
-            "plate: 7 of 9 readable characters match exactly; 1 unreadable",
-            "plate differs from UP34KP5085 (edit cost 2.0)",
-            "colour conflict: observed blue, registry white",
+            "colour conflict: observed white, registry yellow",
             "type compatible: observed SUV, registry car"
           ]
         }

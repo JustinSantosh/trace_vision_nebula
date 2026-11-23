@@ -7,7 +7,7 @@
     "height": 1280,
     "frames": 553
   },
-  "processed_at": "2026-11-23T09:31:08",
+  "processed_at": "2026-11-23T09:44:03",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -50,6 +50,9 @@
       "t_margin": 4.0,
       "top_k": 5,
       "min_plate_sim_candidate": 0.5
+    },
+    "colour": {
+      "method": "clip"
     }
   },
   "summary": {
@@ -103,11 +106,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 4.5,
-    "plates_s": 2.4,
-    "ocr_s": 0.7,
-    "assemble_s": 0.2,
-    "total_s": 8.2
+    "detect_track_s": 4.3,
+    "plates_s": 1.9,
+    "ocr_s": 0.5,
+    "assemble_s": 0.3,
+    "total_s": 7.5
   },
   "vehicles": [
     {
@@ -1885,13 +1888,14 @@
       },
       "colour": {
         "label": "black",
-        "confidence": 0.39,
+        "confidence": 0.241,
         "per_frame": [
+          "brown",
           "black",
-          "black",
-          "blue"
+          "black"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "read",
@@ -3668,14 +3672,15 @@
         "detector_conf_mean": 0.559
       },
       "colour": {
-        "label": "white",
-        "confidence": 0.424,
+        "label": "silver",
+        "confidence": 0.279,
         "per_frame": [
-          "white",
-          "white",
-          "white"
+          "silver",
+          "silver",
+          "silver"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "read",
@@ -4013,19 +4018,19 @@
         "plates_detected": 16
       },
       "decision": "match",
-      "decision_reason": "best match score 85.0, clear of the next candidate",
+      "decision_reason": "best match score 92.5, clear of the next candidate",
       "candidates": [
         {
           "rank": 1,
           "synthetic_vehicle_id": "SV843240",
           "registration_number": "DL9CAZ8556",
-          "match_score": 85.0,
+          "match_score": 92.5,
           "plate_score": 1.0,
-          "colour_score": 0.5,
+          "colour_score": 1.0,
           "type_score": 0.5,
           "reasons": [
             "plate: 10 of 10 readable characters match exactly",
-            "colour close: observed white, registry silver",
+            "colour silver matches",
             "type compatible: observed SUV, registry car"
           ]
         },
@@ -4033,14 +4038,14 @@
           "rank": 2,
           "synthetic_vehicle_id": "SV562499",
           "registration_number": "DL9CAZ8656",
-          "match_score": 71.7,
+          "match_score": 79.2,
           "plate_score": 0.81,
-          "colour_score": 0.5,
+          "colour_score": 1.0,
           "type_score": 0.5,
           "reasons": [
             "plate: 9 of 10 readable characters match exactly",
             "plate differs from DL9CAZ8656 (edit cost 1.0)",
-            "colour close: observed white, registry silver",
+            "colour silver matches",
             "type compatible: observed SUV, registry car"
           ]
         },
@@ -4048,14 +4053,14 @@
           "rank": 3,
           "synthetic_vehicle_id": "SV618657",
           "registration_number": "DL9CAZ8756",
-          "match_score": 64.2,
+          "match_score": 71.7,
           "plate_score": 0.81,
-          "colour_score": 0.5,
+          "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
             "plate: 9 of 10 readable characters match exactly",
             "plate differs from DL9CAZ8756 (edit cost 1.0)",
-            "colour close: observed white, registry silver",
+            "colour silver matches",
             "type conflict: observed SUV, registry auto_rickshaw"
           ]
         },
@@ -4063,14 +4068,14 @@
           "rank": 4,
           "synthetic_vehicle_id": "SV878730",
           "registration_number": "DL7MAZ8556",
-          "match_score": 59.8,
+          "match_score": 67.3,
           "plate_score": 0.64,
-          "colour_score": 0.5,
+          "colour_score": 1.0,
           "type_score": 0.5,
           "reasons": [
             "plate: 8 of 10 readable characters match exactly",
             "plate differs from DL7MAZ8556 (edit cost 2.0)",
-            "colour close: observed white, registry silver",
+            "colour silver matches",
             "type compatible: observed SUV, registry car"
           ]
         },
@@ -4085,7 +4090,7 @@
           "reasons": [
             "plate: 8 of 10 readable characters match exactly",
             "plate differs from DL9CAZ8580 (edit cost 2.0)",
-            "colour conflict: observed white, registry black",
+            "colour conflict: observed silver, registry black",
             "type compatible: observed SUV, registry car"
           ]
         }
@@ -4843,13 +4848,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.43,
+        "confidence": 0.297,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "unreadable (plate too small: max 7 px < 16 px)",
@@ -5594,14 +5600,15 @@
         "detector_conf_mean": 0.602
       },
       "colour": {
-        "label": "grey",
-        "confidence": 0.477,
+        "label": "white",
+        "confidence": 0.299,
         "per_frame": [
-          "grey",
-          "grey",
-          "grey"
+          "white",
+          "white",
+          "brown"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -6060,13 +6067,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.552,
+        "confidence": 0.42,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "read",
@@ -7778,14 +7786,15 @@
         "detector_conf_mean": 0.643
       },
       "colour": {
-        "label": "black",
-        "confidence": 0.406,
+        "label": "white",
+        "confidence": 0.347,
         "per_frame": [
-          "black",
-          "black",
-          "black"
+          "white",
+          "brown",
+          "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "read",
@@ -8392,14 +8401,15 @@
         "detector_conf_mean": 0.498
       },
       "colour": {
-        "label": "silver",
-        "confidence": 0.487,
+        "label": "brown",
+        "confidence": 0.381,
         "per_frame": [
-          "silver",
-          "silver",
+          "brown",
+          "brown",
           "silver"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -8584,14 +8594,15 @@
         "detector_conf_mean": 0.376
       },
       "colour": {
-        "label": "grey",
-        "confidence": 0.41,
+        "label": "brown",
+        "confidence": 0.299,
         "per_frame": [
-          "grey",
-          "grey",
-          "grey"
+          "brown",
+          "white",
+          "brown"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -9435,13 +9446,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.525,
+        "confidence": 0.485,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -9941,14 +9953,15 @@
         "detector_conf_mean": 0.445
       },
       "colour": {
-        "label": "orange",
-        "confidence": 0.254,
+        "label": "brown",
+        "confidence": 0.564,
         "per_frame": [
-          "orange",
           "brown",
-          "orange"
+          "brown",
+          "brown"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "unreadable (plate too small: max 13 px < 16 px)",

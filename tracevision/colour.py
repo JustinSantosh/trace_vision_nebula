@@ -68,9 +68,76 @@ def frame_colour(crop, vtype, k=3, seed=0):
     return name_of(centers[i]), float(counts[i] / counts.sum()), float(hsv[:, 2].mean())
 
 
-def estimate_colour(crops, vtype, night_v=55.0):
-    """crops: BGR vehicle crops (best frames first). Returns {"label", "confidence", "per_frame", "note"}."""
+# ---------------------------------------------------------------- CLIP zero-shot colour (DECISIONS M13, PROBLEMS C8)
+# Pretrained OpenAI CLIP ViT-B/32 compares each vehicle crop with fixed text prompts ("a photo of a white car", ...).
+# Nothing is trained or tuned on our labels: the colour names, prompt templates and the night rule were fixed
+# before evaluating. Falls back to the heuristic if open_clip is not installed.
+CLIP_COLOURS = ["white", "black", "silver", "grey", "red", "blue", "green", "yellow", "brown", "orange"]
+_PROMPT_COLOUR = {"grey": "gray"}                       # CLIP's training text is mostly US English
+NOUN = {"car": "car", "SUV": "SUV", "motorcycle/scooter": "motorcycle", "motorcycle": "motorcycle", "scooter": "scooter",
+        "auto_rickshaw": "auto rickshaw", "truck": "truck", "bus": "bus", "van": "van", "bicycle": "bicycle"}
+TEMPLATES = ["a photo of a {c} {n}.", "a {c} {n} on the road.", "a {c} {n} seen from behind.", "a {c} {n} seen from the front."]
+_clip = {}
+
+
+def _clip_model():
+    if "model" not in _clip:
+        import open_clip
+        import torch
+        dev = "cuda" if torch.cuda.is_available() else "cpu"
+        model, _, pre = open_clip.create_model_and_transforms("ViT-B-32", pretrained="openai", device=dev)
+        model.eval()
+        _clip.update(model=model, pre=pre, tok=open_clip.get_tokenizer("ViT-B-32"), dev=dev, text={}, torch=torch)
+    return _clip
+
+
+def _text_emb(noun):
+    c = _clip_model()
+    if noun not in c["text"]:
+        torch = c["torch"]
+        embs = []
+        with torch.no_grad():
+            for col in CLIP_COLOURS:
+                t = c["tok"]([tp.format(c=_PROMPT_COLOUR.get(col, col), n=noun) for tp in TEMPLATES]).to(c["dev"])
+                e = c["model"].encode_text(t).float()
+                e = e / e.norm(dim=-1, keepdim=True)
+                e = e.mean(0)
+                embs.append(e / e.norm())
+        c["text"][noun] = torch.stack(embs)
+    return c["text"][noun]
+
+
+def clip_colour(crops, vtype):
+    """Returns (label, confidence, per_frame labels) from CLIP, or None if CLIP is unavailable / no crops."""
+    try:
+        c = _clip_model()
+    except Exception:          # open_clip missing or weights unavailable -> caller falls back to the heuristic
+        return None
+    from PIL import Image
+    torch = c["torch"]
+    imgs = [c["pre"](Image.fromarray(cv2.cvtColor(x, cv2.COLOR_BGR2RGB))) for x in crops if x is not None and x.size]
+    if not imgs:
+        return None
+    with torch.no_grad():
+        f = c["model"].encode_image(torch.stack(imgs).to(c["dev"])).float()
+        f = f / f.norm(dim=-1, keepdim=True)
+        T = _text_emb(NOUN.get(vtype, "vehicle"))
+        per = (100.0 * f @ T.T).softmax(dim=-1)                 # per-crop probabilities over the 10 colours
+        mean = f.mean(0); mean = mean / mean.norm()
+        p = (100.0 * mean @ T.T).softmax(dim=-1)                # pooled over the crops
+    i = int(p.argmax())
+    return CLIP_COLOURS[i], float(p[i]), [CLIP_COLOURS[int(j)] for j in per.argmax(dim=-1)]
+
+
+def estimate_colour(crops, vtype, night_v=55.0, method="heuristic"):
+    """crops: BGR vehicle crops (best frames first). Returns {"label", "confidence", "per_frame", "note"}.
+    method: "clip" (CLIP zero-shot, M13) or "heuristic" (k-means + hue rules). The night rule applies to both."""
     res = [r for r in (frame_colour(c, vtype) for c in crops) if r]
+    if method == "clip" and res and np.mean([r[2] for r in res]) >= night_v:
+        cr = clip_colour(crops, vtype)
+        if cr:
+            label, conf, per = cr
+            return {"label": label, "confidence": round(conf, 3), "per_frame": per, "note": "CLIP zero-shot", "method": "clip"}
     if not res:
         return {"label": "unknown", "confidence": 0.0, "per_frame": [], "note": "no usable body pixels"}
     if np.mean([r[2] for r in res]) < night_v:

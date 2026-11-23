@@ -73,7 +73,7 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 - [x] Awiros benchmark and GPU build (15 ms per crop). Install: `pip install paddlepaddle-gpu==3.3.1 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/`
 - [x] UVH-26 loaded, `models/class_mapping.json` built from the real 14 classes (B3, B4, M6)
 - [x] ByteTrack smoke-tested on clip01/02 (`reports/p1_vision_stack.md`)
-- [x] **Colour** estimator (`tracevision/colour.py`): 27% exact / 57% near. Improving it is the best next task (C8).
+- [x] **Colour** estimator (`tracevision/colour.py`): now CLIP zero-shot: 64% exact / 75% near (was 27% / 57%). Improving it is the best next task (C8).
 - [x] **Track re-linking** (position + plate + same-object rule) and the edge-box rule (C6, M10, M11)
 
 **Done:** `tracevision/pipeline.py` (P4).

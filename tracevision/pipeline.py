@@ -350,7 +350,8 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
     for tid, dets in sorted(tracks.items(), key=lambda kv: kv[1][0]["frame"]):
         vtype, tconf = track_type(dets)
         items = sorted(vcrops.get(tid, []), key=lambda x: -x[0]["area"])
-        col = estimate_colour([c for _, c in items[:pc["colour_frames"]]], vtype)
+        col = estimate_colour([c for _, c in items[:pc["colour_frames"]]], vtype,
+                              method=cfg.get("colour", {}).get("method", "heuristic"))
         found, rd = plates.get(tid, []), by_track.get(tid, [])
         if rd:
             fused = fuse(rd, cfg)
@@ -396,7 +397,7 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
     timing["assemble_s"] = round(time.perf_counter() - t3, 1)
     timing["total_s"] = round(time.perf_counter() - t0, 1)
     result = {"clip_id": clip_id, "camera_type": camera_type(clip_id), "video": meta,
-              "processed_at": time.strftime("%Y-%m-%dT%H:%M:%S"), "config": {k: cfg[k] for k in ("pipeline", "plate_detector", "fusion", "match")},
+              "processed_at": time.strftime("%Y-%m-%dT%H:%M:%S"), "config": {k: cfg[k] for k in ("pipeline", "plate_detector", "fusion", "match", "colour") if k in cfg},
               "summary": {"raw_tracks": len(raw), "kept_tracks": len(kept),
                           "dropped_unverified_large": unverified, "vehicles_after_relink": len(vehicles),
                           "plates_read": sum(1 for v in vehicles if v["plate"]["status"] == "read"),

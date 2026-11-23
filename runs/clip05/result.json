@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 493
   },
-  "processed_at": "2026-11-23T09:31:18",
+  "processed_at": "2026-11-23T09:44:14",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -50,6 +50,9 @@
       "t_margin": 4.0,
       "top_k": 5,
       "min_plate_sim_candidate": 0.5
+    },
+    "colour": {
+      "method": "clip"
     }
   },
   "summary": {
@@ -83,11 +86,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 3.3,
-    "plates_s": 1.5,
+    "detect_track_s": 3.5,
+    "plates_s": 1.6,
     "ocr_s": 0.2,
-    "assemble_s": 0.1,
-    "total_s": 5.6
+    "assemble_s": 0.3,
+    "total_s": 6.1
   },
   "vehicles": [
     {
@@ -548,13 +551,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.362,
+        "confidence": 0.433,
         "per_frame": [
-          "blue",
+          "grey",
           "white",
           "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -1216,13 +1220,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.553,
+        "confidence": 0.421,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -2171,13 +2176,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.53,
+        "confidence": 0.646,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -2425,14 +2431,15 @@
         "detector_conf_mean": 0.471
       },
       "colour": {
-        "label": "blue",
-        "confidence": 0.261,
+        "label": "black",
+        "confidence": 0.379,
         "per_frame": [
-          "blue",
-          "blue",
-          "silver"
+          "black",
+          "silver",
+          "black"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -2569,13 +2576,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.388,
+        "confidence": 0.264,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -2901,13 +2909,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.439,
+        "confidence": 0.699,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -3071,14 +3080,15 @@
         "detector_conf_mean": 0.345
       },
       "colour": {
-        "label": "blue",
-        "confidence": 0.585,
+        "label": "grey",
+        "confidence": 0.227,
         "per_frame": [
-          "blue",
-          "blue",
-          "blue"
+          "silver",
+          "grey",
+          "grey"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -3264,13 +3274,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.454,
+        "confidence": 0.58,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "read",
@@ -4679,14 +4690,15 @@
         "detector_conf_mean": 0.451
       },
       "colour": {
-        "label": "grey",
-        "confidence": 0.376,
+        "label": "white",
+        "confidence": 0.645,
         "per_frame": [
-          "grey",
-          "grey",
-          "grey"
+          "white",
+          "white",
+          "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "read",
@@ -5024,20 +5036,20 @@
         "plates_detected": 16
       },
       "decision": "no_confident_match",
-      "decision_reason": "best match score 40.0 is below the threshold 67.5",
+      "decision_reason": "best match score 47.5 is below the threshold 67.5",
       "candidates": [
         {
           "rank": 1,
           "synthetic_vehicle_id": "SV931285",
           "registration_number": "UK09AW8959",
-          "match_score": 40.0,
+          "match_score": 47.5,
           "plate_score": 0.25,
-          "colour_score": 0.5,
+          "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
             "plate: 6 of 10 readable characters match exactly",
             "plate differs from UK09AW8959 (edit cost 5.0)",
-            "colour close: observed grey, registry white",
+            "colour white matches",
             "type car matches"
           ]
         }
@@ -5563,14 +5575,15 @@
         "detector_conf_mean": 0.613
       },
       "colour": {
-        "label": "silver",
-        "confidence": 0.551,
+        "label": "white",
+        "confidence": 0.731,
         "per_frame": [
-          "silver",
-          "silver",
-          "silver"
+          "white",
+          "white",
+          "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -6148,13 +6161,14 @@
       },
       "colour": {
         "label": "black",
-        "confidence": 0.645,
+        "confidence": 0.354,
         "per_frame": [
           "black",
           "black",
           "black"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -7039,14 +7053,15 @@
         "detector_conf_mean": 0.497
       },
       "colour": {
-        "label": "blue",
-        "confidence": 0.472,
+        "label": "grey",
+        "confidence": 0.403,
         "per_frame": [
-          "blue",
-          "blue",
-          "blue"
+          "grey",
+          "grey",
+          "silver"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -7722,13 +7737,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.558,
+        "confidence": 0.536,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -8019,13 +8035,14 @@
       },
       "colour": {
         "label": "yellow",
-        "confidence": 0.298,
+        "confidence": 0.858,
         "per_frame": [
           "yellow",
           "yellow",
-          "green"
+          "yellow"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -8112,14 +8129,15 @@
         "detector_conf_mean": 0.445
       },
       "colour": {
-        "label": "white",
-        "confidence": 0.628,
+        "label": "brown",
+        "confidence": 0.207,
         "per_frame": [
-          "white",
-          "white",
-          "white"
+          "brown",
+          "black",
+          "black"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -8242,13 +8260,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.615,
+        "confidence": 0.439,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": ""
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",

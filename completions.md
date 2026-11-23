@@ -138,7 +138,7 @@ Full report: `TRACEVISION_DATA/reports/p5_app_and_reports.md`.
 Full report: `TRACEVISION_DATA/reports/p6_evaluation.md`. Run with `python -m tracevision.evaluate` and `python -m tracevision.robustness`.
 - **8/9 registered vehicles matched to the right record; 0/42 unregistered vehicles falsely identified.**
 - **Plate characters: 85% correct, 15% `?`, 0% wrong** (132 characters). Exact plate 7/10.
-- Type 68% exact / 93% compatible; colour 27% exact / 57% near (weakest, C8). Phantom large boxes from UVH-26 are now removed by a COCO cross-check (C11).
+- Type 68% exact / 93% compatible; colour **64% exact / 75% near with CLIP zero-shot** (was 27% / 57% with the hue rule, C8). Phantom large boxes from UVH-26 are now removed by a COCO cross-check (C11).
 - CCTV-style clips: all vehicles found, no plate large enough to read, so every answer is correctly "no confident match".
 - **Robustness** (7 degradations on 5 clips): **0 false identifications in every variant**; identification drops to 1/8 under strong blur, downscaling, JPEG and night (5/8 with noise); wrong plate characters appear on very degraded crops (up to 17% at 360p, C10).
 - **All phases P1–P6 are done.** Owner actions are in **[NEEDS.md](NEEDS.md)**; README rewritten for submission.
