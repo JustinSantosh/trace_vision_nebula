@@ -34,7 +34,7 @@ from fastapi import Body, FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from . import ROOT, intel, violations
+from . import ROOT, intel, violations, parking, echallan
 from .report import build
 
 FRONTEND_DIR = ROOT / "frontend"
@@ -329,13 +329,22 @@ async def create_job(video: UploadFile = File(...)):
     d.mkdir(parents=True)
     dst = d / f"upload{ext}"
     size = 0
-    with open(dst, "wb") as f:
-        while chunk := await video.read(1 << 20):
-            size += len(chunk)
-            if size > MAX_BYTES:
-                raise HTTPException(413, "file too large (max 500 MB)")
-            f.write(chunk)
-    (d / "name.txt").write_text(video.filename or "", encoding="utf-8")
+    try:
+        with open(dst, "wb") as f:
+            while chunk := await video.read(1 << 20):
+                size += len(chunk)
+                if size > MAX_BYTES:
+                    raise HTTPException(413, "file too large (max 500 MB)")
+                f.write(chunk)
+        if size == 0:
+            raise HTTPException(400, "the uploaded file is empty")
+    except BaseException:
+        # never leave a partial upload or an orphan job folder behind
+        import shutil
+        shutil.rmtree(d, ignore_errors=True)
+        raise
+    # keep the original name for display only; it is never used as a path
+    (d / "name.txt").write_text(re.sub(r"[\x00-\x1f]", "", Path(video.filename or "").name)[:120], encoding="utf-8")
     jobs[jid] = {"status": "queued", "phase": "queued", "video": str(dst), "dir": str(d), "name": video.filename, "created": time.time()}
     q.put(jid)
     return {"job_id": jid}
@@ -572,7 +581,261 @@ def all_violations():
                              "layout": d.get("layout"), "checked_vehicles": d["checked_vehicles"],
                              "flagged": len(d["violations"]), "stabilisation": d.get("stabilisation")})
         items += d["violations"]
-    return JSONResponse({"violations": items, "assessed_clips": assessed, "issued_challans": intel.issued_challans()})
+    return JSONResponse({
+        "violations": items,
+        "assessed_clips": assessed,
+        "issued_challans": intel.issued_challans(),
+        "parking_cases": parking.load_parking_cases(),
+        "echallan_cases": echallan.load_cases()
+    })
+
+
+# ---------------------------------------------------------------- Parking & E-Challan Management (Parts 5 & 6)
+@app.get("/api/parking/cases")
+def list_parking_cases():
+    return JSONResponse(parking.load_parking_cases())
+
+
+def _text(payload: dict, key: str, limit: int = 300, default: str = "") -> str:
+    v = payload.get(key, default)
+    return str(v).strip()[:limit] if v is not None else default
+
+
+_CASE_ID = re.compile(r"^(PRK|ECH)-\d{8}-[0-9A-F]{6}$")
+
+
+def _case_id(case_id: str) -> str:
+    if not _CASE_ID.match(case_id or ""):
+        raise HTTPException(404, "case not found")
+    return case_id
+
+
+@app.get("/api/enforcement/meta")
+def enforcement_meta():
+    """State machines and catalogues the UI renders actions from (single source of truth: parking.py / echallan.py)."""
+    return JSONResponse({
+        "parking": {"transitions": {k: sorted(v) for k, v in parking.VALID_TRANSITIONS.items()},
+                    "human_only": sorted(parking.HUMAN_ONLY_STATES),
+                    "needs_reason": [parking.STATE_TOWING_AUTHORISED, parking.STATE_TOWED, parking.STATE_ECHALLAN_ISSUED],
+                    "violations": parking.PARKING_VIOLATIONS},
+        "echallan": {"categories": {k: {"rule": v["rule"], "fine_inr": v["standard_fine_inr"]} for k, v in echallan.LEGAL_PROVISIONS.items()},
+                     "duplicate_window_minutes": echallan.DUPLICATE_WINDOW_MINUTES},
+        "notice": "Simulated workflows. No notice, challan, payment or towing order leaves this machine.",
+    })
+
+
+@app.get("/api/parking/scan/{kind}/{rid}")
+def parking_scan(kind: str, rid: str):
+    """Read-only parking classification of one stored run against the camera's configured zones (never creates a case)."""
+    _, res = _result_for(f"{kind}/{rid}")
+    cam = violations.camera_of(res.get("clip_id")) if kind == "runs" else None
+    return JSONResponse(parking.scan_run(res, cam) | {"run": f"{kind}/{rid}"})
+
+
+@app.post("/api/parking/cases")
+def create_parking_case(payload: dict = Body(...)):
+    """Open a parking case. With run_id + track_id the vehicle's attributes come from the stored analysis, never from
+    defaults; a case without evidence is refused."""
+    run_id = _text(payload, "run_id", 80)
+    if not re.fullmatch(r"(runs|jobs)/\w+", run_id):
+        raise HTTPException(400, "run_id must reference a stored analysis, e.g. runs/clip02")
+    try:
+        track_id = int(payload.get("track_id"))
+    except (TypeError, ValueError):
+        raise HTTPException(400, "track_id must be an integer")
+    _, res = _result_for(run_id)
+    veh = next((v for v in res.get("vehicles", []) if v.get("track_id") == track_id), None)
+    if not veh:
+        raise HTTPException(404, f"vehicle T{track_id} is not in {run_id}")
+    analysis = payload.get("analysis_result") if isinstance(payload.get("analysis_result"), dict) else {}
+    vtype = analysis.get("violation_type") or payload.get("violation_type") or "no_parking"
+    if vtype not in parking.PARKING_VIOLATIONS:
+        raise HTTPException(400, f"violation_type must be one of {sorted(parking.PARKING_VIOLATIONS)}")
+    cands = veh.get("candidates") or []
+    registration = cands[0]["registration_number"] if veh.get("decision") == "match" and cands else None
+    frames = [veh.get("first_frame"), veh.get("last_frame")]
+    case = parking.create_parking_case(
+        run_id=run_id, clip_id=violations.run_label(run_id, res), track_id=track_id, registration=registration,
+        vehicle_type=(veh.get("type") or {}).get("label") or "unknown",
+        colour=(veh.get("colour") or {}).get("label") or "unknown",
+        analysis_result={"violation_type": vtype, "duration_s": analysis.get("duration_s"),
+                         "zone_name": analysis.get("zone_name") or _text(payload, "zone_name", 80) or None,
+                         "first_frame": frames[0], "last_frame": frames[1]},
+        location=_text(payload, "location", 120) or "Not recorded",
+        evidence_frames=[f for f in frames if f is not None])
+    intel.audit({"action": "parking case", "registration": registration, "context": f"{run_id}:T{track_id}",
+                 "outcome": "duplicate of open case" if case.get("duplicate_of_open_case") else f"opened {case['case_id']}"})
+    return JSONResponse(case)
+
+
+@app.post("/api/parking/cases/{case_id}/transition")
+def transition_parking_case_endpoint(case_id: str, payload: dict = Body(...)):
+    new_state = _text(payload, "new_state", 40)
+    officer = _text(payload, "officer", 60)
+    note = _text(payload, "note", 300) or _text(payload, "notes", 300)   # older clients sent "notes"
+    if not new_state:
+        raise HTTPException(400, "new_state is required")
+    if not officer:
+        raise HTTPException(400, "officer is required: every transition is attributed to a named person")
+    try:
+        updated = parking.transition_parking_case(_case_id(case_id), new_state, officer=officer, note=note)
+        return JSONResponse(updated)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+
+
+@app.get("/api/parking/cases/{case_id}/warning")
+def get_parking_warning(case_id: str):
+    _case_id(case_id)
+    cases = parking.load_parking_cases()
+    case = next((c for c in cases if c["case_id"] == case_id), None)
+    if not case:
+        raise HTTPException(404, "case not found")
+    notice = case.get("warning_notice") or parking.generate_owner_warning_notice(case)
+    return JSONResponse(notice)
+
+
+@app.get("/api/echallans/cases")
+def list_echallan_cases(status: str = ""):
+    cases = echallan.load_cases()
+    if status:
+        cases = [c for c in cases if c.get("status") == status]
+    return JSONResponse(cases)
+
+
+@app.post("/api/echallans/cases")
+def create_echallan_case(payload: dict = Body(...)):
+    """Draft an e-challan. Evidence fields not supplied stay empty (never defaulted to invented values). When
+    evidence_run + track_id are given, the vehicle must exist in that stored analysis and its stored plate / type /
+    colour are used."""
+    reg = _text(payload, "registration_number", 16).upper()
+    if not reg:
+        raise HTTPException(400, "registration_number is required")
+    category = _text(payload, "violation_category", 60) or "Illegal parking"
+    if category not in echallan.LEGAL_PROVISIONS:
+        raise HTTPException(400, f"violation_category must be one of {sorted(echallan.LEGAL_PROVISIONS)}")
+    run, track_id, veh = _text(payload, "evidence_run", 80) or None, payload.get("track_id"), None
+    if run:
+        if not re.fullmatch(r"(runs|jobs)/\w+", run):
+            raise HTTPException(400, "evidence_run must look like runs/clip03")
+        try:
+            track_id = int(track_id)
+        except (TypeError, ValueError):
+            raise HTTPException(400, "track_id is required with evidence_run")
+        _, res = _result_for(run)
+        veh = next((v for v in res.get("vehicles", []) if v.get("track_id") == track_id), None)
+        if not veh:
+            raise HTTPException(404, f"vehicle T{track_id} is not in {run}")
+    else:
+        track_id = None
+    plate = (veh or {}).get("plate") or {}
+    try:
+        case = echallan.create_echallan_draft(
+            registration=reg, violation_category=category, location=_text(payload, "location", 120) or "Not recorded",
+            evidence_run=run, track_id=track_id,
+            ocr_plate=plate.get("fused") if veh else (_text(payload, "ocr_plate", 16) or None),
+            ocr_confidence=_plate_confidence(plate) if veh else payload.get("ocr_confidence"),
+            vehicle_type=((veh or {}).get("type") or {}).get("label") or _text(payload, "vehicle_type", 30) or None,
+            vehicle_colour=((veh or {}).get("colour") or {}).get("label") or _text(payload, "vehicle_colour", 30) or None,
+            evidence_frames=[veh.get("first_frame"), veh.get("last_frame")] if veh else payload.get("evidence_frames"),
+            fine_amount=payload.get("fine_inr"),
+            officer_id=_text(payload, "officer_id", 60) or "UNASSIGNED",
+            notes=_text(payload, "notes", 300))
+        return JSONResponse(case)
+    except (ValueError, TypeError) as e:
+        raise HTTPException(400, str(e))
+
+
+def _plate_confidence(plate: dict):
+    """Mean fused per-character confidence over the characters actually read ('?' positions excluded); None if none."""
+    vals = [p.get("confidence") for p in plate.get("positions") or [] if p.get("char") not in (None, "?")]
+    vals = [float(v) for v in vals if isinstance(v, (int, float))]
+    return round(sum(vals) / len(vals), 3) if vals else None
+
+
+def _echallan_action(fn, *args):
+    try:
+        return JSONResponse(fn(*args))
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+
+
+@app.post("/api/echallans/cases/{case_id}/verify")
+def verify_echallan_endpoint(case_id: str, payload: dict = Body(...)):
+    return _echallan_action(echallan.submit_for_review, _case_id(case_id), _text(payload, "officer", 60), _text(payload, "notes"))
+
+
+@app.post("/api/echallans/cases/{case_id}/approve")
+def approve_echallan_endpoint(case_id: str, payload: dict = Body(...)):
+    return _echallan_action(echallan.approve_and_issue_echallan, _case_id(case_id), _text(payload, "officer", 60), _text(payload, "notes"))
+
+
+@app.post("/api/echallans/cases/{case_id}/cancel")
+def cancel_echallan_endpoint(case_id: str, payload: dict = Body(...)):
+    reason = _text(payload, "reason")
+    if not reason:
+        raise HTTPException(400, "reason is required")
+    return _echallan_action(echallan.cancel_echallan, _case_id(case_id), _text(payload, "officer", 60), reason)
+
+
+@app.post("/api/echallans/cases/{case_id}/pay")
+def pay_echallan_endpoint(case_id: str, payload: dict = Body(default={})):
+    """SIMULATED payment record. No payment gateway is connected."""
+    return _echallan_action(echallan.record_payment, _case_id(case_id), _text(payload, "reference", 40))
+
+
+@app.post("/api/echallans/cases/{case_id}/dispute")
+def dispute_echallan_endpoint(case_id: str, payload: dict = Body(...)):
+    reason = _text(payload, "reason", 500)
+    evidence_url = _text(payload, "evidence_url", 300) or None
+    if not reason:
+        raise HTTPException(400, "reason is required")
+    return _echallan_action(echallan.file_echallan_dispute, _case_id(case_id), reason, evidence_url)
+
+
+@app.post("/api/echallans/cases/{case_id}/resolve_dispute")
+def resolve_dispute_endpoint(case_id: str, payload: dict = Body(...)):
+    resolution = payload.get("resolution")
+    if resolution not in ("upheld", "dismissed"):
+        raise HTTPException(400, "resolution must be 'upheld' or 'dismissed'")
+    return _echallan_action(echallan.resolve_echallan_dispute, _case_id(case_id), _text(payload, "officer", 60),
+                            resolution, _text(payload, "findings", 500))
+
+
+@app.get("/api/colour/model_info")
+def get_colour_model_info():
+    from . import load_config
+    from .colour import default_probe_path
+    models = ROOT / "TRACEVISION_DATA" / "models"
+    probe_path = default_probe_path()
+    cfg_name = "vcor_linear_probe_v2_config.json" if probe_path and probe_path.name.endswith("_v2.pt") else "vcor_linear_probe_config.json"
+    probe_info = None
+    try:
+        probe_info = json.loads((models / cfg_name).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        pass
+    try:
+        active = (load_config().get("colour") or {}).get("method", "heuristic")
+    except Exception:
+        active = None
+    cctv_path = ROOT / "TRACEVISION_DATA" / "reports" / "final_claude_audit" / "colour_cctv_transfer.json"
+    try:
+        cctv = json.loads(cctv_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        cctv = None
+
+    return JSONResponse({
+        "supported_methods": ["heuristic", "clip", "linear_probe"],
+        "active_method": active,
+        "linear_probe_available": probe_path is not None,
+        "linear_probe_file": probe_path.name if probe_path else None,
+        "linear_probe_info": probe_info,
+        "cctv_transfer": cctv,
+        "vocabulary_12": [
+            "white", "black", "silver", "grey", "red", "blue",
+            "green", "yellow", "brown", "orange", "other", "unknown"
+        ]
+    })
 
 
 @app.post("/api/violations/review")

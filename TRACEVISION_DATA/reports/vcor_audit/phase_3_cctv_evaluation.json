@@ -1,0 +1,1723 @@
+{
+  "timestamp": "2026-11-23 22:58:46",
+  "total_labelled_rows": 67,
+  "evaluated_instances": 62,
+  "missing_instances_count": 5,
+  "missing_samples": [
+    {
+      "clip_id": "clip10",
+      "target_id": "clip10_v01",
+      "reason": "Video file not found locally (stock / omitted from Git)"
+    },
+    {
+      "clip_id": "clip10",
+      "target_id": "clip10_v02",
+      "reason": "Video file not found locally (stock / omitted from Git)"
+    },
+    {
+      "clip_id": "clip10",
+      "target_id": "clip10_v03",
+      "reason": "Video file not found locally (stock / omitted from Git)"
+    },
+    {
+      "clip_id": "clip11",
+      "target_id": "clip11_v01",
+      "reason": "Video file not found locally (stock / omitted from Git)"
+    },
+    {
+      "clip_id": "clip11",
+      "target_id": "clip11_v02",
+      "reason": "Video file not found locally (stock / omitted from Git)"
+    }
+  ],
+  "metrics": {
+    "heuristic": {
+      "exact_accuracy": 0.2903,
+      "near_accuracy": 0.629,
+      "avg_latency_ms": 5.69
+    },
+    "clip_zero_shot": {
+      "exact_accuracy": 0.5161,
+      "near_accuracy": 0.7097,
+      "avg_latency_ms": 902.27
+    },
+    "linear_probe": {
+      "exact_accuracy": 0.0968,
+      "near_accuracy": 0.129,
+      "avg_latency_ms": 260.7
+    }
+  },
+  "class_breakdown": {
+    "black": {
+      "support": 17,
+      "heuristic_exact": 0.235,
+      "clip_exact": 0.235,
+      "probe_exact": 0.118,
+      "probe_confusions": [
+        "other",
+        "other",
+        "other",
+        "other",
+        "other",
+        "other",
+        "other",
+        "brown",
+        "brown",
+        "other",
+        "other",
+        "other",
+        "other",
+        "other",
+        "other"
+      ]
+    },
+    "blue": {
+      "support": 2,
+      "heuristic_exact": 0.0,
+      "clip_exact": 0.0,
+      "probe_exact": 0.0,
+      "probe_confusions": [
+        "other",
+        "brown"
+      ]
+    },
+    "brown": {
+      "support": 1,
+      "heuristic_exact": 0.0,
+      "clip_exact": 1.0,
+      "probe_exact": 1.0,
+      "probe_confusions": []
+    },
+    "green": {
+      "support": 2,
+      "heuristic_exact": 0.0,
+      "clip_exact": 0.0,
+      "probe_exact": 0.0,
+      "probe_confusions": [
+        "other",
+        "other"
+      ]
+    },
+    "grey": {
+      "support": 3,
+      "heuristic_exact": 0.333,
+      "clip_exact": 0.333,
+      "probe_exact": 0.0,
+      "probe_confusions": [
+        "brown",
+        "other",
+        "other"
+      ]
+    },
+    "silver": {
+      "support": 5,
+      "heuristic_exact": 0.4,
+      "clip_exact": 0.2,
+      "probe_exact": 0.0,
+      "probe_confusions": [
+        "white",
+        "grey",
+        "other",
+        "other",
+        "brown"
+      ]
+    },
+    "white": {
+      "support": 26,
+      "heuristic_exact": 0.385,
+      "clip_exact": 0.808,
+      "probe_exact": 0.077,
+      "probe_confusions": [
+        "brown",
+        "other",
+        "other",
+        "brown",
+        "brown",
+        "brown",
+        "brown",
+        "other",
+        "other",
+        "other",
+        "brown",
+        "brown",
+        "black",
+        "other",
+        "other",
+        "brown",
+        "brown",
+        "other",
+        "other",
+        "brown",
+        "brown",
+        "other",
+        "other",
+        "other"
+      ]
+    },
+    "yellow": {
+      "support": 6,
+      "heuristic_exact": 0.167,
+      "clip_exact": 0.667,
+      "probe_exact": 0.167,
+      "probe_confusions": [
+        "other",
+        "other",
+        "other",
+        "other",
+        "other"
+      ]
+    }
+  },
+  "sample_evaluations": [
+    {
+      "clip_id": "clip01",
+      "target_id": "clip01_v01",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "silver",
+        "conf": 0.504,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.273,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.103,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Honda Amaze; tracker split it (ids 3, 89, 67, 254) | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip01",
+      "target_id": "clip01_v02",
+      "vehicle_type": "suv",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.708,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.319,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.102,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Maruti Ertiga (MUV); 6th char unclear (1 or I); plate small | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip01",
+      "target_id": "clip01_v03",
+      "vehicle_type": "motorcycle",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.111,
+        "exact": false,
+        "near": false
+      },
+      "notes": "two-row plate UP37A / A8404; rider + pillion | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip02",
+      "target_id": "clip02_v01",
+      "vehicle_type": "suv",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "silver",
+        "conf": 0.432,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.554,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.105,
+        "exact": false,
+        "near": false
+      },
+      "notes": "MPV seen top-down; plate too far | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip02",
+      "target_id": "clip02_v02",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.414,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.726,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.105,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Hyundai i10-type hatchback, top-down; plate too far | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip02",
+      "target_id": "clip02_v03",
+      "vehicle_type": "motorcycle",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.118,
+        "exact": false,
+        "near": false
+      },
+      "notes": "rider in red shirt; plate too far | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip02",
+      "target_id": "clip02_v04",
+      "vehicle_type": "auto_rickshaw",
+      "ground_truth": "yellow",
+      "heuristic": {
+        "pred": "brown",
+        "conf": 0.388,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "green",
+        "conf": 0.349,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.124,
+        "exact": false,
+        "near": false
+      },
+      "notes": "CNG auto, yellow roof + green lower body (CNG auto); crowded auto stand | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip03",
+      "target_id": "clip03_v01",
+      "vehicle_type": "car",
+      "ground_truth": "silver",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.394,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.355,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "white",
+        "conf": 0.099,
+        "exact": false,
+        "near": true
+      },
+      "notes": "Honda City | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip03",
+      "target_id": "clip03_v02",
+      "vehicle_type": "suv",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.622,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "black",
+        "conf": 0.283,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.108,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Tata Curvv; tracker split it (ids 2, 152, 214); hidden by our mirror around frames 196-260 | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip03",
+      "target_id": "clip03_v03",
+      "vehicle_type": "suv",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "black",
+        "conf": 0.406,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "brown",
+        "conf": 0.531,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.105,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Maruti Brezza; chosen as a no-match (not in registry) test | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip03",
+      "target_id": "clip03_v04",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.527,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "brown",
+        "conf": 0.372,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.11,
+        "exact": false,
+        "near": false
+      },
+      "notes": "taxi, yellow commercial plate, blurry; 5th/8th/10th chars unclear | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip04",
+      "target_id": "clip04_v01",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.6,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.406,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "white",
+        "conf": 0.106,
+        "exact": true,
+        "near": true
+      },
+      "notes": "Hyundai Grand i10, yellow commercial plate; tracker split (ids 2, 69) | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip04",
+      "target_id": "clip04_v02",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.437,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.432,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.099,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Maruti Dzire taxi, yellow plate; 6th char unclear (Q/D/0); similar white cars around | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip04",
+      "target_id": "clip04_v03",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.532,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.778,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "white",
+        "conf": 0.104,
+        "exact": true,
+        "near": true
+      },
+      "notes": "Tata Tiago; check 6th char (5 vs S) | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip05",
+      "target_id": "clip05_v01",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "silver",
+        "conf": 0.498,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.217,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.106,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Maruti Dzire taxi, yellow plate; 8th char unclear (6/8) | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip05",
+      "target_id": "clip05_v02",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.595,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.424,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.105,
+        "exact": false,
+        "near": false
+      },
+      "notes": "white sedan ahead, plate blurred | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip05",
+      "target_id": "clip05_v03",
+      "vehicle_type": "auto_rickshaw",
+      "ground_truth": "yellow",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.459,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "yellow",
+        "conf": 0.625,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.114,
+        "exact": false,
+        "near": false
+      },
+      "notes": "small, far; next to a motorcycle | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip06",
+      "target_id": "clip06_v01",
+      "vehicle_type": "car",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.544,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "black",
+        "conf": 0.333,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "black",
+        "conf": 0.102,
+        "exact": true,
+        "near": true
+      },
+      "notes": "dark sedan, top-down | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip06",
+      "target_id": "clip06_v02",
+      "vehicle_type": "car",
+      "ground_truth": "silver",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.567,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.368,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "grey",
+        "conf": 0.1,
+        "exact": false,
+        "near": true
+      },
+      "notes": "silver sedan (Honda City type), top-down | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip06",
+      "target_id": "clip06_v03",
+      "vehicle_type": "suv",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.469,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.453,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.11,
+        "exact": false,
+        "near": false
+      },
+      "notes": "white MPV (Ertiga type), top-down | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip06",
+      "target_id": "clip06_v04",
+      "vehicle_type": "auto_rickshaw",
+      "ground_truth": "yellow",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.562,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "yellow",
+        "conf": 0.825,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.121,
+        "exact": false,
+        "near": false
+      },
+      "notes": "yellow roof + green lower body (CNG auto); visible until the clip ends | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip07",
+      "target_id": "clip07_v01",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.589,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.485,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.101,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Ford Figo; tracker split (ids 2, 29) | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip07",
+      "target_id": "clip07_v02",
+      "vehicle_type": "suv",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.685,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.344,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.107,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Toyota Innova Crysta, yellow commercial plate too blurry | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip07",
+      "target_id": "clip07_v03",
+      "vehicle_type": "auto_rickshaw",
+      "ground_truth": "yellow",
+      "heuristic": {
+        "pred": "orange",
+        "conf": 0.54,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "yellow",
+        "conf": 0.654,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.112,
+        "exact": false,
+        "near": false
+      },
+      "notes": "yellow roof + green lower body (CNG auto); no plate visible on the rear | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip08",
+      "target_id": "clip08_v01",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.766,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "silver",
+        "conf": 0.299,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "black",
+        "conf": 0.1,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Maruti Baleno; low light | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip08",
+      "target_id": "clip08_v02",
+      "vehicle_type": "motorcycle",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.113,
+        "exact": false,
+        "near": false
+      },
+      "notes": "two-row plate too small at 478px - reviewer may read some chars | verified by team 2026-11-23 | 2026-11-23: owner confirmed the system's read UP37P1176 is correct (plate checked in the clip08 report crops); readability none -> full"
+    },
+    {
+      "clip_id": "clip08",
+      "target_id": "clip08_v03",
+      "vehicle_type": "motorcycle",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.108,
+        "exact": false,
+        "near": false
+      },
+      "notes": "rider + pillion; two-row plate too small | verified by team 2026-11-23 | 2026-11-23: owner confirmed the system's read DL3SS5192 is correct (plate checked in the clip08 report crops); readability none -> full"
+    },
+    {
+      "clip_id": "clip08",
+      "target_id": "clip08_v04",
+      "vehicle_type": "car",
+      "ground_truth": "silver",
+      "heuristic": {
+        "pred": "blue",
+        "conf": 0.44,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "grey",
+        "conf": 0.248,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.104,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Maruti Swift; plate blurred | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip09",
+      "target_id": "clip09_v01",
+      "vehicle_type": "car",
+      "ground_truth": "silver",
+      "heuristic": {
+        "pred": "silver",
+        "conf": 0.451,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.598,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.112,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Maruti WagonR taxi (champagne/beige), yellow plate; 9th char unclear (2/3) | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip09",
+      "target_id": "clip09_v02",
+      "vehicle_type": "suv",
+      "ground_truth": "silver",
+      "heuristic": {
+        "pred": "silver",
+        "conf": 0.541,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "silver",
+        "conf": 0.386,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.106,
+        "exact": false,
+        "near": false
+      },
+      "notes": "Hyundai Creta, front view, oncoming | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip09",
+      "target_id": "clip09_v03",
+      "vehicle_type": "auto_rickshaw",
+      "ground_truth": "yellow",
+      "heuristic": {
+        "pred": "black",
+        "conf": 0.435,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "brown",
+        "conf": 0.268,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.115,
+        "exact": false,
+        "near": false
+      },
+      "notes": "very blurry; colour uncertain | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip01",
+      "target_id": "clip01_v04",
+      "vehicle_type": "suv",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "other",
+        "conf": 0.729,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "grey",
+        "conf": 0.232,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "black",
+        "conf": 0.104,
+        "exact": true,
+        "near": true
+      },
+      "notes": "close-vehicle round: dark (possibly maroon) compact SUV ahead; plate too small | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip02",
+      "target_id": "clip02_v05",
+      "vehicle_type": "motorcycle",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.123,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: rider + pillion with backpack, top-down | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip02",
+      "target_id": "clip02_v06",
+      "vehicle_type": "truck",
+      "ground_truth": "green",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.354,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "silver",
+        "conf": 0.391,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.111,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: small open goods carrier (tempo), top-down; tracker split (ids 188, 204) | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip02",
+      "target_id": "clip02_v07",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.836,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.773,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.105,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: white sedan, top-down | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip03",
+      "target_id": "clip03_v05",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "silver",
+        "conf": 0.43,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "grey",
+        "conf": 0.188,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.11,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: Dzire taxi with blue lower bumper, yellow plate (starts DL1?) too blurry | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip03",
+      "target_id": "clip03_v06",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.4,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.344,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.108,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: Dzire taxi, yellow plate too blurry; may or may not be clip03_v04 | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip03",
+      "target_id": "clip03_v07",
+      "vehicle_type": "car",
+      "ground_truth": "brown",
+      "heuristic": {
+        "pred": "orange",
+        "conf": 0.431,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "brown",
+        "conf": 0.405,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.113,
+        "exact": true,
+        "near": true
+      },
+      "notes": "close-vehicle round: Maruti WagonR (bronze); 5th char unclear | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip04",
+      "target_id": "clip04_v04",
+      "vehicle_type": "car",
+      "ground_truth": "grey",
+      "heuristic": {
+        "pred": "black",
+        "conf": 0.422,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "grey",
+        "conf": 0.325,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.11,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: Maruti Swift; plate too small | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip05",
+      "target_id": "clip05_v04",
+      "vehicle_type": "suv",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.638,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.608,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.099,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: Hyundai Creta-type SUV; plate not visible | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip05",
+      "target_id": "clip05_v05",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "silver",
+        "conf": 0.433,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "grey",
+        "conf": 0.416,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.103,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: white sedan; plate not visible | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip05",
+      "target_id": "clip05_v06",
+      "vehicle_type": "suv",
+      "ground_truth": "grey",
+      "heuristic": {
+        "pred": "grey",
+        "conf": 0.44,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "black",
+        "conf": 0.6,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.108,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: grey SUV; plate not visible | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip06",
+      "target_id": "clip06_v05",
+      "vehicle_type": "car",
+      "ground_truth": "grey",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.641,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "silver",
+        "conf": 0.4,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.11,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: grey hatchback, top-down | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip06",
+      "target_id": "clip06_v06",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.393,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.617,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.102,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: white hatchback (Alto type), top-down | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip06",
+      "target_id": "clip06_v07",
+      "vehicle_type": "auto_rickshaw",
+      "ground_truth": "yellow",
+      "heuristic": {
+        "pred": "yellow",
+        "conf": 0.622,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "yellow",
+        "conf": 0.992,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "yellow",
+        "conf": 0.123,
+        "exact": true,
+        "near": true
+      },
+      "notes": "close-vehicle round: second CNG auto, yellow roof + green lower body | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip07",
+      "target_id": "clip07_v04",
+      "vehicle_type": "car",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "silver",
+        "conf": 0.373,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.325,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.101,
+        "exact": false,
+        "near": false
+      },
+      "notes": "close-vehicle round: Tata sedan (Tigor type); plate too soft to read | verified by team 2026-11-23"
+    },
+    {
+      "clip_id": "clip12",
+      "target_id": "clip12_v01",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "silver",
+        "conf": 0.593,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.776,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.105,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): centre sedan; plate clear; 'Honda' logo + 'AMAZE' badge (badge clearer in clip13); make/model verified: badge visible"
+    },
+    {
+      "clip_id": "clip13",
+      "target_id": "clip13_v01",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "white",
+        "conf": 0.54,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.466,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.105,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): same sedan as clip12_v01 from a second spot; plate clear; 'AMAZE' badge visible; make/model verified: badge visible"
+    },
+    {
+      "clip_id": "clip13",
+      "target_id": "clip13_v02",
+      "vehicle_type": "car",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "silver",
+        "conf": 0.689,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.498,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.102,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): white car partly visible at the right edge, side view, plate not visible"
+    },
+    {
+      "clip_id": "clip14",
+      "target_id": "clip14_v01",
+      "vehicle_type": "suv",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "black",
+        "conf": 0.485,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "brown",
+        "conf": 0.258,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.11,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): left dark SUV, Hyundai logo; 5th plate character looks like O or Q (unclear) - OWNER: confirm the real plate; make/model verified: badge visible"
+    },
+    {
+      "clip_id": "clip14",
+      "target_id": "clip14_v02",
+      "vehicle_type": "suv",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "black",
+        "conf": 0.394,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.375,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.097,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): right white SUV; plate clear; 'XUV 3XO' badge on the tailgate; make/model verified: badge visible"
+    },
+    {
+      "clip_id": "clip15",
+      "target_id": "clip15_v01",
+      "vehicle_type": "suv",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.106,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): left dark SUV, same as clip14_v01; 5th character O or Q unclear - OWNER: confirm; make/model verified: badge visible"
+    },
+    {
+      "clip_id": "clip15",
+      "target_id": "clip15_v02",
+      "vehicle_type": "suv",
+      "ground_truth": "white",
+      "heuristic": {
+        "pred": "silver",
+        "conf": 0.494,
+        "exact": false,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "white",
+        "conf": 0.419,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.11,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): right white SUV, same as clip14_v02; plate too small/blurred to read in THIS clip (pillar in front); registry_plate_full taken from clip14 where it is clear; make/model verified: badge visible"
+    },
+    {
+      "clip_id": "clip16",
+      "target_id": "clip16_v01",
+      "vehicle_type": "scooter",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "black",
+        "conf": 0.579,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "black",
+        "conf": 0.343,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.11,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): centre-left scooter; plate covered by a hanging red tag, only the last two characters '14' visible; ASSUMED 10-character plate - OWNER: fix length/characters and add registry_plate_full if this is your scooter"
+    },
+    {
+      "clip_id": "clip16",
+      "target_id": "clip16_v02",
+      "vehicle_type": "motorcycle",
+      "ground_truth": "blue",
+      "heuristic": {
+        "pred": "brown",
+        "conf": 0.458,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "grey",
+        "conf": 0.292,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.108,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): motorcycle right of the scooter; two-row plate 'CG 04 / DK 1578' clear; body dark blue/black"
+    },
+    {
+      "clip_id": "clip16",
+      "target_id": "clip16_v03",
+      "vehicle_type": "motorcycle",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "brown",
+        "conf": 0.654,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "brown",
+        "conf": 0.31,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.111,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): far-right motorcycle, cut by the frame edge; two-row plate 'CG04P / B6426'; X6 link to clip17_v03 is TENTATIVE (parking order only) - OWNER: confirm or clear"
+    },
+    {
+      "clip_id": "clip17",
+      "target_id": "clip17_v01",
+      "vehicle_type": "scooter",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "black",
+        "conf": 0.642,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "black",
+        "conf": 0.357,
+        "exact": true,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.118,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): same scooter as clip16_v01 ('ACTIVA' badge); plate half covered by the red tag: 'CG0' on row 1 and '08' (or 'Q8') on row 2 visible; ASSUMED 10 characters - OWNER: fix; make/model verified: badge visible"
+    },
+    {
+      "clip_id": "clip17",
+      "target_id": "clip17_v02",
+      "vehicle_type": "motorcycle",
+      "ground_truth": "blue",
+      "heuristic": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "brown",
+        "conf": 0.107,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): same motorcycle as clip16_v02 (plate CG04DK1578), dark blue tank"
+    },
+    {
+      "clip_id": "clip17",
+      "target_id": "clip17_v03",
+      "vehicle_type": "motorcycle",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "black",
+        "conf": 0.579,
+        "exact": true,
+        "near": true
+      },
+      "clip_zero_shot": {
+        "pred": "grey",
+        "conf": 0.183,
+        "exact": false,
+        "near": true
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.113,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): far-right motorcycle, partly visible, plate not visible; TENTATIVELY the same as clip16_v03 (parking order) - OWNER: confirm or clear X6"
+    },
+    {
+      "clip_id": "clip18",
+      "target_id": "clip18_v01",
+      "vehicle_type": "scooter",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.11,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): centre scooter WITHOUT a number plate (folder 'number plate missing'); OWNER: add registry_plate_full if you know its registration"
+    },
+    {
+      "clip_id": "clip18",
+      "target_id": "clip18_v02",
+      "vehicle_type": "bicycle",
+      "ground_truth": "green",
+      "heuristic": {
+        "pred": "black",
+        "conf": 0.371,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "red",
+        "conf": 0.181,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.112,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): bicycle at the right edge (more visible in later frames)"
+    },
+    {
+      "clip_id": "clip19",
+      "target_id": "clip19_v01",
+      "vehicle_type": "scooter",
+      "ground_truth": "black",
+      "heuristic": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "clip_zero_shot": {
+        "pred": "unknown",
+        "conf": 0.0,
+        "exact": false,
+        "near": false
+      },
+      "linear_probe": {
+        "pred": "other",
+        "conf": 0.11,
+        "exact": false,
+        "near": false
+      },
+      "notes": "owner-verified 2026-11-23 (AI draft accepted as written): same plate-less scooter as clip18_v01 from a second spot; OWNER: add registry_plate_full if known"
+    }
+  ]
+}

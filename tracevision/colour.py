@@ -73,11 +73,79 @@ def frame_colour(crop, vtype, k=3, seed=0):
 # Nothing is trained or tuned on our labels: the colour names, prompt templates and the night rule were fixed
 # before evaluating. Falls back to the heuristic if open_clip is not installed.
 CLIP_COLOURS = ["white", "black", "silver", "grey", "red", "blue", "green", "yellow", "brown", "orange"]
+ALLOWED_COLOURS = {"white", "black", "silver", "grey", "red", "blue", "green", "yellow", "brown", "orange", "other", "unknown"}
 _PROMPT_COLOUR = {"grey": "gray"}                       # CLIP's training text is mostly US English
 NOUN = {"car": "car", "SUV": "SUV", "motorcycle/scooter": "motorcycle", "motorcycle": "motorcycle", "scooter": "scooter",
         "auto_rickshaw": "auto rickshaw", "truck": "truck", "bus": "bus", "van": "van", "bicycle": "bicycle"}
 TEMPLATES = ["a photo of a {c} {n}.", "a {c} {n} on the road.", "a {c} {n} seen from behind.", "a {c} {n} seen from the front."]
 _clip = {}
+_probe = {}
+
+
+_MODELS_DIR = __import__("pathlib").Path(__file__).resolve().parent.parent / "TRACEVISION_DATA" / "models"
+# v2 (final audit): same data/splits, trained to convergence with a correctly scaled penalty; v1 is under-fit
+# (see TRACEVISION_DATA/reports/final_claude_audit/model_accuracy_audit.md). v1 stays as the fallback.
+PROBE_CANDIDATES = (_MODELS_DIR / "vcor_linear_probe_v2.pt", _MODELS_DIR / "vcor_linear_probe.pt")
+
+
+def default_probe_path():
+    return next((p for p in PROBE_CANDIDATES if p.exists()), None)
+
+
+def _linear_probe_model(path=None):
+    """Lazy loader for a trained VCoR linear probe head (cached per file). Returns {"weight", "bias", "classes"} or None."""
+    from pathlib import Path
+    probe_path = Path(path) if path else default_probe_path()
+    if probe_path is None or not probe_path.exists():
+        return None
+    key = str(probe_path)
+    if key not in _probe:
+        try:
+            import torch
+            ckpt = torch.load(probe_path, map_location="cpu", weights_only=False)
+            _probe[key] = dict(weight=ckpt["weight"].float(), bias=ckpt["bias"].float(), classes=ckpt["target_classes"],
+                               path=probe_path.name)
+        except Exception:
+            return None
+    return _probe[key]
+
+
+def linear_probe_colour(crops, vtype, min_conf=0.25, probe_path=None):
+    """Returns (label, confidence, per_frame labels) from frozen CLIP Linear Probe, or None on failure."""
+    p = _linear_probe_model(probe_path) if probe_path else _linear_probe_model()
+    if not p:
+        return None
+    try:
+        c = _clip_model()
+    except Exception:
+        return None
+    from PIL import Image
+    torch = c["torch"]
+    imgs = [c["pre"](Image.fromarray(cv2.cvtColor(x, cv2.COLOR_BGR2RGB))) for x in crops if x is not None and x.size]
+    if not imgs:
+        return None
+    with torch.no_grad():
+        dev = c["dev"]
+        f = c["model"].encode_image(torch.stack(imgs).to(dev)).float()
+        f = f / f.norm(dim=-1, keepdim=True)
+        W = p["weight"].to(dev)
+        b = p["bias"].to(dev)
+        logits = f @ W.T + b
+        probs = logits.softmax(dim=-1)
+        mean_f = f.mean(0)
+        mean_f = mean_f / mean_f.norm()
+        pooled_logits = mean_f @ W.T + b
+        pooled_p = pooled_logits.softmax(dim=-1)
+
+    i = int(pooled_p.argmax())
+    conf = float(pooled_p[i])
+    label = p["classes"][i]
+    per_frame = [p["classes"][int(j)] for j in probs.argmax(dim=-1)]
+
+    if conf < min_conf or label not in ALLOWED_COLOURS:
+        return "unknown", round(conf, 3), per_frame
+
+    return label, round(conf, 3), per_frame
 
 
 def _clip_model():
@@ -129,19 +197,32 @@ def clip_colour(crops, vtype):
     return CLIP_COLOURS[i], float(p[i]), [CLIP_COLOURS[int(j)] for j in per.argmax(dim=-1)]
 
 
-def estimate_colour(crops, vtype, night_v=55.0, method="heuristic"):
+def estimate_colour(crops, vtype, night_v=55.0, method="heuristic", min_probe_conf=0.25, probe_path=None):
     """crops: BGR vehicle crops (best frames first). Returns {"label", "confidence", "per_frame", "note"}.
-    method: "clip" (CLIP zero-shot, M13) or "heuristic" (k-means + hue rules). The night rule applies to both."""
+    method: "clip" (CLIP zero-shot, M13), "linear_probe" (VCoR linear probe, optional),
+            or "heuristic" (k-means + hue rules). The night rule applies to all methods."""
     res = [r for r in (frame_colour(c, vtype) for c in crops) if r]
-    if method == "clip" and res and np.mean([r[2] for r in res]) >= night_v:
-        cr = clip_colour(crops, vtype)
-        if cr:
-            label, conf, per = cr
-            return {"label": label, "confidence": round(conf, 3), "per_frame": per, "note": "CLIP zero-shot", "method": "clip"}
     if not res:
         return {"label": "unknown", "confidence": 0.0, "per_frame": [], "note": "no usable body pixels"}
     if np.mean([r[2] for r in res]) < night_v:
         return {"label": "unknown", "confidence": 0.0, "per_frame": [r[0] for r in res], "note": "too dark to judge colour"}
+
+    if method == "linear_probe":
+        lp = linear_probe_colour(crops, vtype, min_conf=min_probe_conf, probe_path=probe_path)
+        if lp:
+            label, conf, per = lp
+            model = ((_linear_probe_model(probe_path) if probe_path else _linear_probe_model()) or {}).get("path")
+            return {"label": label, "confidence": round(conf, 3), "per_frame": per, "note": "VCoR CLIP linear probe",
+                    "method": "linear_probe", "model": model}
+        # Fallback to clip zero-shot if linear probe is unavailable
+        method = "clip"
+
+    if method == "clip":
+        cr = clip_colour(crops, vtype)
+        if cr:
+            label, conf, per = cr
+            return {"label": label, "confidence": round(conf, 3), "per_frame": per, "note": "CLIP zero-shot", "method": "clip"}
+
     votes = Counter()
     for name, dom, _ in res:
         votes[name] += dom

@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-11-23 22:54:32",
+  "model_name": "ViT-B-32",
+  "pretrained": "openai",
+  "device": "cpu",
+  "total_samples": 10295,
+  "split_counts": {
+    "train": 7208,
+    "val": 1542,
+    "test": 1545
+  },
+  "target_classes": [
+    "black",
+    "blue",
+    "brown",
+    "green",
+    "grey",
+    "orange",
+    "other",
+    "red",
+    "silver",
+    "unknown",
+    "white",
+    "yellow"
+  ],
+  "embedding_dim": 512,
+  "embeddings_file": "TRACEVISION_DATA/models/vcor_clip_embeddings.pt",
+  "embeddings_file_size_mb": 21.33,
+  "sha256": "5e7d4009078cf0ed5921439429092a57c01354fe92a5894871e955bebeab18c4",
+  "normalized": true
+}

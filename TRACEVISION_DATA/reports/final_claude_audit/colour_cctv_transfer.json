@@ -1,0 +1,123 @@
+{
+  "leakage": {
+    "val": {
+      "n": 1542,
+      "max_cos_ge_0.995": 0,
+      "max_cos_ge_0.98": 7,
+      "median_max_cos": 0.9133
+    },
+    "test": {
+      "n": 1545,
+      "max_cos_ge_0.995": 0,
+      "max_cos_ge_0.98": 3,
+      "median_max_cos": 0.9127
+    },
+    "val_vs_test_ge_0.995": 0
+  },
+  "n": 62,
+  "methods": {
+    "heuristic": {
+      "exact": 18,
+      "near": 39,
+      "unknown": 9,
+      "ms_per_crop": 5.8,
+      "pred_dist": {
+        "silver": 11,
+        "grey": 12,
+        "unknown": 9,
+        "white": 13,
+        "brown": 3,
+        "black": 9,
+        "orange": 2,
+        "blue": 1,
+        "other": 1,
+        "yellow": 1
+      },
+      "per_class_exact": {
+        "black": "4/17",
+        "blue": "0/2",
+        "brown": "0/1",
+        "green": "0/2",
+        "grey": "1/3",
+        "silver": "2/5",
+        "white": "10/26",
+        "yellow": "1/6"
+      }
+    },
+    "clip_zero_shot": {
+      "exact": 29,
+      "near": 43,
+      "unknown": 9,
+      "ms_per_crop": 1800.8,
+      "pred_dist": {
+        "white": 23,
+        "silver": 7,
+        "unknown": 9,
+        "green": 1,
+        "brown": 6,
+        "yellow": 4,
+        "black": 4,
+        "grey": 7,
+        "red": 1
+      },
+      "per_class_exact": {
+        "black": "3/17",
+        "blue": "0/2",
+        "brown": "1/1",
+        "green": "0/2",
+        "grey": "1/3",
+        "silver": "1/5",
+        "white": "19/26",
+        "yellow": "4/6"
+      }
+    },
+    "probe_v1": {
+      "exact": 0,
+      "near": 0,
+      "unknown": 62,
+      "ms_per_crop": 519.7,
+      "pred_dist": {
+        "unknown": 62
+      },
+      "per_class_exact": {
+        "black": "0/17",
+        "blue": "0/2",
+        "brown": "0/1",
+        "green": "0/2",
+        "grey": "0/3",
+        "silver": "0/5",
+        "white": "0/26",
+        "yellow": "0/6"
+      }
+    },
+    "probe_v2": {
+      "exact": 19,
+      "near": 25,
+      "unknown": 9,
+      "ms_per_crop": 791.5,
+      "pred_dist": {
+        "black": 15,
+        "white": 8,
+        "unknown": 9,
+        "silver": 4,
+        "other": 8,
+        "brown": 5,
+        "grey": 3,
+        "yellow": 3,
+        "red": 5,
+        "orange": 1,
+        "blue": 1
+      },
+      "per_class_exact": {
+        "black": "6/17",
+        "blue": "0/2",
+        "brown": "0/1",
+        "green": "0/2",
+        "grey": "0/3",
+        "silver": "2/5",
+        "white": "8/26",
+        "yellow": "3/6"
+      }
+    }
+  }
+}

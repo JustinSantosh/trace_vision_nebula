@@ -1,0 +1,35 @@
+# Final audit: execution log
+
+Branch `ui-redesign`, 2026-11-23/24. No commits, pushes, resets or deletions were made. Every finding below was
+reproduced before it was fixed, and re-tested after.
+
+| # | Issue found | Root cause | Files changed | Fix | Verified by |
+|---|---|---|---|---|---|
+| 1 | HEAD commit `880e85b` contains unresolved merge-conflict markers in `frontend/index.html`, `app.js`, `styles.css` | Merge committed with conflicts; the working copy had already been resolved by `TRACEVISION_DATA/scripts/resolve_conflicts.py` (kept the PR #3 side) | none (reported) | The uncommitted working copy is the consistent version. **Committing it is what repairs `main`'s history.** | `git show HEAD:<file> \| grep '^<<<<<<<'` |
+| 2 | Colour probe v1 under-fit: on CCTV it produced `unknown` for 62/62 crops through the production path; the earlier report's 9.7% came from bypassing the confidence gate | Penalty `0.5·(1/C)·‖W‖²` on a *mean* loss is N (=7,208)× stronger than intended; weight rows stayed at norm ≈1.3 on unit features, logits within ≈0.2, bias (`other` +0.18) decided most outputs. Val accuracy still rising at the top of the C grid | `TRACEVISION_DATA/scripts/train_linear_probe_v2.py` (new), `tracevision/colour.py` | Retrained on the same splits: train-standardised features, standard penalty, L-BFGS to convergence, C chosen on **validation**, test scored once. New file `vcor_linear_probe_v2.pt`; v1 kept as fallback | VCoR test acc 60.8% → **81.3%**, top-2 74.9% → **95.7%**, macro-F1 58.9% → **80.7%** |
+| 3 | Production default for colour | — | none | Kept `clip`: on CCTV crops zero-shot (29/62) still beats v2 (19/62). CCTV labels used for reporting only | `colour_cctv_transfer.json` |
+| 4 | Parking/e-challan tests wrote 16 test cases into the live ledgers (`runs/enforcement/*.json`) that the UI showed as real cases | Tests did not isolate storage | `tests/test_parking_echallan.py` | Autouse fixture redirects both ledgers to `tmp_path` (no assertion changed). The 16 records were **moved** (not deleted) to `runs/enforcement/_archived_test_records_20261123/` | ledger mtimes unchanged after test runs |
+| 5 | UI "Authorize Towing" always failed silently | UI sent `towing_authorized`, backend state is `towing_authorised`; UI sent `notes`, API read `note`; result never checked | `app.js`, `api.py` | Actions rendered from the backend state machine (`/api/enforcement/meta`); API accepts both keys; errors shown in place | CDP click-through |
+| 6 | UI "Send Warning" did nothing | Called a read-only GET | `app.js` | Real transitions `owner_notification_pending` → `warning_sent` | CDP click-through |
+| 7 | UI "Reject Draft" → HTTP 405 | `/api/echallans/cases/{id}/cancel` did not exist | `api.py`, `app.js` | Endpoint added (needs officer + reason) | `test_api_echallan_cancel_route_exists_and_validates` |
+| 8 | A cancelled or disputed e-challan could be approved and re-issued | `approve_and_issue_echallan` only refused issued/paid | `echallan.py` | Only draft / pending_review / approved can be approved | `test_cancelled_or_disputed_cases_cannot_be_approved` |
+| 9 | Duplicate-challan check raced | Check ran outside the lock that guards the insert | `echallan.py` | Check + insert under one lock | code review; dup test |
+| 10 | A resolved dispute could be resolved again | No status check | `echallan.py` | Requires status `disputed`; record marked `resolved` | `test_dispute_cannot_be_resolved_twice` |
+| 11 | API fabricated evidence on missing fields: `ocr_confidence` 0.95, `evidence_run` runs/clip01, frames [0,50], colour white, dwell 120 s | Convenience defaults | `api.py`, `echallan.py` | Missing evidence stays `null`; with `evidence_run`+`track_id` the plate, OCR confidence (mean fused per-character), type and colour are copied from the stored result; unknown vehicle → 404 | `test_api_echallan_from_stored_evidence_uses_stored_attributes`, `test_draft_keeps_unknown_evidence_empty` |
+| 12 | Towing / issuance could be done by "SYSTEM" with no reason | No actor check | `parking.py` | Human officer for verify/unresolved/towing/towed/issued; written reason for towing/towed/issued | `test_towing_needs_named_officer_and_reason_and_follows_the_warning` |
+| 13 | Owner warning said failure to move "will result in automated e-challan issuance and … towing" | Wording contradicted human-approval design | `parking.py` | Wording says an officer reviews; "No action is taken automatically" | same test |
+| 14 | `warning_sent` → HTTP 500 for a case without a measured dwell | `round(None/60)` | `parking.py` | Shows "not measured (officer observation)" | **found in the live browser/API run**; `test_warning_works_when_dwell_was_not_measured` |
+| 15 | A vehicle that drives off and comes back counted as stationary | Stationarity used first→last displacement only | `parking.py` | Also bounds the largest excursion from the median position | `test_vehicle_that_leaves_and_returns_is_not_stationary` |
+| 16 | Congestion / signal waiting not distinguished from parking | Not implemented (param unused) | `parking.py` | `signal_queue` zone type; optional `scene_stationary_share` → `traffic_congestion`; `stationary_below_limit` reported instead of `None` | 2 new tests |
+| 17 | No path from a stored analysis to parking analysis | `analyze_track_parking` had no caller | `parking.py`, `api.py` | Read-only `scan_run` + `GET /api/parking/scan/{kind}/{rid}`; moving cameras reported "not assessed" | `test_moving_camera_runs_are_not_assessed_for_parking`, `test_api_parking_scan_is_read_only` |
+| 18 | Ledger writes not crash-safe | Direct overwrite | `parking.py`, `echallan.py` | Write to `.tmp`, then `os.replace` | code review |
+| 19 | Oversized/empty upload left a partial file and orphan job folder | `HTTPException` raised mid-write with no cleanup | `api.py` | Folder removed on any failure; empty upload → 400 | code review (UI-only test still passes) |
+| 20 | `/api/colour/model_info` hard-coded `active_method: "clip"` | Constant | `api.py` | Reads `config.yaml`; reports the probe file in use and CCTV transfer results | `test_api_colour_model_info_reports_config_not_a_constant` |
+| 21 | Performance view showed hard-coded colour figures ("51.6%", "+9.3% top-2") | Literals in `app.js` | `app.js` | Table built from `model_info` | screenshot |
+| 22 | Selecting a metric toggled `aria-current` on enforcement rows too | Unscoped `.metric` selector | `app.js` | Scoped to `#metric-list` | — |
+| 23 | No payment step; no evidence-verification step | Not implemented | `echallan.py`, `api.py`, `app.js` | `submit_for_review` (draft → pending_review), `record_payment` (simulated) + endpoints + UI | `test_full_lifecycle_verify_approve_pay` |
+| 24 | Malformed case IDs reached the store lookups | No format check | `api.py` | `PRK-/ECH-YYYYMMDD-XXXXXX` validated → 404 | `test_api_rejects_malformed_case_ids` |
+
+Not changed on purpose: detector, tracker, plate detector, OCR, fusion and matching thresholds. No labelled data
+exists to measure a change against except the 19 evaluation clips, which must not be used for tuning (see
+`model_accuracy_audit.md`).

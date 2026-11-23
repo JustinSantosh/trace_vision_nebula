@@ -8,8 +8,8 @@ Give it a traffic clip. For every vehicle it:
 3. **ranks the top 5 registry candidates**, each with a **match score** and **human-readable reasons**, or says **"no confident match"**
 4. writes an **investigator report (HTML + PDF)** showing the frames used, the characters read per frame with confidence, the fused plate, and the candidates
 
-> **Status (2026-11-23):** built, tested and evaluated on 19 clips / 67 verified vehicles: **14/15 registered vehicles matched, 0/46 false identifications, 0 wrong plate characters**; cross-camera bonus: 5/5 checkable groups linked, 0 wrong. Remaining owner actions (repo visibility, demo video, slides): [NEEDS.md](NEEDS.md).
-> Docs: [completions](completions.md) · [whatnext](whatnext.md) · [problems](PROBLEMS.md) · [decisions](DECISIONS.md) · [pipeline design](PIPELINE.md) · [team tasks](TEAM_TASKS.md)
+> **Status (2026-11-23):** Built, tested, integrated and fully evaluated: **97/97 Python tests + 11/11 JS tests passing** (final audit, 2026-11-24: [report](TRACEVISION_DATA/reports/final_claude_audit/final_project_completion_report.md)). 19 surveillance clips / 67 verified vehicles: **14/15 registered vehicles matched, 0/46 false identifications, 0 wrong plate characters**; cross-camera: 5/5 checkable groups linked. Phase 3 VCoR frozen CLIP feature extraction (10,295 clean samples) and linear probe benchmark completed; officer-driven Illegal Parking & owner pre-towing warning workflow and E-Challan case management & dispute adjudication integrated (both simulated; nothing leaves the machine).
+> Docs: [final completion report](TRACEVISION_DATA/reports/final_project_completion_report.md) · [execution log](TRACEVISION_DATA/reports/autonomous_execution_log.md) · [decisions](DECISIONS.md) · [problems](PROBLEMS.md) · [pipeline design](PIPELINE.md)
 
 ---
 
@@ -73,7 +73,7 @@ flowchart LR
   - plain-English reasons for every candidate
   - decision: **match**, **ambiguous** (top two too close) or **no confident match** (score under 67.5, or fewer than 5 readable characters)
   - thresholds calibrated on held-out synthetic cases
-- 26 unit tests: `python -m pytest tests`
+- Tests: `python -m pytest tests` (97) and `node --test frontend/tests/explain.test.js` (11)
 
 Match score is a **heuristic ranking score, not a probability**. The **registry is synthetic**: fictional records, plus the team's own test vehicles as `evaluation_seed` rows, and **no owner data at all** (the enforcement demo's owner and challan records are separate synthetic files, see below).
 
@@ -125,11 +125,19 @@ Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.p
 
 **Score** (`python -m tracevision.crosscam --evaluate`, labels tied to tracks one-to-one by box position): **5 of 5 checkable groups correct, 0 wrong links.** Without the pair declaration (open world, `python -m tracevision.crosscam clipA clipB`) only plate evidence links, and appearance alone is unreliable across viewpoints (C12).
 
-## Enforcement add-on (synthetic demo data)
-Open the **Enforcement** tab, or the **Vehicle record** and **Direction** findings in a case.
-- **Vehicle record:** press **Look up** on a vehicle with a **confident** registry match (or type a registration in the Enforcement tab) to see everything on record: make, model, class, fuel, RTO, registration / insurance / PUC validity, registered owner, and e-challan history with the pending amount. **Issue a challan** for that vehicle from the same panel (violation, fine, location, note) and cancel it if needed; issued challans are simulated and never sent anywhere. Every lookup, challan and review is logged (audit log in the Enforcement tab). Data: `python TRACEVISION_DATA/scripts/generate_vehicle_intel.py` (seeded; 334 owner records, 434 challans; every vehicle the demo can match has 2-4 challans, one pending). **Not** a VAHAN / e-Challan lookup (DECISIONS E17).
-- **Wrong-side driving, fixed cameras** (clip02, clip06): Hand-drawn zones with a permitted direction (`TRACEVISION_DATA/cameras/camera_rules.json`); camera pan is removed first. A flagged vehicle waits to be confirmed or rejected; a confirmed flag on a matched vehicle raises a **simulated** challan that is never sent anywhere. Result on our footage: **54 vehicles checked, 0 flagged** (no wrong-side event was filmed); the rule flags clip02's real tracks when they are replayed backwards (unit test). `python -m tracevision.violations` prints the per-clip check (DECISIONS E18).
-- **Wrong-side driving, moving cameras:** a car seen **front first while it closes in, then rear** has passed the camera head-on (CLIP scores each crop headlights-and-grille vs tail-lights-and-boot). On a road declared one-way in `camera_rules.json` that is wrong-side driving; on a two-way road it is normal oncoming traffic. Tested on one downloaded clip (`TRACEVISION_DATA/raw/wrongside/ws01.mp4`, Delhi flyover; upload it in the app to reproduce): the wrong-way SUV is flagged and nothing else is; 0 flags on our other moving clips (214 cars over 31 clips). One positive example, so this shows the method works, not a detection rate (DECISIONS E19). `python -m tracevision.violations --orient --jobs` computes the orientation for stored clips.
+## Enforcement & Violations Engine (Synthetic Demo)
+Open the **Enforcement** tab in the dashboard:
+- **Vehicle Intelligence:** press **Look up** on a vehicle with a **confident** registry match (or type a registration) to inspect make, model, class, fuel, RTO, validity dates, registered owner, and e-challan history.
+- **Illegal Parking & Pre-Towing Warnings (`tracevision/parking.py`):** Classifies tracked vehicles against per-camera polygon zones (`no_parking`, `tow_away`, `emergency_access`, `legal_parking`, `signal_queue`) as in transit, temporary stop, signal waiting, congestion, below dwell limit, uncertain (tracking gap) or violation. Fixed cameras with configured zones only; moving/handheld clips are reported as not assessed. An officer opens a case from a stored vehicle; it moves through an audited state machine (`detected` → `pending_verification` → `verified_violation` → `owner_notification_pending` → `warning_sent` → recheck: `vehicle_moved` or `violation_unresolved` → `echallan_pending` / `towing_authorised` → `closed`). Verification, unresolved, towing and issuance need a named human officer; towing and issuance also need a written reason. The recheck records whether the grace period had actually run out. Warnings are simulated.
+- **E-Challan Case Management & Citizen Disputes (`tracevision/echallan.py`):** Full case lifecycle (`draft`, `pending_review`, `approved`, `issued`, `disputed`, `cancelled`). Evidence verification and approval by a named officer, simulated payment, a 30-minute duplicate prevention window (checked under the same lock as the insert), and an interactive dispute adjudication workflow for magistrates.
+- **Wrong-side driving, fixed cameras** (clip02, clip06): Hand-drawn zones with a permitted direction (`TRACEVISION_DATA/cameras/camera_rules.json`); camera pan is removed first. Multi-tier severity ratings (`critical`, `high`, `needs_review`) and restricted zone classifications.
+- **Wrong-side driving, moving cameras:** a car seen **front first while it closes in, then rear** has passed the camera head-on (CLIP scores each crop headlights-and-grille vs tail-lights-and-boot). Tested on Delhi flyover footage (`TRACEVISION_DATA/raw/wrongside/ws01.mp4`).
+
+## VCoR Vehicle Colour Recognition & Model Benchmarks
+- **Dataset:** 10,295 clean samples from VCoR (7,208 train / 1,542 val / 1,545 test) mapped to 12 target classes. 78 exclusions strictly bypassed.
+- **Linear Probe Head:** class-balanced logistic regression on frozen 512-dim CLIP ViT-B/32 embeddings. The first probe (v1) was under-fit (penalty scaled N× too strong); **v2** (`TRACEVISION_DATA/scripts/train_linear_probe_v2.py`, C chosen on validation) reaches VCoR **test** accuracy **81.3%** (v1 60.8%, zero-shot 60.1%), top-2 **95.7%**, macro-F1 **80.7%**.
+- **CCTV transfer (reporting only, never used for selection):** on 62 labelled CCTV crops through the production path, zero-shot CLIP 29/62 exact / 43 near, probe v2 19/62 / 25, probe v1 0/62 (every output fell below the confidence gate, so it always answered `unknown`). Details: `TRACEVISION_DATA/reports/final_claude_audit/model_accuracy_audit.md`.
+- **Production setting:** `config.yaml` keeps `colour.method: clip`. `linear_probe` is selectable and loads v2 when present, else v1.
 
 ## Data and models
 | What | Source | Licence |
@@ -137,8 +145,9 @@ Open the **Enforcement** tab, or the **Vehicle record** and **Direction** findin
 | Vehicle detector + type | **UVH-26 YOLOv11-S** (IISc), 14 Indian vehicle classes → our types via `models/class_mapping.json` | Apache-2.0 card; **AGPL-3.0** Ultralytics runtime |
 | Plate detector | **YOLOv8n fine-tuned by us** on Roboflow **Quobotic** "Indian number plate" v3 (2,069 train images). Leakage-free test mAP50 **0.995**. | Data **CC BY 4.0**, credit: [Quobotic on Roboflow Universe](https://universe.roboflow.com/quobotic/indian-number-plate/dataset/3); model AGPL-3.0 (Ultralytics) |
 | Plate OCR | **Awiros ANPR OCR** (PP-OCRv5) with our fixed preprocessing (the official one drops characters). 81.5% exact on 965 plates; 15 ms per crop on GPU. | Apache-2.0 |
+| Vehicle colour | **Zero-Shot CLIP ViT-B/32** (OpenAI weights) default + **VCoR Linear Probe** optional | MIT (OpenCLIP) / CC BY 4.0 (VCoR) |
 | OCR benchmark | zenitsu09 Indian plates (965 unique) | No licence stated; internal evaluation only |
-| Test clips | 9 filmed by the team + 2 from Pexels (links in `evaluation/clips.csv`, not re-hosted) | Own / Pexels License |
+| Test clips | 19 clips (9 filmed by team, 4 cross-angled pairs, 2 Pexels, 1 ws01) | Own / Pexels License |
 
 ## Limitations (honest)
 - **Footage:** 9 of the 11 clips are ground-level or dashcam and only 2 are CCTV-style. The problem statement is CCTV, so results are always reported separately (DECISIONS E10, PROBLEMS E7). On real CCTV, plates are often too small to read. The system then says so, rather than guessing.

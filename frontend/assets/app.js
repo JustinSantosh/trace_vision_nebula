@@ -1,54 +1,15 @@
-﻿"use strict";
+"use strict";
 /* TraceVision investigator UI.
  * Four views (Cases, Cross-camera, Performance, Enforcement) plus a case view. Every finding shown in the middle column has its
  * backing in the side panel: the stored reads, votes, thresholds and candidate reasons it rests on. Nothing is
  * re-scored here; values come from result.json, /api/overview and /api/review as stored. */
 (() => {
-<<<<<<< HEAD
-  const byId = (id) => document.getElementById(id);
-  const state = {
-    overview: null,
-    sampleClips: [],
-    limits: null,
-    engineStatus: "starting",
-    selectedFile: null,
-    previewUrl: null,
-    jobId: null,
-    jobPollStartedAt: 0,
-    jobPollErrors: 0,
-    jobPollTimer: null,
-    startupPollCount: 0,
-    startupPollTimer: null,
-    review: null,
-    reviewPromise: null,
-    reviewRequestId: 0,
-    selectedCrosscamPair: null,
-    selectedCrosscamTracks: {},
-    crosscamPairRequestId: 0,
-    crosscamResults: {},
-    selectedReportClip: null,
-    demoRun: null,
-    demoTimer: null,
-    demoResultClip: null,
-    demoRequestId: 0,
-    commandActiveIndex: 0,
-    navigationChordPending: false,
-    navigationChordTimer: null,
-    result: null,
-    resultKind: null,
-    resultId: null,
-    resultFiles: [],
-    selectedTrackId: null,
-    resultRequestId: 0,
-    evidenceFrames: [],
-=======
   const $ = (id) => document.getElementById(id);
   const X = window.TVExplain;
   const S = {
     overview: null, review: null, route: null, result: null, files: [], cross: [], vid: null, finding: "plate",
     boxes: new Map(), req: 0, file: null, jobTimer: null, cc: { pair: null, link: null, results: {} }, perfKey: null,
     viol: null, rec: new Map(), meta: null, enfSel: null, enfManual: false, enfFiles: {},
->>>>>>> e0a45b3fe87a3b56faebcb54fe61170e3761ea7c
   };
 
   /* ---------------------------------------------------------------- helpers */
@@ -122,168 +83,6 @@
     return [list, more];
   }
 
-<<<<<<< HEAD
-  function renderEvaluation(evaluation, crosscam) {
-    const grid = byId("metric-grid");
-    const metrics = evaluation && Array.isArray(evaluation.metrics) ? evaluation.metrics.slice() : [];
-    if (crosscam && Number.isFinite(crosscam.groups) && crosscam.groups > 0) {
-      metrics.push({
-        key: "crosscam_correct_links",
-        label: "Cross-camera correct links",
-        value: crosscam.correct_links + "/" + crosscam.groups,
-        detail: String(crosscam.wrong_links_on_groups) + " wrong links in the evaluation",
-      });
-    }
-    if (grid) {
-      grid.replaceChildren();
-      if (metrics.length === 0) {
-        const empty = document.createElement("article");
-        empty.className = "metric-card panel metric-empty";
-        empty.textContent = "No evaluation figures were found in the local reports.";
-        grid.appendChild(empty);
-      }
-      metrics.forEach((metric) => {
-        const card = document.createElement("article");
-        card.className = "metric-card panel";
-        const metricLabel = metric.label || metric.key || "Evaluation metric";
-        card.title = metricExplanation(metric.key, metricLabel);
-        card.tabIndex = 0;
-        card.setAttribute("aria-label", metricLabel + ": " + String(metric.value == null ? "not reported" : metric.value) + ". " + card.title);
-        const label = document.createElement("span");
-        label.textContent = metricLabel;
-        const value = document.createElement("b");
-        value.textContent = metric.value == null || metric.value === "" ? "—" : String(metric.value);
-        const note = document.createElement("small");
-        note.textContent = metric.detail || ((evaluation && evaluation.clip_count ? evaluation.clip_count + "-clip evaluation" : "Local evaluation report"));
-        card.append(label, value, note);
-        grid.appendChild(card);
-      });
-    }
-    const source = evaluation && evaluation.source ? evaluation.source : "local evaluation files";
-    const clipText = evaluation && evaluation.clip_count ? " · " + evaluation.clip_count + " clips" : "";
-    setText("evaluation-source", source + clipText);
-    setText("evaluation-note", metrics.length
-      ? "Reported evaluation figures are loaded at runtime from local report files; they are not computed or altered by the interface."
-      : "Evaluation data is missing or not in a recognised report format. No figures are substituted.");
-  }
-
-  function formatCameraType(cameraType) {
-    return String(cameraType || "unknown").replace(/_/g, " ").toUpperCase();
-  }
-
-  function renderSamples(clips) {
-    const grid = byId("sample-grid");
-    if (!grid) return;
-    state.sampleClips = Array.isArray(clips) ? clips.slice() : [];
-    renderFilteredSamples();
-  }
-
-  function renderFilteredSamples() {
-    const grid = byId("sample-grid");
-    if (!grid) return;
-    const query = String(byId("sample-search") && byId("sample-search").value || "").trim().toLowerCase();
-    const filter = byId("sample-filter") ? byId("sample-filter").value : "all";
-    const sort = byId("sample-sort") ? byId("sample-sort").value : "recent";
-    let clips = state.sampleClips.filter((clip) => {
-      const matchesQuery = !query || (String(clip.clip_id || "") + " " + formatCameraType(clip.camera_type) + " " + String(clip.processed_at || "")).toLowerCase().includes(query);
-      const matchesFilter = filter === "video" ? Boolean(clip.has_video)
-        : filter === "report" ? Boolean(clip.has_report)
-          : filter === "match" ? Number(clip.match_count) > 0
-            : filter === "abstained" ? Number(clip.no_match_count) > 0
-              : true;
-      return matchesQuery && matchesFilter;
-    });
-    const clipNumber = (clip) => Number(String(clip.clip_id || "").match(/\d+/)?.[0] || 0);
-    const countValue = (value) => Number.isFinite(Number(value)) ? Number(value) : -1;
-    const compareChronology = (a, b, newestFirst) => {
-      const left = String(a.processed_at || "");
-      const right = String(b.processed_at || "");
-      if (left && right) {
-        const order = left.localeCompare(right);
-        if (order) return newestFirst ? -order : order;
-      } else if (left || right) {
-        return left ? -1 : 1;
-      }
-      return newestFirst ? clipNumber(b) - clipNumber(a) : clipNumber(a) - clipNumber(b);
-    };
-    clips.sort((a, b) => {
-      if (sort === "oldest") return compareChronology(a, b, false);
-      if (sort === "vehicles") return countValue(b.vehicle_count) - countValue(a.vehicle_count) || clipNumber(a) - clipNumber(b);
-      if (sort === "matches") return countValue(b.match_count) - countValue(a.match_count) || countValue(b.vehicle_count) - countValue(a.vehicle_count);
-      return compareChronology(a, b, true);
-    });
-
-    grid.replaceChildren();
-    const empty = byId("samples-empty");
-    if (empty) {
-      empty.hidden = clips.length > 0;
-      empty.textContent = state.sampleClips.length
-        ? "No stored results match these filters. Clear filters to see all available results."
-        : "No stored result files were found in runs/.";
-    }
-    const countText = clips.length === state.sampleClips.length
-      ? clips.length + (clips.length === 1 ? " stored investigation" : " stored investigations")
-      : clips.length + " of " + state.sampleClips.length + " investigations";
-    setText("sample-count", countText);
-
-    clips.forEach((clip) => {
-      const row = document.createElement("article");
-      row.className = "sample-row panel";
-      const identity = document.createElement("div");
-      identity.className = "sample-identity";
-      const clipId = document.createElement("h3");
-      clipId.textContent = clip.clip_id;
-      const camera = document.createElement("span");
-      camera.className = "sample-camera";
-      camera.textContent = formatCameraType(clip.camera_type);
-      identity.append(clipId, camera);
-
-      const stats = document.createElement("div");
-      stats.className = "sample-stats";
-      [["Vehicles", clip.vehicle_count], ["Matches", clip.match_count], ["No confident match", clip.no_match_count]].forEach(([label, value]) => {
-        const item = document.createElement("div");
-        const name = document.createElement("span");
-        name.textContent = label;
-        const amount = document.createElement("b");
-        amount.textContent = value == null ? "—" : String(value);
-        item.append(name, amount);
-        stats.appendChild(item);
-      });
-
-      const meta = document.createElement("div");
-      meta.className = "sample-meta";
-      const availability = document.createElement("span");
-      availability.className = "sample-availability";
-      availability.textContent = clip.has_video ? "Video available" : clip.has_report ? "Report available · no video" : "Result data only";
-      const time = document.createElement("small");
-      time.textContent = clip.processed_at ? String(clip.processed_at).replace("T", " ") : "Processing time not recorded";
-      meta.append(availability, time);
-
-      const action = document.createElement("div");
-      action.className = "sample-action";
-      if (clip.has_video) {
-        const open = document.createElement("a");
-        open.className = "sample-open";
-        open.href = "/#results/runs/" + encodeURIComponent(clip.clip_id);
-        open.textContent = "Open result";
-        open.setAttribute("aria-label", "Open stored result for " + clip.clip_id);
-        action.appendChild(open);
-      } else if (clip.has_report) {
-        const open = document.createElement("a");
-        open.className = "sample-open";
-        open.href = "/runs/" + encodeURIComponent(clip.clip_id) + "/report";
-        open.textContent = "Open report";
-        open.setAttribute("aria-label", "Open stored report for " + clip.clip_id);
-        action.appendChild(open);
-      } else {
-        const unavailable = document.createElement("span");
-        unavailable.className = "sample-unavailable";
-        unavailable.textContent = "No review media";
-        action.appendChild(unavailable);
-      }
-      row.append(identity, stats, meta, action);
-      grid.appendChild(row);
-=======
   /* ---------------------------------------------------------------- routing */
   function route() {
     const h = location.hash.replace(/^#\/?/, "");
@@ -299,7 +98,6 @@
     document.querySelectorAll(".tabs a").forEach((a) => {
       const on = a.dataset.tab === (view === "case" ? "cases" : view);
       if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
->>>>>>> e0a45b3fe87a3b56faebcb54fe61170e3761ea7c
     });
     if (view !== "case") $("video").pause();
     if (view !== "crosscam") { $("va").pause(); $("vb").pause(); }
@@ -311,88 +109,8 @@
     window.scrollTo(0, 0);
   }
 
-<<<<<<< HEAD
-  // Totals over the stored results returned by /api/overview (runs/clip*/result.json). Nothing is estimated: a value
-  // missing from every clip is shown as unavailable rather than zero.
-  function renderOperations(data) {
-    const strip = byId("ops-strip");
-    if (!strip) return;
-    strip.replaceChildren();
-    const clips = data && Array.isArray(data.clips) ? data.clips : [];
-    if (!clips.length) {
-      const empty = document.createElement("div");
-      empty.className = "ops-empty";
-      empty.textContent = "No stored results were found in runs/.";
-      strip.appendChild(empty);
-      setText("ops-source", "runs/ · no results");
-      return;
-    }
-    const sum = (key) => {
-      const values = clips.map((clip) => clip[key]).filter((value) => Number.isFinite(Number(value)) && value !== null && value !== "");
-      return values.length ? values.reduce((total, value) => total + Number(value), 0) : null;
-    };
-    const crosscam = data.crosscam_evaluation;
-    const withVideo = clips.filter((clip) => clip.has_video).length;
-    const primaryItems = [
-      { label: "Clips analysed", value: clips.length, note: withVideo + " with video on this machine" },
-      { label: "Vehicles tracked", value: sum("vehicle_count"), note: "after track re-linking" },
-      { label: "Registry matches", value: sum("match_count"), note: "confident decisions", tone: "good" },
-      { label: "No confident match", value: sum("no_match_count"), note: "system abstained", tone: "muted" },
-    ];
-    const secondaryItems = [
-      { label: "Plates read", value: sum("plates_read"), note: "fused from several frames" },
-      { label: "Ambiguous", value: sum("ambiguous_count"), note: "top candidates too close", tone: "warn" },
-      { label: "Cross-camera links", value: crosscam && Number.isFinite(Number(crosscam.system_links_total)) ? crosscam.system_links_total : null,
-        note: crosscam ? crosscam.correct_links + "/" + crosscam.groups + " reference groups correct" : "no pair evaluation found", tone: "link" },
-    ];
-    const addCells = (container, items, secondary) => items.forEach((item) => {
-      const cell = document.createElement("div");
-      cell.className = "ops-cell" + (secondary ? " ops-cell-secondary" : "") + (item.tone ? " tone-" + item.tone : "");
-      const label = document.createElement("span");
-      label.textContent = item.label;
-      const value = document.createElement("b");
-      value.textContent = item.value === null || item.value === undefined ? "—" : String(item.value);
-      const note = document.createElement("small");
-      note.textContent = item.value === null || item.value === undefined ? "not recorded" : item.note;
-      cell.append(label, value, note);
-      container.appendChild(cell);
-    });
-    const primary = document.createElement("div");
-    primary.className = "ops-primary";
-    const secondary = document.createElement("div");
-    secondary.className = "ops-secondary";
-    addCells(primary, primaryItems, false);
-    addCells(secondary, secondaryItems, true);
-    strip.replaceChildren(primary, secondary);
-    const latest = clips.map((clip) => clip.processed_at).filter(Boolean).sort().pop();
-    setText("ops-source", "runs/ · " + clips.length + " result files" + (latest ? " · latest " + String(latest).replace("T", " ") : ""));
-  }
-
-  function applyOverview(data) {
-    state.overview = data;
-    renderOperations(data);
-    state.limits = data.limits || null;
-    if (state.limits) {
-      const allowed = Array.isArray(state.limits.allowed_extensions) ? state.limits.allowed_extensions : [];
-      const accept = allowed.join(",");
-      fileInput.setAttribute("accept", accept);
-      const pretty = allowed.map((extension) => extension.replace(/^\./, "").toUpperCase()).join(", ");
-      const maxLabel = formatBytes(Number(state.limits.max_bytes));
-      setText("file-rules", pretty + " · up to " + maxLabel);
-      setText("limit-label", maxLabel);
-    }
-    renderEngine(data.engine || { status: "error", error: "The API did not return engine state." });
-    renderEvaluation(data.evaluation, data.crosscam_evaluation);
-    renderSamples(data.clips);
-    populateDemoClips(data.clips);
-    if (byId("command-dialog").open) renderCommandList(byId("command-search").value);
-  }
-
-  async function refreshOverview(autoPoll) {
-=======
   /* ---------------------------------------------------------------- overview + cases */
   async function loadOverview() {
->>>>>>> e0a45b3fe87a3b56faebcb54fe61170e3761ea7c
     try {
       S.overview = await getJSON("/api/overview");
     } catch (e) {
@@ -973,6 +691,7 @@
     const as = data.assessed_clips || [];
     $("ws-scope").textContent = "· " + plural(as.length, "clip") + " · " + as.reduce((t, c) => t + c.checked_vehicles, 0) + " vehicles checked";
     const vs = data.violations || [];
+    $("ws-count").textContent = vs.filter((x) => x.review.status === "pending").length || "";
     await Promise.all([...new Set(vs.map((x) => x.run))].filter((r) => !S.enfFiles[r]).map(async (r) => {
       S.enfFiles[r] = await getJSON("/data/" + r + "/files").catch(() => []);
     }));
@@ -982,7 +701,7 @@
     S.enfPending = pending.map((x) => x.violation_id);
     const row = (x) => el("li", { class: x.review.status === "pending" ? null : "reviewed-row" }, el("button", { class: "metric", type: "button", "data-k": x.violation_id, onclick: () => selectViolation(x) },
       el("b", { class: x.registration_number ? "mono-sm" : "none", text: x.registration_number || "No plate match" }),
-      el("span", null, x.label + " · " + x.clip_id + " T" + x.track_id, el("small", { text: [cap(x.colour), x.vehicle_type, clock(x.time_s[0]) + "–" + clock(x.time_s[1])].filter(Boolean).join(" · ") })),
+      el("span", null, x.label + " · " + x.clip_id + " T" + x.track_id, el("small", { text: [x.severity && x.severity !== "not_a_violation" ? "Severity: " + cap(x.severity) : null, cap(x.colour), x.vehicle_type, clock(x.time_s[0]) + "–" + clock(x.time_s[1])].filter(Boolean).join(" · ") })),
       reviewTag(x.review.status)));
     const rows = pending.map(row);
     if (vs.length && !pending.length) rows.push(el("li", { class: "muted", style: "padding:12px 14px", text: "All caught up: every suspected violation has been reviewed." }));
@@ -1014,6 +733,8 @@
         el("td", { class: "muted", text: (c.date || "").replace("T", " ") + (c.context ? " · " + c.context : "") }),
         el("td", null, el("button", { class: "more", type: "button", text: "Cancel", onclick: () => cancelChallan(c.challan_id, async () => { S.rec.clear(); await openEnforcement(); }) }))))))
       : pad("None yet. Look up a vehicle and use “Issue a challan”, or confirm a suspected violation on a matched vehicle."));
+    renderParking();
+    renderEChallans();
     renderAudit();
     const keep = vs.find((x) => x.violation_id === S.enfSel);
     if (keep) selectViolation(keep); else if (!S.enfManual) manualLookup();
@@ -1024,6 +745,323 @@
     const n = el("p", { class: "flash", role: "status", text: S.enfFlash });
     S.enfFlash = null;
     return n;
+  }
+  /* ---------------------------------------------------------------- parking + e-challan workflows
+   * Actions are rendered from the backend state machine (/api/enforcement/meta), so the UI can only offer moves the
+   * server will accept. Every action is attributed to the acting officer typed in the page header and the server's
+   * error text is shown in place (nothing fails silently). All of it is simulated and stays on this machine. */
+  const PARK_LABEL = {
+    detected: "Detected", pending_verification: "Verifying", verified_violation: "Verified violation",
+    owner_notification_pending: "Warning prepared", warning_sent: "Owner warned", vehicle_moved: "Vehicle moved",
+    violation_unresolved: "Unresolved after recheck", echallan_pending: "E-challan pending", echallan_issued: "E-challan issued",
+    towing_authorised: "Towing authorised", closed: "Closed", disputed: "Disputed", towed: "Towed",
+  };
+  const PARK_ACTION = {
+    pending_verification: "Start verification", verified_violation: "Confirm violation from evidence",
+    owner_notification_pending: "Prepare owner warning", warning_sent: "Send warning (simulated)",
+    vehicle_moved: "Recheck: vehicle has moved", violation_unresolved: "Recheck: still there",
+    echallan_pending: "Proceed to e-challan", echallan_issued: "Record e-challan issued", towing_authorised: "Authorise towing",
+    towed: "Record vehicle towed", disputed: "Record dispute", closed: "Close case",
+  };
+  const PARK_TONE = (st) => ({ vehicle_moved: "match", closed: "match", warning_sent: "unsure", owner_notification_pending: "unsure",
+    violation_unresolved: "fail", towing_authorised: "fail", towed: "fail", disputed: "fail", echallan_pending: "unsure" })[st] || "";
+  const ECH_LABEL = { draft: "Draft", pending_review: "Awaiting approval", approved: "Approved", issued: "Issued (simulated)",
+    paid: "Paid (simulated)", disputed: "Disputed", cancelled: "Cancelled" };
+  const ECH_TONE = (st) => ({ issued: "match", paid: "match", draft: "unsure", pending_review: "unsure", disputed: "fail" })[st] || "";
+  const JSONH = { "Content-Type": "application/json" };
+  const post = (url, body) => apiCall(url, { method: "POST", headers: JSONH, body: JSON.stringify(body || {}) });
+
+  function officerName() {
+    const v = ($("officer") && $("officer").value || "").trim();
+    return v;
+  }
+  function initOfficer() {
+    const f = $("officer");
+    if (!f) return;
+    try { f.value = localStorage.getItem("tv.officer") || ""; } catch (_) { /* storage unavailable */ }
+    f.addEventListener("input", () => { try { localStorage.setItem("tv.officer", f.value.trim()); } catch (_) { /* ignore */ } });
+  }
+  async function enfMeta() {
+    if (!S.enfMeta) S.enfMeta = await getJSON("/api/enforcement/meta").catch(() => null);
+    return S.enfMeta;
+  }
+  /* Run an action: needs an officer name, shows the server's answer in `msg`, then refreshes the view and reopens `reopen`. */
+  async function runAction(msg, call, reopen) {
+    if (!officerName()) { msg.textContent = "Type your name in “Acting officer” at the top of the page first. Every action is recorded against it."; $("officer").focus(); return; }
+    msg.textContent = "Working…";
+    const r = await call();
+    if (!r.ok) { msg.textContent = r.error; return; }
+    S.enfFlash = r.data && r.data.duplicate_of_open_case ? "An open case already exists for this vehicle; showing it." : null;
+    await openEnforcement();
+    if (reopen && r.data) reopen(r.data);
+  }
+
+  function setEnfTab(tab) {
+    S.enfTab = tab;
+    document.querySelectorAll("#enf-tabs button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === tab)));
+    document.querySelectorAll("#view-enforcement [data-pane]").forEach((p) => { p.hidden = p.dataset.pane !== tab; });
+  }
+  function initEnfTabs() {
+    const bar = $("enf-tabs");
+    if (!bar) return;
+    bar.addEventListener("click", (e) => { const b = e.target.closest("button[data-tab]"); if (b) setEnfTab(b.dataset.tab); });
+    bar.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      const bs = [...bar.querySelectorAll("button")]; const i = bs.indexOf(document.activeElement);
+      if (i < 0) return;
+      const n = bs[(i + (e.key === "ArrowRight" ? 1 : bs.length - 1)) % bs.length]; n.focus(); setEnfTab(n.dataset.tab);
+    });
+    setEnfTab(S.enfTab || "wrongside");
+  }
+  const dwell = (s) => (Number.isFinite(num(s)) && num(s) > 0 ? Math.round(num(s)) + " s" : "not measured");
+
+  async function renderParking() {
+    const elScope = $("parking-scope");
+    const elCases = $("parking-cases");
+    if (!elCases) return;
+    try {
+      const data = await getJSON("/api/parking/cases");
+      const cases = (Array.isArray(data) ? data : (data.cases || [])).slice().sort((a, b) => (b.updated_at || "").localeCompare(a.updated_at || ""));
+      const open = cases.filter((c) => !["closed", "vehicle_moved", "towed"].includes(c.state));
+      if (elScope) elScope.textContent = "· " + plural(cases.length, "case") + " · " + open.length + " open · " + cases.filter((c) => c.towing_authorized).length + " towing authorised";
+      $("parking-count").textContent = open.length ? String(open.length) : "";
+      const newBtn = el("button", { class: "btn", type: "button", text: "Open a parking case", onclick: () => newParkingForm() });
+      if (!cases.length) {
+        elCases.replaceChildren(el("div", { class: "empty" }, el("p", null, el("b", { text: "No parking cases." }),
+          " Cases are opened by an officer from a vehicle in a stored analysis. Fixed cameras with configured zones can be scanned for stationary vehicles first."), newBtn));
+        return;
+      }
+      elCases.replaceChildren(el("div", { class: "table-tools" }, newBtn), el("table", { class: "cases" },
+        el("thead", null, el("tr", null, ...["Case", "Vehicle", "Zone / location", "Dwell", "Status", ""].map((h) => el("th", { text: h })))),
+        el("tbody", null, ...cases.map((c) => {
+          const tr = el("tr", { "data-href": "1", tabindex: "0" },
+            el("td", { class: "clip", text: c.case_id }, el("small", { class: "sub", text: (c.clip_id || "") + (c.track_id != null ? " · T" + c.track_id : "") })),
+            el("td", null, c.registration_number ? plateEl(c.registration_number) : el("span", { class: "muted", text: "No confident plate match" }),
+              el("small", { class: "sub", text: [cap(c.colour), c.vehicle_type].filter((x) => x && x !== "Unknown" && x !== "unknown").join(" ") })),
+            el("td", null, (c.zone_name || cap(c.violation_type)), el("small", { class: "sub", text: c.location || "" })),
+            el("td", { class: "num", text: dwell(c.dwell_duration_s) }),
+            el("td", null, el("span", { class: "tag " + PARK_TONE(c.state), text: PARK_LABEL[c.state] || cap(c.state) })),
+            el("td", { class: "go", text: "→" }));
+          tr.addEventListener("click", () => showParkingDetails(c));
+          tr.addEventListener("keydown", (e) => { if (e.key === "Enter") showParkingDetails(c); });
+          return tr;
+        }))));
+    } catch (e) {
+      elCases.replaceChildren(pad("Couldn't load parking cases: " + e.message));
+    }
+  }
+
+  async function newParkingForm() {
+    setEnfTab("parking");
+    const meta = await enfMeta();
+    const clips = (S.overview && S.overview.clips) || [];
+    const runSel = el("select", { class: "field", "aria-label": "Stored analysis" }, ...clips.map((c) => el("option", { value: "runs/" + c.clip_id, text: c.clip_id + " · " + cap(c.camera_type) })));
+    const trackSel = el("select", { class: "field", "aria-label": "Vehicle" });
+    const typeSel = el("select", { class: "field", "aria-label": "Violation type" },
+      ...Object.entries((meta && meta.parking.violations) || {}).map(([k, v]) => el("option", { value: k, text: v.title + " · " + inr(v.fine_inr) })));
+    const loc = el("input", { class: "field", placeholder: "Location (e.g. Sector 29 market, east kerb)", maxlength: 120, "aria-label": "Location" });
+    const scan = el("div", { class: "scan", "aria-live": "polite" });
+    const msg = el("p", { class: "ev-note", role: "status" });
+    let scanned = null;
+    const loadRun = async () => {
+      trackSel.replaceChildren(el("option", { text: "Loading…" }));
+      scan.replaceChildren(el("p", { class: "muted small", text: "Checking the camera's parking zones…" }));
+      const [res, sc] = await Promise.all([getJSON("/data/" + runSel.value + "/result.json").catch(() => null), getJSON("/api/parking/scan/" + runSel.value).catch(() => null)]);
+      scanned = sc;
+      const vs = (res && res.vehicles) || [];
+      trackSel.replaceChildren(...vs.map((v) => el("option", { value: v.track_id,
+        text: "T" + v.track_id + " · " + [cap((v.colour || {}).label), (v.type || {}).label].filter(Boolean).join(" ") + " · " + ((v.plate || {}).fused || "plate not read") + (v.decision === "match" ? " · matched" : "") })));
+      if (!sc) { scan.replaceChildren(el("p", { class: "muted small", text: "Zone check unavailable." })); return; }
+      if (!sc.assessed) {
+        scan.replaceChildren(el("p", { class: "flash", text: "Automatic dwell check not available for this clip: " + sc.not_assessed_reason + ". You can still open a case from your own observation; it starts at ‘Detected’ and must be verified." }));
+        return;
+      }
+      scan.replaceChildren(el("p", { class: "muted small", text: "Zones: " + sc.zones.map((z) => z.name + " (" + cap(z.type) + ", limit " + z.dwell_limit_s + " s)").join(" · ") }),
+        sc.findings.length ? el("ul", { class: "reasons" }, ...sc.findings.map((f) => el("li", null, "T" + f.track_id + ": " + cap(f.status) + (f.duration_s != null ? " · " + f.duration_s + " s" : "") + " · " + f.zone_name)))
+          : el("p", { class: "muted small", text: "No tracked vehicle stayed inside a zone." }));
+    };
+    runSel.addEventListener("change", loadRun);
+    const go = el("button", { class: "btn", type: "button", text: "Open case" , onclick: () => {
+      const tid = Number(trackSel.value);
+      const f = scanned && scanned.findings ? scanned.findings.find((x) => x.track_id === tid) : null;
+      runAction(msg, () => post("/api/parking/cases", { run_id: runSel.value, track_id: tid, violation_type: typeSel.value, location: loc.value,
+        analysis_result: f ? { violation_type: f.violation_type || typeSel.value, duration_s: f.duration_s, zone_name: f.zone_name } : undefined }), showParkingDetails);
+    } });
+    $("enf-evidence").replaceChildren(...evHead("Parking", "Open a parking case", "Pick the vehicle from a stored analysis. Its plate match, type and colour come from that analysis, never from this form."),
+      el("div", { class: "lookup" }, el("label", { class: "fl" }, "Stored analysis", runSel), el("label", { class: "fl" }, "Vehicle", trackSel),
+        el("label", { class: "fl" }, "Violation", typeSel), el("label", { class: "fl" }, "Location", loc), scan, go, msg));
+    if (clips.length) loadRun(); else scan.replaceChildren(pad("No stored analyses."));
+  }
+
+  async function showParkingDetails(c) {
+    const ev = $("enf-evidence");
+    if (!ev) return;
+    setEnfTab("parking");
+    const meta = await enfMeta();
+    const next = ((meta && meta.parking.transitions[c.state]) || []).slice().sort((a, b) => (a === "closed") - (b === "closed"));
+    const needsReason = new Set((meta && meta.parking.needs_reason) || []);
+    const warn = c.warning_notice || {};
+    const note = el("input", { class: "field", placeholder: "Note / reason (required to authorise towing or record issuance)", maxlength: 300, "aria-label": "Note" });
+    const msg = el("p", { class: "ev-note", role: "status" });
+    const act = (st) => el("button", { class: "btn" + (st === "closed" || st === "disputed" ? " ghost" : "") + (st === "towing_authorised" ? " danger" : ""), type: "button",
+      text: PARK_ACTION[st] || cap(st),
+      onclick: () => {
+        if (needsReason.has(st) && !note.value.trim()) { msg.textContent = "Write the reason for this decision in the note field first."; note.focus(); return; }
+        runAction(msg, () => post("/api/parking/cases/" + c.case_id + "/transition", { new_state: st, officer: officerName(), note: note.value }), showParkingDetails);
+      } });
+    const draftBtn = c.state === "echallan_pending" ? el("button", { class: "btn ghost", type: "button", text: "Draft the e-challan", onclick: () => {
+      if (!c.registration_number) { msg.textContent = "No confident registry match for this vehicle, so no e-challan can be drafted against a registration."; return; }
+      runAction(msg, () => post("/api/echallans/cases", { registration_number: c.registration_number,
+        violation_category: c.violation_type === "tow_away" ? "Tow-away obstruction" : c.violation_type === "emergency_access" ? "Emergency route obstruction" : "Illegal parking",
+        location: c.location, evidence_run: c.run_id, track_id: c.track_id, officer_id: officerName(), notes: "From parking case " + c.case_id }),
+      (d) => { setEnfTab("echallan"); showEChallanDetails(d); });
+    } }) : null;
+    ev.replaceChildren(...[
+      flashNode(),
+      ...evHead("Parking case", c.case_id, (c.violation_title || cap(c.violation_type)) + " · " + (c.legal_section || "")),
+      el("ol", { class: "steps" }, ...["detected", "verified_violation", "warning_sent", "violation_unresolved", "towing_authorised"].map((s) => {
+        const order = ["detected", "pending_verification", "verified_violation", "owner_notification_pending", "warning_sent", "violation_unresolved", "echallan_pending", "towing_authorised", "towed"];
+        const done = order.indexOf(c.state) >= order.indexOf(s) || (c.audit_trail || []).some((a) => a.to_state === s);
+        return el("li", { class: done ? "done" : null, "aria-current": c.state === s ? "step" : null, text: PARK_LABEL[s] });
+      })),
+      section("Vehicle and place", null, kv([
+        ["Registration", c.registration_number ? plateEl(c.registration_number) : "No confident registry match"],
+        ["Vehicle", [cap(c.colour), c.vehicle_type].filter((x) => x && !/^unknown$/i.test(x)).join(" ") || "—"],
+        ["Evidence", c.run_id && c.run_id !== "runs/manual" ? el("a", { class: "more", href: "#case/" + c.run_id, text: (c.clip_id || c.run_id) + " · vehicle T" + c.track_id }) : "—"],
+        ["Zone", c.zone_name || "—"], ["Location", c.location || "—"], ["Dwell measured", dwell(c.dwell_duration_s)],
+        ["Fine (if issued)", c.fine_inr ? inr(c.fine_inr) : "—"], ["Status", el("span", { class: "tag " + PARK_TONE(c.state), text: PARK_LABEL[c.state] || cap(c.state) })],
+        ["Towing authorised", c.towing_authorized ? "Yes, by an officer" : "No"],
+        c.recheck ? ["Recheck", c.recheck.seconds_after_warning + " s after the warning · grace period " + (c.recheck.grace_period_elapsed ? "had run out" : "had NOT run out")] : null,
+      ])),
+      warn.warning_message ? section("Owner warning", "simulated · not sent anywhere", el("div", { class: "flash" },
+        el("p", { style: "margin:0 0 6px", text: warn.warning_message }),
+        el("small", { class: "muted", text: "Response period: " + (warn.response_period_minutes ?? "—") + " min · " + (warn.disclaimer || "") }))) : null,
+      next.length ? section("Next step", "the server only allows these moves", el("div", { class: "lookup" }, note, el("div", { class: "btn-row" }, ...next.map(act), draftBtn), msg))
+        : section("Next step", null, el("p", { class: "ev-note", text: "This case is final." })),
+      section("Audit trail", null, el("ul", { class: "reasons" }, ...(c.audit_trail || []).map((a) => el("li", null, (a.timestamp || "").replace("T", " ") + " · " + a.officer + " · " + (PARK_LABEL[a.to_state] || a.to_state) + (a.action && !/^Status changed/.test(a.action) ? ": " + a.action : ""))))),
+    ].filter(Boolean));
+  }
+
+  async function renderEChallans() {
+    const elScope = $("echallan-scope");
+    const elCases = $("echallan-cases");
+    if (!elCases) return;
+    try {
+      const data = await getJSON("/api/echallans/cases");
+      const cases = (Array.isArray(data) ? data : (data.cases || [])).slice().sort((a, b) => (b.timestamp || "").localeCompare(a.timestamp || ""));
+      const waiting = cases.filter((c) => ["draft", "pending_review", "disputed"].includes(c.status)).length;
+      if (elScope) elScope.textContent = "· " + plural(cases.length, "case") + " · " + waiting + " need an officer";
+      $("echallan-count").textContent = waiting ? String(waiting) : "";
+      const filter = el("select", { class: "field compact", "aria-label": "Filter by status" }, el("option", { value: "", text: "All statuses" }),
+        ...Object.entries(ECH_LABEL).map(([k, v]) => el("option", { value: k, text: v, selected: S.echFilter === k ? true : null })));
+      filter.addEventListener("change", () => { S.echFilter = filter.value; renderEChallans(); });
+      const shown = S.echFilter ? cases.filter((c) => c.status === S.echFilter) : cases;
+      const tools = el("div", { class: "table-tools" }, el("button", { class: "btn", type: "button", text: "Draft an e-challan", onclick: () => newEChallanForm() }), filter);
+      if (!shown.length) {
+        elCases.replaceChildren(tools, el("div", { class: "empty" }, el("p", null, el("b", { text: cases.length ? "No cases with this status." : "No e-challan cases." }),
+          cases.length ? "" : " Drafts come from a parking case, or are written by an officer against a vehicle in a stored analysis. Each one needs evidence verification and a named approving officer.")));
+        return;
+      }
+      elCases.replaceChildren(tools, el("table", { class: "cases" },
+        el("thead", null, el("tr", null, ...["Case", "Registration", "Violation", "Fine", "Status", ""].map((h) => el("th", { text: h })))),
+        el("tbody", null, ...shown.map((c) => {
+          const tr = el("tr", { "data-href": "1", tabindex: "0" },
+            el("td", { class: "clip", text: c.case_id }, el("small", { class: "sub", text: (c.timestamp || "").replace("T", " ") })),
+            el("td", null, plateEl(c.registration_number || "?")),
+            el("td", null, c.violation_category, el("small", { class: "sub", text: c.legal_provision })),
+            el("td", { class: "num", text: inr(c.fine_inr) }),
+            el("td", null, el("span", { class: "tag " + ECH_TONE(c.status), text: ECH_LABEL[c.status] || cap(c.status) })),
+            el("td", { class: "go", text: "→" }));
+          tr.addEventListener("click", () => showEChallanDetails(c));
+          tr.addEventListener("keydown", (e) => { if (e.key === "Enter") showEChallanDetails(c); });
+          return tr;
+        }))));
+    } catch (e) {
+      elCases.replaceChildren(pad("Couldn't load e-challan cases: " + e.message));
+    }
+  }
+
+  async function newEChallanForm() {
+    setEnfTab("echallan");
+    const meta = await enfMeta();
+    const clips = (S.overview && S.overview.clips) || [];
+    const runSel = el("select", { class: "field", "aria-label": "Stored analysis" }, ...clips.map((c) => el("option", { value: "runs/" + c.clip_id, text: c.clip_id })));
+    const trackSel = el("select", { class: "field", "aria-label": "Vehicle" });
+    const cat = el("select", { class: "field", "aria-label": "Violation" }, ...Object.entries((meta && meta.echallan.categories) || {}).map(([k, v]) => el("option", { value: k, text: k + " · " + inr(v.fine_inr) })));
+    const loc = el("input", { class: "field", placeholder: "Location", maxlength: 120, "aria-label": "Location" });
+    const msg = el("p", { class: "ev-note", role: "status" });
+    let vehicles = [];
+    const loadRun = async () => {
+      const res = await getJSON("/data/" + runSel.value + "/result.json").catch(() => null);
+      vehicles = ((res && res.vehicles) || []).filter((v) => v.decision === "match" && (v.candidates || []).length);
+      trackSel.replaceChildren(...(vehicles.length ? vehicles.map((v) => el("option", { value: v.track_id, text: "T" + v.track_id + " · " + v.candidates[0].registration_number + " · " + [cap((v.colour || {}).label), (v.type || {}).label].filter(Boolean).join(" ") }))
+        : [el("option", { value: "", text: "No vehicle with a confident registry match in this clip" })]));
+    };
+    runSel.addEventListener("change", loadRun);
+    const go = el("button", { class: "btn", type: "button", text: "Create draft", onclick: () => {
+      const v = vehicles.find((x) => String(x.track_id) === trackSel.value);
+      if (!v) { msg.textContent = "Choose a vehicle with a confident registry match. A challan is never drafted against an uncertain plate."; return; }
+      runAction(msg, () => post("/api/echallans/cases", { registration_number: v.candidates[0].registration_number, violation_category: cat.value,
+        location: loc.value, evidence_run: runSel.value, track_id: v.track_id, officer_id: officerName() }), showEChallanDetails);
+    } });
+    $("enf-evidence").replaceChildren(...evHead("E-challan", "Draft an e-challan", "Only vehicles with a confident registry match are offered. The plate, OCR confidence, type and colour are copied from the stored analysis."),
+      el("div", { class: "lookup" }, el("label", { class: "fl" }, "Stored analysis", runSel), el("label", { class: "fl" }, "Vehicle", trackSel),
+        el("label", { class: "fl" }, "Violation", cat), el("label", { class: "fl" }, "Location", loc), go, msg));
+    if (clips.length) loadRun();
+  }
+
+  function showEChallanDetails(c) {
+    const ev = $("enf-evidence");
+    if (!ev) return;
+    setEnfTab("echallan");
+    const dsp = c.dispute_record;
+    const va = c.vehicle_attributes || {};
+    const er = c.evidence_reference || {};
+    const text = el("input", { class: "field", placeholder: "Reason / findings / note", maxlength: 300, "aria-label": "Reason or findings" });
+    const msg = el("p", { class: "ev-note", role: "status" });
+    const base = "/api/echallans/cases/" + c.case_id;
+    const need = (what) => { if (!text.value.trim()) { msg.textContent = "Write the " + what + " first."; text.focus(); return false; } return true; };
+    const B = (label, cls, fn) => el("button", { class: "btn" + (cls ? " " + cls : ""), type: "button", text: label, onclick: fn });
+    const acts = [];
+    if (c.status === "draft") acts.push(B("Verify evidence", "", () => runAction(msg, () => post(base + "/verify", { officer: officerName(), notes: text.value }), showEChallanDetails)));
+    if (["draft", "pending_review", "approved"].includes(c.status)) acts.push(B("Approve and issue (simulated)", c.status === "draft" ? "ghost" : "", () => runAction(msg, () => post(base + "/approve", { officer: officerName(), notes: text.value }), showEChallanDetails)));
+    if (c.status === "issued") {
+      acts.push(B("Record payment (simulated)", "", () => runAction(msg, () => post(base + "/pay", {}), showEChallanDetails)));
+      acts.push(B("Record citizen dispute", "ghost", () => need("dispute reason") && runAction(msg, () => post(base + "/dispute", { reason: text.value }), showEChallanDetails)));
+    }
+    if (c.status === "disputed") {
+      acts.push(B("Uphold dispute (cancel challan)", "", () => need("findings") && runAction(msg, () => post(base + "/resolve_dispute", { resolution: "upheld", officer: officerName(), findings: text.value }), showEChallanDetails)));
+      acts.push(B("Dismiss dispute (challan stands)", "ghost", () => need("findings") && runAction(msg, () => post(base + "/resolve_dispute", { resolution: "dismissed", officer: officerName(), findings: text.value }), showEChallanDetails)));
+    }
+    if (["draft", "pending_review", "approved", "issued"].includes(c.status)) acts.push(B("Cancel", "ghost", () => need("cancellation reason") && runAction(msg, () => post(base + "/cancel", { officer: officerName(), reason: text.value }), showEChallanDetails)));
+    const steps = ["draft", "pending_review", "issued", "paid"];
+    ev.replaceChildren(...[
+      flashNode(),
+      ...evHead("E-challan", c.case_id, (c.violation_category || "Violation") + " · " + (c.legal_provision || "")),
+      el("ol", { class: "steps" }, ...steps.map((s) => el("li", { class: steps.indexOf(c.status) >= steps.indexOf(s) || (s === "issued" && c.issued_at) ? "done" : null,
+        "aria-current": c.status === s ? "step" : null, text: { draft: "Draft", pending_review: "Verified", issued: "Approved & issued", paid: "Paid" }[s] }))),
+      c.status === "cancelled" || c.status === "disputed" ? el("p", { class: "flash", text: c.status === "cancelled" ? "Cancelled: " + (c.cancellation_reason || "") : "Disputed: waiting for an adjudicating officer." }) : null,
+      section("Case", null, kv([
+        ["Registration", plateEl(c.registration_number || "?")], ["Fine", inr(c.fine_inr)],
+        ["Status", el("span", { class: "tag " + ECH_TONE(c.status), text: ECH_LABEL[c.status] || cap(c.status) })],
+        ["Payment", c.payment_status === "paid_simulated" ? "Paid (simulated) · " + (c.payment_reference || "") : cap(c.payment_status || "unpaid")],
+        ["Evidence verified by", c.verified_by || "Not yet"], ["Approved by", c.approved_by || "Not yet"],
+        ["Location", c.location || "—"], ["Created", (c.timestamp || "").replace("T", " ")],
+      ])),
+      section("Evidence", "copied from the stored analysis", kv([
+        ["Plate read", va.ocr_plate ? plateEl(va.ocr_plate) : "—"],
+        ["OCR confidence", va.ocr_confidence != null ? pct(va.ocr_confidence, 1) + " (mean fused per-character)" : "not recorded"],
+        ["Vehicle", [cap(va.colour), va.type].filter(Boolean).join(" ") || "—"],
+        ["Clip", er.run_id ? el("a", { class: "more", href: "#case/" + er.run_id, text: er.run_id.replace("runs/", "") + (er.track_id != null ? " · vehicle T" + er.track_id : "") }) : "No stored evidence linked"],
+        ["Frames", er.frames ? er.frames.join("–") : "—"],
+      ])),
+      dsp ? section("Citizen dispute", dsp.dispute_id, kv([["Claim", dsp.reason], ["Filed", (dsp.filed_at || "").replace("T", " ")],
+        ["Outcome", dsp.resolution ? cap(dsp.resolution) + " by " + dsp.adjudicated_by + (dsp.findings ? ": " + dsp.findings : "") : "Under review"]])) : null,
+      acts.length ? section("Officer action", null, el("div", { class: "lookup" }, text, el("div", { class: "btn-row" }, ...acts), msg))
+        : section("Officer action", null, el("p", { class: "ev-note", text: "This case is final." })),
+      section("Audit history", null, el("ul", { class: "reasons" }, ...(c.audit_history || []).map((a) => el("li", null, (a.timestamp || "").replace("T", " ") + " · " + a.officer + " · " + cap(a.action.toLowerCase()) + (a.details ? ": " + a.details : ""))))),
+      el("p", { class: "demo-banner small", text: (c.legal_notice || "Simulated e-challan.") + " No payment gateway or government system is connected." }),
+    ].filter(Boolean));
   }
   async function renderAudit() {
     const r = await apiCall("/api/audit");
@@ -1242,230 +1280,6 @@
     if (pair.same_scene && Array.isArray(pair.same_scene.links)) {
       return pair.same_scene.links.map((l) => ({ a: l.a, b: l.b, status: l.link, score: l.link_score, reasons: l.evidence || [], final: l.final }));
     }
-<<<<<<< HEAD
-    byId("demo-start").disabled = usable.length === 0;
-  }
-
-  function renderDemoStages() {
-    const run = state.demoRun;
-    const list = byId("demo-stage-list");
-    list.replaceChildren();
-    const complete = Boolean(run && run.complete);
-    demoStages.forEach((entry, index) => {
-      const item = document.createElement("div");
-      const done = complete || (run && index < run.activeIndex);
-      const active = !complete && run && index === run.activeIndex;
-      item.className = "demo-stage" + (done ? " is-complete" : active ? " is-active" : "");
-      if (active) item.setAttribute("aria-current", "step");
-      const marker = document.createElement("i");
-      marker.textContent = done ? "✓" : String(index + 1).padStart(2, "0");
-      const copy = document.createElement("span");
-      const title = document.createElement("b");
-      title.textContent = entry[0];
-      const description = document.createElement("small");
-      description.textContent = "SIMULATED · " + entry[1];
-      copy.append(title, description);
-      item.append(marker, copy);
-      list.appendChild(item);
-    });
-    const completedCount = complete ? demoStages.length : Math.max(0, run ? run.activeIndex : 0);
-    setText("demo-progress-count", completedCount + " / " + demoStages.length);
-    byId("demo-progress-fill").style.width = complete ? "100%" : run && run.activeIndex >= 0 ? ((run.activeIndex + 0.45) / demoStages.length * 100) + "%" : "0%";
-    setText("demo-progress-title", complete ? "Walkthrough ready" : run && run.activeIndex >= 0 ? "Simulating " + demoStages[run.activeIndex][0].toLowerCase() : "Preparing walkthrough");
-    byId("demo-complete-message").hidden = !complete;
-    byId("demo-open-result").hidden = !complete;
-  }
-
-  function advanceDemo(requestId) {
-    const run = state.demoRun;
-    if (!run || requestId !== state.demoRequestId) return;
-    run.activeIndex += 1;
-    if (run.activeIndex >= demoStages.length) {
-      run.complete = true;
-      renderDemoStages();
-      return;
-    }
-    renderDemoStages();
-    state.demoTimer = window.setTimeout(() => advanceDemo(requestId), 720);
-  }
-
-  function startDemoWalkthrough(clipId) {
-    window.clearTimeout(state.demoTimer);
-    state.demoTimer = null;
-    const requestId = ++state.demoRequestId;
-    state.demoRun = { clipId: clipId, activeIndex: -1, complete: false };
-    setText("demo-clip-label", "STORED RESULT · " + clipId);
-    byId("demo-complete-message").hidden = true;
-    byId("demo-open-result").hidden = true;
-    renderDemoStages();
-    state.demoTimer = window.setTimeout(() => advanceDemo(requestId), 360);
-  }
-
-  function showDemoView(clipId) {
-    const stored = state.overview && Array.isArray(state.overview.clips)
-      ? state.overview.clips.find((clip) => clip.clip_id === clipId && clip.has_video)
-      : null;
-    if (state.overview && !stored) {
-      showLanding();
-      showToast("That stored clip is unavailable for demo playback.");
-      return;
-    }
-    state.demoResultClip = null;
-    byId("landing-view").hidden = true;
-    byId("results-view").hidden = true;
-    byId("demo-view").hidden = false;
-    ["crosscam-view", "reports-view", "insights-view"].forEach((id) => { byId(id).hidden = true; });
-    const resultVideo = byId("result-video");
-    if (resultVideo) resultVideo.pause();
-    ["pair-video-a", "pair-video-b"].forEach((id) => byId(id).pause());
-    setActiveNav("results");
-    setText("breadcrumb-current", "Demo mode");
-    document.title = "TRACEVISION AI — Demo mode";
-    startDemoWalkthrough(clipId);
-  }
-
-  function openDemoDialog() {
-    populateDemoClips(state.overview && state.overview.clips);
-    if (!state.overview) {
-      refreshOverview(false).then((data) => { if (data) populateDemoClips(data.clips); });
-    }
-    const dialog = byId("demo-dialog");
-    if (!dialog.open) dialog.showModal();
-  }
-
-  function beginDemoFromDialog() {
-    const clipId = byId("demo-clip-select").value;
-    if (!/^clip\d+$/.test(clipId)) return;
-    byId("demo-dialog").close();
-    const route = "#demo/" + encodeURIComponent(clipId);
-    if (window.location.hash === route) showDemoView(clipId);
-    else window.location.hash = route;
-  }
-
-  function openDemoResult() {
-    const run = state.demoRun;
-    if (!run || !run.complete) return;
-    window.clearTimeout(state.demoTimer);
-    state.demoTimer = null;
-    state.demoResultClip = run.clipId;
-    window.location.hash = "#results/runs/" + encodeURIComponent(run.clipId);
-  }
-
-  function openAboutDialog() {
-    const dialog = byId("about-dialog");
-    if (!dialog.open) dialog.showModal();
-  }
-
-  function commandDefinitions() {
-    const commands = [
-      { label: "Go to overview", detail: "Workspace home", action: () => { window.location.hash = "#top"; } },
-      { label: "Analyse a clip", detail: "Upload a new video", action: () => { window.location.hash = "#upload"; } },
-      { label: "Browse stored results", detail: "Open the sample gallery", action: () => { window.location.hash = "#samples-title"; } },
-      { label: "Cross-camera review", detail: "Compare stored camera pairs", action: () => { window.location.hash = "#crosscam"; } },
-      { label: "Investigation reports", detail: "Preview stored HTML and PDF", action: () => { window.location.hash = "#reports"; } },
-      { label: "Evaluation insights", detail: "Metrics and robustness charts", action: () => { window.location.hash = "#insights"; } },
-      { label: "Rehearse demo mode", detail: "Run simulated stages on a stored clip", action: openDemoDialog },
-      { label: "About and limitations", detail: "Evidence handling and keyboard shortcuts", action: openAboutDialog },
-    ];
-    const clips = state.overview && Array.isArray(state.overview.clips) ? state.overview.clips : [];
-    clips.forEach((clip) => {
-      if (!clip.has_video) return;
-      commands.push({
-        label: "Open result · " + clip.clip_id,
-        detail: clip.vehicle_count + " tracked · " + formatCameraType(clip.camera_type),
-        action: () => { window.location.hash = "#results/runs/" + encodeURIComponent(clip.clip_id); },
-      });
-    });
-    return commands;
-  }
-
-  function renderCommandList(query) {
-    const list = byId("command-list");
-    list.replaceChildren();
-    const normalized = String(query || "").trim().toLowerCase();
-    const commands = commandDefinitions().filter((command) => (command.label + " " + command.detail).toLowerCase().includes(normalized));
-    state.commandActiveIndex = 0;
-    commands.forEach((command, index) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "command-item";
-      button.setAttribute("role", "option");
-      button.setAttribute("aria-selected", index === 0 ? "true" : "false");
-      const copy = document.createElement("span");
-      copy.className = "command-item-copy";
-      const label = document.createElement("b");
-      label.textContent = command.label;
-      const detail = document.createElement("small");
-      detail.textContent = command.detail;
-      copy.append(label, detail);
-      const arrow = document.createElement("i");
-      arrow.textContent = "↗";
-      button.append(copy, arrow);
-      button.addEventListener("mouseenter", () => setCommandActive(index));
-      button.addEventListener("click", () => {
-        byId("command-dialog").close();
-        command.action();
-      });
-      list.appendChild(button);
-    });
-    if (!commands.length) {
-      const empty = document.createElement("div");
-      empty.className = "command-empty";
-      empty.textContent = "No matching commands.";
-      list.appendChild(empty);
-    }
-  }
-
-  function setCommandActive(index) {
-    const items = Array.from(byId("command-list").querySelectorAll(".command-item"));
-    if (!items.length) return;
-    state.commandActiveIndex = (index + items.length) % items.length;
-    items.forEach((item, itemIndex) => item.setAttribute("aria-selected", itemIndex === state.commandActiveIndex ? "true" : "false"));
-  }
-
-  function openCommandPalette() {
-    const dialog = byId("command-dialog");
-    byId("command-search").value = "";
-    renderCommandList("");
-    if (!dialog.open) dialog.showModal();
-    window.setTimeout(() => byId("command-search").focus(), 0);
-  }
-
-  function runCommandFromPalette() {
-    const items = Array.from(byId("command-list").querySelectorAll(".command-item"));
-    if (items[state.commandActiveIndex]) items[state.commandActiveIndex].click();
-  }
-
-  function navigateShortcut(view) {
-    const routes = { o: "#top", c: "#crosscam", i: "#insights", r: "#reports" };
-    if (routes[view]) window.location.hash = routes[view];
-  }
-
-  function bindPolishControls() {
-    byId("demo-mode-open").addEventListener("click", openDemoDialog);
-    byId("command-palette-open").addEventListener("click", openCommandPalette);
-    byId("about-open").addEventListener("click", openAboutDialog);
-    byId("demo-start").addEventListener("click", beginDemoFromDialog);
-    byId("demo-open-result").addEventListener("click", openDemoResult);
-    byId("demo-exit").addEventListener("click", () => { window.location.hash = "#top"; });
-    byId("demo-banner-dismiss").addEventListener("click", () => {
-      state.demoResultClip = null;
-      byId("demo-result-banner").hidden = true;
-    });
-    byId("sample-search").addEventListener("input", renderFilteredSamples);
-    byId("sample-filter").addEventListener("change", renderFilteredSamples);
-    byId("sample-sort").addEventListener("change", renderFilteredSamples);
-    byId("sample-reset").addEventListener("click", () => {
-      byId("sample-search").value = "";
-      byId("sample-filter").value = "all";
-      byId("sample-sort").value = "recent";
-      renderFilteredSamples();
-      byId("sample-search").focus();
-    });
-    document.querySelectorAll("[data-close-dialog]").forEach((button) => button.addEventListener("click", () => {
-      const dialog = button.closest("dialog");
-      if (dialog && dialog.open) dialog.close();
-=======
     const seen = new Set(), out = [];
     (pair.directions || []).forEach((d) => (d.links || []).forEach((l) => {
       if (!l.linked_to) return;
@@ -1474,7 +1288,6 @@
       if (seen.has(key)) return;
       seen.add(key);
       out.push({ a, b, status: (l.linked_to.evidence || "link"), score: l.linked_to.link_score, reasons: l.linked_to.reasons || [], parts: l.linked_to.parts, reason: l.decision_reason });
->>>>>>> e0a45b3fe87a3b56faebcb54fe61170e3761ea7c
     }));
     return out;
   }
@@ -1673,10 +1486,40 @@
     } catch (_) {
       $("robust").replaceChildren(el("p", { class: "muted", text: "Robustness results aren't available." }));
     }
+
+    try {
+      const modelData = await getJSON("/api/colour/model_info");
+      const info = modelData.linear_probe_info || {};
+      const vm = info.val_metrics || {};
+      const tm = info.test_metrics || {};
+      const v2 = !!vm.probe_v2;
+      const probeV = v2 ? vm.probe_v2 : (vm.probe || {});
+      const probeT = v2 ? tm.probe_v2 : (tm.probe || {});
+      const cell = (m) => (m && Number.isFinite(num(m.accuracy)) ? pct(m.accuracy, 1) + " · top-2 " + pct(m.top2_accuracy, 1) + " · F1 " + pct(m.macro_f1, 1) : "—");
+      const cc = modelData.cctv_transfer && modelData.cctv_transfer.methods;
+      const ccCell = (k) => (cc && cc[k] ? cc[k].exact + "/" + modelData.cctv_transfer.n + " exact · " + cc[k].near + " near · " + cc[k].unknown + " unknown" : "—");
+      const rows = [
+        ["VCoR validation (1,542 crops)", cell(vm.clip_zero_shot), v2 ? cell(vm.probe_v1) : "—", cell(probeV)],
+        ["VCoR test (1,545 crops, scored once)", cell(tm.clip_zero_shot), v2 ? cell(tm.probe_v1) : "—", cell(probeT)],
+        ["Team CCTV crops (" + (modelData.cctv_transfer ? modelData.cctv_transfer.n : "62") + " vehicles, reporting only)", ccCell("clip_zero_shot"), ccCell("probe_v1"), ccCell("probe_v2")],
+      ];
+      $("colour-probe-perf").replaceChildren(el("div", null,
+        el("p", { class: "muted small", style: "padding:12px 16px 0",
+          text: "Production method: " + String(modelData.active_method || "unknown").toUpperCase() + " (config.yaml) · probe file: " + (modelData.linear_probe_file || "none") +
+            (info.optimal_C != null ? " · C = " + info.optimal_C + " chosen on validation" : "") + " · backbone " + (info.backbone || "ViT-B-32") + "." }),
+        el("table", { class: "cases" },
+          el("thead", null, el("tr", null, ...["Data", "CLIP zero-shot (production)", "Probe v1 (shipped)", v2 ? "Probe v2 (retrained)" : "Linear probe"].map((h) => el("th", { text: h })))),
+          el("tbody", null, ...rows.map((r) => el("tr", null, el("td", { class: "clip", text: r[0] }), ...r.slice(1).map((t) => el("td", { text: t })))))),
+        el("p", { class: "ev-note", style: "padding:0 16px 12px",
+          text: "VCoR scores are on clean, tightly cropped photos and do not transfer to CCTV. On the team's CCTV crops zero-shot CLIP is still the most accurate, so it stays the production default. The probe v1 weights were under-fit (every prediction fell below the confidence gate); v2 fixes that on VCoR but not on CCTV. The CCTV crops were never used for training or model selection. Colour is supporting evidence only, never identity." })
+      ));
+    } catch (_) {
+      $("colour-probe-perf").replaceChildren(el("p", { class: "muted", text: "Colour model benchmark diagnostics currently unavailable." }));
+    }
   }
   function selectMetric(m) {
     S.perfKey = m.key;
-    document.querySelectorAll(".metric").forEach((b) => b.setAttribute("aria-current", String(b.dataset.k === m.key)));
+    document.querySelectorAll("#metric-list .metric").forEach((b) => b.setAttribute("aria-current", String(b.dataset.k === m.key)));
     $("perf-evidence").replaceChildren(...[
       evHead("How it's measured", m.label, m.what),
       section("Result", null, kv([["Value", m.value], ["Scope", m.detail]])),
@@ -1688,6 +1531,8 @@
 
   /* ---------------------------------------------------------------- start */
   initMeta();
+  initOfficer();
+  initEnfTabs();
   initIntake();
   initPlayer();
   initCrosscam();

@@ -200,10 +200,25 @@ def check_track(track, zone, width, height, motion=None):
     steps = [vec(pts[i], pts[i + STEP]) for i in range(0, len(pts) - STEP, STEP)]
     steps = [s for s in steps if hypot(*s) > 0.004]
     agree = sum(1 for s in steps if _unit(s)[0] * allowed[0] + _unit(s)[1] * allowed[1] < 0) / len(steps) if steps else 0.0
+    is_wrong = cos <= MAX_COS and agree >= MIN_AGREE
+    
+    # Severity classification: Critical, High, Needs Review, Not a Violation
+    zone_type = zone.get("restricted_type", "divided_carriageway")
+    if is_wrong:
+        if cos <= -0.80 or disp >= 0.12 or zone_type in ("one_way", "emergency_route"):
+            severity = "critical"
+        else:
+            severity = "high"
+    else:
+        if cos <= -0.30 and agree >= 0.50:
+            severity = "needs_review"
+        else:
+            severity = "not_a_violation"
+
     return {"zone": zone["name"], "points": len(pts), "first_frame": pts[0][0], "last_frame": pts[-1][0],
             "displacement_frac": round(disp, 3), "cos_to_allowed": round(cos, 3), "against_flow_share": round(agree, 2),
             "allowed_direction": zone["allowed_direction"], "observed_direction": [round(u[0], 3), round(u[1], 3)],
-            "wrong_side": cos <= MAX_COS and agree >= MIN_AGREE}
+            "wrong_side": is_wrong, "severity": severity, "zone_type": zone_type}
 
 
 def load_reviews() -> dict:
@@ -225,8 +240,10 @@ def _entry(veh, run_id, clip, first, last, fps, measurement, reviews):
     cands = veh.get("candidates") or []
     matched = veh.get("decision") == "match" and cands
     vid = f"{run_id}:T{veh['track_id']}:wrong_side"
+    severity = measurement.get("severity", "high")
     return {
         "violation_id": vid, "type": "wrong_side_driving", "label": "Wrong-side driving",
+        "severity": severity,
         "run": run_id, "clip_id": clip, "track_id": veh["track_id"],
         "vehicle_type": (veh.get("type") or {}).get("label"), "colour": (veh.get("colour") or {}).get("label"),
         "plate": (veh.get("plate") or {}).get("fused"), "decision": veh.get("decision"),
@@ -363,7 +380,8 @@ def _detect_head_on(result: dict, run_id: str, cam):
         out["checked_vehicles"] += 1
         m = head_on(seq)
         wrong = bool(m) and layout != "two_way"
-        pv = (m or {"method": "head_on_pass"}) | {"wrong_side": wrong, "layout": layout, "head_on": bool(m), "samples": len(seq)}
+        severity = ("critical" if layout == "one_way" else "needs_review") if wrong else "not_a_violation"
+        pv = (m or {"method": "head_on_pass"}) | {"wrong_side": wrong, "severity": severity, "layout": layout, "head_on": bool(m), "samples": len(seq)}
         out["per_vehicle"][str(veh["track_id"])] = pv
         if wrong:
             out["violations"].append(_entry(veh, run_id, clip, m["first_frame"], m["last_frame"], fps, pv, reviews))
