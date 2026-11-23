@@ -80,6 +80,24 @@ h4{margin:14px 0 6px;font-size:12.5px;text-transform:uppercase;letter-spacing:.0
 .cand ul{margin:4px 0 0;padding-left:18px;color:var(--muted);font-size:12px}
 .note{font-size:11.5px;color:var(--muted);margin-top:8px}
 .err{padding:30px;color:var(--bad)}
+.feed{max-height:250px;overflow:auto}
+.feed h3 .live{margin-left:auto;font-size:11px;font-weight:600;color:#fff;background:var(--bad);padding:1px 7px;border-radius:9px}
+.ev{display:flex;gap:8px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line);font-size:12.5px;cursor:pointer}
+.ev:hover{background:var(--soft)}
+.ev .ts{font-family:var(--mono);color:var(--muted);flex:none;width:46px}
+.ev .ic{flex:none;width:9px;height:9px;border-radius:50%}
+.ev .tx{flex:1;min-width:0}
+.ev .tx b{font-family:var(--mono)}
+.ev img{height:22px;max-width:80px;object-fit:contain;border-radius:3px;background:#000;flex:none}
+.ev.new{animation:flash 1.4s ease-out}
+@keyframes flash{from{background:color-mix(in srgb,var(--sel) 32%,transparent)}to{background:transparent}}
+.feed .empty{color:var(--muted);padding:14px 12px;font-size:12.5px}
+.fcard.future{opacity:.25}
+.fcard.future .ft,.fcard.future .chars{visibility:hidden}
+.pending{border:1px dashed var(--line);border-radius:7px;padding:10px;color:var(--muted);font-size:12.5px}
+.pulse{animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.ev.new,.pulse{animation:none}}
 </style>
 </head>
 <body>
@@ -101,18 +119,23 @@ h4{margin:14px 0 6px;font-size:12.5px;text-transform:uppercase;letter-spacing:.0
       <select id="speed" aria-label="Playback speed">
         <option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option>
       </select>
+      <label class="tog" title="Reveal the analysis in step with the video: track → plate reads → registry check → decision"><input type="checkbox" id="live" checked> live playback</label>
       <label class="tog"><input type="checkbox" id="onlyPlates"> only vehicles with plate evidence</label>
       <span class="fr" id="fr">frame –</span>
     </div>
     <div class="timeline" id="tl" title="Click to jump. Orange ticks: frames used for plate reading. Blue: selected vehicle."></div>
     <div class="legend">
+      <span class="lv"><i style="background:var(--none)"></i>tracking</span>
+      <span class="lv"><i style="background:#0ea5e9"></i>reading plate</span>
+      <span class="lv"><i style="background:#a855f7"></i>checking registry</span>
       <span><i style="background:var(--match)"></i>registry match</span>
       <span><i style="background:var(--plate)"></i>plate read · no confident match</span>
-      <span><i style="background:var(--none)"></i>no plate</span>
+      <span class="nl"><i style="background:var(--none)"></i>no plate</span>
       <span>Click a box or a row to inspect it · Space play/pause · ←/→ step</span>
     </div>
   </div>
   <div class="side">
+    <div class="card feed" id="feed"><h3>Live feed <span class="live">● LIVE</span></h3><div class="empty">Press Play: tracking, plate reads and registry checks appear here as the video reaches them.</div></div>
     <div class="card list" id="list"><h3>Vehicles</h3></div>
     <div class="card det" id="det"><h3>Details</h3><div class="empty">Select a vehicle: click its box on the video or a row above.</div></div>
   </div>
@@ -152,6 +175,110 @@ function vehicleImg(d) {
 }
 const plateText = d => d.plate && d.plate.fused ? d.plate.fused : "";
 
+// ---------------------------------------------------------------- live playback
+// The analysis is finished before playback; live mode REVEALS it in step with the video:
+//   tracking (box only) -> reading (each per-frame plate read appears at its frame) -> checking registry
+//   (shortly after the vehicle's last read) -> decided (final colour, fused plate, candidates).
+// Nothing is recomputed in the browser: every plate text and decision shown is the pipeline's own output.
+const READ_C = "#0ea5e9", CHECK_C = "#a855f7";
+const isLive = () => $("live").checked;
+let STAGE = new Map(), EV = [], shownEv = -1, POST = 0, POST_MAX = 0, postTimer = null;
+function vframe() {   // "virtual" frame: past the end during the post-roll
+  const f = frameNow();
+  return f >= R.video.frames - 1 ? f + POST : f;
+}
+function onEnded() {
+  if (!isLive() || POST_MAX <= 0) return;
+  const t0 = performance.now(), ms = POST_MAX / FPS * 1000;
+  cancelAnimationFrame(postTimer);
+  const step = now => {
+    POST = Math.min(POST_MAX, Math.round((now - t0) / ms * POST_MAX)); paint();
+    if (POST < POST_MAX) postTimer = requestAnimationFrame(step);
+  };
+  postTimer = requestAnimationFrame(step);
+}
+function resetPost() { cancelAnimationFrame(postTimer); POST = 0; }
+function buildStages() {
+  // stage times may run past the last frame: the video then holds its final frame while a short post-roll
+  // plays the remaining "checking registry" -> decision steps (see onEnded)
+  const delay = Math.round(0.3 * FPS), dur = Math.round(0.9 * FPS);
+  for (const d of VEH) {
+    const rs = reads(d).map(r => r.frame);
+    if (!rs.length) { STAGE.set(d, null); continue; }
+    const first = Math.min(...rs), last = Math.max(...rs);
+    STAGE.set(d, {first, last, check: last + delay, decide: last + delay + dur});
+  }
+  POST_MAX = Math.max(0, ...[...STAGE.values()].filter(Boolean).map(s => s.decide - (R.video.frames - 1)));
+  EV = [];
+  for (const d of VEH) {
+    const s = STAGE.get(d);
+    if (!s) continue;  // only vehicles with plate evidence get feed entries (busy clips stay readable)
+    EV.push({f: d.first_frame, k: "enter", d});
+    for (const r of reads(d)) EV.push({f: r.frame, k: "read", d, r});
+    EV.push({f: s.check, k: "check", d});
+    EV.push({f: s.decide, k: "decide", d});
+  }
+  const order = {enter: 0, read: 1, check: 2, decide: 3};
+  EV.sort((a, b) => a.f - b.f || order[a.k] - order[b.k]);
+}
+function phase(d, f) {
+  if (!isLive()) return "decided";
+  const s = STAGE.get(d);
+  if (!s || f < s.first) return "tracking";
+  if (f < s.check) return "reading";
+  if (f < s.decide) return "checking";
+  return "decided";
+}
+const readsSoFar = (d, f) => reads(d).filter(r => r.frame <= f).sort((a, b) => a.frame - b.frame);
+function colourAt(d, f) {
+  const p = phase(d, f);
+  return p === "tracking" ? css("--none") : p === "reading" ? READ_C : p === "checking" ? CHECK_C : decColour(d);
+}
+function rowState(d, f) {   // what the vehicle list may show at frame f
+  const p = phase(d, f), so = readsSoFar(d, f);
+  if (p === "tracking") return {col: css("--none"), badge: STAGE.get(d) ? "tracking" : "no plate", plate: ""};
+  if (p === "reading") return {col: READ_C, badge: `reading (${so.length})`, plate: so.length ? so[so.length - 1].text : ""};
+  if (p === "checking") return {col: CHECK_C, badge: "checking registry…", plate: plateText(d)};
+  return {col: decColour(d), badge: decLabel(d), plate: plateText(d) || (reads(d).length ? "…" : "")};
+}
+function evHtml(e, isNew) {
+  const d = e.d, id = `#${d.track_id}`, t = (e.f / FPS).toFixed(1) + "s";
+  let ic, tx, img = "";
+  if (e.k === "enter") { ic = css("--none"); tx = `${id} ${esc(d.type.label)} tracked`; }
+  else if (e.k === "read") {
+    ic = READ_C; const src = crop(d, "plate", e.r.frame); if (src) img = `<img src="${src}" alt="">`;
+    tx = `${id} plate read <b>${esc(e.r.text || "∅")}</b> <span style="color:var(--muted)">f${e.r.frame} · ${e.r.height_px}px</span>`;
+  } else if (e.k === "check") { ic = CHECK_C; tx = `${id} checking registry with fused plate <b>${esc(plateText(d) || "?")}</b>…`; }
+  else {
+    ic = decColour(d); const c = (d.candidates || [])[0];
+    tx = d.decision === "match" && c ? `${id} <b style="color:${css("--match")}">MATCH</b> → <b>${esc(c.registration_number)}</b> (match score ${c.match_score.toFixed(1)})`
+                                     : `${id} <b>${esc(decLabel(d))}</b>: ${esc(d.decision_reason || "")}`;
+  }
+  return `<div class="ev${isNew ? " new" : ""}" data-id="${d.track_id}" data-f="${e.f}"><span class="ts">${t}</span><span class="ic" style="background:${ic}"></span>${img}<span class="tx">${tx}</span></div>`;
+}
+function renderFeed(f) {
+  const feed = $("feed");
+  feed.style.display = isLive() ? "" : "none";
+  if (!isLive()) return;
+  let n = 0; while (n < EV.length && EV[n].f <= f) n++;
+  if (n === shownEv) return;
+  const grew = n > shownEv && shownEv >= 0 && n - shownEv <= 3;
+  const items = EV.slice(0, n).reverse().slice(0, 80);
+  feed.innerHTML = `<h3>Live feed <span class="live">● LIVE</span></h3>` +
+    (items.length ? items.map((e, i) => evHtml(e, grew && i < n - shownEv)).join("")
+                  : `<div class="empty">Press Play: tracking, plate reads and registry checks appear here as the video reaches them.</div>`);
+  feed.querySelectorAll(".ev").forEach(el => el.onclick = () => {
+    select(VEH.find(x => x.track_id === +el.dataset.id)); seekFrame(+el.dataset.f);
+  });
+  shownEv = n;
+}
+let lastSig = "";
+function syncPhases(f) {     // re-render list / details only when some vehicle changes stage
+  const sig = VEH.map(d => phase(d, f)[0] + (phase(d, f) === "reading" ? readsSoFar(d, f).length : "")).join("");
+  if (sig === lastSig) return;
+  lastSig = sig; renderList(); if (sel) renderDetails();
+}
+
 async function init() {
   try {
     [R, FILES] = await Promise.all([
@@ -169,7 +296,7 @@ async function init() {
   v.src = `${BASE}/video`;
   v.addEventListener("loadedmetadata", () => { fit(); drawTimeline(); paint(); });
   new ResizeObserver(fit).observe($("stage"));
-  renderList(); tick();
+  buildStages(); applyLiveUi(); renderList(); tick();
 }
 
 function fit() {
@@ -186,7 +313,7 @@ function visible(d) { return !$("onlyPlates").checked || d.decision === "match" 
 
 function paint() {
   if (!R) return;
-  const f = frameNow(); curFrame = f;
+  const f = frameNow(), vf = vframe(); curFrame = f;
   const W = cv.width, H = cv.height, sx = W / R.video.width, sy = H / R.video.height;
   const dpr = window.devicePixelRatio || 1;
   ctx.clearRect(0, 0, W, H);
@@ -196,15 +323,22 @@ function paint() {
   for (const d of order) {
     const b = boxAt(d, f); if (!b) continue; live.add(d.track_id);
     const x = b[0] * sx, y = b[1] * sy, w = (b[2] - b[0]) * sx, h = (b[3] - b[1]) * sy;
-    const col = decColour(d), isSel = d === sel;
+    const col = colourAt(d, vf), isSel = d === sel, ph = phase(d, vf);
     if (sel && !isSel) ctx.globalAlpha = .45;
     ctx.lineWidth = (isSel ? 3.5 : 2) * dpr; ctx.strokeStyle = col; ctx.strokeRect(x, y, w, h);
     if (isSel) { ctx.lineWidth = 1 * dpr; ctx.strokeStyle = "#fff"; ctx.strokeRect(x - 2.5 * dpr, y - 2.5 * dpr, w + 5 * dpr, h + 5 * dpr); }
     const usedNow = reads(d).some(r => Math.abs(r.frame - f) <= 1);
     // full label for the selected vehicle and vehicles with plate evidence; just the id otherwise (busy frames stay readable)
     const rich = isSel || d.decision === "match" || reads(d).length;
-    const label = rich ? `#${d.track_id} ${d.type.label}${plateText(d) ? " · " + plateText(d) : ""}${usedNow ? "  ◉ reading plate" : ""}`
-                       : `#${d.track_id}`;
+    let label;
+    if (!rich) label = `#${d.track_id}`;
+    else if (ph === "tracking") label = `#${d.track_id} ${d.type.label}`;
+    else if (ph === "reading") {
+      const so = readsSoFar(d, vf);
+      label = `#${d.track_id} ${d.type.label} · ${usedNow ? "◉ reading plate" : "read"}: ${so.length ? so[so.length - 1].text : "…"} (${so.length})`;
+    } else if (ph === "checking") label = `#${d.track_id} · ${plateText(d)} · checking registry…`;
+    else label = `#${d.track_id} ${d.type.label}${plateText(d) ? " · " + plateText(d) : ""}` +
+                 (isLive() && STAGE.get(d) ? (d.decision === "match" ? "  ✔ MATCH" : "  ✖ no match") : (usedNow ? "  ◉ reading plate" : ""));
     const tw = ctx.measureText(label).width + 10 * dpr, th = 17 * dpr, ly = y - th < 0 ? y + th : y;
     const lx = Math.max(0, Math.min(x - ctx.lineWidth / 2, W - tw));  // keep the label inside the video
     ctx.fillStyle = col; ctx.fillRect(lx, ly - th, tw, th);
@@ -213,16 +347,21 @@ function paint() {
   }
   $("fr").textContent = `frame ${f} / ${R.video.frames - 1} · ${v.currentTime.toFixed(2)} s`;
   document.querySelectorAll(".row").forEach(el => el.classList.toggle("live", live.has(+el.dataset.id)));
-  document.querySelectorAll(".fcard").forEach(el => el.classList.toggle("now", Math.abs(+el.dataset.f - f) <= 1));
+  document.querySelectorAll(".fcard").forEach(el => {
+    el.classList.toggle("now", Math.abs(+el.dataset.f - f) <= 1);
+    el.classList.toggle("future", isLive() && +el.dataset.f > f);
+  });
+  renderFeed(vf); syncPhases(vf);
   const hd = $("tl").querySelector(".head"); if (hd) hd.style.left = (100 * f / Math.max(1, R.video.frames - 1)) + "%";
 }
 function tick() {
   paint();
   if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(tick); else requestAnimationFrame(tick);
 }
-v.addEventListener("seeked", paint);
+v.addEventListener("seeked", () => { if (!v.ended) resetPost(); paint(); });
 v.addEventListener("pause", () => { $("play").textContent = "▶ Play"; paint(); });
-v.addEventListener("play", () => { $("play").textContent = "❚❚ Pause"; if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(tick); });
+v.addEventListener("play", () => { resetPost(); $("play").textContent = "❚❚ Pause"; if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(tick); });
+v.addEventListener("ended", onEnded);
 
 function seekFrame(f) { v.pause(); v.currentTime = Math.max(0, (f + 0.5) / FPS); }
 $("play").onclick = () => v.paused ? v.play() : v.pause();
@@ -230,6 +369,11 @@ $("back").onclick = () => seekFrame(frameNow() - 1);
 $("fwd").onclick = () => seekFrame(frameNow() + 1);
 $("speed").onchange = e => v.playbackRate = +e.target.value;
 $("onlyPlates").onchange = () => { renderList(); drawTimeline(); paint(); };
+function applyLiveUi() {
+  document.querySelectorAll(".legend .lv").forEach(el => el.style.display = isLive() ? "" : "none");
+  document.querySelectorAll(".legend .nl").forEach(el => el.style.display = isLive() ? "none" : "");
+}
+$("live").onchange = () => { applyLiveUi(); shownEv = -1; lastSig = ""; renderList(); if (sel) renderDetails(); paint(); };
 document.addEventListener("keydown", e => {
   if (["INPUT","SELECT","BUTTON"].includes(e.target.tagName) && e.key !== " ") return;
   if (e.key === " ") { e.preventDefault(); $("play").click(); }
@@ -257,12 +401,15 @@ $("tl").addEventListener("click", e => { const r = $("tl").getBoundingClientRect
 
 function renderList() {
   const vs = VEH.filter(visible);
-  $("list").innerHTML = `<h3>Vehicles <span>${vs.length} shown · ${VEH.length} tracked</span></h3>` + vs.map(d =>
-    `<div class="row${d === sel ? " sel" : ""}" data-id="${d.track_id}">
-      <span class="dot" style="background:${decColour(d)}"></span>
+  const f = R ? vframe() : 0;
+  $("list").innerHTML = `<h3>Vehicles <span>${vs.length} shown · ${VEH.length} tracked</span></h3>` + vs.map(d => {
+    const st = rowState(d, f);
+    return `<div class="row${d === sel ? " sel" : ""}" data-id="${d.track_id}">
+      <span class="dot" style="background:${st.col}"></span>
       <span class="t">#${d.track_id} ${esc(d.type.label)} · ${esc(d.colour.label)}</span>
-      <span class="p">${esc(plateText(d) || (reads(d).length ? "…" : ""))}</span>
-      <span class="badge" style="background:${decColour(d)}">${esc(decLabel(d))}</span></div>`).join("");
+      <span class="p">${esc(st.plate)}</span>
+      <span class="badge${st.badge.startsWith("checking") ? " pulse" : ""}" style="background:${st.col}">${esc(st.badge)}</span></div>`;
+  }).join("");
   $("list").querySelectorAll(".row").forEach(el => el.onclick = () => {
     const d = VEH.find(x => x.track_id === +el.dataset.id); select(d);
     // jump to the vehicle's best plate read (largest crop), else to where it is first seen
@@ -272,22 +419,30 @@ function renderList() {
 }
 
 function select(d) {
-  sel = d; renderList(); drawTimeline(); paint();
-  const det = $("det");
-  if (!d) { det.innerHTML = `<h3>Details</h3><div class="empty">Select a vehicle: click its box on the video or a row above.</div>`; return; }
-  const p = d.plate || {}, rs = reads(d).slice().sort((a, b) => a.frame - b.frame);
-  const plateHtml = p.fused ? p.fused.split("").map(c => c === "?" ? `<span class="q">?</span>` : esc(c)).join("") : `<span style="color:var(--muted);font-size:15px;letter-spacing:0">${esc(p.status || "no plate")}</span>`;
+  sel = d; renderList(); drawTimeline(); renderDetails();
+}
+function renderDetails() {
+  const d = sel, det = $("det");
+  if (!d) { det.innerHTML = `<h3>Details</h3><div class="empty">Select a vehicle: click its box on the video or a row above.</div>`; paint(); return; }
+  const f = vframe(), ph = phase(d, f), st = rowState(d, f), done = ph === "decided" || !STAGE.get(d);
+  const p = d.plate || {}, rs = reads(d).slice().sort((a, b) => a.frame - b.frame), so = readsSoFar(d, f);
+  let plateHtml;
+  if (ph === "reading") plateHtml = `<span style="color:${READ_C}">${esc(so.length ? so[so.length - 1].text : "…")}</span>`;
+  else if (ph === "tracking") plateHtml = `<span style="color:var(--muted);font-size:15px;letter-spacing:0">${STAGE.get(d) ? "not read yet" : esc(p.status || "no plate")}</span>`;
+  else plateHtml = p.fused ? p.fused.split("").map(c => c === "?" ? `<span class="q">?</span>` : esc(c)).join("") : `<span style="color:var(--muted);font-size:15px;letter-spacing:0">${esc(p.status || "no plate")}</span>`;
+  const sub = ph === "reading" ? `latest single-frame read · ${so.length} of ${rs.length} reads so far (fused plate appears at the registry check)`
+            : ph === "tracking" ? "" : (p.fused ? `fused from ${rs.length} frame read${rs.length === 1 ? "" : "s"}` + (p.unknown_positions && p.unknown_positions.length ? ` · unreadable position(s) ${p.unknown_positions.join(", ")} kept as ?` : "") : "");
   const vimg = vehicleImg(d);
-  let h = `<h3><span class="dot" style="background:${decColour(d)}"></span>Vehicle #${d.track_id}
-     <span class="badge" style="background:${decColour(d)};margin-left:auto">${esc(decLabel(d))}</span></h3><div class="body">
+  let h = `<h3><span class="dot" style="background:${st.col}"></span>Vehicle #${d.track_id}
+     <span class="badge${ph === "checking" ? " pulse" : ""}" style="background:${st.col};margin-left:auto">${esc(st.badge)}</span></h3><div class="body">
     ${vimg ? `<img class="veh" src="${vimg}" alt="vehicle #${d.track_id}">` : ""}
     <div class="plate">${plateHtml}</div>
-    <div class="sub">${p.fused ? `fused from ${rs.length} frame read${rs.length === 1 ? "" : "s"}` + (p.unknown_positions && p.unknown_positions.length ? ` · unreadable position(s) ${p.unknown_positions.join(", ")} kept as ?` : "") : ""}</div>
+    <div class="sub">${sub}</div>
     <div class="kv">
       <b>Type</b><span>${esc(d.type.label)} <span style="color:var(--muted)">(vote ${Math.round(100 * (d.type.vote_share || 0))}%, detector ${(d.type.detector_conf_mean || 0).toFixed(2)})</span></span>
       <b>Colour</b><span>${esc(d.colour.label)} <span style="color:var(--muted)">(confidence ${(d.colour.confidence || 0).toFixed(2)}${d.colour.note ? " · " + esc(d.colour.note) : ""})</span></span>
       <b>Seen</b><span>frames ${d.first_frame}–${d.last_frame} (${(d.first_frame / FPS).toFixed(1)}–${(d.last_frame / FPS).toFixed(1)} s)</span>
-      <b>Decision</b><span>${esc(d.decision_reason || "")}</span>
+      ${done ? `<b>Decision</b><span>${esc(d.decision_reason || "")}</span>` : ""}
     </div>`;
   if (rs.length) {
     h += `<h4>Frames picked for plate reading (${rs.length})</h4><div class="frames">` + rs.map(r => {
@@ -302,7 +457,11 @@ function select(d) {
     h += `<div class="note">No plate was read for this vehicle${p.plates_detected ? ` (${p.plates_detected} plate detection(s), all too small or unreadable)` : ""}.</div>`;
   }
   const cs = d.candidates || [];
-  if (cs.length) {
+  if (!done && STAGE.get(d)) {
+    h += `<h4>Registry</h4><div class="pending${ph === "checking" ? " pulse" : ""}">${ph === "checking"
+      ? `Checking the registry with <b style="font-family:var(--mono)">${esc(plateText(d))}</b> plus type and colour…`
+      : "The registry is checked after the vehicle's last plate read. Keep playing."}</div>`;
+  } else if (cs.length) {
     h += `<h4>Registry candidates (match score, not a probability)</h4>` + cs.slice(0, 5).map(c => `
       <div class="cand"><div class="top"><span>#${c.rank}</span><span class="reg">${esc(c.registration_number)}</span>
         <div class="bar"><div style="width:${Math.max(0, Math.min(100, c.match_score))}%"></div></div><b>${c.match_score.toFixed(1)}</b></div>
