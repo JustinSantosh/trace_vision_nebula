@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "tracevision-app",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "tracevision.api"],
+      "port": 8000
+    }
+  ]
+}
