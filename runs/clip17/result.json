@@ -7,7 +7,7 @@
     "height": 478,
     "frames": 253
   },
-  "processed_at": "2026-11-23T11:33:36",
+  "processed_at": "2026-11-23T11:55:02",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -25,6 +25,9 @@
       "verify_samples": 6,
       "verify_min_iou": 0.3,
       "verify_min_share": 0.34,
+      "ensemble_coco": true,
+      "ensemble_match_iou": 0.5,
+      "ensemble_new_conf": 0.5,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -59,18 +62,24 @@
     "raw_tracks": 7,
     "kept_tracks": 4,
     "dropped_unverified_large": [],
+    "coco_ensemble": {
+      "coco_tracks": 4,
+      "attached_to_uvh": 4,
+      "added_coco_only": []
+    },
     "vehicles_after_relink": 4,
     "plates_read": 2,
     "decisions": {
-      "no_confident_match": 4
+      "no_confident_match": 3,
+      "match": 1
     }
   },
   "timing": {
-    "detect_track_s": 1.7,
-    "plates_s": 0.5,
-    "ocr_s": 0.2,
-    "assemble_s": 0.1,
-    "total_s": 3.0
+    "detect_track_s": 9.1,
+    "plates_s": 1.1,
+    "ocr_s": 0.6,
+    "assemble_s": 0.3,
+    "total_s": 12.0
   },
   "vehicles": [
     {
@@ -289,7 +298,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.384
+        "detector_conf_mean": 0.384,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "unknown",
@@ -403,426 +413,720 @@
       "candidates": []
     },
     {
-      "track_id": 14,
-      "merged_track_ids": [
-        14
-      ],
-      "first_frame": 176,
-      "last_frame": 252,
-      "first_time_s": 2.94,
-      "n_detections": 10,
-      "first_box": [
-        576,
-        34,
-        757,
-        289
-      ],
-      "track": [
-        [
-          176,
-          576,
-          34,
-          757,
-          289
-        ],
-        [
-          178,
-          579,
-          43,
-          757,
-          292
-        ],
-        [
-          238,
-          637,
-          114,
-          802,
-          317
-        ],
-        [
-          240,
-          633,
-          116,
-          808,
-          317
-        ],
-        [
-          242,
-          629,
-          117,
-          812,
-          317
-        ],
-        [
-          244,
-          625,
-          116,
-          814,
-          317
-        ],
-        [
-          246,
-          622,
-          116,
-          815,
-          317
-        ],
-        [
-          248,
-          621,
-          117,
-          817,
-          317
-        ],
-        [
-          250,
-          620,
-          117,
-          818,
-          317
-        ],
-        [
-          252,
-          618,
-          116,
-          821,
-          317
-        ]
-      ],
-      "type": {
-        "label": "motorcycle/scooter",
-        "vote_share": 0.811,
-        "detector_conf_mean": 0.418
-      },
-      "colour": {
-        "label": "green",
-        "confidence": 0.247,
-        "per_frame": [
-          "blue",
-          "green",
-          "grey"
-        ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
-      },
-      "plate": {
-        "status": "read",
-        "fused": "??????K1578",
-        "unknown_positions": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6
-        ],
-        "positions": [
-          {
-            "pos": 1,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5393,
-            "support": 2,
-            "best_candidate": "U",
-            "frames": []
-          },
-          {
-            "pos": 2,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.2802,
-            "support": 3,
-            "best_candidate": "H",
-            "frames": []
-          },
-          {
-            "pos": 3,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.2371,
-            "support": 4,
-            "best_candidate": "0",
-            "frames": []
-          },
-          {
-            "pos": 4,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.7306,
-            "support": 4,
-            "best_candidate": "0",
-            "frames": []
-          },
-          {
-            "pos": 5,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.002,
-            "support": 4,
-            "best_candidate": "O",
-            "frames": []
-          },
-          {
-            "pos": 6,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5454,
-            "support": 4,
-            "best_candidate": "D",
-            "frames": []
-          },
-          {
-            "pos": 7,
-            "char": "K",
-            "confidence": 0.9698,
-            "share": 0.9768,
-            "support": 4,
-            "best_candidate": "K",
-            "frames": [
-              240,
-              244,
-              248,
-              252
-            ]
-          },
-          {
-            "pos": 8,
-            "char": "1",
-            "confidence": 0.9979,
-            "share": 0.999,
-            "support": 4,
-            "best_candidate": "1",
-            "frames": [
-              240,
-              244,
-              248,
-              252
-            ]
-          },
-          {
-            "pos": 9,
-            "char": "5",
-            "confidence": 0.8707,
-            "share": 0.8837,
-            "support": 4,
-            "best_candidate": "5",
-            "frames": [
-              240,
-              244,
-              248,
-              252
-            ]
-          },
-          {
-            "pos": 10,
-            "char": "7",
-            "confidence": 0.9952,
-            "share": 0.9963,
-            "support": 4,
-            "best_candidate": "7",
-            "frames": [
-              240,
-              244,
-              248,
-              252
-            ]
-          },
-          {
-            "pos": 11,
-            "char": "8",
-            "confidence": 0.9592,
-            "share": 0.8348,
-            "support": 4,
-            "best_candidate": "8",
-            "frames": [
-              244,
-              248,
-              252
-            ]
-          }
-        ],
-        "warnings": [
-          "reads disagree on length [9, 10, 11]; aligned to 11 characters"
-        ],
-        "per_frame_reads": [
-          {
-            "frame": 240,
-            "text": "D04CK1570",
-            "height_px": 35,
-            "quality": 0.914,
-            "char_probs": [
-              0.2661,
-              0.8661,
-              0.6487,
-              0.8285,
-              0.9558,
-              0.9994,
-              0.9214,
-              0.9911,
-              0.5292
-            ]
-          },
-          {
-            "frame": 244,
-            "text": "UPD04DK1578",
-            "height_px": 34,
-            "quality": 0.902,
-            "char_probs": [
-              0.4838,
-              0.219,
-              0.663,
-              0.5839,
-              0.8339,
-              0.6787,
-              0.9809,
-              0.9977,
-              0.9842,
-              0.9957,
-              0.986
-            ]
-          },
-          {
-            "frame": 248,
-            "text": "UHS04DK1578",
-            "height_px": 34,
-            "quality": 0.902,
-            "char_probs": [
-              0.2656,
-              0.3077,
-              0.6812,
-              0.3711,
-              0.6684,
-              0.7487,
-              0.9878,
-              0.997,
-              0.9254,
-              0.9984,
-              0.9628
-            ]
-          },
-          {
-            "frame": 252,
-            "text": "CH04DK1578",
-            "height_px": 34,
-            "quality": 0.9,
-            "char_probs": [
-              0.3035,
-              0.2316,
-              0.5029,
-              0.9451,
-              0.5384,
-              0.955,
-              0.9973,
-              0.6506,
-              0.9958,
-              0.9288
-            ]
-          }
-        ],
-        "plates_detected": 4
-      },
-      "decision": "no_confident_match",
-      "decision_reason": "best match score 46.7 is below the threshold 67.5",
-      "candidates": [
-        {
-          "rank": 1,
-          "synthetic_vehicle_id": "SV725737",
-          "registration_number": "CG04DK1578",
-          "match_score": 46.7,
-          "plate_score": 0.453,
-          "colour_score": 0.0,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 5 of 5 readable characters match exactly; 6 unreadable",
-            "plate differs from CG04DK1578 (edit cost 1.0)",
-            "colour conflict: observed green, registry blue",
-            "type motorcycle matches"
-          ]
-        },
-        {
-          "rank": 2,
-          "synthetic_vehicle_id": "SV873861",
-          "registration_number": "CG04DH1578",
-          "match_score": 46.7,
-          "plate_score": 0.453,
-          "colour_score": 0.0,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 4 of 5 readable characters match exactly; 6 unreadable",
-            "plate differs from CG04DH1578 (edit cost 1.0)",
-            "colour conflict: observed green, registry blue",
-            "type motorcycle matches"
-          ]
-        },
-        {
-          "rank": 3,
-          "synthetic_vehicle_id": "SV207526",
-          "registration_number": "CG04DK1278",
-          "match_score": 32.8,
-          "plate_score": 0.255,
-          "colour_score": 0.0,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 4 of 5 readable characters match exactly; 6 unreadable",
-            "plate differs from CG04DK1278 (edit cost 2.0)",
-            "colour conflict: observed green, registry blue",
-            "type scooter matches"
-          ]
-        },
-        {
-          "rank": 4,
-          "synthetic_vehicle_id": "SV658848",
-          "registration_number": "MP10ME1576",
-          "match_score": 32.8,
-          "plate_score": 0.255,
-          "colour_score": 0.0,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 3 of 5 readable characters match exactly; 6 unreadable",
-            "plate differs from MP10ME1576 (edit cost 2.0)",
-            "colour conflict: observed green, registry white",
-            "type motorcycle matches"
-          ]
-        },
-        {
-          "rank": 5,
-          "synthetic_vehicle_id": "SV255991",
-          "registration_number": "DL06WP1573",
-          "match_score": 17.8,
-          "plate_score": 0.255,
-          "colour_score": 0.0,
-          "type_score": 0.0,
-          "reasons": [
-            "plate: 3 of 5 readable characters match exactly; 6 unreadable",
-            "plate differs from DL06WP1573 (edit cost 2.0)",
-            "colour conflict: observed green, registry brown",
-            "type conflict: observed motorcycle/scooter, registry SUV"
-          ]
-        }
-      ]
-    },
-    {
       "track_id": 16,
       "merged_track_ids": [
         16
       ],
-      "first_frame": 186,
+      "first_frame": 0,
       "last_frame": 252,
-      "first_time_s": 3.11,
-      "n_detections": 27,
+      "first_time_s": 0.0,
+      "n_detections": 127,
       "first_box": [
-        548,
-        74,
-        700,
-        280
+        557,
+        105,
+        847,
+        397
       ],
       "track": [
+        [
+          0,
+          557,
+          105,
+          847,
+          397
+        ],
+        [
+          2,
+          557,
+          106,
+          846,
+          397
+        ],
+        [
+          4,
+          557,
+          106,
+          846,
+          397
+        ],
+        [
+          6,
+          557,
+          106,
+          846,
+          397
+        ],
+        [
+          8,
+          557,
+          106,
+          846,
+          397
+        ],
+        [
+          10,
+          557,
+          105,
+          846,
+          397
+        ],
+        [
+          12,
+          557,
+          106,
+          846,
+          396
+        ],
+        [
+          14,
+          556,
+          105,
+          846,
+          396
+        ],
+        [
+          16,
+          556,
+          104,
+          846,
+          396
+        ],
+        [
+          18,
+          556,
+          102,
+          847,
+          395
+        ],
+        [
+          20,
+          556,
+          102,
+          847,
+          395
+        ],
+        [
+          22,
+          555,
+          103,
+          847,
+          395
+        ],
+        [
+          24,
+          555,
+          102,
+          845,
+          394
+        ],
+        [
+          26,
+          552,
+          100,
+          845,
+          394
+        ],
+        [
+          28,
+          548,
+          93,
+          846,
+          392
+        ],
+        [
+          30,
+          546,
+          91,
+          843,
+          389
+        ],
+        [
+          32,
+          545,
+          88,
+          842,
+          385
+        ],
+        [
+          34,
+          544,
+          83,
+          842,
+          381
+        ],
+        [
+          36,
+          544,
+          80,
+          841,
+          375
+        ],
+        [
+          38,
+          539,
+          77,
+          834,
+          371
+        ],
+        [
+          40,
+          541,
+          75,
+          835,
+          368
+        ],
+        [
+          42,
+          541,
+          71,
+          837,
+          364
+        ],
+        [
+          44,
+          537,
+          67,
+          834,
+          362
+        ],
+        [
+          46,
+          538,
+          63,
+          836,
+          360
+        ],
+        [
+          48,
+          538,
+          62,
+          836,
+          359
+        ],
+        [
+          50,
+          539,
+          61,
+          838,
+          358
+        ],
+        [
+          52,
+          538,
+          57,
+          840,
+          357
+        ],
+        [
+          54,
+          539,
+          58,
+          840,
+          357
+        ],
+        [
+          56,
+          539,
+          60,
+          838,
+          356
+        ],
+        [
+          58,
+          536,
+          46,
+          848,
+          363
+        ],
+        [
+          60,
+          529,
+          28,
+          848,
+          371
+        ],
+        [
+          62,
+          532,
+          20,
+          848,
+          370
+        ],
+        [
+          64,
+          535,
+          12,
+          848,
+          371
+        ],
+        [
+          66,
+          538,
+          9,
+          848,
+          375
+        ],
+        [
+          68,
+          541,
+          4,
+          848,
+          380
+        ],
+        [
+          70,
+          559,
+          15,
+          848,
+          360
+        ],
+        [
+          72,
+          564,
+          15,
+          848,
+          361
+        ],
+        [
+          74,
+          565,
+          9,
+          848,
+          365
+        ],
+        [
+          76,
+          575,
+          4,
+          848,
+          344
+        ],
+        [
+          78,
+          580,
+          1,
+          848,
+          338
+        ],
+        [
+          80,
+          585,
+          1,
+          848,
+          335
+        ],
+        [
+          82,
+          590,
+          0,
+          848,
+          327
+        ],
+        [
+          84,
+          589,
+          0,
+          848,
+          340
+        ],
+        [
+          86,
+          598,
+          0,
+          848,
+          323
+        ],
+        [
+          88,
+          599,
+          0,
+          848,
+          326
+        ],
+        [
+          90,
+          602,
+          0,
+          848,
+          326
+        ],
+        [
+          92,
+          601,
+          0,
+          848,
+          339
+        ],
+        [
+          94,
+          604,
+          2,
+          848,
+          345
+        ],
+        [
+          96,
+          610,
+          2,
+          848,
+          338
+        ],
+        [
+          98,
+          618,
+          2,
+          848,
+          328
+        ],
+        [
+          100,
+          618,
+          0,
+          848,
+          340
+        ],
+        [
+          102,
+          624,
+          0,
+          848,
+          333
+        ],
+        [
+          104,
+          623,
+          0,
+          848,
+          345
+        ],
+        [
+          106,
+          629,
+          1,
+          848,
+          340
+        ],
+        [
+          108,
+          634,
+          0,
+          848,
+          333
+        ],
+        [
+          110,
+          640,
+          0,
+          848,
+          328
+        ],
+        [
+          112,
+          642,
+          0,
+          848,
+          331
+        ],
+        [
+          114,
+          646,
+          0,
+          848,
+          327
+        ],
+        [
+          116,
+          651,
+          0,
+          848,
+          323
+        ],
+        [
+          118,
+          653,
+          1,
+          848,
+          324
+        ],
+        [
+          120,
+          655,
+          1,
+          848,
+          324
+        ],
+        [
+          122,
+          655,
+          1,
+          848,
+          326
+        ],
+        [
+          124,
+          656,
+          1,
+          848,
+          326
+        ],
+        [
+          126,
+          657,
+          1,
+          848,
+          321
+        ],
+        [
+          128,
+          657,
+          1,
+          848,
+          317
+        ],
+        [
+          130,
+          655,
+          0,
+          848,
+          319
+        ],
+        [
+          132,
+          655,
+          0,
+          848,
+          318
+        ],
+        [
+          134,
+          654,
+          1,
+          848,
+          319
+        ],
+        [
+          136,
+          654,
+          1,
+          848,
+          320
+        ],
+        [
+          138,
+          652,
+          1,
+          848,
+          325
+        ],
+        [
+          140,
+          651,
+          1,
+          848,
+          327
+        ],
+        [
+          142,
+          648,
+          1,
+          848,
+          330
+        ],
+        [
+          144,
+          647,
+          1,
+          844,
+          323
+        ],
+        [
+          146,
+          632,
+          2,
+          848,
+          365
+        ],
+        [
+          148,
+          634,
+          5,
+          846,
+          350
+        ],
+        [
+          150,
+          630,
+          7,
+          846,
+          360
+        ],
+        [
+          152,
+          625,
+          3,
+          847,
+          367
+        ],
+        [
+          154,
+          622,
+          3,
+          846,
+          368
+        ],
+        [
+          156,
+          618,
+          3,
+          844,
+          369
+        ],
+        [
+          158,
+          622,
+          2,
+          837,
+          347
+        ],
+        [
+          160,
+          622,
+          1,
+          834,
+          333
+        ],
+        [
+          162,
+          624,
+          1,
+          828,
+          315
+        ],
+        [
+          164,
+          620,
+          3,
+          828,
+          318
+        ],
+        [
+          166,
+          610,
+          3,
+          832,
+          335
+        ],
+        [
+          168,
+          605,
+          4,
+          832,
+          338
+        ],
+        [
+          170,
+          598,
+          8,
+          833,
+          348
+        ],
+        [
+          172,
+          594,
+          14,
+          833,
+          355
+        ],
+        [
+          174,
+          587,
+          8,
+          837,
+          363
+        ],
+        [
+          176,
+          584,
+          15,
+          836,
+          371
+        ],
+        [
+          178,
+          577,
+          9,
+          839,
+          376
+        ],
+        [
+          180,
+          574,
+          12,
+          838,
+          378
+        ],
+        [
+          182,
+          573,
+          19,
+          833,
+          374
+        ],
+        [
+          184,
+          572,
+          26,
+          828,
+          369
+        ],
         [
           186,
           548,
           74,
           700,
           280
+        ],
+        [
+          188,
+          569,
+          35,
+          821,
+          357
+        ],
+        [
+          190,
+          569,
+          49,
+          814,
+          352
+        ],
+        [
+          192,
+          567,
+          58,
+          810,
+          347
+        ],
+        [
+          194,
+          547,
+          65,
+          782,
+          343
+        ],
+        [
+          196,
+          560,
+          75,
+          793,
+          338
+        ],
+        [
+          198,
+          533,
+          88,
+          750,
+          332
         ],
         [
           200,
@@ -865,6 +1169,13 @@
           130,
           679,
           305
+        ],
+        [
+          212,
+          560,
+          107,
+          772,
+          318
         ],
         [
           214,
@@ -1010,305 +1321,324 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.675
+        "detector_conf_mean": 0.675,
+        "source": "UVH-26"
       },
       "colour": {
-        "label": "unknown",
-        "confidence": 0.0,
+        "label": "blue",
+        "confidence": 0.291,
         "per_frame": [
-          "black",
-          "black",
-          "black"
+          "blue",
+          "blue",
+          "green"
         ],
-        "note": "too dark to judge colour"
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "read",
-        "fused": "????D?1?7?",
+        "fused": "??0??K1578",
         "unknown_positions": [
           1,
           2,
-          3,
           4,
-          6,
-          8,
-          10
+          5
         ],
         "positions": [
           {
             "pos": 1,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.3908,
-            "support": 5,
-            "best_candidate": "T",
+            "share": 0.7015,
+            "support": 3,
+            "best_candidate": "C",
             "frames": []
           },
           {
             "pos": 2,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.4085,
+            "share": 0.3815,
             "support": 5,
-            "best_candidate": "S",
+            "best_candidate": "G",
             "frames": []
           },
           {
             "pos": 3,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.9133,
+            "char": "0",
+            "confidence": 0.9176,
+            "share": 0.9727,
             "support": 5,
             "best_candidate": "0",
-            "frames": []
+            "frames": [
+              34,
+              30,
+              48,
+              52,
+              56
+            ]
           },
           {
             "pos": 4,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.7502,
+            "share": 0.822,
             "support": 5,
             "best_candidate": "4",
             "frames": []
           },
           {
             "pos": 5,
-            "char": "D",
-            "confidence": 0.8162,
-            "share": 0.7594,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.6755,
             "support": 5,
             "best_candidate": "D",
-            "frames": [
-              230,
-              234,
-              250,
-              246
-            ]
+            "frames": []
           },
           {
             "pos": 6,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.8114,
+            "char": "K",
+            "confidence": 0.9593,
+            "share": 0.9734,
             "support": 5,
             "best_candidate": "K",
-            "frames": []
+            "frames": [
+              34,
+              30,
+              48,
+              52,
+              56
+            ]
           },
           {
             "pos": 7,
             "char": "1",
-            "confidence": 0.9972,
-            "share": 0.9977,
+            "confidence": 0.9997,
+            "share": 0.9998,
             "support": 5,
             "best_candidate": "1",
             "frames": [
-              230,
-              234,
-              238,
-              250,
-              246
+              34,
+              30,
+              48,
+              52,
+              56
             ]
           },
           {
             "pos": 8,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.8122,
+            "char": "5",
+            "confidence": 0.9891,
+            "share": 0.991,
             "support": 5,
             "best_candidate": "5",
-            "frames": []
+            "frames": [
+              34,
+              30,
+              48,
+              52,
+              56
+            ]
           },
           {
             "pos": 9,
             "char": "7",
-            "confidence": 0.9252,
-            "share": 0.9392,
+            "confidence": 0.9942,
+            "share": 0.9947,
             "support": 5,
             "best_candidate": "7",
             "frames": [
-              230,
-              234,
-              238,
-              250,
-              246
+              34,
+              30,
+              48,
+              52,
+              56
             ]
           },
           {
             "pos": 10,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5321,
+            "char": "8",
+            "confidence": 0.8964,
+            "share": 0.6151,
             "support": 5,
             "best_candidate": "8",
-            "frames": []
+            "frames": [
+              34,
+              30,
+              48
+            ]
           }
         ],
-        "warnings": [],
+        "warnings": [
+          "reads disagree on length [9, 10]; aligned to 10 characters"
+        ],
         "per_frame_reads": [
           {
-            "frame": 230,
-            "text": "TS09DK1578",
-            "height_px": 37,
-            "quality": 0.936,
+            "frame": 34,
+            "text": "CJ04DK1578",
+            "height_px": 46,
+            "quality": 0.978,
             "char_probs": [
-              0.8045,
-              0.8498,
-              0.8046,
-              0.5149,
-              0.4219,
-              0.5992,
-              0.9984,
-              0.9693,
-              0.8255,
-              0.5326
-            ]
-          },
-          {
-            "frame": 234,
-            "text": "DH04DK1570",
-            "height_px": 37,
-            "quality": 0.936,
-            "char_probs": [
-              0.3773,
-              0.2624,
-              0.6263,
-              0.3222,
-              0.9667,
-              0.5881,
-              0.9957,
-              0.8666,
-              0.9818,
-              0.7741
-            ]
-          },
-          {
-            "frame": 238,
-            "text": "UH04GK1570",
-            "height_px": 36,
-            "quality": 0.924,
-            "char_probs": [
-              0.2667,
-              0.2923,
-              0.5666,
-              0.8225,
-              0.4405,
-              0.8955,
+              0.6535,
+              0.7174,
+              0.9219,
+              0.7621,
+              0.4355,
+              0.9868,
+              0.9996,
               0.995,
-              0.6062,
-              0.8335,
-              0.6117
+              0.9951,
+              0.796
             ]
           },
           {
-            "frame": 250,
-            "text": "DL04DK1578",
-            "height_px": 35,
-            "quality": 0.915,
+            "frame": 30,
+            "text": "CG04QK1578",
+            "height_px": 47,
+            "quality": 0.976,
             "char_probs": [
-              0.7063,
-              0.6628,
-              0.8818,
-              0.7312,
-              0.9759,
-              0.9582,
+              0.3968,
+              0.6932,
+              0.9445,
+              0.4709,
+              0.441,
+              0.8332,
+              0.9997,
+              0.9824,
+              0.9901,
+              0.9065
+            ]
+          },
+          {
+            "frame": 48,
+            "text": "CG04DK1578",
+            "height_px": 48,
+            "quality": 0.975,
+            "char_probs": [
+              0.5435,
+              0.9559,
+              0.7718,
+              0.751,
+              0.6054,
+              0.9936,
+              0.9996,
+              0.9772,
+              0.9875,
+              0.9869
+            ]
+          },
+          {
+            "frame": 52,
+            "text": "D04DK1574",
+            "height_px": 47,
+            "quality": 0.975,
+            "char_probs": [
+              0.4857,
+              0.9845,
+              0.9694,
+              0.9767,
+              0.988,
               0.9998,
-              0.5509,
-              0.9931,
-              0.9537
+              0.9958,
+              0.9993,
+              0.8041
             ]
           },
           {
-            "frame": 246,
-            "text": "TS04DK1578",
-            "height_px": 35,
-            "quality": 0.913,
+            "frame": 56,
+            "text": "D04DK1574",
+            "height_px": 48,
+            "quality": 0.975,
             "char_probs": [
-              0.7679,
-              0.6942,
-              0.7146,
-              0.6875,
-              0.9059,
-              0.791,
-              0.9972,
-              0.9613,
-              0.9942,
-              0.7096
+              0.4941,
+              0.9654,
+              0.7833,
+              0.8644,
+              0.9949,
+              0.9999,
+              0.9951,
+              0.9989,
+              0.8157
             ]
           }
         ],
-        "plates_detected": 7
+        "plates_detected": 5
       },
-      "decision": "no_confident_match",
-      "decision_reason": "only 3 plate character(s) readable; at least 5 are needed for a confident match",
+      "decision": "match",
+      "decision_reason": "best match score 84.2, clear of the next candidate",
       "candidates": [
         {
           "rank": 1,
-          "synthetic_vehicle_id": "SV207526",
-          "registration_number": "CG04DK1278",
-          "match_score": 62.8,
-          "plate_score": 0.548,
-          "colour_score": null,
+          "synthetic_vehicle_id": "SV725737",
+          "registration_number": "CG04DK1578",
+          "match_score": 84.2,
+          "plate_score": 0.775,
+          "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
-            "plate: 3 of 3 readable characters match exactly; 7 unreadable",
-            "colour not compared (unknown)",
-            "type scooter matches"
+            "plate: 6 of 6 readable characters match exactly; 4 unreadable",
+            "colour blue matches",
+            "type motorcycle matches"
           ]
         },
         {
           "rank": 2,
-          "synthetic_vehicle_id": "SV725737",
-          "registration_number": "CG04DK1578",
-          "match_score": 62.8,
-          "plate_score": 0.548,
-          "colour_score": null,
+          "synthetic_vehicle_id": "SV207526",
+          "registration_number": "CG04DK1278",
+          "match_score": 67.7,
+          "plate_score": 0.538,
+          "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
-            "plate: 3 of 3 readable characters match exactly; 7 unreadable",
-            "colour not compared (unknown)",
-            "type motorcycle matches"
+            "plate: 5 of 6 readable characters match exactly; 4 unreadable",
+            "plate differs from CG04DK1278 (edit cost 1.0)",
+            "colour blue matches",
+            "type scooter matches"
           ]
         },
         {
           "rank": 3,
           "synthetic_vehicle_id": "SV873861",
           "registration_number": "CG04DH1578",
-          "match_score": 62.8,
-          "plate_score": 0.548,
-          "colour_score": null,
+          "match_score": 67.7,
+          "plate_score": 0.538,
+          "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
-            "plate: 3 of 3 readable characters match exactly; 7 unreadable",
-            "colour not compared (unknown)",
+            "plate: 5 of 6 readable characters match exactly; 4 unreadable",
+            "plate differs from CG04DH1578 (edit cost 1.0)",
+            "colour blue matches",
             "type motorcycle matches"
           ]
         },
         {
           "rank": 4,
-          "synthetic_vehicle_id": "SV085495",
-          "registration_number": "MH26DR1775",
-          "match_score": 45.1,
-          "plate_score": 0.548,
-          "colour_score": null,
-          "type_score": 0.0,
+          "synthetic_vehicle_id": "SV132475",
+          "registration_number": "CG04DK7570",
+          "match_score": 54.1,
+          "plate_score": 0.344,
+          "colour_score": 1.0,
+          "type_score": 1.0,
           "reasons": [
-            "plate: 3 of 3 readable characters match exactly; 7 unreadable",
-            "colour not compared (unknown)",
-            "type conflict: observed motorcycle/scooter, registry SUV"
+            "plate: 4 of 6 readable characters match exactly; 4 unreadable",
+            "plate differs from CG04DK7570 (edit cost 2.0)",
+            "colour blue matches",
+            "type motorcycle matches"
           ]
         },
         {
           "rank": 5,
-          "synthetic_vehicle_id": "SV132475",
-          "registration_number": "CG04DK7570",
-          "match_score": 37.7,
-          "plate_score": 0.243,
-          "colour_score": null,
+          "synthetic_vehicle_id": "SV297227",
+          "registration_number": "CG04DK1928",
+          "match_score": 39.1,
+          "plate_score": 0.344,
+          "colour_score": 0.0,
           "type_score": 1.0,
           "reasons": [
-            "plate: 2 of 3 readable characters match exactly; 7 unreadable",
-            "plate differs from CG04DK7570 (edit cost 1.0)",
-            "colour not compared (unknown)",
+            "plate: 4 of 6 readable characters match exactly; 4 unreadable",
+            "plate differs from CG04DK1928 (edit cost 2.0)",
+            "colour conflict: observed blue, registry yellow",
             "type motorcycle matches"
           ]
         }
@@ -1319,17 +1649,717 @@
       "merged_track_ids": [
         19
       ],
-      "first_frame": 200,
+      "first_frame": 0,
       "last_frame": 252,
-      "first_time_s": 3.34,
-      "n_detections": 27,
+      "first_time_s": 0.0,
+      "n_detections": 127,
       "first_box": [
-        285,
-        66,
-        482,
-        346
+        288,
+        74,
+        520,
+        410
       ],
       "track": [
+        [
+          0,
+          288,
+          74,
+          520,
+          410
+        ],
+        [
+          2,
+          295,
+          94,
+          513,
+          410
+        ],
+        [
+          4,
+          290,
+          86,
+          514,
+          410
+        ],
+        [
+          6,
+          297,
+          105,
+          509,
+          410
+        ],
+        [
+          8,
+          290,
+          86,
+          514,
+          410
+        ],
+        [
+          10,
+          283,
+          70,
+          519,
+          411
+        ],
+        [
+          12,
+          284,
+          72,
+          518,
+          411
+        ],
+        [
+          14,
+          285,
+          76,
+          517,
+          410
+        ],
+        [
+          16,
+          286,
+          78,
+          516,
+          410
+        ],
+        [
+          18,
+          282,
+          69,
+          518,
+          410
+        ],
+        [
+          20,
+          281,
+          64,
+          520,
+          410
+        ],
+        [
+          22,
+          283,
+          73,
+          516,
+          409
+        ],
+        [
+          24,
+          285,
+          87,
+          510,
+          410
+        ],
+        [
+          26,
+          284,
+          92,
+          507,
+          409
+        ],
+        [
+          28,
+          272,
+          66,
+          511,
+          408
+        ],
+        [
+          30,
+          267,
+          56,
+          510,
+          405
+        ],
+        [
+          32,
+          263,
+          49,
+          508,
+          403
+        ],
+        [
+          34,
+          260,
+          46,
+          504,
+          399
+        ],
+        [
+          36,
+          258,
+          41,
+          503,
+          395
+        ],
+        [
+          38,
+          260,
+          46,
+          499,
+          391
+        ],
+        [
+          40,
+          264,
+          59,
+          494,
+          388
+        ],
+        [
+          42,
+          267,
+          64,
+          492,
+          384
+        ],
+        [
+          44,
+          267,
+          65,
+          491,
+          381
+        ],
+        [
+          46,
+          264,
+          64,
+          491,
+          381
+        ],
+        [
+          48,
+          264,
+          65,
+          490,
+          379
+        ],
+        [
+          50,
+          264,
+          66,
+          488,
+          376
+        ],
+        [
+          52,
+          261,
+          65,
+          489,
+          378
+        ],
+        [
+          54,
+          259,
+          60,
+          491,
+          377
+        ],
+        [
+          56,
+          257,
+          56,
+          492,
+          377
+        ],
+        [
+          58,
+          246,
+          41,
+          495,
+          378
+        ],
+        [
+          60,
+          237,
+          38,
+          498,
+          390
+        ],
+        [
+          62,
+          226,
+          30,
+          502,
+          400
+        ],
+        [
+          64,
+          223,
+          28,
+          501,
+          396
+        ],
+        [
+          66,
+          212,
+          24,
+          506,
+          408
+        ],
+        [
+          68,
+          201,
+          15,
+          510,
+          418
+        ],
+        [
+          70,
+          196,
+          15,
+          509,
+          418
+        ],
+        [
+          72,
+          184,
+          11,
+          516,
+          435
+        ],
+        [
+          74,
+          173,
+          5,
+          520,
+          447
+        ],
+        [
+          76,
+          168,
+          6,
+          524,
+          457
+        ],
+        [
+          78,
+          163,
+          8,
+          525,
+          464
+        ],
+        [
+          80,
+          160,
+          8,
+          525,
+          465
+        ],
+        [
+          82,
+          156,
+          8,
+          527,
+          468
+        ],
+        [
+          84,
+          148,
+          2,
+          527,
+          469
+        ],
+        [
+          86,
+          140,
+          0,
+          527,
+          472
+        ],
+        [
+          88,
+          138,
+          1,
+          529,
+          474
+        ],
+        [
+          90,
+          133,
+          0,
+          528,
+          473
+        ],
+        [
+          92,
+          131,
+          0,
+          527,
+          469
+        ],
+        [
+          94,
+          129,
+          0,
+          529,
+          470
+        ],
+        [
+          96,
+          124,
+          1,
+          527,
+          469
+        ],
+        [
+          98,
+          117,
+          0,
+          528,
+          470
+        ],
+        [
+          100,
+          114,
+          0,
+          530,
+          470
+        ],
+        [
+          102,
+          113,
+          0,
+          534,
+          468
+        ],
+        [
+          104,
+          114,
+          0,
+          541,
+          468
+        ],
+        [
+          106,
+          128,
+          1,
+          566,
+          469
+        ],
+        [
+          108,
+          107,
+          2,
+          552,
+          470
+        ],
+        [
+          110,
+          96,
+          1,
+          549,
+          472
+        ],
+        [
+          112,
+          92,
+          0,
+          550,
+          471
+        ],
+        [
+          114,
+          94,
+          1,
+          560,
+          471
+        ],
+        [
+          116,
+          85,
+          0,
+          558,
+          472
+        ],
+        [
+          118,
+          84,
+          0,
+          562,
+          472
+        ],
+        [
+          120,
+          76,
+          0,
+          561,
+          473
+        ],
+        [
+          122,
+          85,
+          0,
+          570,
+          472
+        ],
+        [
+          124,
+          89,
+          0,
+          576,
+          471
+        ],
+        [
+          126,
+          89,
+          0,
+          579,
+          471
+        ],
+        [
+          128,
+          90,
+          0,
+          581,
+          471
+        ],
+        [
+          130,
+          79,
+          1,
+          571,
+          471
+        ],
+        [
+          132,
+          80,
+          0,
+          573,
+          471
+        ],
+        [
+          134,
+          72,
+          1,
+          567,
+          471
+        ],
+        [
+          136,
+          73,
+          1,
+          570,
+          473
+        ],
+        [
+          138,
+          71,
+          1,
+          568,
+          472
+        ],
+        [
+          140,
+          72,
+          1,
+          568,
+          473
+        ],
+        [
+          142,
+          78,
+          1,
+          571,
+          471
+        ],
+        [
+          144,
+          80,
+          0,
+          569,
+          467
+        ],
+        [
+          146,
+          82,
+          1,
+          570,
+          469
+        ],
+        [
+          148,
+          90,
+          1,
+          572,
+          467
+        ],
+        [
+          150,
+          94,
+          0,
+          572,
+          467
+        ],
+        [
+          152,
+          98,
+          0,
+          574,
+          469
+        ],
+        [
+          154,
+          101,
+          1,
+          573,
+          471
+        ],
+        [
+          156,
+          106,
+          1,
+          571,
+          469
+        ],
+        [
+          158,
+          115,
+          2,
+          570,
+          467
+        ],
+        [
+          160,
+          122,
+          3,
+          567,
+          464
+        ],
+        [
+          162,
+          131,
+          7,
+          564,
+          460
+        ],
+        [
+          164,
+          137,
+          7,
+          560,
+          455
+        ],
+        [
+          166,
+          144,
+          6,
+          558,
+          449
+        ],
+        [
+          168,
+          150,
+          3,
+          556,
+          442
+        ],
+        [
+          170,
+          157,
+          2,
+          552,
+          436
+        ],
+        [
+          172,
+          163,
+          3,
+          548,
+          431
+        ],
+        [
+          174,
+          169,
+          4,
+          545,
+          427
+        ],
+        [
+          176,
+          178,
+          12,
+          539,
+          422
+        ],
+        [
+          178,
+          188,
+          20,
+          535,
+          419
+        ],
+        [
+          180,
+          196,
+          24,
+          531,
+          413
+        ],
+        [
+          182,
+          206,
+          29,
+          526,
+          404
+        ],
+        [
+          184,
+          218,
+          40,
+          519,
+          396
+        ],
+        [
+          186,
+          230,
+          53,
+          511,
+          386
+        ],
+        [
+          188,
+          239,
+          61,
+          506,
+          380
+        ],
+        [
+          190,
+          238,
+          41,
+          513,
+          375
+        ],
+        [
+          192,
+          252,
+          61,
+          503,
+          368
+        ],
+        [
+          194,
+          253,
+          48,
+          506,
+          363
+        ],
+        [
+          196,
+          259,
+          54,
+          501,
+          358
+        ],
+        [
+          198,
+          269,
+          62,
+          495,
+          352
+        ],
         [
           200,
           285,
@@ -1523,38 +2553,37 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.691
+        "detector_conf_mean": 0.691,
+        "source": "UVH-26"
       },
       "colour": {
-        "label": "red",
-        "confidence": 0.266,
+        "label": "brown",
+        "confidence": 0.37,
         "per_frame": [
-          "red",
-          "red",
-          "red"
+          "brown",
+          "brown",
+          "brown"
         ],
         "note": "CLIP zero-shot",
         "method": "clip"
       },
       "plate": {
         "status": "unreadable (low OCR confidence)",
-        "fused": "????????",
+        "fused": "??????",
         "unknown_positions": [
           1,
           2,
           3,
           4,
           5,
-          6,
-          7,
-          8
+          6
         ],
         "positions": [
           {
             "pos": 1,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.5447,
+            "share": 0.6962,
             "support": 5,
             "best_candidate": "D",
             "frames": []
@@ -1563,16 +2592,16 @@
             "pos": 2,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.4001,
+            "share": 0.8002,
             "support": 5,
-            "best_candidate": "H",
+            "best_candidate": "0",
             "frames": []
           },
           {
             "pos": 3,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.7946,
+            "share": 0.8342,
             "support": 5,
             "best_candidate": "0",
             "frames": []
@@ -1581,128 +2610,104 @@
             "pos": 4,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.4758,
+            "share": 0.6688,
             "support": 4,
-            "best_candidate": "7",
+            "best_candidate": "8",
             "frames": []
           },
           {
             "pos": 5,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.8389,
-            "support": 4,
-            "best_candidate": "0",
+            "share": 0.4626,
+            "support": 5,
+            "best_candidate": "8",
             "frames": []
           },
           {
             "pos": 6,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.6067,
-            "support": 5,
-            "best_candidate": "8",
-            "frames": []
-          },
-          {
-            "pos": 7,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.3432,
-            "support": 5,
-            "best_candidate": "4",
-            "frames": []
-          },
-          {
-            "pos": 8,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.4078,
+            "share": 0.5879,
             "support": 5,
             "best_candidate": "4",
             "frames": []
           }
         ],
         "warnings": [
-          "reads disagree on length [7, 8]; aligned to 8 characters"
+          "does not fit the Indian plate format",
+          "reads disagree on length [5, 6, 7]; aligned to 6 characters"
         ],
         "per_frame_reads": [
           {
-            "frame": 200,
-            "text": "DH02844",
-            "height_px": 42,
-            "quality": 0.963,
+            "frame": 80,
+            "text": "D00884",
+            "height_px": 79,
+            "quality": 0.978,
             "char_probs": [
-              0.3846,
-              0.2796,
-              0.6131,
-              0.2188,
-              0.2373,
-              0.2017,
-              0.2448
+              0.6351,
+              0.7777,
+              0.8085,
+              0.6691,
+              0.2141,
+              0.3879
             ]
           },
           {
-            "frame": 216,
-            "text": "DH03854",
-            "height_px": 39,
-            "quality": 0.962,
+            "frame": 84,
+            "text": "D070844",
+            "height_px": 83,
+            "quality": 0.977,
             "char_probs": [
-              0.241,
-              0.2115,
-              0.3514,
-              0.266,
-              0.4465,
-              0.2955,
-              0.4083
+              0.54,
+              0.5421,
+              0.3312,
+              0.8346,
+              0.876,
+              0.259,
+              0.3444
             ]
           },
           {
-            "frame": 234,
-            "text": "DB070627",
-            "height_px": 40,
-            "quality": 0.962,
+            "frame": 76,
+            "text": "D022659",
+            "height_px": 82,
+            "quality": 0.974,
             "char_probs": [
-              0.4197,
-              0.3411,
-              0.7472,
-              0.437,
-              0.4411,
-              0.1892,
-              0.2102,
-              0.1804
+              0.6621,
+              0.6438,
+              0.2242,
+              0.3486,
+              0.2662,
+              0.2468,
+              0.2505
             ]
           },
           {
-            "frame": 250,
-            "text": "DH030854",
-            "height_px": 40,
-            "quality": 0.95,
+            "frame": 162,
+            "text": "D0084",
+            "height_px": 78,
+            "quality": 0.972,
             "char_probs": [
-              0.5295,
-              0.3252,
-              0.5931,
-              0.3896,
-              0.9214,
-              0.6957,
-              0.3442,
-              0.2508
+              0.4824,
+              0.9375,
+              0.5365,
+              0.4617,
+              0.4491
             ]
           },
           {
-            "frame": 230,
-            "text": "CH070844",
-            "height_px": 39,
-            "quality": 0.948,
+            "frame": 166,
+            "text": "D00884",
+            "height_px": 75,
+            "quality": 0.972,
             "char_probs": [
-              0.1635,
-              0.2856,
-              0.7797,
-              0.6824,
-              0.9523,
-              0.5991,
-              0.5012,
-              0.3635
+              0.4745,
+              0.8144,
+              0.8407,
+              0.4123,
+              0.2986,
+              0.8679
             ]
           }
         ],
@@ -1711,6 +2716,471 @@
       "decision": "no_confident_match",
       "decision_reason": "plate unreadable (low OCR confidence): cannot identify from the plate",
       "candidates": []
+    },
+    {
+      "track_id": 14,
+      "merged_track_ids": [
+        14
+      ],
+      "first_frame": 176,
+      "last_frame": 252,
+      "first_time_s": 2.94,
+      "n_detections": 20,
+      "first_box": [
+        576,
+        34,
+        757,
+        289
+      ],
+      "track": [
+        [
+          176,
+          576,
+          34,
+          757,
+          289
+        ],
+        [
+          178,
+          579,
+          43,
+          757,
+          292
+        ],
+        [
+          208,
+          686,
+          167,
+          837,
+          317
+        ],
+        [
+          220,
+          687,
+          173,
+          833,
+          316
+        ],
+        [
+          222,
+          686,
+          171,
+          834,
+          316
+        ],
+        [
+          224,
+          683,
+          169,
+          833,
+          316
+        ],
+        [
+          226,
+          682,
+          169,
+          834,
+          317
+        ],
+        [
+          228,
+          682,
+          169,
+          834,
+          317
+        ],
+        [
+          230,
+          681,
+          169,
+          833,
+          317
+        ],
+        [
+          232,
+          680,
+          168,
+          834,
+          317
+        ],
+        [
+          234,
+          679,
+          169,
+          833,
+          317
+        ],
+        [
+          236,
+          679,
+          168,
+          833,
+          317
+        ],
+        [
+          238,
+          637,
+          114,
+          802,
+          317
+        ],
+        [
+          240,
+          633,
+          116,
+          808,
+          317
+        ],
+        [
+          242,
+          629,
+          117,
+          812,
+          317
+        ],
+        [
+          244,
+          625,
+          116,
+          814,
+          317
+        ],
+        [
+          246,
+          622,
+          116,
+          815,
+          317
+        ],
+        [
+          248,
+          621,
+          117,
+          817,
+          317
+        ],
+        [
+          250,
+          620,
+          117,
+          818,
+          317
+        ],
+        [
+          252,
+          618,
+          116,
+          821,
+          317
+        ]
+      ],
+      "type": {
+        "label": "motorcycle/scooter",
+        "vote_share": 0.811,
+        "detector_conf_mean": 0.424,
+        "source": "UVH-26"
+      },
+      "colour": {
+        "label": "green",
+        "confidence": 0.247,
+        "per_frame": [
+          "blue",
+          "green",
+          "grey"
+        ],
+        "note": "CLIP zero-shot",
+        "method": "clip"
+      },
+      "plate": {
+        "status": "read",
+        "fused": "?????K1?7?",
+        "unknown_positions": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          10
+        ],
+        "positions": [
+          {
+            "pos": 1,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.2353,
+            "support": 3,
+            "best_candidate": "P",
+            "frames": []
+          },
+          {
+            "pos": 2,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.3636,
+            "support": 4,
+            "best_candidate": "D",
+            "frames": []
+          },
+          {
+            "pos": 3,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.7306,
+            "support": 4,
+            "best_candidate": "0",
+            "frames": []
+          },
+          {
+            "pos": 4,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.7783,
+            "support": 5,
+            "best_candidate": "4",
+            "frames": []
+          },
+          {
+            "pos": 5,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.456,
+            "support": 5,
+            "best_candidate": "D",
+            "frames": []
+          },
+          {
+            "pos": 6,
+            "char": "K",
+            "confidence": 0.9698,
+            "share": 0.9041,
+            "support": 5,
+            "best_candidate": "K",
+            "frames": [
+              240,
+              244,
+              248,
+              252
+            ]
+          },
+          {
+            "pos": 7,
+            "char": "1",
+            "confidence": 0.9979,
+            "share": 0.902,
+            "support": 5,
+            "best_candidate": "1",
+            "frames": [
+              240,
+              244,
+              248,
+              252
+            ]
+          },
+          {
+            "pos": 8,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.8397,
+            "support": 5,
+            "best_candidate": "5",
+            "frames": []
+          },
+          {
+            "pos": 9,
+            "char": "7",
+            "confidence": 0.9952,
+            "share": 0.9963,
+            "support": 4,
+            "best_candidate": "7",
+            "frames": [
+              240,
+              244,
+              248,
+              252
+            ]
+          },
+          {
+            "pos": 10,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.7912,
+            "support": 5,
+            "best_candidate": "8",
+            "frames": []
+          }
+        ],
+        "warnings": [
+          "reads disagree on length [6, 9, 10, 11]; aligned to 10 characters"
+        ],
+        "per_frame_reads": [
+          {
+            "frame": 240,
+            "text": "D04CK1570",
+            "height_px": 35,
+            "quality": 0.914,
+            "char_probs": [
+              0.2661,
+              0.8661,
+              0.6487,
+              0.8285,
+              0.9558,
+              0.9994,
+              0.9214,
+              0.9911,
+              0.5292
+            ]
+          },
+          {
+            "frame": 244,
+            "text": "UPD04DK1578",
+            "height_px": 34,
+            "quality": 0.902,
+            "char_probs": [
+              0.4838,
+              0.219,
+              0.663,
+              0.5839,
+              0.8339,
+              0.6787,
+              0.9809,
+              0.9977,
+              0.9842,
+              0.9957,
+              0.986
+            ]
+          },
+          {
+            "frame": 248,
+            "text": "UHS04DK1578",
+            "height_px": 34,
+            "quality": 0.902,
+            "char_probs": [
+              0.2656,
+              0.3077,
+              0.6812,
+              0.3711,
+              0.6684,
+              0.7487,
+              0.9878,
+              0.997,
+              0.9254,
+              0.9984,
+              0.9628
+            ]
+          },
+          {
+            "frame": 236,
+            "text": "MA2258",
+            "height_px": 41,
+            "quality": 0.9,
+            "char_probs": [
+              0.5606,
+              0.3895,
+              0.2739,
+              0.3564,
+              0.3244,
+              0.1902
+            ]
+          },
+          {
+            "frame": 252,
+            "text": "CH04DK1578",
+            "height_px": 34,
+            "quality": 0.9,
+            "char_probs": [
+              0.3035,
+              0.2316,
+              0.5029,
+              0.9451,
+              0.5384,
+              0.955,
+              0.9973,
+              0.6506,
+              0.9958,
+              0.9288
+            ]
+          }
+        ],
+        "plates_detected": 5
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "only 3 plate character(s) readable; at least 5 are needed for a confident match",
+      "candidates": [
+        {
+          "rank": 1,
+          "synthetic_vehicle_id": "SV207526",
+          "registration_number": "CG04DK1278",
+          "match_score": 53.3,
+          "plate_score": 0.548,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 3 of 3 readable characters match exactly; 7 unreadable",
+            "colour conflict: observed green, registry blue",
+            "type scooter matches"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SV725737",
+          "registration_number": "CG04DK1578",
+          "match_score": 53.3,
+          "plate_score": 0.548,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 3 of 3 readable characters match exactly; 7 unreadable",
+            "colour conflict: observed green, registry blue",
+            "type motorcycle matches"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SV302777",
+          "registration_number": "CG11DM6570",
+          "match_score": 34.3,
+          "plate_score": 0.061,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 1 of 3 readable characters match exactly; 7 unreadable",
+            "plate differs from CG11DM6570 (edit cost 2.0)",
+            "colour green matches",
+            "type scooter matches"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SV132475",
+          "registration_number": "CG04DK7570",
+          "match_score": 32.0,
+          "plate_score": 0.243,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 2 of 3 readable characters match exactly; 7 unreadable",
+            "plate differs from CG04DK7570 (edit cost 1.0)",
+            "colour conflict: observed green, registry blue",
+            "type motorcycle matches"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SV297227",
+          "registration_number": "CG04DK1928",
+          "match_score": 32.0,
+          "plate_score": 0.243,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 2 of 3 readable characters match exactly; 7 unreadable",
+            "plate differs from CG04DK1928 (edit cost 1.0)",
+            "colour conflict: observed green, registry yellow",
+            "type motorcycle matches"
+          ]
+        }
+      ]
     }
   ],
   "note": "match_score is a heuristic ranking score, not a probability. '?' marks characters that could not be read."

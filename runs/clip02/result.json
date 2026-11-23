@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 123
   },
-  "processed_at": "2026-11-23T11:31:12",
+  "processed_at": "2026-11-23T11:51:38",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -25,6 +25,9 @@
       "verify_samples": 6,
       "verify_min_iou": 0.3,
       "verify_min_share": 0.34,
+      "ensemble_coco": true,
+      "ensemble_match_iou": 0.5,
+      "ensemble_new_conf": 0.5,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -57,20 +60,44 @@
   },
   "summary": {
     "raw_tracks": 57,
-    "kept_tracks": 32,
+    "kept_tracks": 34,
     "dropped_unverified_large": [],
-    "vehicles_after_relink": 31,
+    "coco_ensemble": {
+      "coco_tracks": 23,
+      "attached_to_uvh": 19,
+      "added_coco_only": [
+        {
+          "track_id": 100073,
+          "type": "bus",
+          "mean_conf": 0.53,
+          "frames": [
+            42,
+            58
+          ]
+        },
+        {
+          "track_id": 100156,
+          "type": "car",
+          "mean_conf": 0.588,
+          "frames": [
+            114,
+            122
+          ]
+        }
+      ]
+    },
+    "vehicles_after_relink": 33,
     "plates_read": 0,
     "decisions": {
-      "no_confident_match": 31
+      "no_confident_match": 33
     }
   },
   "timing": {
-    "detect_track_s": 1.4,
-    "plates_s": 3.0,
+    "detect_track_s": 1.9,
+    "plates_s": 2.2,
     "ocr_s": 0.0,
-    "assemble_s": 0.7,
-    "total_s": 5.0
+    "assemble_s": 0.6,
+    "total_s": 4.7
   },
   "vehicles": [
     {
@@ -527,7 +554,8 @@
       "type": {
         "label": "car",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.879
+        "detector_conf_mean": 0.879,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "white",
@@ -1007,7 +1035,8 @@
       "type": {
         "label": "auto_rickshaw",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.91
+        "detector_conf_mean": 0.91,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "green",
@@ -1487,7 +1516,8 @@
       "type": {
         "label": "auto_rickshaw",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.878
+        "detector_conf_mean": 0.878,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "yellow",
@@ -1967,7 +1997,8 @@
       "type": {
         "label": "car",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.879
+        "detector_conf_mean": 0.879,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "white",
@@ -2447,7 +2478,8 @@
       "type": {
         "label": "auto_rickshaw",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.827
+        "detector_conf_mean": 0.827,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "brown",
@@ -2920,7 +2952,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.761
+        "detector_conf_mean": 0.761,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "blue",
@@ -3400,7 +3433,8 @@
       "type": {
         "label": "truck",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.653
+        "detector_conf_mean": 0.653,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "yellow",
@@ -3880,7 +3914,8 @@
       "type": {
         "label": "car",
         "vote_share": 0.964,
-        "detector_conf_mean": 0.609
+        "detector_conf_mean": 0.617,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "unknown",
@@ -4359,7 +4394,8 @@
       "type": {
         "label": "car",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.695
+        "detector_conf_mean": 0.695,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "brown",
@@ -4839,7 +4875,8 @@
       "type": {
         "label": "car",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.711
+        "detector_conf_mean": 0.711,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "white",
@@ -5319,7 +5356,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.817
+        "detector_conf_mean": 0.817,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "unknown",
@@ -5798,7 +5836,8 @@
       "type": {
         "label": "auto_rickshaw",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.747
+        "detector_conf_mean": 0.747,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "yellow",
@@ -6278,7 +6317,8 @@
       "type": {
         "label": "car",
         "vote_share": 0.645,
-        "detector_conf_mean": 0.627
+        "detector_conf_mean": 0.626,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "white",
@@ -6737,7 +6777,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.839
+        "detector_conf_mean": 0.839,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "red",
@@ -7217,7 +7258,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.82
+        "detector_conf_mean": 0.82,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "unknown",
@@ -7696,7 +7738,8 @@
       "type": {
         "label": "auto_rickshaw",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.732
+        "detector_conf_mean": 0.732,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "yellow",
@@ -8027,7 +8070,8 @@
       "type": {
         "label": "car",
         "vote_share": 0.635,
-        "detector_conf_mean": 0.545
+        "detector_conf_mean": 0.546,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "white",
@@ -8507,7 +8551,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.807
+        "detector_conf_mean": 0.807,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "unknown",
@@ -8986,7 +9031,8 @@
       "type": {
         "label": "car",
         "vote_share": 0.974,
-        "detector_conf_mean": 0.583
+        "detector_conf_mean": 0.587,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "white",
@@ -9221,7 +9267,8 @@
       "type": {
         "label": "truck",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.362
+        "detector_conf_mean": 0.362,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "silver",
@@ -9659,7 +9706,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.867
+        "detector_conf_mean": 0.867,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "blue",
@@ -9683,6 +9731,397 @@
       },
       "decision": "no_confident_match",
       "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 61,
+      "merged_track_ids": [
+        61,
+        79
+      ],
+      "first_frame": 24,
+      "last_frame": 122,
+      "first_time_s": 0.8,
+      "n_detections": 49,
+      "first_box": [
+        364,
+        819,
+        478,
+        850
+      ],
+      "track": [
+        [
+          24,
+          364,
+          819,
+          478,
+          850
+        ],
+        [
+          26,
+          350,
+          812,
+          478,
+          850
+        ],
+        [
+          28,
+          331,
+          804,
+          478,
+          850
+        ],
+        [
+          30,
+          313,
+          794,
+          478,
+          850
+        ],
+        [
+          32,
+          299,
+          786,
+          478,
+          850
+        ],
+        [
+          34,
+          356,
+          776,
+          478,
+          848
+        ],
+        [
+          36,
+          350,
+          769,
+          478,
+          847
+        ],
+        [
+          38,
+          341,
+          761,
+          478,
+          849
+        ],
+        [
+          40,
+          335,
+          754,
+          478,
+          849
+        ],
+        [
+          42,
+          253,
+          746,
+          478,
+          850
+        ],
+        [
+          44,
+          323,
+          738,
+          478,
+          847
+        ],
+        [
+          46,
+          249,
+          733,
+          478,
+          850
+        ],
+        [
+          50,
+          348,
+          722,
+          478,
+          850
+        ],
+        [
+          52,
+          345,
+          717,
+          478,
+          850
+        ],
+        [
+          54,
+          347,
+          711,
+          478,
+          849
+        ],
+        [
+          56,
+          341,
+          704,
+          478,
+          850
+        ],
+        [
+          58,
+          337,
+          697,
+          478,
+          850
+        ],
+        [
+          60,
+          331,
+          693,
+          478,
+          850
+        ],
+        [
+          62,
+          330,
+          687,
+          478,
+          850
+        ],
+        [
+          64,
+          328,
+          682,
+          478,
+          849
+        ],
+        [
+          66,
+          325,
+          675,
+          478,
+          847
+        ],
+        [
+          68,
+          321,
+          670,
+          478,
+          848
+        ],
+        [
+          70,
+          320,
+          666,
+          478,
+          849
+        ],
+        [
+          72,
+          317,
+          660,
+          478,
+          849
+        ],
+        [
+          74,
+          315,
+          655,
+          478,
+          849
+        ],
+        [
+          76,
+          314,
+          649,
+          478,
+          849
+        ],
+        [
+          78,
+          315,
+          645,
+          478,
+          843
+        ],
+        [
+          80,
+          316,
+          641,
+          478,
+          833
+        ],
+        [
+          82,
+          317,
+          636,
+          478,
+          825
+        ],
+        [
+          84,
+          317,
+          630,
+          475,
+          816
+        ],
+        [
+          86,
+          317,
+          627,
+          469,
+          808
+        ],
+        [
+          88,
+          316,
+          623,
+          465,
+          800
+        ],
+        [
+          90,
+          316,
+          619,
+          460,
+          792
+        ],
+        [
+          92,
+          316,
+          615,
+          456,
+          783
+        ],
+        [
+          94,
+          316,
+          611,
+          452,
+          774
+        ],
+        [
+          96,
+          316,
+          607,
+          448,
+          766
+        ],
+        [
+          98,
+          315,
+          603,
+          444,
+          758
+        ],
+        [
+          100,
+          315,
+          599,
+          440,
+          750
+        ],
+        [
+          102,
+          315,
+          596,
+          438,
+          744
+        ],
+        [
+          104,
+          315,
+          593,
+          434,
+          737
+        ],
+        [
+          106,
+          314,
+          589,
+          431,
+          730
+        ],
+        [
+          108,
+          314,
+          586,
+          428,
+          724
+        ],
+        [
+          110,
+          314,
+          583,
+          426,
+          717
+        ],
+        [
+          112,
+          313,
+          579,
+          424,
+          713
+        ],
+        [
+          114,
+          313,
+          577,
+          421,
+          706
+        ],
+        [
+          116,
+          311,
+          573,
+          419,
+          702
+        ],
+        [
+          118,
+          310,
+          569,
+          416,
+          696
+        ],
+        [
+          120,
+          310,
+          566,
+          415,
+          692
+        ],
+        [
+          122,
+          310,
+          564,
+          412,
+          686
+        ]
+      ],
+      "type": {
+        "label": "SUV",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.589,
+        "source": "UVH-26"
+      },
+      "colour": {
+        "label": "white",
+        "confidence": 0.511,
+        "per_frame": [
+          "white",
+          "white",
+          "white"
+        ],
+        "note": "CLIP zero-shot",
+        "method": "clip"
+      },
+      "plate": {
+        "status": "unreadable (plate too small: max 12 px < 16 px)",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 8
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate unreadable (plate too small: max 12 px < 16 px): cannot identify from the plate",
       "candidates": []
     },
     {
@@ -9950,7 +10389,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.405
+        "detector_conf_mean": 0.405,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "red",
@@ -9977,327 +10417,42 @@
       "candidates": []
     },
     {
-      "track_id": 61,
-      "merged_track_ids": [
-        61,
-        78
-      ],
-      "first_frame": 34,
-      "last_frame": 122,
-      "first_time_s": 1.13,
-      "n_detections": 37,
-      "first_box": [
-        356,
-        776,
-        478,
-        848
-      ],
-      "track": [
-        [
-          34,
-          356,
-          776,
-          478,
-          848
-        ],
-        [
-          36,
-          350,
-          769,
-          478,
-          847
-        ],
-        [
-          38,
-          341,
-          761,
-          478,
-          849
-        ],
-        [
-          40,
-          335,
-          754,
-          478,
-          849
-        ],
-        [
-          44,
-          323,
-          738,
-          478,
-          847
-        ],
-        [
-          54,
-          222,
-          773,
-          357,
-          850
-        ],
-        [
-          56,
-          215,
-          764,
-          365,
-          850
-        ],
-        [
-          58,
-          207,
-          755,
-          371,
-          850
-        ],
-        [
-          60,
-          203,
-          747,
-          375,
-          848
-        ],
-        [
-          66,
-          186,
-          726,
-          387,
-          847
-        ],
-        [
-          70,
-          179,
-          711,
-          397,
-          848
-        ],
-        [
-          72,
-          180,
-          706,
-          397,
-          848
-        ],
-        [
-          74,
-          181,
-          698,
-          395,
-          844
-        ],
-        [
-          76,
-          180,
-          692,
-          396,
-          847
-        ],
-        [
-          78,
-          181,
-          686,
-          395,
-          847
-        ],
-        [
-          80,
-          185,
-          681,
-          390,
-          842
-        ],
-        [
-          82,
-          190,
-          674,
-          384,
-          834
-        ],
-        [
-          84,
-          195,
-          669,
-          378,
-          826
-        ],
-        [
-          86,
-          200,
-          665,
-          371,
-          817
-        ],
-        [
-          88,
-          205,
-          659,
-          366,
-          807
-        ],
-        [
-          90,
-          209,
-          653,
-          362,
-          799
-        ],
-        [
-          92,
-          213,
-          649,
-          357,
-          791
-        ],
-        [
-          94,
-          216,
-          644,
-          352,
-          782
-        ],
-        [
-          96,
-          220,
-          640,
-          349,
-          775
-        ],
-        [
-          98,
-          223,
-          635,
-          346,
-          767
-        ],
-        [
-          100,
-          225,
-          631,
-          343,
-          760
-        ],
-        [
-          102,
-          228,
-          627,
-          341,
-          753
-        ],
-        [
-          104,
-          229,
-          623,
-          338,
-          746
-        ],
-        [
-          106,
-          232,
-          619,
-          336,
-          739
-        ],
-        [
-          108,
-          233,
-          615,
-          335,
-          734
-        ],
-        [
-          110,
-          235,
-          612,
-          333,
-          728
-        ],
-        [
-          112,
-          236,
-          609,
-          331,
-          722
-        ],
-        [
-          114,
-          237,
-          605,
-          329,
-          716
-        ],
-        [
-          116,
-          238,
-          602,
-          328,
-          711
-        ],
-        [
-          118,
-          239,
-          599,
-          326,
-          706
-        ],
-        [
-          120,
-          239,
-          596,
-          325,
-          701
-        ],
-        [
-          122,
-          240,
-          593,
-          323,
-          695
-        ]
-      ],
-      "type": {
-        "label": "car",
-        "vote_share": 1.0,
-        "detector_conf_mean": 0.681
-      },
-      "colour": {
-        "label": "white",
-        "confidence": 0.633,
-        "per_frame": [
-          "white",
-          "white",
-          "white"
-        ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
-      },
-      "plate": {
-        "status": "no plate detected",
-        "fused": null,
-        "unknown_positions": null,
-        "positions": [],
-        "warnings": [],
-        "per_frame_reads": [],
-        "plates_detected": 0
-      },
-      "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
-      "candidates": []
-    },
-    {
       "track_id": 66,
       "merged_track_ids": [
         66
       ],
-      "first_frame": 38,
+      "first_frame": 32,
       "last_frame": 122,
-      "first_time_s": 1.27,
-      "n_detections": 43,
+      "first_time_s": 1.07,
+      "n_detections": 46,
       "first_box": [
         1,
-        700,
-        30,
-        784
+        722,
+        21,
+        769
       ],
       "track": [
+        [
+          32,
+          1,
+          722,
+          21,
+          769
+        ],
+        [
+          34,
+          1,
+          718,
+          23,
+          768
+        ],
+        [
+          36,
+          3,
+          716,
+          24,
+          766
+        ],
         [
           38,
           1,
@@ -10603,7 +10758,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.774
+        "detector_conf_mean": 0.774,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "blue",
@@ -10612,6 +10768,429 @@
           "blue",
           "blue",
           "blue"
+        ],
+        "note": "CLIP zero-shot",
+        "method": "clip"
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 100073,
+      "merged_track_ids": [
+        100073
+      ],
+      "first_frame": 42,
+      "last_frame": 58,
+      "first_time_s": 1.4,
+      "n_detections": 9,
+      "first_box": [
+        77,
+        764,
+        207,
+        850
+      ],
+      "track": [
+        [
+          42,
+          77,
+          764,
+          207,
+          850
+        ],
+        [
+          44,
+          68,
+          757,
+          208,
+          850
+        ],
+        [
+          46,
+          60,
+          748,
+          214,
+          850
+        ],
+        [
+          48,
+          57,
+          741,
+          221,
+          850
+        ],
+        [
+          50,
+          54,
+          732,
+          229,
+          850
+        ],
+        [
+          52,
+          52,
+          724,
+          236,
+          850
+        ],
+        [
+          54,
+          51,
+          716,
+          242,
+          850
+        ],
+        [
+          56,
+          51,
+          709,
+          247,
+          850
+        ],
+        [
+          58,
+          53,
+          702,
+          253,
+          849
+        ]
+      ],
+      "type": {
+        "label": "bus",
+        "vote_share": 0.888,
+        "detector_conf_mean": 0.53,
+        "source": "COCO YOLOv8n"
+      },
+      "colour": {
+        "label": "black",
+        "confidence": 0.273,
+        "per_frame": [
+          "black",
+          "black",
+          "silver"
+        ],
+        "note": "CLIP zero-shot",
+        "method": "clip"
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 78,
+      "merged_track_ids": [
+        78
+      ],
+      "first_frame": 46,
+      "last_frame": 122,
+      "first_time_s": 1.53,
+      "n_detections": 38,
+      "first_box": [
+        224,
+        810,
+        356,
+        850
+      ],
+      "track": [
+        [
+          46,
+          224,
+          810,
+          356,
+          850
+        ],
+        [
+          48,
+          209,
+          802,
+          368,
+          850
+        ],
+        [
+          50,
+          193,
+          791,
+          384,
+          850
+        ],
+        [
+          52,
+          179,
+          781,
+          398,
+          850
+        ],
+        [
+          54,
+          222,
+          773,
+          357,
+          850
+        ],
+        [
+          56,
+          215,
+          764,
+          365,
+          850
+        ],
+        [
+          58,
+          207,
+          755,
+          371,
+          850
+        ],
+        [
+          60,
+          203,
+          747,
+          375,
+          848
+        ],
+        [
+          64,
+          231,
+          732,
+          349,
+          850
+        ],
+        [
+          66,
+          186,
+          726,
+          387,
+          847
+        ],
+        [
+          68,
+          226,
+          719,
+          356,
+          850
+        ],
+        [
+          70,
+          179,
+          711,
+          397,
+          848
+        ],
+        [
+          72,
+          180,
+          706,
+          397,
+          848
+        ],
+        [
+          74,
+          181,
+          698,
+          395,
+          844
+        ],
+        [
+          76,
+          180,
+          692,
+          396,
+          847
+        ],
+        [
+          78,
+          181,
+          686,
+          395,
+          847
+        ],
+        [
+          80,
+          185,
+          681,
+          390,
+          842
+        ],
+        [
+          82,
+          190,
+          674,
+          384,
+          834
+        ],
+        [
+          84,
+          195,
+          669,
+          378,
+          826
+        ],
+        [
+          86,
+          200,
+          665,
+          371,
+          817
+        ],
+        [
+          88,
+          205,
+          659,
+          366,
+          807
+        ],
+        [
+          90,
+          209,
+          653,
+          362,
+          799
+        ],
+        [
+          92,
+          213,
+          649,
+          357,
+          791
+        ],
+        [
+          94,
+          216,
+          644,
+          352,
+          782
+        ],
+        [
+          96,
+          220,
+          640,
+          349,
+          775
+        ],
+        [
+          98,
+          223,
+          635,
+          346,
+          767
+        ],
+        [
+          100,
+          225,
+          631,
+          343,
+          760
+        ],
+        [
+          102,
+          228,
+          627,
+          341,
+          753
+        ],
+        [
+          104,
+          229,
+          623,
+          338,
+          746
+        ],
+        [
+          106,
+          232,
+          619,
+          336,
+          739
+        ],
+        [
+          108,
+          233,
+          615,
+          335,
+          734
+        ],
+        [
+          110,
+          235,
+          612,
+          333,
+          728
+        ],
+        [
+          112,
+          236,
+          609,
+          331,
+          722
+        ],
+        [
+          114,
+          237,
+          605,
+          329,
+          716
+        ],
+        [
+          116,
+          238,
+          602,
+          328,
+          711
+        ],
+        [
+          118,
+          239,
+          599,
+          326,
+          706
+        ],
+        [
+          120,
+          239,
+          596,
+          325,
+          701
+        ],
+        [
+          122,
+          240,
+          593,
+          323,
+          695
+        ]
+      ],
+      "type": {
+        "label": "car",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.725,
+        "source": "UVH-26"
+      },
+      "colour": {
+        "label": "white",
+        "confidence": 0.633,
+        "per_frame": [
+          "white",
+          "white",
+          "white"
         ],
         "note": "CLIP zero-shot",
         "method": "clip"
@@ -10908,7 +11487,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.783
+        "detector_conf_mean": 0.783,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "unknown",
@@ -10931,290 +11511,6 @@
       },
       "decision": "no_confident_match",
       "decision_reason": "plate no plate detected: cannot identify from the plate",
-      "candidates": []
-    },
-    {
-      "track_id": 79,
-      "merged_track_ids": [
-        79
-      ],
-      "first_frame": 54,
-      "last_frame": 122,
-      "first_time_s": 1.8,
-      "n_detections": 34,
-      "first_box": [
-        347,
-        711,
-        478,
-        849
-      ],
-      "track": [
-        [
-          54,
-          347,
-          711,
-          478,
-          849
-        ],
-        [
-          56,
-          341,
-          704,
-          478,
-          850
-        ],
-        [
-          58,
-          337,
-          697,
-          478,
-          850
-        ],
-        [
-          62,
-          330,
-          687,
-          478,
-          850
-        ],
-        [
-          64,
-          328,
-          682,
-          478,
-          849
-        ],
-        [
-          66,
-          325,
-          675,
-          478,
-          847
-        ],
-        [
-          68,
-          321,
-          670,
-          478,
-          848
-        ],
-        [
-          70,
-          320,
-          666,
-          478,
-          849
-        ],
-        [
-          72,
-          317,
-          660,
-          478,
-          849
-        ],
-        [
-          74,
-          315,
-          655,
-          478,
-          849
-        ],
-        [
-          76,
-          314,
-          649,
-          478,
-          849
-        ],
-        [
-          78,
-          315,
-          645,
-          478,
-          843
-        ],
-        [
-          80,
-          316,
-          641,
-          478,
-          833
-        ],
-        [
-          82,
-          317,
-          636,
-          478,
-          825
-        ],
-        [
-          84,
-          317,
-          630,
-          475,
-          816
-        ],
-        [
-          86,
-          317,
-          627,
-          469,
-          808
-        ],
-        [
-          88,
-          316,
-          623,
-          465,
-          800
-        ],
-        [
-          90,
-          316,
-          619,
-          460,
-          792
-        ],
-        [
-          92,
-          316,
-          615,
-          456,
-          783
-        ],
-        [
-          94,
-          316,
-          611,
-          452,
-          774
-        ],
-        [
-          96,
-          316,
-          607,
-          448,
-          766
-        ],
-        [
-          98,
-          315,
-          603,
-          444,
-          758
-        ],
-        [
-          100,
-          315,
-          599,
-          440,
-          750
-        ],
-        [
-          102,
-          315,
-          596,
-          438,
-          744
-        ],
-        [
-          104,
-          315,
-          593,
-          434,
-          737
-        ],
-        [
-          106,
-          314,
-          589,
-          431,
-          730
-        ],
-        [
-          108,
-          314,
-          586,
-          428,
-          724
-        ],
-        [
-          110,
-          314,
-          583,
-          426,
-          717
-        ],
-        [
-          112,
-          313,
-          579,
-          424,
-          713
-        ],
-        [
-          114,
-          313,
-          577,
-          421,
-          706
-        ],
-        [
-          116,
-          311,
-          573,
-          419,
-          702
-        ],
-        [
-          118,
-          310,
-          569,
-          416,
-          696
-        ],
-        [
-          120,
-          310,
-          566,
-          415,
-          692
-        ],
-        [
-          122,
-          310,
-          564,
-          412,
-          686
-        ]
-      ],
-      "type": {
-        "label": "SUV",
-        "vote_share": 1.0,
-        "detector_conf_mean": 0.552
-      },
-      "colour": {
-        "label": "white",
-        "confidence": 0.511,
-        "per_frame": [
-          "white",
-          "white",
-          "white"
-        ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
-      },
-      "plate": {
-        "status": "unreadable (plate too small: max 12 px < 16 px)",
-        "fused": null,
-        "unknown_positions": null,
-        "positions": [],
-        "warnings": [],
-        "per_frame_reads": [],
-        "plates_detected": 8
-      },
-      "decision": "no_confident_match",
-      "decision_reason": "plate unreadable (plate too small: max 12 px < 16 px): cannot identify from the plate",
       "candidates": []
     },
     {
@@ -11475,7 +11771,8 @@
       "type": {
         "label": "auto_rickshaw",
         "vote_share": 0.842,
-        "detector_conf_mean": 0.517
+        "detector_conf_mean": 0.533,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "unknown",
@@ -11695,7 +11992,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.677
+        "detector_conf_mean": 0.677,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "unknown",
@@ -11894,7 +12192,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.828
+        "detector_conf_mean": 0.828,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "brown",
@@ -11925,17 +12224,38 @@
       "merged_track_ids": [
         94
       ],
-      "first_frame": 96,
+      "first_frame": 90,
       "last_frame": 122,
-      "first_time_s": 3.2,
-      "n_detections": 14,
+      "first_time_s": 3.0,
+      "n_detections": 17,
       "first_box": [
-        438,
-        647,
-        478,
-        750
+        452,
+        671,
+        477,
+        749
       ],
       "track": [
+        [
+          90,
+          452,
+          671,
+          477,
+          749
+        ],
+        [
+          92,
+          450,
+          665,
+          476,
+          747
+        ],
+        [
+          94,
+          446,
+          656,
+          476,
+          749
+        ],
         [
           96,
           438,
@@ -12038,7 +12358,8 @@
       "type": {
         "label": "car",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.539
+        "detector_conf_mean": 0.539,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "red",
@@ -12133,7 +12454,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.773
+        "detector_conf_mean": 0.773,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "red",
@@ -12141,6 +12463,88 @@
         "per_frame": [
           "red",
           "grey",
+          "black"
+        ],
+        "note": "CLIP zero-shot",
+        "method": "clip"
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 100156,
+      "merged_track_ids": [
+        100156
+      ],
+      "first_frame": 114,
+      "last_frame": 122,
+      "first_time_s": 3.8,
+      "n_detections": 5,
+      "first_box": [
+        364,
+        793,
+        478,
+        850
+      ],
+      "track": [
+        [
+          114,
+          364,
+          793,
+          478,
+          850
+        ],
+        [
+          116,
+          362,
+          791,
+          478,
+          850
+        ],
+        [
+          118,
+          357,
+          785,
+          478,
+          850
+        ],
+        [
+          120,
+          350,
+          777,
+          478,
+          850
+        ],
+        [
+          122,
+          342,
+          769,
+          478,
+          849
+        ]
+      ],
+      "type": {
+        "label": "car",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.588,
+        "source": "COCO YOLOv8n"
+      },
+      "colour": {
+        "label": "black",
+        "confidence": 0.385,
+        "per_frame": [
+          "silver",
+          "black",
           "black"
         ],
         "note": "CLIP zero-shot",

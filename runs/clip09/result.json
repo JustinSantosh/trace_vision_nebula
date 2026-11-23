@@ -7,7 +7,7 @@
     "height": 1280,
     "frames": 909
   },
-  "processed_at": "2026-11-23T11:32:12",
+  "processed_at": "2026-11-23T11:52:54",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -25,6 +25,9 @@
       "verify_samples": 6,
       "verify_min_iou": 0.3,
       "verify_min_share": 0.34,
+      "ensemble_coco": true,
+      "ensemble_match_iou": 0.5,
+      "ensemble_new_conf": 0.5,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -57,7 +60,7 @@
   },
   "summary": {
     "raw_tracks": 56,
-    "kept_tracks": 14,
+    "kept_tracks": 15,
     "dropped_unverified_large": [
       {
         "track_id": 29,
@@ -174,18 +177,33 @@
         }
       }
     ],
-    "vehicles_after_relink": 8,
+    "coco_ensemble": {
+      "coco_tracks": 6,
+      "attached_to_uvh": 5,
+      "added_coco_only": [
+        {
+          "track_id": 100028,
+          "type": "bicycle",
+          "mean_conf": 0.715,
+          "frames": [
+            378,
+            392
+          ]
+        }
+      ]
+    },
+    "vehicles_after_relink": 9,
     "plates_read": 2,
     "decisions": {
-      "no_confident_match": 8
+      "no_confident_match": 9
     }
   },
   "timing": {
-    "detect_track_s": 7.8,
-    "plates_s": 2.4,
+    "detect_track_s": 12.3,
+    "plates_s": 2.0,
     "ocr_s": 0.1,
-    "assemble_s": 0.2,
-    "total_s": 11.8
+    "assemble_s": 0.3,
+    "total_s": 15.7
   },
   "vehicles": [
     {
@@ -425,7 +443,8 @@
       "type": {
         "label": "car",
         "vote_share": 0.555,
-        "detector_conf_mean": 0.49
+        "detector_conf_mean": 0.489,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "silver",
@@ -674,7 +693,8 @@
       "type": {
         "label": "auto_rickshaw",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.738
+        "detector_conf_mean": 0.738,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "brown",
@@ -705,17 +725,52 @@
       "merged_track_ids": [
         124
       ],
-      "first_frame": 256,
-      "last_frame": 272,
-      "first_time_s": 8.53,
-      "n_detections": 9,
+      "first_frame": 246,
+      "last_frame": 274,
+      "first_time_s": 8.2,
+      "n_detections": 15,
       "first_box": [
-        248,
-        815,
-        695,
-        1280
+        557,
+        1007,
+        720,
+        1279
       ],
       "track": [
+        [
+          246,
+          557,
+          1007,
+          720,
+          1279
+        ],
+        [
+          248,
+          525,
+          960,
+          719,
+          1279
+        ],
+        [
+          250,
+          494,
+          926,
+          709,
+          1279
+        ],
+        [
+          252,
+          466,
+          906,
+          695,
+          1279
+        ],
+        [
+          254,
+          425,
+          895,
+          668,
+          1279
+        ],
         [
           256,
           248,
@@ -778,12 +833,20 @@
           849,
           169,
           1081
+        ],
+        [
+          274,
+          0,
+          860,
+          107,
+          1069
         ]
       ],
       "type": {
         "label": "SUV",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.424
+        "detector_conf_mean": 0.416,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "white",
@@ -1036,9 +1099,9 @@
         147
       ],
       "first_frame": 274,
-      "last_frame": 286,
+      "last_frame": 288,
       "first_time_s": 9.13,
-      "n_detections": 7,
+      "n_detections": 8,
       "first_box": [
         49,
         834,
@@ -1094,18 +1157,26 @@
           837,
           542,
           1137
+        ],
+        [
+          288,
+          354,
+          850,
+          710,
+          1165
         ]
       ],
       "type": {
         "label": "auto_rickshaw",
         "vote_share": 0.764,
-        "detector_conf_mean": 0.734
+        "detector_conf_mean": 0.785,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "black",
-        "confidence": 0.276,
+        "confidence": 0.235,
         "per_frame": [
-          "black",
+          "yellow",
           "black",
           "black"
         ],
@@ -1131,9 +1202,9 @@
         158
       ],
       "first_frame": 320,
-      "last_frame": 624,
+      "last_frame": 628,
       "first_time_s": 10.67,
-      "n_detections": 113,
+      "n_detections": 117,
       "first_box": [
         146,
         943,
@@ -1483,6 +1554,20 @@
           855,
           720,
           1280
+        ],
+        [
+          494,
+          550,
+          1015,
+          703,
+          1280
+        ],
+        [
+          496,
+          505,
+          944,
+          701,
+          1279
         ],
         [
           498,
@@ -1931,12 +2016,27 @@
           860,
           590,
           927
+        ],
+        [
+          626,
+          535,
+          858,
+          602,
+          926
+        ],
+        [
+          628,
+          554,
+          856,
+          619,
+          921
         ]
       ],
       "type": {
         "label": "SUV",
         "vote_share": 0.458,
-        "detector_conf_mean": 0.454
+        "detector_conf_mean": 0.501,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "yellow",
@@ -2207,17 +2307,24 @@
       "merged_track_ids": [
         166
       ],
-      "first_frame": 372,
+      "first_frame": 370,
       "last_frame": 386,
-      "first_time_s": 12.4,
-      "n_detections": 8,
+      "first_time_s": 12.33,
+      "n_detections": 9,
       "first_box": [
-        52,
-        845,
-        269,
-        1012
+        36,
+        854,
+        163,
+        1007
       ],
       "track": [
+        [
+          370,
+          36,
+          854,
+          163,
+          1007
+        ],
         [
           372,
           52,
@@ -2278,7 +2385,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.652
+        "detector_conf_mean": 0.652,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "unknown",
@@ -2289,6 +2397,109 @@
           "black"
         ],
         "note": "too dark to judge colour"
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "candidates": []
+    },
+    {
+      "track_id": 100028,
+      "merged_track_ids": [
+        100028
+      ],
+      "first_frame": 378,
+      "last_frame": 392,
+      "first_time_s": 12.6,
+      "n_detections": 8,
+      "first_box": [
+        66,
+        861,
+        254,
+        1010
+      ],
+      "track": [
+        [
+          378,
+          66,
+          861,
+          254,
+          1010
+        ],
+        [
+          380,
+          138,
+          853,
+          332,
+          1007
+        ],
+        [
+          382,
+          220,
+          849,
+          415,
+          1004
+        ],
+        [
+          384,
+          308,
+          856,
+          492,
+          1002
+        ],
+        [
+          386,
+          389,
+          859,
+          572,
+          1003
+        ],
+        [
+          388,
+          467,
+          861,
+          646,
+          1003
+        ],
+        [
+          390,
+          540,
+          863,
+          719,
+          1005
+        ],
+        [
+          392,
+          597,
+          875,
+          720,
+          1003
+        ]
+      ],
+      "type": {
+        "label": "bicycle",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.715,
+        "source": "COCO YOLOv8n"
+      },
+      "colour": {
+        "label": "red",
+        "confidence": 0.528,
+        "per_frame": [
+          "red",
+          "red",
+          "red"
+        ],
+        "note": "CLIP zero-shot",
+        "method": "clip"
       },
       "plate": {
         "status": "no plate detected",
@@ -2358,7 +2569,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.804
+        "detector_conf_mean": 0.804,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "unknown",
@@ -2444,7 +2656,8 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.477
+        "detector_conf_mean": 0.477,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "white",

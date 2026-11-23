@@ -174,6 +174,13 @@ function vehicleImg(d) {
   return null;
 }
 const plateText = d => d.plate && d.plate.fused ? d.plate.fused : "";
+// per-frame OCR text with every character below the fusion's confidence bar shown as '?' (never display a guess)
+const TAU = () => (R && R.config && R.config.fusion && R.config.fusion.tau_prob) || 0.8;
+function masked(r) {
+  const t = r.text || "", p = r.char_probs || [];
+  if (p.length !== t.length) return t;
+  return t.split("").map((c, i) => p[i] >= TAU() ? c : "?").join("");
+}
 
 // ---------------------------------------------------------------- live playback
 // The analysis is finished before playback; live mode REVEALS it in step with the video:
@@ -237,7 +244,7 @@ function colourAt(d, f) {
 function rowState(d, f) {   // what the vehicle list may show at frame f
   const p = phase(d, f), so = readsSoFar(d, f);
   if (p === "tracking") return {col: css("--none"), badge: STAGE.get(d) ? "tracking" : "no plate", plate: ""};
-  if (p === "reading") return {col: READ_C, badge: `reading (${so.length})`, plate: so.length ? so[so.length - 1].text : ""};
+  if (p === "reading") return {col: READ_C, badge: `reading (${so.length})`, plate: so.length ? masked(so[so.length - 1]) : ""};
   if (p === "checking") return {col: CHECK_C, badge: "checking registry…", plate: plateText(d)};
   return {col: decColour(d), badge: decLabel(d), plate: plateText(d) || (reads(d).length ? "…" : "")};
 }
@@ -247,7 +254,7 @@ function evHtml(e, isNew) {
   if (e.k === "enter") { ic = css("--none"); tx = `${id} ${esc(d.type.label)} tracked`; }
   else if (e.k === "read") {
     ic = READ_C; const src = crop(d, "plate", e.r.frame); if (src) img = `<img src="${src}" alt="">`;
-    tx = `${id} plate read <b>${esc(e.r.text || "∅")}</b> <span style="color:var(--muted)">f${e.r.frame} · ${e.r.height_px}px</span>`;
+    tx = `${id} plate read <b>${esc(masked(e.r) || "∅")}</b> <span style="color:var(--muted)">f${e.r.frame} · ${e.r.height_px}px</span>`;
   } else if (e.k === "check") { ic = CHECK_C; tx = `${id} checking registry with fused plate <b>${esc(plateText(d) || "?")}</b>…`; }
   else {
     ic = decColour(d); const c = (d.candidates || [])[0];
@@ -335,7 +342,7 @@ function paint() {
     else if (ph === "tracking") label = `#${d.track_id} ${d.type.label}`;
     else if (ph === "reading") {
       const so = readsSoFar(d, vf);
-      label = `#${d.track_id} ${d.type.label} · ${usedNow ? "◉ reading plate" : "read"}: ${so.length ? so[so.length - 1].text : "…"} (${so.length})`;
+      label = `#${d.track_id} ${d.type.label} · ${usedNow ? "◉ reading plate" : "read"}: ${so.length ? masked(so[so.length - 1]) : "…"} (${so.length})`;
     } else if (ph === "checking") label = `#${d.track_id} · ${plateText(d)} · checking registry…`;
     else label = `#${d.track_id} ${d.type.label}${plateText(d) ? " · " + plateText(d) : ""}` +
                  (isLive() && STAGE.get(d) ? (d.decision === "match" ? "  ✔ MATCH" : "  ✖ no match") : (usedNow ? "  ◉ reading plate" : ""));
@@ -427,10 +434,10 @@ function renderDetails() {
   const f = vframe(), ph = phase(d, f), st = rowState(d, f), done = ph === "decided" || !STAGE.get(d);
   const p = d.plate || {}, rs = reads(d).slice().sort((a, b) => a.frame - b.frame), so = readsSoFar(d, f);
   let plateHtml;
-  if (ph === "reading") plateHtml = `<span style="color:${READ_C}">${esc(so.length ? so[so.length - 1].text : "…")}</span>`;
+  if (ph === "reading") plateHtml = `<span style="color:${READ_C}">${esc(so.length ? masked(so[so.length - 1]) : "…")}</span>`;
   else if (ph === "tracking") plateHtml = `<span style="color:var(--muted);font-size:15px;letter-spacing:0">${STAGE.get(d) ? "not read yet" : esc(p.status || "no plate")}</span>`;
   else plateHtml = p.fused ? p.fused.split("").map(c => c === "?" ? `<span class="q">?</span>` : esc(c)).join("") : `<span style="color:var(--muted);font-size:15px;letter-spacing:0">${esc(p.status || "no plate")}</span>`;
-  const sub = ph === "reading" ? `latest single-frame read · ${so.length} of ${rs.length} reads so far (fused plate appears at the registry check)`
+  const sub = ph === "reading" ? `latest single-frame read (characters under ${TAU()} confidence shown as ?) · ${so.length} of ${rs.length} reads so far (fused plate appears at the registry check)`
             : ph === "tracking" ? "" : (p.fused ? `fused from ${rs.length} frame read${rs.length === 1 ? "" : "s"}` + (p.unknown_positions && p.unknown_positions.length ? ` · unreadable position(s) ${p.unknown_positions.join(", ")} kept as ?` : "") : "");
   const vimg = vehicleImg(d);
   let h = `<h3><span class="dot" style="background:${st.col}"></span>Vehicle #${d.track_id}
@@ -449,7 +456,7 @@ function renderDetails() {
       const src = crop(d, "plate", r.frame);
       return `<div class="fcard" data-f="${r.frame}" title="Jump to frame ${r.frame}">
         ${src ? `<img src="${src}" alt="plate crop, frame ${r.frame}">` : `<div style="height:40px"></div>`}
-        <div class="ft">${esc(r.text || "∅")}</div>
+        <div class="ft" title="raw OCR: ${esc(r.text || "")}">${esc(masked(r) || "∅")}</div>
         <div class="chars">${(r.char_probs || []).map(q => `<span style="background:${probCol(q)}" title="${q}"></span>`).join("")}</div>
         <div class="fm">f${r.frame} · ${r.height_px}px · q ${(+r.quality).toFixed(2)}</div></div>`;
     }).join("") + `</div><div class="note">Bars under each read: per-character OCR confidence (green ≥ 0.95, amber ≥ 0.8, red lower).</div>`;

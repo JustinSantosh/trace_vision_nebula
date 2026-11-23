@@ -105,10 +105,16 @@ def ensemble_coco(video, uvh_tracks, coco_model, pc, min_area):
             if m > best_iou:
                 best, best_iou = uk, m
         if best is not None and best_iou >= pc.get("ensemble_match_iou", 0.5):
+            extra = []
             for d in cd:
                 u = by_frame[best].get(d["frame"])
                 if u is not None:
                     u["coco"] = (d["type"], d["conf"])
+                else:                      # COCO saw the same vehicle on frames UVH-26 missed: extend the track
+                    extra.append(d)
+            if extra:
+                out[best] = sorted(out[best] + extra, key=lambda x: x["frame"])
+                by_frame[best].update({d["frame"]: d for d in extra})
             attached += 1
         elif float(np.mean([d["conf"] for d in cd])) >= pc.get("ensemble_new_conf", 0.5):
             nid = 100000 + int(ck)
@@ -118,10 +124,11 @@ def ensemble_coco(video, uvh_tracks, coco_model, pc, min_area):
     return out, {"coco_tracks": len(kept_c), "attached_to_uvh": attached, "added_coco_only": added}
 
 
-def final_type(dets):
-    """Vehicle type for a track. UVH-26 votes by default (finer Indian classes). If the attached COCO votes name an
-    INCOMPATIBLE type (e.g. truck vs motorcycle) with a higher mean confidence, the more confident detector wins
-    (M15). COCO never overrides auto_rickshaw (COCO has no such class). COCO-only tracks use COCO votes.
+def final_type(dets, override_below=0.5):
+    """Vehicle type for a track. UVH-26 votes by default (finer Indian classes). Only when UVH-26 is itself UNSURE
+    (mean confidence of its type < override_below, i.e. footage unlike its elevated-CCTV training data) and the
+    attached COCO votes name an INCOMPATIBLE type (e.g. truck vs motorcycle) with a higher mean confidence, does
+    COCO's type win (M15). COCO never overrides auto_rickshaw (COCO has no such class). COCO-only tracks use COCO.
     Returns (label, vote_share, mean detector confidence, source)."""
     uv = [d for d in dets if d.get("src", "uvh") == "uvh"]
     if not uv:
@@ -129,14 +136,14 @@ def final_type(dets):
         return t, share, float(np.mean([d["conf"] for d in dets])), "COCO YOLOv8n"
     t_u, share_u = track_type(uv)
     m_u = float(np.mean([d["conf"] for d in uv if d["type"] == t_u]))
-    co = [d["coco"] for d in uv if d.get("coco")]
+    co = [d["coco"] for d in uv if d.get("coco")] + [(d["type"], d["conf"]) for d in dets if d.get("src") == "coco"]
     if co and t_u != "auto_rickshaw":
         votes = Counter()
         for t, c in co:
             votes[t] += c
         t_c, w = votes.most_common(1)[0]
         m_c = float(np.mean([c for t, c in co if t == t_c]))
-        if not compatible(t_u, t_c) and m_c > m_u:
+        if m_u < override_below and not compatible(t_u, t_c) and m_c > m_u:
             return t_c, round(w / sum(votes.values()), 3), m_c, "COCO YOLOv8n (more confident than UVH-26)"
     return t_u, share_u, m_u, "UVH-26"
 
