@@ -1,0 +1,293 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080a11">
+  <meta name="description" content="TRACEVISION AI local vehicle traceability workspace">
+  <title>TRACEVISION AI — Vehicle Traceability</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%23080a11'/%3E%3Cpath d='M20 6 32 13v14l-12 7-12-7V13z' fill='none' stroke='%2369e4f2' stroke-width='2.4'/%3E%3Ccircle cx='20' cy='20' r='4' fill='%2369e4f2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/frontend/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Workspace navigation">
+      <a class="brand" href="/" aria-label="TRACEVISION AI home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M20 3.5 34.5 12v16L20 36.5 5.5 28V12L20 3.5Z" stroke="currentColor" stroke-width="1.4"/><path d="M20 10.5 28 15v10l-8 4.5L12 25V15l8-4.5Z" stroke="currentColor" stroke-width="1.4"/><circle cx="20" cy="20" r="3.2" fill="currentColor"/></svg></span>
+        <span class="brand-copy"><strong>TRACEVISION</strong><span>AI INVESTIGATIONS</span></span>
+      </a>
+      <div class="workspace-label">WORKSPACE <span>LOCAL</span></div>
+      <nav class="primary-nav" aria-label="Primary">
+        <a class="nav-link is-active" data-nav-view="overview" href="#top" aria-current="page"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="5.5" height="5.5" rx="1"/><rect x="11.5" y="3" width="5.5" height="5.5" rx="1"/><rect x="3" y="11.5" width="5.5" height="5.5" rx="1"/><rect x="11.5" y="11.5" width="5.5" height="5.5" rx="1"/></svg><span>Overview</span></a>
+        <div class="nav-group-label">INVESTIGATE</div>
+        <a class="nav-link" data-nav-view="upload" href="#upload"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 5.5h12M4 10h12M4 14.5h7"/><circle cx="15" cy="14.5" r="2.5"/></svg><span>Analyse a clip</span><span class="nav-step">01</span></a>
+        <a class="nav-link" data-nav-view="results" href="#samples-title"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M7 8h6M7 11h3"/></svg><span>Results</span><span class="nav-step">02</span></a>
+        <a class="nav-link" data-nav-view="crosscam" href="#crosscam"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="5" cy="10" r="2"/><circle cx="15" cy="5" r="2"/><circle cx="15" cy="15" r="2"/><path d="m6.8 9 6.4-3M6.8 11l6.4 3"/></svg><span>Cross-camera</span><span class="nav-step">03</span></a>
+        <div class="nav-group-label nav-group-secondary">REVIEW</div>
+        <a class="nav-link" data-nav-view="insights" href="#insights"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 16V9m4 7V4m5 12v-5m5 5V7"/><path d="M2 17h16"/></svg><span>Insights</span><span class="nav-step">04</span></a>
+        <a class="nav-link" data-nav-view="reports" href="#reports"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2.8h7l3.2 3.3v11.1H5z"/><path d="M12 2.8v3.7h3.2M7.5 10h5M7.5 13h5"/></svg><span>Reports</span><span class="nav-step">05</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="local-card"><span class="local-indicator"></span><div><strong>Local workspace</strong><small>Evidence stays on this machine</small></div></div>
+        <div class="sidebar-foot"><span>TRACEVISION AI</span><span>PHASE 05</span></div>
+      </div>
+    </aside>
+
+    <div class="main-column">
+      <header class="topbar">
+        <div class="breadcrumb"><span>Workspace</span><span class="crumb-divider">/</span><strong id="breadcrumb-current">Overview</strong></div>
+        <div class="topbar-actions"><span class="offline-tag"><span></span> LOCAL INSTANCE</span><span class="topbar-divider"></span><button class="icon-button" type="button" aria-label="Open command palette" title="Command palette · Ctrl+K" id="command-palette-open">⌕</button><button class="icon-button help-button" type="button" aria-label="About and limitations" title="About and limitations" id="about-open">?</button><button class="icon-button" type="button" aria-label="Refresh runtime status" id="refresh-overview"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16.5 7.5A6.8 6.8 0 0 0 4.2 5.7L3 7"/><path d="M3 3.8V7h3.2M3.5 12.5a6.8 6.8 0 0 0 12.3 1.8L17 13"/><path d="M17 16.2V13h-3.2"/></svg></button><div class="user-mark" aria-label="Investigator workspace">TV</div></div>
+      </header>
+
+      <main id="main" class="content">
+        <div id="landing-view">
+        <section class="hero-panel panel" id="top" aria-labelledby="hero-title">
+          <div class="hero-content">
+            <div class="eyebrow"><span class="eyebrow-line"></span> VEHICLE TRACEABILITY CONSOLE</div>
+            <div class="hero-overline"><span class="micro-pulse"></span> EVIDENCE-FIRST INVESTIGATION</div>
+            <h1 id="hero-title">See the vehicle.<br><span>Follow the evidence.</span></h1>
+            <p>Trace vehicles through CCTV footage with careful plate reads, clear attribute evidence, and honest registry decisions.</p>
+            <a class="button button-primary" href="#upload"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg>Analyse a clip <span class="button-arrow" aria-hidden="true">↗</span></a>
+            <button class="button button-demo" id="demo-mode-open" type="button">Rehearse a stored result <span aria-hidden="true">▶</span></button>
+            <div class="hero-footnote"><span class="tiny-lock" aria-hidden="true">◇</span> Runs locally · Unknown plate characters stay “?”</div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="hero-grid"></div><div class="hero-orbit orbit-a"></div><div class="hero-orbit orbit-b"></div><div class="hero-scan-line"></div>
+            <div class="vehicle-frame frame-one"><i class="frame-corner tl"></i><i class="frame-corner tr"></i><i class="frame-corner bl"></i><i class="frame-corner br"></i><span>TRACK / —</span></div>
+            <div class="vehicle-frame frame-two"><i class="frame-corner tl"></i><i class="frame-corner tr"></i><i class="frame-corner bl"></i><i class="frame-corner br"></i></div>
+            <div class="hero-plate"><span>UNKNOWN PLATE</span><div><i>?</i><i>?</i><i>?</i><i>?</i><i>?</i><i>?</i><i>?</i></div></div>
+            <div class="hero-telemetry">FRAME — — — <b>·</b> LOCAL ANALYSIS</div>
+          </div>
+        </section>
+
+        <section class="ops-section" aria-labelledby="ops-title">
+          <div class="section-heading compact-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> STORED INVESTIGATIONS</div><h2 id="ops-title">Case file at a glance</h2></div><span class="data-source" id="ops-source">Reading runs/…</span></div>
+          <div class="ops-strip panel" id="ops-strip" aria-live="polite"><div class="ops-empty">Loading stored results…</div></div>
+        </section>
+
+        <section class="stats-section" aria-labelledby="stats-title">
+          <div class="section-heading compact-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> EVALUATION SNAPSHOT</div><h2 id="stats-title">Measured on stored test clips</h2></div><span class="data-source" id="evaluation-source">Loading evaluation files…</span></div>
+          <div class="metric-grid" id="metric-grid" aria-live="polite">
+            <article class="metric-card panel metric-skeleton"><span>REGISTERED MATCHES</span><b>—</b><i></i></article>
+            <article class="metric-card panel metric-skeleton"><span>FALSE CONFIDENT MATCHES</span><b>—</b><i></i></article>
+            <article class="metric-card panel metric-skeleton"><span>WRONG PLATE CHARACTERS</span><b>—</b><i></i></article>
+            <article class="metric-card panel metric-skeleton"><span>VEHICLES TRACKED</span><b>—</b><i></i></article>
+          </div>
+          <p class="evaluation-note" id="evaluation-note">Figures load from the local evaluation reports.</p>
+        </section>
+
+        <section class="work-section" id="upload" aria-labelledby="upload-title">
+          <div class="section-heading">
+            <div><div class="eyebrow"><span class="eyebrow-line"></span> NEW INVESTIGATION</div><h2 id="upload-title">Analyse a clip</h2><p class="section-lede">Select a video to run the local analysis pipeline.</p></div>
+            <span class="engine-pill" id="engine-pill" data-state="starting"><i></i><span>Checking engine</span></span>
+          </div>
+          <div class="notice notice-error" id="service-notice" role="status" hidden>
+            <span class="notice-symbol" aria-hidden="true">!</span><div class="notice-body"><strong id="service-title">Analysis engine unavailable</strong><p id="service-message">The local engine has not confirmed readiness.</p><details id="service-details" hidden><summary>Technical detail</summary><code id="service-error"></code></details></div><button class="button button-quiet" type="button" id="retry-overview">Retry</button>
+          </div>
+          <div class="upload-layout">
+            <div class="upload-card panel">
+              <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a video clip or drop it here">
+                <input id="video-file" type="file" hidden>
+                <span class="upload-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 21V7m0 0-5 5m5-5 5 5M7 20v5h18v-5"/></svg></span>
+                <strong>Drop a video to begin</strong><span class="dropzone-sub">or <u>browse files</u></span>
+                <small id="file-rules">Allowed formats and size limit load from the local service.</small>
+              </div>
+              <div class="selected-file" id="selected-file" hidden>
+                <video id="video-preview" controls muted playsinline></video>
+                <div class="file-meta"><div><strong id="file-name"></strong><span id="file-size"></span></div><button type="button" class="text-button" id="remove-file">Remove</button></div>
+              </div>
+              <div class="upload-actions"><div id="upload-feedback" role="status" aria-live="polite">The engine must be ready before a clip can be submitted.</div><button class="button button-primary" id="submit-job" type="button" disabled>Start analysis <span class="button-arrow" aria-hidden="true">↗</span></button></div>
+            </div>
+            <aside class="privacy-card panel"><div class="privacy-glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 19 6v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>Local by design</h3><p>Video uploads go to this local FastAPI service. No clip is sent to a third-party service by the interface.</p><div class="privacy-divider"></div><div class="privacy-foot"><span>MAX FILE SIZE</span><b id="limit-label">—</b></div><div class="privacy-foot"><span>ENGINE</span><b id="privacy-engine">CHECKING</b></div></aside>
+          </div>
+        </section>
+
+        <section class="samples-section" aria-labelledby="samples-title">
+          <div class="section-heading">
+            <div><div class="eyebrow"><span class="eyebrow-line"></span> STORED ANALYSES</div><h2 id="samples-title">Explore a sample result</h2><p class="section-lede">Open an existing result without running the model again.</p></div>
+            <span class="sample-count" id="sample-count">Loading stored results…</span>
+          </div>
+          <div class="sample-grid" id="sample-grid" aria-live="polite"><div class="sample-placeholder panel" aria-busy="true"></div><div class="sample-placeholder panel" aria-busy="true"></div><div class="sample-placeholder panel" aria-busy="true"></div></div>
+          <div class="samples-empty" id="samples-empty" hidden>No stored result files were found in runs/.</div>
+        </section>
+
+        <section class="processing-section panel" id="processing-panel" aria-labelledby="processing-title" hidden>
+          <div class="processing-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> JOB STATUS</div><h2 id="processing-title">Analysis in progress</h2><p id="processing-subtitle">Waiting for the local job status.</p></div><span class="job-status-pill" id="job-status-pill" data-state="queued">QUEUED</span></div>
+          <div class="job-tracker" id="job-tracker" aria-label="Job progress">
+            <div class="job-step" data-step="queued"><i>01</i><span><b>Queued</b><small>Waiting for the engine</small></span></div>
+            <div class="job-step" data-step="analysis"><i>02</i><span><b>Analysis</b><small>Pipeline running</small></span></div>
+            <div class="job-step" data-step="report"><i>03</i><span><b>Report</b><small>Building evidence report</small></span></div>
+            <div class="job-step" data-step="complete"><i>04</i><span><b>Complete</b><small>Result is ready</small></span></div>
+          </div>
+          <div class="pipeline-flow"><div class="pipeline-label">PIPELINE SEQUENCE</div><ol><li>Detect</li><li>Track</li><li>Plate detection</li><li>OCR + fusion</li><li>Vehicle attributes</li><li>Registry match</li><li>Report</li></ol><p>Per-stage progress is not exposed by the current pipeline API; the tracker above follows the actual job status.</p></div>
+          <div class="job-error" id="job-error" role="alert" hidden></div>
+          <div class="job-result-links" id="job-result-links" hidden></div>
+          <button type="button" class="button button-quiet" id="retry-job-status" hidden>Check job status again</button>
+        </section>
+
+        <footer class="page-footer"><span>TRACEVISION AI <i>·</i> INVESTIGATOR WORKSPACE</span><span>LOCAL DATA <b>●</b></span></footer>
+        </div>
+        <section class="results-page" id="results-view" aria-labelledby="result-title" hidden>
+          <div class="results-heading">
+            <div>
+              <button class="text-button back-button" id="back-to-overview" type="button">← Overview</button>
+              <div class="eyebrow"><span class="eyebrow-line"></span> ANALYSIS RESULTS</div>
+              <h1 id="result-title">Loading result</h1>
+              <p class="page-lede" id="result-meta">Reading stored evidence…</p>
+            </div>
+            <div class="result-actions">
+              <a class="button button-quiet" id="result-html-report" href="#" hidden>HTML report</a>
+              <a class="button button-quiet" id="result-pdf-report" href="#" hidden>PDF report</a>
+            </div>
+          </div>
+          <div class="demo-result-banner" id="demo-result-banner" role="status" hidden><span class="demo-live-dot"></span><div><b>DEMO MODE · STORED RESULT</b><small>The progress sequence was simulated. This view is the existing stored result; no model run was started.</small></div><button class="text-button" type="button" id="demo-banner-dismiss">Dismiss</button></div>
+          <div class="results-loading" id="results-loading" role="status">Loading result, clip, and evidence files…</div>
+          <div class="results-error" id="results-error" role="alert" hidden></div>
+          <div class="results-layout" id="results-content" hidden>
+            <section class="viewer-panel panel" aria-label="Annotated video viewer">
+              <div class="viewer-heading"><span class="viewer-kicker">ANNOTATED PLAYBACK</span><span class="viewer-frame" id="viewer-frame">FRAME —</span></div>
+              <div class="video-stage" id="video-stage">
+                <video id="result-video" playsinline preload="metadata"></video>
+                <canvas id="track-canvas" aria-label="Tracked vehicle boxes. Click a box to select a vehicle."></canvas>
+                <div class="video-unavailable" id="video-unavailable" hidden>Video is unavailable for this stored result. Vehicle evidence and scores are still shown below.</div>
+              </div>
+              <div class="viewer-controls">
+                <button class="viewer-control primary-control" id="play-toggle" type="button" aria-label="Play video">▶</button>
+                <button class="viewer-control" id="seek-back" type="button" title="Back five seconds">−5s</button>
+                <button class="viewer-control" id="seek-forward" type="button" title="Forward five seconds">+5s</button>
+                <button class="viewer-control" id="previous-evidence" type="button" title="Previous plate evidence frame">‹ Evidence</button>
+                <button class="viewer-control" id="next-evidence" type="button" title="Next plate evidence frame">Evidence ›</button>
+                <select id="playback-speed" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
+                <span class="viewer-time" id="viewer-time">00:00 / —</span>
+              </div>
+              <div class="timeline-wrap">
+                <div class="timeline-rail"><div class="timeline-progress" id="timeline-progress"></div><div class="timeline-markers" id="timeline-markers" aria-hidden="true"></div></div>
+                <input id="seek-slider" class="seek-slider" type="range" min="0" max="1000" value="0" aria-label="Seek through clip">
+              </div>
+              <div class="viewer-legend"><span><i class="legend-cyan"></i>Vehicle track</span><span><i class="legend-violet"></i>Selected vehicle</span><span><i class="legend-tick"></i>Frame used for plate reading</span></div>
+            </section>
+            <aside class="vehicle-list-panel panel">
+              <div class="panel-heading"><div><span class="viewer-kicker">TRACKED VEHICLES</span><h2>Evidence index</h2></div><span class="count-pill" id="vehicle-count">—</span></div>
+              <div class="vehicle-list" id="vehicle-list"></div>
+              <div class="vehicle-list-empty" id="vehicle-list-empty" hidden>No vehicles were recorded in this result.</div>
+            </aside>
+          </div>
+          <section class="vehicle-detail panel" id="vehicle-detail" hidden>
+            <div class="detail-header">
+              <div><span class="viewer-kicker">SELECTED VEHICLE</span><h2 id="detail-title">Track —</h2></div>
+              <div id="decision-badge" class="decision-badge"></div>
+            </div>
+            <div class="detail-overview">
+              <div class="vehicle-image-wrap" id="vehicle-image-wrap">
+                <img id="vehicle-image" alt="" hidden>
+                <div class="image-placeholder" id="vehicle-placeholder"><span>NO VEHICLE CROP</span><small>Crop image not available for this result</small></div>
+              </div>
+              <div class="attribute-panel">
+                <div class="attribute-block"><span>VEHICLE TYPE</span><b id="vehicle-type">—</b><small id="type-source"></small></div>
+                <div class="attribute-block"><span>OBSERVED COLOUR</span><div class="colour-value"><i id="colour-swatch"></i><b id="vehicle-colour">—</b></div><small id="colour-confidence"></small></div>
+                <div class="attribute-block"><span>OBSERVED</span><b id="track-frames">—</b><small id="track-duration"></small></div>
+                <div class="attribute-block"><span>SOURCE</span><b id="track-source">—</b><small id="track-source-detail"></small></div>
+              </div>
+              <div class="score-grid" aria-label="Separate confidence and match indicators">
+                <article class="score-card"><span>DETECTOR CONFIDENCE</span><b id="detector-score">—</b><div class="score-meter"><i id="detector-meter"></i></div><small>Mean vehicle detector confidence</small></article>
+                <article class="score-card"><span>OCR CONFIDENCE</span><b id="ocr-score">—</b><div class="score-meter"><i id="ocr-meter"></i></div><small>Mean fused per-character confidence</small></article>
+                <article class="score-card match-score-card"><span>TOP CANDIDATE SCORE</span><b id="match-score">—</b><div class="score-meter"><i id="match-meter"></i></div><small>Heuristic ranking score · not a probability</small></article>
+              </div>
+            </div>
+            <div class="plate-evidence-section">
+              <div class="subsection-heading"><div><span class="viewer-kicker">FUSED PLATE</span><p id="plate-status">Plate evidence not available.</p></div><span class="plate-source-note">Unknown characters remain ?</span></div>
+              <div class="plate-cells" id="plate-cells"></div>
+            </div>
+            <div class="frame-evidence-section">
+              <div class="subsection-heading"><div><span class="viewer-kicker">FRAME EVIDENCE</span><h3>Reads used for this vehicle</h3></div><span class="section-note" id="frame-evidence-count"></span></div>
+              <div class="frame-evidence-strip" id="frame-evidence"></div>
+              <div class="frame-evidence-empty" id="frame-evidence-empty" hidden>No OCR frame reads were recorded for this vehicle.</div>
+            </div>
+            <div class="decision-logic-section">
+              <div class="subsection-heading"><div><span class="viewer-kicker">WHY THIS DECISION</span><h3>Decision rule, applied to this vehicle</h3></div><span class="section-note" id="decision-logic-source">Thresholds as stored with this result</span></div>
+              <ol class="decision-checks" id="decision-checks"></ol>
+              <p class="decision-logic-note" id="decision-logic-note"></p>
+            </div>
+            <div class="candidate-section">
+              <div class="subsection-heading"><div><span class="viewer-kicker">REGISTRY RANKING</span><h3>Candidate records</h3></div><span class="section-note">Scores are ranking scores, not probabilities</span></div>
+              <div class="no-match-note" id="no-match-note" hidden></div>
+              <div class="candidate-list" id="candidate-list"></div>
+              <div class="candidate-empty" id="candidate-empty" hidden>No candidate records were returned for this vehicle.</div>
+            </div>
+          </section>
+          <footer class="page-footer"><span>TRACEVISION AI <i>·</i> INVESTIGATOR WORKSPACE</span><span>LOCAL EVIDENCE <b>●</b></span></footer>
+        </section>
+        <section class="demo-page" id="demo-view" aria-labelledby="demo-title" hidden>
+          <div class="secondary-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> REHEARSAL MODE</div><h1 id="demo-title">Stored result walkthrough</h1><p class="page-lede">A timed walkthrough of the pipeline stages using an existing clip result.</p></div><span class="demo-mode-pill"><i></i> SIMULATED PROGRESS</span></div>
+          <div class="demo-disclosure"><b>DEMO MODE · NOT A LIVE ANALYSIS</b><p>Progress below is simulated for rehearsal. It does not upload a file, run the model, or create a new result. At the end, the interface opens the selected stored result.</p></div>
+          <div class="demo-progress-card panel">
+            <div class="demo-progress-header"><div><span class="viewer-kicker" id="demo-clip-label">STORED CLIP</span><h2 id="demo-progress-title">Preparing walkthrough</h2></div><span class="demo-progress-count" id="demo-progress-count">0 / 7</span></div>
+            <div class="demo-progress-track"><i id="demo-progress-fill"></i></div>
+            <div class="demo-stage-list" id="demo-stage-list"></div>
+            <div class="demo-complete-message" id="demo-complete-message" hidden>Walkthrough complete. The next screen will use this clip’s stored result data.</div>
+            <div class="demo-actions"><button class="button button-quiet" type="button" id="demo-exit">Back to workspace</button><button class="button button-primary" type="button" id="demo-open-result" hidden>Open stored result ↗</button></div>
+          </div>
+          <footer class="page-footer"><span>TRACEVISION AI <i>·</i> DEMO MODE</span><span>STORED DATA ONLY <b>●</b></span></footer>
+        </section>
+        <section class="secondary-page" id="crosscam-view" aria-labelledby="crosscam-title" hidden>
+          <div class="secondary-heading">
+            <div><div class="eyebrow"><span class="eyebrow-line"></span> MULTI-CAMERA REVIEW</div><h1 id="crosscam-title">Cross-camera trace</h1><p class="page-lede">Compare recorded track decisions across stored clip pairs.</p></div>
+            <span class="source-chip" id="crosscam-source">Reading runs/crosscam…</span>
+          </div>
+          <div class="review-loading" id="crosscam-loading" role="status">Loading cross-camera files and evaluation labels…</div>
+          <div class="review-error" id="crosscam-error" role="alert" hidden></div>
+          <div id="crosscam-content" hidden>
+            <div class="pair-toolbar panel">
+              <label for="crosscam-pair-select"><span>CLIP PAIR</span><select id="crosscam-pair-select"></select></label>
+              <div class="pair-toolbar-meta"><span class="count-pill" id="crosscam-pair-count">—</span><small id="crosscam-pair-caption">System decisions are shown by direction.</small></div>
+              <button class="viewer-control" id="play-pair-toggle" type="button">Play both</button>
+            </div>
+            <div class="pair-video-grid" id="pair-video-grid">
+              <article class="pair-video-card panel"><div class="pair-video-heading"><div><span class="viewer-kicker">CAMERA A</span><h2 id="pair-clip-a-title">clip —</h2></div><span class="camera-track-count" id="pair-clip-a-count">—</span></div><div class="pair-video-stage"><video id="pair-video-a" playsinline preload="metadata" controls></video><canvas id="pair-canvas-a" aria-hidden="true"></canvas><div class="pair-video-missing" id="pair-video-a-missing" hidden>Clip video unavailable.</div></div></article>
+              <article class="pair-video-card panel"><div class="pair-video-heading"><div><span class="viewer-kicker">CAMERA B</span><h2 id="pair-clip-b-title">clip —</h2></div><span class="camera-track-count" id="pair-clip-b-count">—</span></div><div class="pair-video-stage"><video id="pair-video-b" playsinline preload="metadata" controls></video><canvas id="pair-canvas-b" aria-hidden="true"></canvas><div class="pair-video-missing" id="pair-video-b-missing" hidden>Clip video unavailable.</div></div></article>
+            </div>
+            <section class="pair-label-panel panel"><div class="subsection-heading"><div><span class="viewer-kicker">EVALUATION LABELS</span><h2>Reference outcomes</h2></div><span class="section-note">Label IDs are not pipeline track IDs</span></div><div class="pair-label-list" id="pair-label-list"></div><div class="pair-label-empty" id="pair-label-empty" hidden>No evaluation group is recorded for this pair.</div></section>
+            <section class="pair-joint-section"><div class="subsection-heading"><div><span class="viewer-kicker">SAME-SCENE PAIR LINKING · EVALUATED OUTPUT</span><h2>Joint links for this camera pair</h2></div><span class="section-note">Owner-declared pair: same spot, two camera angles. Only plate-confirmed links are an identity.</span></div><div class="pair-joint-list" id="pair-joint-list"></div><div class="pair-decision-empty" id="pair-joint-empty" hidden>No joint same-scene links were recorded for this pair.</div><p class="pair-joint-note" id="pair-joint-note"></p></section>
+            <section class="pair-decisions-section"><div class="subsection-heading"><div><span class="viewer-kicker">RECORDED SYSTEM DECISIONS · EACH DIRECTION ALONE</span><h2>Directional link evidence</h2></div><span class="section-note">Link scores are heuristic ranking scores, not probabilities</span></div><div class="pair-decision-list" id="pair-decision-list"></div><div class="pair-decision-empty" id="pair-decision-empty" hidden>No link decisions were recorded for this pair.</div></section>
+          </div>
+          <footer class="page-footer"><span>TRACEVISION AI <i>·</i> MULTI-CAMERA REVIEW</span><span>LOCAL EVIDENCE <b>●</b></span></footer>
+        </section>
+        <section class="secondary-page" id="reports-view" aria-labelledby="reports-title" hidden>
+          <div class="secondary-heading">
+            <div><div class="eyebrow"><span class="eyebrow-line"></span> EVIDENCE DOCUMENTS</div><h1 id="reports-title">Investigation reports</h1><p class="page-lede">Preview stored HTML reports and download the available originals.</p></div>
+            <span class="source-chip">EXISTING REPORT FILES</span>
+          </div>
+          <div class="report-toolbar panel"><label for="report-clip-select"><span>STORED CLIP</span><select id="report-clip-select"></select></label><div class="result-actions"><a class="button button-quiet" id="download-report-html" href="#" download hidden>Download HTML</a><a class="button button-quiet" id="download-report-pdf" href="#" download hidden>Download PDF</a></div></div>
+          <div class="report-empty panel" id="report-empty" hidden>No stored HTML reports are available yet.</div>
+          <div class="report-preview-wrap panel" id="report-preview-wrap" hidden><div class="report-preview-heading"><span class="viewer-kicker" id="report-preview-label">REPORT PREVIEW</span><a id="open-report-tab" href="#" target="_blank" rel="noreferrer">Open report in a new tab ↗</a></div><iframe id="report-preview" title="Stored investigation report preview" sandbox="allow-same-origin"></iframe></div>
+          <footer class="page-footer"><span>TRACEVISION AI <i>·</i> REPORT REVIEW</span><span>LOCAL REPORTS <b>●</b></span></footer>
+        </section>
+        <section class="secondary-page" id="insights-view" aria-labelledby="insights-title" hidden>
+          <div class="secondary-heading">
+            <div><div class="eyebrow"><span class="eyebrow-line"></span> EVALUATION REVIEW</div><h1 id="insights-title">Measured performance</h1><p class="page-lede">Runtime evaluation and robustness figures from the local report files.</p></div>
+            <span class="source-chip" id="insights-source">Loading evaluation sources…</span>
+          </div>
+          <div class="review-error" id="insights-error" role="alert" hidden></div>
+          <section class="insight-section"><div class="subsection-heading"><div><span class="viewer-kicker">P6 EVALUATION</span><h2>Current labelled-set results</h2></div><span class="section-note" id="insight-clip-count"></span></div><div class="insight-metric-grid" id="insight-metric-grid"></div></section>
+          <section class="insight-section panel robustness-panel"><div class="subsection-heading"><div><span class="viewer-kicker">DEGRADED VIDEO ROBUSTNESS</span><h2>Identification under image changes</h2></div><span class="section-note">Match rate and wrong-character rate by variant</span></div><div class="robustness-legend"><span><i class="robust-match-key"></i>Registered match</span><span><i class="robust-error-key"></i>Wrong plate characters</span></div><div class="robustness-chart" id="robustness-chart"></div><p class="evaluation-footnote">Variant metrics are reported as recorded in p6_robustness.json: degraded copies of clip01, 03, 04, 08 and 11 only, not all CCTV conditions. This sweep was run on an earlier pipeline version (before the phantom-box check, CLIP colour and the two-detector ensemble) and has not been re-run since.</p></section>
+          <section class="insight-section panel crosscam-insight-panel"><div class="subsection-heading"><div><span class="viewer-kicker">CROSS-CAMERA EVALUATION</span><h2>Reference group outcomes</h2></div><span class="section-note" id="crosscam-insight-total"></span></div><div class="crosscam-outcome-chart" id="crosscam-outcome-chart"></div><p class="evaluation-footnote" id="crosscam-eval-note"></p></section>
+          <footer class="page-footer"><span>TRACEVISION AI <i>·</i> EVALUATION REVIEW</span><span>RUNTIME DATA <b>●</b></span></footer>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog class="command-dialog" id="command-dialog" aria-labelledby="command-title">
+    <div class="command-shell"><div class="command-heading"><div><span class="viewer-kicker">QUICK NAVIGATION</span><h2 id="command-title">Command palette</h2></div><button class="dialog-close" type="button" data-close-dialog aria-label="Close command palette">Esc</button></div><label class="command-search-wrap"><span class="visually-hidden">Search commands</span><input id="command-search" type="search" placeholder="Search pages, results, and actions…" autocomplete="off"></label><div class="command-list" id="command-list" role="listbox" aria-label="Commands"></div><div class="command-footer"><span>↑ ↓ to navigate · Enter to open</span><span>CTRL K</span></div></div>
+  </dialog>
+  <dialog class="demo-dialog" id="demo-dialog" aria-labelledby="demo-dialog-title">
+    <div class="dialog-panel"><div class="dialog-topline"><span class="demo-mode-pill"><i></i> DEMO MODE</span><button class="dialog-close" type="button" data-close-dialog aria-label="Close demo setup">Esc</button></div><h2 id="demo-dialog-title">Choose a stored clip</h2><p>This rehearsal uses an existing result. Stage progress is simulated; no upload or model execution occurs.</p><label for="demo-clip-select">STORED RESULT</label><select id="demo-clip-select"></select><div class="dialog-actions"><button class="button button-quiet" type="button" data-close-dialog>Cancel</button><button class="button button-primary" id="demo-start" type="button">Start demo walkthrough</button></div></div>
+  </dialog>
+  <dialog class="about-dialog" id="about-dialog" aria-labelledby="about-title">
+    <div class="dialog-panel"><div class="dialog-topline"><span class="viewer-kicker">TRACEVISION AI</span><button class="dialog-close" type="button" data-close-dialog aria-label="Close about and limitations">Esc</button></div><h2 id="about-title">About this workspace</h2><p>Local investigator interface for vehicle traceability from CCTV clips. The interface reads stored results and evaluation files from this repository’s FastAPI service.</p><div class="about-grid"><article><b>Evidence first</b><p>Unknown plate characters stay as ?. Candidate scores are ranking scores, not probabilities. No owner contact information is shown.</p></article><article><b>Current limitations</b><p id="about-engine-status">Engine status loads from the local API.</p><p>The pipeline exposes coarse job status only; inner stages are not live progress. Evaluation figures reflect the stored labelled set and robustness variants.</p></article></div><div class="shortcut-list"><span><kbd>Ctrl</kbd> + <kbd>K</kbd><b>Open command palette</b></span><span><kbd>?</kbd><b>Open About and limitations</b></span><span><kbd>Esc</kbd><b>Close dialogs</b></span><span><kbd>G</kbd> then <kbd>O</kbd><b>Go to overview</b></span><span><kbd>G</kbd> then <kbd>C</kbd><b>Go to cross-camera</b></span><span><kbd>G</kbd> then <kbd>I</kbd><b>Go to insights</b></span><span><kbd>G</kbd> then <kbd>R</kbd><b>Go to reports</b></span></div><div class="dialog-actions"><button class="button button-primary" type="button" data-close-dialog>Done</button></div></div>
+  </dialog>
+  <script src="/frontend/explain.js" defer></script>
+  <script src="/frontend/app.js" defer></script>
+</body>
+</html>
