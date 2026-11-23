@@ -36,6 +36,9 @@ __pycache__/
 TRACEVISION_DATA/raw/test_videos/clip10.mp4
 TRACEVISION_DATA/raw/test_videos/clip11.mp4
 # clip12-19 (2026-11-23): own footage, cross-camera pairs from our parking -> shared via Git LFS
+# Wrong-side driving test clip (2026-11-23): downloaded, NOT own footage; shared via Git LFS by the owner's choice (DECISIONS E20)
+!TRACEVISION_DATA/raw/wrongside/
+!TRACEVISION_DATA/raw/wrongside/*
 # Labelling aids: contact sheets + frame index (frames themselves are regenerated with extract_test_video_frames.py)
 !TRACEVISION_DATA/processed/test_video_frames/**/
 !TRACEVISION_DATA/processed/test_video_frames/*/contact_sheet_fps2.jpg

@@ -23,7 +23,7 @@
   "uploads": {
     "ws01.mp4": {
       "layout": "one_way",
-      "description": "Downloaded clip (Delhi flyover, phone in a moving car). The lanes beyond the concrete barrier carry traffic the camera's way (rear ends at 27-30 s); the uploader reports the SUV coming the other way as wrong-side. Not in the repo (unknown licence)."
+      "description": "Downloaded clip (Delhi flyover, phone in a moving car). The lanes beyond the concrete barrier carry traffic the camera's way (rear ends at 27-30 s); the uploader reports the SUV coming the other way as wrong-side. File: TRACEVISION_DATA/raw/wrongside/ws01.mp4 (downloaded, not own footage; DECISIONS E20). Upload it under this name to get this rule."
     }
   }
 }
