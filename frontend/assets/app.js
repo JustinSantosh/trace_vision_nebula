@@ -1,6 +1,6 @@
 ﻿"use strict";
 /* TraceVision investigator UI.
- * Three views (Cases, Cross-camera, Performance) plus a case view. Every finding shown in the middle column has its
+ * Four views (Cases, Cross-camera, Performance, Enforcement) plus a case view. Every finding shown in the middle column has its
  * backing in the side panel: the stored reads, votes, thresholds and candidate reasons it rests on. Nothing is
  * re-scored here; values come from result.json, /api/overview and /api/review as stored. */
 (() => {
@@ -9,6 +9,7 @@
   const S = {
     overview: null, review: null, route: null, result: null, files: [], cross: [], vid: null, finding: "plate",
     boxes: new Map(), req: 0, file: null, jobTimer: null, cc: { pair: null, link: null, results: {} }, perfKey: null,
+    viol: null, rec: new Map(), role: "analyst", meta: null, enfSel: null, enfFiles: {},
   };
 
   /* ---------------------------------------------------------------- helpers */
@@ -29,6 +30,19 @@
   const clock = (s) => (Number.isFinite(s) && s >= 0 ? Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0") : "—");
   const cap = (s) => String(s || "").replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase());
   const plural = (n, word) => n + " " + word + (n === 1 ? "" : "s");
+  const store = {
+    get(k, d) { try { return localStorage.getItem(k) || d; } catch (_) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (_) { /* private mode: the choice just isn't remembered */ } },
+  };
+  /* Calls that carry the demo role. The role is not authenticated: the server only uses it to shape the answer. */
+  async function apiCall(url, opts = {}) {
+    const headers = Object.assign({ "X-TV-Role": S.role, "X-TV-User": "demo-" + S.role }, opts.headers || {});
+    const r = await fetch(url, Object.assign({ cache: "no-store" }, opts, { headers }));
+    let data = null;
+    try { data = await r.json(); } catch (_) { /* empty body */ }
+    return { ok: r.ok, status: r.status, data, error: data && data.detail ? data.detail : "HTTP " + r.status };
+  }
+  const inr = (n) => "₹" + Number(n || 0).toLocaleString("en-IN");
   async function getJSON(url) {
     const r = await fetch(url, { cache: "no-store" });
     if (!r.ok) throw new Error(url + " returned HTTP " + r.status);
@@ -78,12 +92,13 @@
   function route() {
     const h = location.hash.replace(/^#\/?/, "");
     const parts = h.split("/");
-    const views = ["cases", "case", "crosscam", "performance"];
+    const views = ["cases", "case", "crosscam", "performance", "enforcement"];
     let view = "cases";
     if ((parts[0] === "case" || parts[0] === "results") && parts.length === 3 &&
         ((parts[1] === "runs" && /^clip\d+$/.test(parts[2])) || (parts[1] === "jobs" && /^[0-9a-f]{12}$/i.test(parts[2])))) view = "case";
     else if (parts[0] === "crosscam") view = "crosscam";
     else if (parts[0] === "performance" || parts[0] === "insights") view = "performance";
+    else if (parts[0] === "enforcement") view = "enforcement";
     views.forEach((v) => { $("view-" + v).hidden = v !== view; });
     document.querySelectorAll(".tabs a").forEach((a) => {
       const on = a.dataset.tab === (view === "case" ? "cases" : view);
@@ -91,10 +106,11 @@
     });
     if (view !== "case") $("video").pause();
     if (view !== "crosscam") { $("va").pause(); $("vb").pause(); }
-    document.title = { cases: "Cases", case: parts[2] || "Case", crosscam: "Cross-camera", performance: "Performance" }[view] + " · TraceVision";
+    document.title = { cases: "Cases", case: parts[2] || "Case", crosscam: "Cross-camera", performance: "Performance", enforcement: "Enforcement" }[view] + " · TraceVision";
     if (view === "case") openCase(parts[1], parts[2]);
     if (view === "crosscam") openCrosscam();
     if (view === "performance") openPerformance();
+    if (view === "enforcement") openEnforcement();
     window.scrollTo(0, 0);
   }
 
@@ -237,13 +253,15 @@
     $("case-meta").textContent = "";
     $("case-links").replaceChildren();
     try {
-      const [result, files, cross] = await Promise.all([
+      const [result, files, cross, viol] = await Promise.all([
         getJSON(base + "/result.json"),
         getJSON(base + "/files").catch(() => []),
         kind === "runs" ? getJSON(base + "/crosscam").catch(() => ({ links: [] })) : { links: [] },
+        getJSON(base + "/violations").catch(() => null),
       ]);
       if (req !== S.req) return;
       S.route = { kind, id, base }; S.result = result; S.files = Array.isArray(files) ? files : []; S.cross = cross.links || [];
+      S.viol = viol;
       renderCase();
     } catch (e) {
       if (req !== S.req) return;
@@ -265,7 +283,8 @@
     const when = r.processed_at ? new Date(r.processed_at).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }) : null;
     $("case-title").textContent = r.clip_id || S.route.id;
     $("case-meta").textContent = [cap(r.camera_type || "camera unknown"), plural(vehicles.length, "vehicle"),
-      Number.isFinite(dur) ? clock(dur) + " at " + v.fps + " fps" : null, r.timing ? "analysed in " + r.timing.total_s + " s" : null, when].filter(Boolean).join(" · ");
+      Number.isFinite(dur) ? clock(dur) + " at " + v.fps + " fps" : null, r.timing ? "analysed in " + r.timing.total_s + " s" : null, when,
+      S.viol && S.viol.assessed ? "wrong-side check: " + plural(S.viol.violations.length, "suspected violation") + " in " + S.viol.checked_vehicles + " vehicles" : null].filter(Boolean).join(" · ");
     const rep = S.route.kind === "runs" ? "/runs/" + S.route.id + "/report" : "/jobs/" + S.route.id + "/report";
     $("case-links").replaceChildren(el("a", { href: rep, target: "_blank", rel: "noopener", text: "Report" }), el("a", { href: rep + ".pdf", target: "_blank", rel: "noopener", text: "PDF" }));
     $("vehicle-count").textContent = "· " + vehicles.length;
@@ -344,6 +363,10 @@
     ];
     const link = S.cross.find((l) => l.track_id === v.track_id);
     if (link) out.push({ id: "cross", label: "Other camera", value: link.other_clip + " · T" + link.other_track, meta: link.link });
+    const dir = directionOf(v);
+    if (dir) out.push({ id: "direction", label: "Direction", value: dir.vio ? "Wrong-side suspected" : "With the traffic flow",
+      meta: dir.vio ? cap(dir.vio.review.status) + " review" : "checked in " + dir.m.zone });
+    if (v.decision === "match" && top) out.push({ id: "record", label: "Vehicle record", value: "Look up " + top.registration_number, meta: "synthetic · logged" });
     return out;
   }
 
@@ -351,7 +374,7 @@
     S.finding = id;
     document.querySelectorAll(".finding").forEach((b) => b.setAttribute("aria-current", String(b.dataset.f === id)));
     const v = vehicleById(S.vid);
-    const render = { plate: evPlate, identity: evIdentity, type: evType, colour: evColour, seen: evSeen, cross: evCross }[id];
+    const render = { plate: evPlate, identity: evIdentity, type: evType, colour: evColour, seen: evSeen, cross: evCross, direction: evDirection, record: evRecord }[id];
     $("evidence").replaceChildren(...render(v).flat().filter(Boolean));
     $("evidence").scrollTop = 0;
   }
@@ -472,6 +495,221 @@
       section("Why they're linked", null, el("ul", { class: "reasons" }, ...(l.evidence || []).map((r) => el("li", { class: X.classifyReason(r), text: r })))),
       section("Pooled from both cameras", null, kv([["Plate", f.plate ? plateEl(f.plate) : null], ["Reads pooled", f.reads_pooled], ["Decision", f.decision ? tag(f.decision) : null], ["Match score", f.match_score]])),
       el("a", { class: "more", href: "#crosscam", text: "Open cross-camera view" })];
+  }
+
+  /* ---- evidence: wrong-side driving */
+  function directionOf(v) {
+    if (!S.viol || !S.viol.assessed) return null;
+    const m = (S.viol.per_vehicle || {})[String(v.track_id)];
+    if (!m) return null;
+    return { m, vio: (S.viol.violations || []).find((x) => x.track_id === v.track_id) };
+  }
+  const deg = (u) => Math.round(Math.acos(Math.max(-1, Math.min(1, u))) * 180 / Math.PI);
+  function arrow(dirv, cls) {
+    const a = Math.atan2(dirv[1], dirv[0]) * 180 / Math.PI;
+    return el("span", { class: "dir-arrow " + (cls || ""), style: "transform:rotate(" + a + "deg)", "aria-hidden": "true", text: "→" });
+  }
+  function dirs(m, bad) {
+    return el("div", { class: "dirs" },
+      el("div", null, arrow(m.allowed_direction), el("small", { text: "permitted" })),
+      el("div", null, arrow(m.observed_direction, bad ? "bad" : "good"), el("small", { text: "observed" })));
+  }
+  const reviewTag = (st) => el("span", { class: "tag " + (st === "confirmed" ? "match" : st === "pending" ? "unsure" : ""), text: cap(st) });
+  function evDirection(v) {
+    const { m, vio } = directionOf(v);
+    const fps = num(S.result.video && S.result.video.fps) || 30;
+    const st = S.viol.stabilisation;
+    const out = [evHead("Evidence · direction", vio ? "Wrong-side driving suspected" : "Moving with the traffic flow",
+      vio ? "Inside the " + m.zone + ", this vehicle moves against the permitted direction. It stays a suspicion until an officer reviews it."
+        : "Inside the " + m.zone + ", this vehicle moves the permitted way.")];
+    out.push(section("Measured", "in the camera's reference view", dirs(m, vio),
+      kv([["Angle off the permitted direction", deg(m.cos_to_allowed) + "°"], ["Steps moving against the flow", pct(m.against_flow_share)],
+        ["Distance covered", pct(m.displacement_frac) + " of frame height"], ["Points in zone", m.points],
+        ["Time", clock(m.first_frame / fps) + " – " + clock(m.last_frame / fps)]])));
+    out.push(section("Rule", null, el("ul", { class: "reasons" },
+      el("li", { class: m.cos_to_allowed <= -0.5 ? "conflicting" : "supporting", text: "flagged only when more than 120° off the permitted direction" }),
+      el("li", { class: m.against_flow_share >= 0.7 ? "conflicting" : "supporting", text: "and only when at least 70% of short steps go against the flow" }),
+      st ? el("li", { class: "partial", text: "camera pan removed first (up to " + st.max_pan_px + " px; " + st.frames_usable + " of " + st.frames_sampled + " sampled frames usable)" }) : null)));
+    if (vio) {
+      out.push(section("Review", null, kv([["Status", reviewTag(vio.review.status)],
+        ["Registration", vio.registration_number || "no confident match"], ["Reviewed by", vio.review.by]])),
+        el("a", { class: "more", href: "#enforcement", text: "Open the review queue" }),
+        el("button", { class: "more", type: "button", text: "Jump to the evidence frame", onclick: () => seekFrame(vio.evidence_frames[1]) }));
+    }
+    if (S.viol.camera_description) out.push(el("p", { class: "ev-note", text: S.viol.camera_description }));
+    return out;
+  }
+
+  /* ---- evidence: vehicle record (synthetic, role-gated, logged) */
+  const roleLabel = () => ((S.meta && S.meta.roles && S.meta.roles[S.role]) || { label: cap(S.role) }).label.toLowerCase();
+  function lookupForm(onGo, label) {
+    const needs = S.role !== "analyst";
+    const reason = el("select", { class: "field", "aria-label": "Reason for this lookup" },
+      el("option", { value: "", text: needs ? "Choose a reason…" : "Reason (optional)" }),
+      ...((S.meta && S.meta.reasons) || []).map((r) => el("option", { value: r, text: r })));
+    const msg = el("p", { class: "ev-note", role: "status" });
+    const go = el("button", { class: "btn", type: "button", text: label || "Retrieve record", onclick: () => {
+      if (needs && !reason.value) { msg.textContent = "A reason is required to see owner and challan details. It goes into the audit log."; reason.focus(); return; }
+      onGo(reason.value, msg);
+    } });
+    return el("div", { class: "lookup" }, reason, go, msg);
+  }
+  function evRecord(v) {
+    const reg = v.candidates.slice().sort((a, b) => a.rank - b.rank)[0].registration_number;
+    const key = reg + "|" + S.role;
+    const holder = el("div");
+    const head = evHead("Vehicle record · synthetic", plateEl(reg, true), "Attached because this vehicle is a confident registry match. You are acting as " + roleLabel() + ".");
+    const show = (rec) => holder.replaceChildren(...recordNodes(rec));
+    if (S.rec.has(key)) show(S.rec.get(key));
+    else holder.replaceChildren(lookupForm(async (reason, msg) => {
+      msg.textContent = "Looking up…";
+      const r = await apiCall("/api/intel/" + encodeURIComponent(reg) + "?" + new URLSearchParams({ reason, context: S.route.kind + "/" + S.route.id + ":T" + v.track_id }));
+      if (!r.ok) { msg.textContent = r.error; return; }
+      S.rec.set(key, r.data); show(r.data);
+    }), el("p", { class: "ev-note", text: "Each lookup is logged with your role, the reason and this case." }));
+    return [head, holder];
+  }
+  const COMPLIANCE = { valid: ["Valid", "match"], expiring: ["Expiring", "unsure"], expired: ["Expired", "fail"], unknown: ["Unknown", ""] };
+  function compl(c) {
+    const [t, cls] = COMPLIANCE[c.state] || COMPLIANCE.unknown;
+    return el("span", null, el("span", { class: "tag " + cls, text: t }), " ", el("small", { class: "muted", text: c.until || "" }));
+  }
+  function recordNodes(rec) {
+    const v = rec.vehicle, sum = rec.challan_summary;
+    const out = [el("p", { class: "demo-banner small", text: rec.notice })];
+    out.push(el("div", { class: "rec-stats" },
+      el("div", null, el("b", { text: sum.pending }), el("span", { text: "pending challans" })),
+      el("div", null, el("b", { text: inr(sum.pending_amount_inr) }), el("span", { text: "outstanding" })),
+      el("div", null, el("b", { text: sum.total }), el("span", { text: "on record" }))));
+    out.push(section("Registered owner", rec.owner.masked ? "masked for " + roleLabel() : null,
+      kv([["Name", rec.owner.name], ["Owner", rec.owner.type ? rec.owner.type + (rec.owner.serial ? " · owner no. " + rec.owner.serial : "") : null]]),
+      rec.owner.masked ? el("p", { class: "ev-note", text: "Switch to investigator or officer and give a reason to see the name and challans." }) : null));
+    out.push(section("Vehicle", null, kv([["Make / model", [v.manufacturer, v.model].filter(Boolean).join(" ")], ["Model year", v.model_year],
+      ["Class", v.vehicle_class], ["Fuel", v.fuel_type], ["Colour", cap(v.colour)], ["RTO", v.rto], ["Registered", v.registration_date]])));
+    out.push(section("Compliance", "checked against today", kv([["Registration / fitness", compl(rec.compliance.registration)],
+      ["Insurance", compl(rec.compliance.insurance)], ["PUC", compl(rec.compliance.puc)]])));
+    if (rec.challans) {
+      const t = el("table", { class: "reads challans" }, el("thead", null, el("tr", null, el("th", { text: "Violation" }), el("th", { class: "num", text: "Fine" }), el("th", { text: "Status" }))));
+      const body = el("tbody");
+      rec.challans.forEach((c) => body.append(el("tr", { title: c.challan_id + " · " + c.issuing_authority },
+        el("td", null, c.violation, el("small", { class: "sub", text: c.date.slice(0, 10) + " · " + c.location })),
+        el("td", { class: "num", text: inr(c.fine_inr) }),
+        el("td", null, el("span", { class: "tag " + (c.status === "Paid" ? "match" : c.status === "Pending" ? "unsure" : ""), text: c.status })))));
+      t.append(body);
+      out.push(section("e-Challan history", rec.challans.length ? "newest first" : null, rec.challans.length ? t : el("p", { class: "muted", text: "No challans on record." })));
+    } else out.push(section("e-Challan history", null, el("p", { class: "muted", text: "Hidden for " + roleLabel() + ". Totals only." })));
+    return out;
+  }
+
+  /* ---------------------------------------------------------------- enforcement */
+  const pad = (text) => el("p", { class: "muted", style: "padding:14px 16px", text });
+  async function openEnforcement() {
+    $("ws-list").replaceChildren(el("li", { class: "muted", style: "padding:12px", text: "Loading…" }));
+    let data;
+    try { data = await getJSON("/api/violations"); } catch (e) {
+      $("ws-list").replaceChildren(el("li", { class: "muted", style: "padding:12px", text: "Couldn't load violations. " + e.message })); return;
+    }
+    const as = data.assessed_clips || [];
+    $("ws-scope").textContent = "· " + as.length + " fixed cameras · " + as.reduce((t, c) => t + c.checked_vehicles, 0) + " vehicles checked";
+    const vs = data.violations || [];
+    await Promise.all([...new Set(vs.map((x) => x.run))].filter((r) => !S.enfFiles[r]).map(async (r) => {
+      S.enfFiles[r] = await getJSON("/data/" + r + "/files").catch(() => []);
+    }));
+    const rows = vs.map((x) => el("li", null, el("button", { class: "metric", type: "button", "data-k": x.violation_id, onclick: () => selectViolation(x) },
+      el("b", { class: x.registration_number ? "mono-sm" : "none", text: x.registration_number || "No plate match" }),
+      el("span", null, x.label + " · " + x.clip_id + " T" + x.track_id, el("small", { text: [cap(x.colour), x.vehicle_type, clock(x.time_s[0]) + "–" + clock(x.time_s[1])].filter(Boolean).join(" · ") })),
+      reviewTag(x.review.status))));
+    const checked = as.map((c) => el("li", null, el("a", { class: "metric", href: "#case/runs/" + c.clip_id },
+      el("b", { text: String(c.flagged) }),
+      el("span", null, c.clip_id + " · " + plural(c.flagged, "suspected violation"), el("small", { text: c.checked_vehicles + " vehicles checked" + (c.stabilisation ? " · camera pan up to " + c.stabilisation.max_pan_px + " px removed" : "") })),
+      el("span", { class: "f-go", text: "›" }))));
+    $("ws-list").replaceChildren(...rows, ...checked, el("li", { class: "muted small", style: "padding:12px",
+      text: vs.length ? "Officers confirm or reject each suspected violation. Only a confirmed one with a confident plate match raises a (simulated) challan."
+        : "No vehicle in the fixed-camera clips drove against the flow. Moving-camera clips are not assessed: their image motion isn't road direction." }));
+    const issued = data.issued_challans || [];
+    $("issued").replaceChildren(issued.length ? el("table", { class: "cases" },
+      el("thead", null, el("tr", null, ...["Challan", "Registration", "Violation", "Fine", "Confirmed by"].map((h) => el("th", { text: h })))),
+      el("tbody", null, ...issued.map((c) => el("tr", null, el("td", { class: "clip", text: c.challan_id }), el("td", null, plateEl(c.registration_number)),
+        el("td", { text: c.violation }), el("td", { class: "num", text: inr(c.fine_inr) }), el("td", { class: "muted", text: c.confirmed_by })))))
+      : pad("None yet. One appears when an officer confirms a violation on a matched vehicle."));
+    renderAudit();
+    const keep = vs.find((x) => x.violation_id === S.enfSel);
+    if (keep) selectViolation(keep); else manualLookup();
+  }
+  async function renderAudit() {
+    if (S.role !== "officer") { $("audit").replaceChildren(pad("Visible to traffic officers only. Switch the role at the top right.")); return; }
+    const r = await apiCall("/api/audit");
+    if (!r.ok) { $("audit").replaceChildren(pad(r.error)); return; }
+    const rows = r.data.slice(0, 40);
+    $("audit").replaceChildren(rows.length ? el("table", { class: "cases" },
+      el("thead", null, el("tr", null, ...["When", "Who", "Action", "Registration / item", "Reason / note", "Context", "Outcome"].map((h) => el("th", { text: h })))),
+      el("tbody", null, ...rows.map((e) => el("tr", null, el("td", { class: "muted", text: (e.at || "").replace("T", " ") }), el("td", { text: e.user + " (" + e.role + ")" }),
+        el("td", { text: e.action }), el("td", { class: "clip", text: e.registration || e.violation_id || "" }), el("td", { class: "muted", text: e.reason || e.note || "" }),
+        el("td", { class: "muted", text: e.context || "" }), el("td", { text: e.outcome }))))) : pad("No lookups yet."));
+  }
+  function manualLookup() {
+    S.enfSel = null;
+    document.querySelectorAll("#ws-list .metric").forEach((b) => b.removeAttribute("aria-current"));
+    const input = el("input", { class: "field mono", placeholder: "e.g. DL3CCY1025", "aria-label": "Registration number", maxlength: 12, autocomplete: "off", spellcheck: "false" });
+    const holder = el("div");
+    const form = lookupForm(async (reason, msg) => {
+      const reg = input.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+      if (!reg) { msg.textContent = "Type a registration number."; input.focus(); return; }
+      msg.textContent = "Looking up…";
+      const r = await apiCall("/api/intel/" + encodeURIComponent(reg) + "?" + new URLSearchParams({ reason }));
+      msg.textContent = r.ok ? "" : r.error;
+      holder.replaceChildren(...(r.ok ? recordNodes(r.data) : []));
+      renderAudit();
+    }, "Look up");
+    form.prepend(input);
+    $("enf-evidence").replaceChildren(...evHead("Manual lookup", "Look up a registration", "For a plate the officer already has, such as one read off a photo. Logged as a manual search."), form, holder);
+  }
+  function selectViolation(x) {
+    S.enfSel = x.violation_id;
+    document.querySelectorAll("#ws-list .metric").forEach((b) => b.setAttribute("aria-current", String(b.dataset.k === x.violation_id)));
+    const m = x.measurement;
+    const crops = (S.enfFiles[x.run] || []).filter((f) => f.startsWith("t" + x.track_id + "_vehicle_"));
+    const msg = el("p", { class: "ev-note", role: "status" });
+    const note = el("input", { class: "field", placeholder: "Note (optional)", maxlength: 300, "aria-label": "Review note" });
+    const act = (decision) => async () => {
+      const r = await apiCall("/api/violations/review", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ violation_id: x.violation_id, decision, note: note.value }) });
+      if (!r.ok) { msg.textContent = r.error; return; }
+      S.rec.clear();
+      await openEnforcement();
+      const after = $("enf-evidence").querySelector("[role=status]");
+      if (after) after.textContent = r.data.challan ? "Confirmed. Simulated challan " + r.data.challan.challan_id + " raised." : (r.data.message || "Saved as " + decision + ".");
+    };
+    const officer = S.role === "officer";
+    $("enf-evidence").replaceChildren(...[
+      evHead("Suspected violation", x.label, x.clip_id + " · vehicle T" + x.track_id + " · " + clock(x.time_s[0]) + "–" + clock(x.time_s[1])),
+      crops.length ? el("div", { class: "crops" }, ...crops.slice(0, 3).map((f) => el("img", { src: "/data/" + x.run + "/vehicles/" + f, alt: "Vehicle crop", style: "height:64px" }))) : null,
+      section("Vehicle", null, kv([["Plate read", x.plate ? plateEl(x.plate) : "not read"], ["Registry", x.registration_number ? plateEl(x.registration_number) : "no confident match"],
+        ["Type / colour", [x.vehicle_type, x.colour].filter(Boolean).join(" · ")]])),
+      section("Measured", null, dirs(m, true), kv([["Angle off permitted", deg(m.cos_to_allowed) + "°"], ["Steps against the flow", pct(m.against_flow_share)], ["Zone", m.zone]])),
+      section("Officer review", officer ? null : "officers only", kv([["Status", reviewTag(x.review.status)], ["By", x.review.by], ["Note", x.review.note]]),
+        officer ? el("div", { class: "lookup" }, note, el("div", { class: "btn-row" },
+          el("button", { class: "btn", type: "button", text: "Confirm", onclick: act("confirmed") }),
+          el("button", { class: "btn ghost", type: "button", text: "Reject", onclick: act("rejected") }),
+          x.review.status !== "pending" ? el("button", { class: "more", type: "button", text: "Reset to pending", onclick: act("pending") }) : null), msg)
+          : el("p", { class: "ev-note", text: "Switch to traffic officer to confirm or reject." })),
+      el("a", { class: "more", href: "#case/" + x.run, text: "Open the case and play the clip" }),
+      el("button", { class: "more", type: "button", text: "Manual registration lookup", onclick: manualLookup }),
+    ].flat().filter(Boolean));
+  }
+
+  /* ---------------------------------------------------------------- role */
+  async function initRole() {
+    const sel = $("role");
+    S.role = store.get("tv-role", "analyst");
+    if (![...sel.options].some((o) => o.value === S.role)) S.role = "analyst";
+    sel.value = S.role;
+    sel.addEventListener("change", () => {
+      S.role = sel.value; store.set("tv-role", S.role); S.rec.clear();
+      if (!$("view-case").hidden && S.result && S.vid !== null) selectVehicle(S.vid, false);
+      if (!$("view-enforcement").hidden) openEnforcement();
+    });
+    try { S.meta = await getJSON("/api/intel/meta"); } catch (_) { S.meta = null; }
   }
 
   /* ---------------------------------------------------------------- video + overlay */
@@ -780,6 +1018,7 @@
   }
 
   /* ---------------------------------------------------------------- start */
+  initRole();
   initIntake();
   initPlayer();
   initCrosscam();

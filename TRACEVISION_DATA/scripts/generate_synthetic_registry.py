@@ -3,7 +3,8 @@
 
 Privacy: every record is fictional and marked synthetic = true. Plates of evaluation-clip vehicles appear
 ONLY as `source = evaluation_seed` rows (their make / model / year / id are fictional unless the label says
-the make/model is verified). No owner names, phones or addresses exist anywhere. This registry is NOT
+the make/model is verified). No owner names, phones or addresses exist in this registry (the enforcement demo's
+synthetic owner records are separate files, generate_vehicle_intel.py, DECISIONS E17). This registry is NOT
 connected to any government database.
 
 Records

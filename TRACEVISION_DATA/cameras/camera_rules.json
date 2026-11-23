@@ -1,0 +1,21 @@
+{
+  "_note": "Per-camera traffic rules for violation checks. Polygons are in normalised image coordinates (x/width, y/height) of reference_frame; every other frame is first mapped onto that frame (camera pan removed, violations.camera_motion). allowed_direction is the permitted direction of travel in the image (x right, y down); [0, -1] = away from the camera, up the frame. Only FIXED cameras get rules: on a moving camera, image motion is relative to the camera, not the road. Zones were drawn by hand from the clips (DECISIONS E18).",
+  "cameras": {
+    "cam_fixed_overpass_01": {
+      "description": "Overpass view of a one-way carriageway; all traffic moves away from the camera.",
+      "reference_frame": 60,
+      "zones": [
+        {"name": "one-way carriageway", "allowed_direction": [0, -1],
+         "polygon": [[0.30, 0.45], [0.70, 0.45], [1.0, 0.70], [1.0, 1.0], [0.0, 1.0], [0.0, 0.60]]}
+      ]
+    },
+    "cam_fixed_high_01": {
+      "description": "High view of a divided road; the main carriageway (between the median and the right kerb) is one-way away from the camera. The road beyond the right kerb is excluded.",
+      "reference_frame": 250,
+      "zones": [
+        {"name": "main carriageway", "allowed_direction": [0.15, -1],
+         "polygon": [[0.47, 0.47], [0.61, 0.47], [0.86, 0.655], [0.965, 1.0], [0.125, 1.0], [0.23, 0.765], [0.40, 0.555]]}
+      ]
+    }
+  }
+}

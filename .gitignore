@@ -56,3 +56,7 @@ runs/jobs/
 runs_degraded/**/vehicles/
 runs_degraded/**/report.*
 *.log
+
+# Enforcement demo runtime state (lookup audit log, officer reviews, simulated challans): per machine, never shared
+runs/audit/
+runs/enforcement/

@@ -359,3 +359,43 @@ table.cases { width: 100%; border-collapse: collapse; font-size: 14px; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 .link-row .side .plate { align-self: flex-start; }
 .evidence p { overflow-wrap: anywhere; }
+
+/* ---------- roles, vehicle record, enforcement ---------- */
+.role select { appearance: none; border: 1px solid var(--line-strong); background: var(--surface); border-radius: 999px; padding: 5px 28px 5px 12px; font-size: 13px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-2) 50%), linear-gradient(135deg, var(--ink-2) 50%, transparent 50%);
+  background-position: calc(100% - 14px) 52%, calc(100% - 9px) 52%; background-size: 5px 5px; background-repeat: no-repeat; }
+.topbar .role { margin-left: auto; }
+.topbar .role + .engine { margin-left: 0; }
+.demo-banner { background: var(--mark-soft); border-left: 3px solid var(--mark); border-radius: 6px; padding: 10px 14px; font-size: 13.5px; color: var(--ink); margin-bottom: 24px; }
+.demo-banner.small { font-size: 12.5px; padding: 7px 10px; margin: 14px 0 0; }
+.tag.fail { background: color-mix(in srgb, var(--fail) 14%, transparent); color: var(--fail); }
+.field { width: 100%; border: 1px solid var(--line-strong); background: var(--surface); border-radius: 8px; padding: 8px 10px; font-size: 14px; }
+.field.mono { font-family: var(--mono); text-transform: uppercase; letter-spacing: .04em; }
+.lookup { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.lookup .btn { align-self: flex-start; }
+.btn-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line-strong); }
+.rec-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+.rec-stats div { background: var(--sunken); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; }
+.rec-stats b { font-size: 20px; font-weight: 600; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.rec-stats span { font-size: 12px; color: var(--ink-2); }
+.challans td small.sub { display: block; color: var(--ink-3); font-size: 11.5px; font-family: var(--font); font-weight: 400; }
+.dirs { display: flex; gap: 28px; margin-bottom: 12px; }
+.dirs > div { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.dirs small { font-size: 12px; color: var(--ink-2); }
+.dir-arrow { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--sunken); font-size: 24px; font-weight: 700; line-height: 1; }
+.dir-arrow.good { background: var(--match-soft); color: var(--match); }
+.dir-arrow.bad { background: color-mix(in srgb, var(--fail) 14%, transparent); color: var(--fail); }
+.metric .mono-sm { font-family: var(--mono); font-size: 15px; letter-spacing: .02em; }
+a.metric { text-decoration: none; color: inherit; }
+#view-enforcement .table-wrap { margin-bottom: 8px; }
+@media (max-width: 900px) { .topbar .role select { max-width: 130px; } .rec-stats b { font-size: 17px; } }
+@media (max-width: 560px) { .topbar .role select { max-width: 150px; } }
+#ws-list .metric { grid-template-columns: 110px minmax(0, 1fr) auto; }
+#ws-list .metric b.none { font-family: var(--font); font-size: 14px; color: var(--ink-2); }
+.perf-main, .cc-main { min-width: 0; }
+@media (max-width: 640px) {
+  .topbar { flex-wrap: wrap; height: auto; padding: 8px 16px; row-gap: 6px; }
+  .topbar .tabs { order: 3; width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .tabs a { flex: none; }
+}
