@@ -1,56 +1,61 @@
 # TRACEVISION AI — What Next
 
-**Last updated:** 2026-11-23 · Done work: [completions.md](completions.md) · Problems: [PROBLEMS.md](PROBLEMS.md) · Decisions: [DECISIONS.md](DECISIONS.md) · Pipeline design: [PIPELINE.md](PIPELINE.md) · Team workstreams: [TEAM_TASKS.md](TEAM_TASKS.md)
+**Last updated:** 2026-11-23 (evening) · Done work: [completions.md](completions.md) · Owner actions: [NEEDS.md](NEEDS.md) · Problems: [PROBLEMS.md](PROBLEMS.md) · Decisions: [DECISIONS.md](DECISIONS.md) · Pipeline design: [PIPELINE.md](PIPELINE.md) · Team workstreams: [TEAM_TASKS.md](TEAM_TASKS.md)
 
 **Where we are:**
-- **Phase 0 (data):** done, except the **cross-camera pair** (A6) and the Phase 0 runs that need final labels (0E variants, 0F registry re-seed, final report).
-- **Built and tested:** the vision stack (P1), the plate detector (P2) and the two judged algorithms (P3). The health check passed on 2026-11-23.
-- **All build phases P1–P6 are done** (2026-11-23 overnight). **What's left is owner actions: [NEEDS.md](NEEDS.md)** (car pair, repo visibility, demo video and slides).
-- **Since then:** video viewer with live playback, phantom-box fix (C11), CLIP colour 64% exact (C8). Details in [completions.md](completions.md).
+- **Built, tested and evaluated end to end.** 19 clips, 67 owner-verified vehicles: **14/15 registered vehicles matched, 0/46 false identifications (+0/6 on registered vehicles with unknown plates), 0/252 wrong plate characters**, 61/67 vehicles found, type 95% compatible, colour 59% exact.
+- **Cross-camera:** the four declared, cross-angled parking pairs are linked jointly with evidence pooled from both angles: **5 of 5 checkable groups correct, 0 wrong** (M16).
+- **App:** upload → video viewer with live playback (box → plate reads → registry check → decision), per-vehicle details, cross-camera panel, HTML/PDF report per clip.
+- **What's left for submission is owner work: [NEEDS.md](NEEDS.md)** (repo visibility, demo video, slides).
 
-## 0. Team and owner actions
+## 0. Owner / team actions
 
-| Priority | Action | Status / unblocks |
+| Priority | Action | Status |
 |---|---|---|
-| ✅ | **Test clips:** 19 Indian clips (clip01–11, plus clip12–19: 4 cross-camera parking pairs). 2 fixed CCTV-style (clip02, 06), 9 moving, including a night clip (clip11) and trucks (clip10). No more raised clips by team decision (E10, risk E7). | Done |
-| ✅ | **Hand labels:** owner verified all 51 vehicles → `evaluation/test_clip_labels.csv`. 0 field errors (E11, A23). | Done |
-| 🟠 1 | **Cross-camera pair:** film one car (yours) from **2 different spots** as 2 clips (send the original files, not WhatsApp). Label it in both with the same `cross_camera_group_id`, `in_registry = yes` and the real plate in `registry_plate_full`. | Clears the last label error. Needed for the cross-camera bonus and the Phase 0 report (A6). |
-| 🟡 2 | **More `in_registry = yes` vehicles** with readable plates: only 9 of 51 are `yes`, so positive-match evaluation on real clips is thin. | Stronger P6 match metrics |
-| 🟠 3 | **Repo visibility:** the repo is public and holds real plates and clips (E6 / D10). | Privacy decision |
-| 🟡 4 | `~/Downloads/DS.mp4` and `original-5adf….mp4` were never checked (A11). | Optional |
-| ⚪ 5 | witvix access form for a harder OCR test (A2) | Optional |
+| ✅ | **Test clips:** 19 clips: clip01–09 own footage, clip10–11 Pexels (linked, not re-hosted), clip12–19 four cross-angled parking pairs. 2 are fixed CCTV-style (clip02, 06). | Done |
+| ✅ | **Labels:** 67 vehicles, owner-verified (clip12–19 from an AI draft accepted by the owner, E11); clip08_v02/v03 plates confirmed by the owner. Validator: 0 errors. | Done |
+| ✅ | **Cross-camera pairs** (A6): filmed, labelled (groups X1–X7), linked. | Done |
+| 🔴 1 | **Repo visibility:** public, with real plates (E6 / D10). | Owner decision |
+| 🔴 2 | **Demo video and slides** (demo flow in NEEDS.md). Claude can draft slides. | Owner |
+| 🟠 3 | Review the degraded-variant sample (`difficult_cases.csv`, human check from the spec). | Owner, 10 min |
+| 🟡 4 | Phone originals instead of WhatsApp copies; full plates of the 3 `in_registry = yes` vehicles nobody can read. | Optional |
+| ⚪ 5 | Pexels creator credits; the two unchecked `.mp4` in Downloads (A11); witvix (A2); owner names in TEAM_TASKS. | Optional |
 
 ## 1. Phase 0 (data): status
 - [x] 0A audit · 0B plate data (validated, short-name copy, `data.yaml`) · 0C Awiros check (81.5% exact, GPU 15 ms per crop)
-- [x] 0D: 11 clips, frames, contact sheets, template, guide; labels verified (51 vehicles)
-- [x] All 10 spec scripts exist and pass a smoke run (health check 2026-11-23)
-- [x] **0E:** degraded variants made for all 11 clips (77 videos, local) and used in the robustness test. **Owner:** fill `readable_after_degradation` for the review sample (NEEDS 5).
-- [x] **0F:** registry regenerated from the real labels (9 `evaluation_seed` rows plus decoys). *Re-run after the car pair.*
-- [x] **0D/0E:** `multi_frame_sequences.json` written (51 sequences). `cross_camera_ground_truth.csv` is empty until the car pair is filmed.
-- [ ] **Final Phase 0 report** (after the car pair)
+- [x] 0D: 19 clips, frames, contact sheets, template, guide; labels verified (67 vehicles)
+- [x] All 10 spec scripts exist and pass a smoke run
+- [x] 0E: degraded variants (made for clip01–11; local) and `multi_frame_sequences.json` (67 sequences)
+- [x] 0F: registry re-seeded from the labels (12 `evaluation_seed` rows + fictional decoys); thresholds recalibrated (unchanged 67.5 / 4.0)
+- [x] `cross_camera_ground_truth.csv`: 7 groups (X1–X7)
+- [ ] **Final Phase 0 report** (`reports/phase0_final.md`): Claude can write it now; nothing blocks it.
 
 ## 2. Build steps (PIPELINE.md §10)
-- [x] **P1** vision stack: torch + ultralytics on GPU, UVH-26 (14 classes) + `class_mapping.json`, OCR in a separate worker process (C5). `reports/p1_vision_stack.md`
-- [x] **P2** plate detector: YOLOv8n, **leakage-free mAP50 0.995**; plates under 16 px are reported unreadable (M8). `reports/p2_plate_detector.md`
-- [x] **P3** judged algorithms: **multi-frame fusion** (`?` instead of guesses) + **registry matching** (match score, reasons, match / ambiguous / no-match), 26 tests, calibrated (held-out 62/62 on synthetic cases). `reports/p3_fusion_and_matching.md`
-- [x] **P4 done** (`reports/p4_pipeline.md`): ~~ `tracevision/pipeline.py`, running clip → detect → track (with re-linking, C6) → best frames → plate detect → OCR worker → fuse → colour → match → `runs/<job>/result.json`, on all 11 clips. Includes the **colour estimator** (PIPELINE §5).~~ 8/9 registered vehicles matched, 0 false matches.
-- [x] **P5 done:** report (HTML + PDF) for every clip in `evaluation/reports/`, and the FastAPI app (`python -m tracevision.api`). See `reports/p5_app_and_reports.md`.
-- [x] **P6 done:** evaluation vs labels + robustness sweep (`reports/p6_evaluation.md`): 8/9 matched, 0/42 false matches, 0/132 wrong plate characters.
+- [x] **P1** vision stack (UVH-26 + COCO YOLOv8n ensemble, M15; OCR in its own GPU process)
+- [x] **P2** plate detector: YOLOv8n fine-tuned, leakage-free mAP50 0.995
+- [x] **P3** judged algorithms: multi-frame fusion (`?` rule) + registry matching (match score, reasons, match / ambiguous / no-match), calibrated on synthetic cases
+- [x] **P4** pipeline: detect + track (two detectors) → re-link → phantom-box check (C11) → best frames → plate → OCR → fuse → type → CLIP colour → match
+- [x] **P5** FastAPI app, video viewer with live playback, cross-camera panel, HTML/PDF reports for all 19 clips
+- [x] **P6** evaluation (one-to-one label association, E14) and robustness sweep (*robustness numbers predate the ensemble and CLIP colour*)
+- [x] **Bonus:** cross-camera re-identification: plate-led open-world linking + joint linking with pooled evidence for declared cross-angled pairs (M14, M16)
 
 ## 3. Submission
-- [x] README: architecture diagram, how to run, models and licences (Quobotic CC BY 4.0 credit, AGPL for Ultralytics: B6), honest note on camera types (E7)
-- [ ] Demo video (use the **video viewer with live playback**; include one CCTV-style clip showing "no confident match") and slides
-- [ ] Stretch: cross-camera re-ID (A6), make/model (only with verified labels)
+- [x] README: results, architecture diagram, how to run, models and licences, cross-camera section, honest limitations
+- [x] Team hand-off PDF (`TRACEVISION_Team_Handoff.pdf`)
+- [ ] Demo video and slides (owner)
+- [ ] Repo visibility (owner)
 
-## Installs still needed
-None required: everything is in the README install line (torch 2.14.1+cu126, ultralytics, paddlepaddle-gpu, fastapi, reportlab, **open_clip_torch**, …). Optional: FFmpeg (C1).
+## 4. Optional improvements (known weak spots)
 
-## What remains to finish the project (summary)
-
-| # | Remaining piece | Who | Size |
+| # | Improvement | Problem | Size |
 |---|---|---|---|
-| 1 | Film and label the cross-camera car pair; then Claude re-runs validation, registry, pipeline, reports, evaluation, and the final Phase 0 report | Owner → Claude | Small |
-| 2 | Repo visibility decision | Owner | 1 min |
-| 3 | Demo video and slides (demo flow in NEEDS.md) | Owner (Claude can draft slides) | Medium |
-| 4 | Optional: more `in_registry = yes` vehicles; originals instead of WhatsApp copies; review the degraded sample; check 2 unverifiable plate reads | Owner | Small |
-| 5 | Optional improvements: better car/SUV typing (C9), stricter OCR confidence on low-quality plates (C10), more CCTV-style clips (E7), a real-time "live mode" that analyses while playing (would need re-evaluation) | Team | Medium |
+| 1 | **Colour** (59% exact): a small trained colour classifier, or background removal before CLIP | C8, C12 | Medium |
+| 2 | **Duplicate nested boxes** in the pipeline itself (now folded only for cross-camera linking) | C12 | Small |
+| 3 | **Car vs SUV** confusion | C9 | Medium |
+| 4 | **Stricter OCR confidence on low-quality plates** (blur / 360p / night can be confidently wrong) | C10 | Small |
+| 5 | **Re-run the robustness sweep** with the current pipeline and include clip12–19 | — | Small |
+| 6 | A dedicated **vehicle re-ID model** for cross-camera matching without plates (open world) | C12 | Large |
+| 7 | A true **real-time mode** (analyse while playing); needs re-evaluation | — | Medium |
+
+## Installs
+None required: everything is in the README install line (torch 2.14.1+cu126, ultralytics, paddlepaddle-gpu 3.3.1 cu126, fastapi, reportlab, open_clip_torch, …). UVH-26 weights are downloaded by hand (README). Optional: FFmpeg (C1).

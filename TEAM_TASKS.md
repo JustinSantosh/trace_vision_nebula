@@ -46,7 +46,8 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 - **19 test clips and 67 owner-verified labelled vehicles** are in (clip12–19: cross-camera parking pairs). Most plates in the WhatsApp-quality and CCTV-style clips are under 16 px, so they're reported unreadable (C7).
 - **Windows:** anything that trains or validates with ultralytics must run from a `.py` file, not from stdin (it hangs otherwise).
 - **All phases P1–P6 done (2026-11-23):** pipeline, app (`python -m tracevision.api`), reports for all clips, evaluation. **What's left: [NEEDS.md](NEEDS.md).**
-- **Since then:** video viewer with live playback (`/viewer/runs/clipNN`), phantom-box fix (C11), CLIP colour **64% exact** (C8). Install `open_clip_torch` too (README install line); the CLIP weights (~580 MB) download on first run.
+- **Since then:** video viewer with live playback and a cross-camera panel; phantom-box fix (C11); CLIP colour (C8, 59% exact on 19 clips); two-detector ensemble UVH-26 + COCO YOLOv8n (C13); declared cross-angled pairs linked jointly (M16). Install `open_clip_torch` too (README install line); the CLIP weights (~580 MB) download on first run.
+- **Current results (19 clips, 67 vehicles):** 14/15 registered matched, 0/46 false identifications, 0/252 wrong plate characters, 61/67 found; cross-camera 5/5 checkable groups, 0 wrong.
 
 ---
 
@@ -74,7 +75,7 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 - [x] Awiros benchmark and GPU build (15 ms per crop). Install: `pip install paddlepaddle-gpu==3.3.1 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/`
 - [x] UVH-26 loaded, `models/class_mapping.json` built from the real 14 classes (B3, B4, M6)
 - [x] ByteTrack smoke-tested on clip01/02 (`reports/p1_vision_stack.md`)
-- [x] **Colour** estimator (`tracevision/colour.py`): now CLIP zero-shot: 64% exact / 75% near (was 27% / 57%). Improving it is the best next task (C8).
+- [x] **Colour** estimator (`tracevision/colour.py`): now CLIP zero-shot: 59% exact on 19 clips (was 27% with the hue rule). Still the best next task (C8).
 - [x] **Track re-linking** (position + plate + same-object rule) and the edge-box rule (C6, M10, M11)
 
 **Done:** `tracevision/pipeline.py` (P4).
@@ -85,7 +86,7 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 - [x] **Multi-frame fusion** `tracevision/fuse.py`: aligned, confidence-weighted vote per position, `?` instead of guesses
 - [x] **Matcher** `tracevision/match.py`: wildcard and look-alike aware **match score** (not a probability) + reasons + match / ambiguous / no-match
 - [x] 26 unit tests; thresholds calibrated with a split by anchor (`python -m tracevision.calibrate`, held-out 62/62). See `reports/p3_fusion_and_matching.md`.
-- [x] Checked on real clips (P6, 19 clips): 11/15 registered matched, 0/46 false matches
+- [x] Checked on real clips (P6, 19 clips): 14/15 registered matched, 0/46 false matches
 
 **Done.**
 

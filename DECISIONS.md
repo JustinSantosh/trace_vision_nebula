@@ -1,6 +1,6 @@
 # TRACEVISION AI — Decision Log
 
-**Last updated:** 2026-11-23 · One line per decision: what was decided, why, and where the evidence lives. Problem IDs (A5, B7, …) refer to [PROBLEMS.md](PROBLEMS.md). Done work is in [completions.md](completions.md) and the plan in [whatnext.md](whatnext.md).
+**Last updated:** 2026-11-23 (evening) · One line per decision: what was decided, why, and where the evidence lives. Problem IDs (A5, B7, …) refer to [PROBLEMS.md](PROBLEMS.md). Done work is in [completions.md](completions.md) and the plan in [whatnext.md](whatnext.md).
 
 **Status:** ✅ in force · 🔁 changed (the old version is kept and struck through) · ⏳ waiting on someone
 
@@ -42,6 +42,8 @@
 | E12 | 2026-11-23 | **Evaluation protocol:** link labels to system vehicles by **box position only** (IoU ≥ 0.3 at the labelled first frame), never by plate text; report every metric split by camera type; report wrong plate characters separately from `?`. | Keeps the plate metrics non-circular and honest about the `?` rule | `tracevision/evaluate.py` | ✅ |
 | E13 | 2026-11-23 | **Evaluation:** vehicles labelled `in_registry = yes` whose full plate is unknown (so the registry cannot contain them) are reported separately and still checked for false matches, not counted as "should match"; the registry lookup runs for every labelled vehicle, so a registered vehicle the system didn't find counts as a miss. clip12–19 labels: AI draft accepted by the owner as written (E11 process). | Counting unseedable vehicles as misses would understate matching; skipping not-found ones would overstate it. | A6, C12 | ✅ |
 | E14 | 2026-11-23 | **One-to-one label ↔ system-vehicle association** (greedy by IoU at the label's first frame), in `evaluate.py` and `crosscam --evaluate`. | A system vehicle can only be one real vehicle; before, it could be credited as a correct match for one label and a false match for its neighbour (C14). | C14 | ✅ |
+| E15 | 2026-11-23 | **clip08_v02 / v03 relabelled** from `none` to `full` (`UP37P1176`, `DL3SS5192`) after the owner checked the system's reads against the report crops. | The owner's verification is the ground truth; disclosed in the evaluation report because the check happened after seeing the system's output (not independent). | A20, P6 | ✅ |
+| E16 | 2026-11-23 | The sunset road clip uploaded for testing is **not** added to the repo (owner's choice); uploads under `runs/jobs/` are never committed. | Unknown source and privacy on a public repo. | E6 | ✅ |
 
 ## Evaluation, clips and registry
 

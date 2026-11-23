@@ -5,33 +5,26 @@ Hack-A-Sol 5.0 · Track 02 AIML · **AIML-01 Vehicle Identification and Traceabi
 
 Open problems are in [PROBLEMS.md](PROBLEMS.md). Next steps are in [whatnext.md](whatnext.md). Decisions are in [DECISIONS.md](DECISIONS.md).
 
-**Project status:**
+**Project status (2026-11-23, evening):**
 
 | Part | State |
 |---|---|
-| Phase 0 data (0A–0F) | ✅ Done, except the cross-camera car pair (A6) and the final Phase 0 report |
-| P1–P6: models, fusion + matching, pipeline, app + reports, evaluation | ✅ Done. 19 clips / 67 vehicles: **14/15 matched, 0/46 false matches, 0/234 wrong plate characters**, 61/67 found (two-detector ensemble, M15) |
-| Video viewer + live playback, phantom-box fix, CLIP colour | ✅ Done (see below) |
-| Cross-camera pairs (clip12–19) + re-ID | ✅ Declared same-scene pairs linked jointly with pooled evidence (M16): 5 of 5 checkable groups correct, 0 wrong |
-| Owner actions: car pair, repo visibility, demo video + slides | ⏳ [NEEDS.md](NEEDS.md) |
+| Phase 0 data (0A–0F) | ✅ Done: 19 clips, 67 owner-verified vehicles, registry, sequences, cross-camera ground truth. Only the written final Phase 0 report is missing. |
+| P1–P6: models, fusion + matching, pipeline, app + reports, evaluation | ✅ Done. **14/15 registered vehicles matched, 0/46 false identifications (+0/6), 0/252 wrong plate characters**, 61/67 vehicles found, type 77% exact / 95% compatible, colour 59% exact |
+| Video viewer, live playback, cross-camera panel | ✅ Done |
+| Cross-camera re-identification (bonus) | ✅ Declared cross-angled pairs linked jointly with pooled evidence: **5 of 5 checkable groups correct, 0 wrong** (M16) |
+| Owner actions: repo visibility, demo video + slides | ⏳ [NEEDS.md](NEEDS.md) |
 
-**Latest (2026-11-23, after P6):**
-- **Annotated video viewer** (`/viewer/runs/clipNN` or **▶ Open video viewer** after an upload): the clip plays with tracked boxes, a side panel shows each vehicle's picked plate frames, per-frame reads, the fused plate and the top 5 with reasons.
-- **Live playback** (on by default): the analysis is revealed in step with the video, as box → each plate read → "checking registry" → MATCH or no confident match, narrated in a live feed. It replays the finished analysis; nothing is recomputed.
-- **Phantom boxes fixed (C11, M12):** UVH-26 sometimes boxed empty road or sky as a "Truck". Large tracks are now confirmed by COCO YOLOv8n. 13 phantoms were removed from our clips, and all metrics are unchanged.
-- **Cross-camera re-ID (A6, M14):** 4 pairs filmed in our parking (clip12–19). `python -m tracevision.crosscam --pairs` links 3 vehicles by plate with 0 wrong links; hidden-plate and no-plate vehicles get "no link" because appearance alone isn't reliable (C12).
-- **Colour by CLIP zero-shot (C8, M13):** **64% exact / 75% near** (was 27% / 57%). Matching is unchanged.
-
----|---|
-| 0A Audit | ✅ |
-| 0B Plate-detection data | ✅ |
-| 0C Awiros OCR check | ✅ |
-| 0D Clips + labels | 🟡 Tools ready; waiting for clips |
-| 0E Variants + sequences | 🟡 Tools ready; waiting for labels |
-| 0F Registry | 🟡 Starter ready; re-seed after labels |
-| Final Phase 0 report | ⏳ After labels |
-
----
+**Latest work (2026-11-23, after P6), in order:**
+- **Annotated video viewer** (`/viewer/runs/clipNN`, or **▶ Open video viewer** after an upload): tracked boxes on the video, picked plate frames side by side, per-frame reads, fused plate, top 5 with reasons.
+- **Live playback:** the finished analysis is revealed in step with the video (box → each plate read → "checking registry" → MATCH / no confident match), narrated in a live feed; low-confidence OCR characters are shown as `?`.
+- **Phantom boxes removed (C11, M12):** large tracks must be confirmed by COCO YOLOv8n; 13 phantoms (road, sky, signs) removed from our clips.
+- **Colour by CLIP zero-shot (C8, M13):** 27% → 64% exact on the first 11 clips; 59% on all 19 (close-ups with foliage are harder).
+- **Cross-camera clips clip12–19:** four cross-angled pairs filmed in our parking, labelled (AI draft, owner-verified), registry re-seeded (A6).
+- **Two-detector ensemble (C13, M15):** COCO YOLOv8n alongside UVH-26 for close-up, ground-level vehicles: found 52 → 61 of 67, registered matched 11 → 14 of 15, type compatible 90 → 95%.
+- **Fair evaluation (E13, E14, C14):** vehicles whose full plate nobody knows reported separately; one-to-one label ↔ vehicle association (removed 2 fake false matches).
+- **Cross-camera re-ID (M14, M16):** plate-led open-world linking; for declared cross-angled pairs, joint linking (plate-confirmed → duplicate folding → one-to-one pairing → elimination) with the plate re-fused over both cameras' reads. Shown in the viewer with a ⇄ badge and a link to the other clip.
+- **clip08_v02 / v03:** owner confirmed the system's plate reads; labels updated (E15).
 
 ## 1. Problem statement understood (AIML-01)
 
@@ -189,4 +182,14 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | c5290a5 | P6 part 1: evaluation vs labels; same-object containment rule |
 | 32a50d2 | README for submission; NEEDS.md; robustness script |
 | a6e3719 | P6 docs |
-| (this push) | P6 done: robustness sweep results; final docs |
+| 05a766f | P6 done: robustness sweep results; final docs |
+| 9995348 / 2aaba39 | Video viewer; live playback |
+| 331b648 | Phantom vehicle boxes removed (C11) |
+| a4b20bf | CLIP colour (C8) |
+| c578596 / a475b66 | Cross-camera clips clip12–19; cross-camera re-ID |
+| 746f2b3 | clip12–19 labels promoted; registry re-seeded; 19-clip evaluation |
+| 458b8f5 / 0073501 | Two-detector ensemble (C13); viewer masks low-confidence OCR characters |
+| 571beb6 | One-to-one evaluation association (C14) |
+| 1af02dc | clip08 plates confirmed by the owner |
+| f0a3b08 / 0ae9b02 / ee4e3b7 | Declared cross-angled pairs: joint linking + pooled evidence; viewer cross-camera panel |
+| (this push) | Docs brought up to date |

@@ -8,7 +8,7 @@ Give it a traffic clip. For every vehicle it:
 3. **ranks the top 5 registry candidates**, each with a **match score** and **human-readable reasons**, or says **"no confident match"**
 4. writes an **investigator report (HTML + PDF)** showing the frames used, the characters read per frame with confidence, the fused plate, and the candidates
 
-> **Status (2026-11-23):** all phases built, tested and evaluated (P1–P6). Remaining owner actions: [NEEDS.md](NEEDS.md).
+> **Status (2026-11-23):** built, tested and evaluated on 19 clips / 67 verified vehicles: **14/15 registered vehicles matched, 0/46 false identifications, 0 wrong plate characters**; cross-camera bonus: 5/5 checkable groups linked, 0 wrong. Remaining owner actions (repo visibility, demo video, slides): [NEEDS.md](NEEDS.md).
 > Docs: [completions](completions.md) · [whatnext](whatnext.md) · [problems](PROBLEMS.md) · [decisions](DECISIONS.md) · [pipeline design](PIPELINE.md) · [team tasks](TEAM_TASKS.md)
 
 ---
@@ -21,9 +21,9 @@ From `python -m tracevision.evaluate` → `TRACEVISION_DATA/reports/p6_evaluatio
 | Registered vehicles matched to the right record | **14/15** | 14/15 | — (none registered) |
 | Unregistered vehicles given a false confident match | **0/46** | 0/32 | 0/14 |
 | Vehicles marked "in registry" but whose full plate nobody knows (so not in the registry): false matches | **0/6** | 0/6 | — |
-| **Wrong plate characters output** | **0/234** | 0/234 | — (plates too small) |
-| Plate characters read correctly / left as `?` | 82% / 18% | 82% / 18% | — |
-| Exact plate (fully readable labels) | 12/17 | 12/17 | — |
+| **Wrong plate characters output** | **0/252** | 0/252 | — (plates too small) |
+| Plate characters read correctly / left as `?` | 84% / 16% | 84% / 16% | — |
+| Exact plate (fully readable labels) | 14/19 | 14/19 | — |
 | Vehicles detected and tracked (at the labelled frame) | 61/67 | 47/53 | 14/14 |
 | Type exact / compatible (car≈SUV) | 77% / 95% | | 86% / 93% |
 | Colour exact / near (white≈silver≈grey), CLIP zero-shot | 59% / 67% | | |
