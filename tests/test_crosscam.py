@@ -60,3 +60,22 @@ def test_unknown_attributes_are_not_penalised():
 def test_no_evidence_no_score():
     score, _, _, ev = score_pair(sig(), sig(), CAL, dict(DEFAULTS))
     assert score == 0.0 and ev == "none"
+
+
+def test_partial_plate_consistent_with_full_plate():
+    # clip15 white SUV read 'C?14???5??' vs clip14 'CG14MW3529': every jointly read character agrees
+    s, k = plate_similarity("C?14???5??", "CG14MW3529")
+    assert s == 1.0 and k == 4          # consistent, but only 4 characters: never enough for a plate-confirmed link
+
+
+def test_duplicate_tracks_fold_nested_box(tmp_path):
+    import json
+    from tracevision.crosscam import duplicate_tracks
+    big = [[f, 100, 100, 400, 400] for f in range(0, 40, 2)]
+    small = [[f, 150, 150, 350, 380] for f in range(0, 40, 2)]          # inside the big box, same vehicle
+    other = [[f, 500, 100, 700, 400] for f in range(0, 40, 2)]          # a different vehicle beside it
+    tiny = [[f, 200, 300, 240, 340] for f in range(0, 40, 2)]           # small object in front: area ratio too small
+    vt = lambda tid, tr, t: {"track_id": tid, "track": tr, "type": {"label": t}}
+    (tmp_path / "result.json").write_text(json.dumps({"vehicles": [
+        vt(1, big, "SUV"), vt(2, small[:-3], "SUV"), vt(3, other, "SUV"), vt(4, tiny, "motorcycle/scooter")]}))
+    assert duplicate_tracks(tmp_path) == {2: 1}

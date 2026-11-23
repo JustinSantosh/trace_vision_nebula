@@ -19,7 +19,9 @@
     },
     "t_link": 70.0,
     "t_margin": 8.0,
-    "appearance_only_min": "neg_p99"
+    "appearance_only_min": "neg_p99",
+    "plate_confirm": 0.9,
+    "pair_min_score": 50.0
   },
   "calibration": {
     "clips": [
@@ -104,5 +106,50 @@
       ]
     }
   ],
-  "note": "link_score is a heuristic ranking score, not a probability. Plate vetoes are never overridden by looks."
+  "note": "link_score is a heuristic ranking score, not a probability. Plate vetoes are never overridden by looks.",
+  "pair_linking": {
+    "clip_a": "clip18",
+    "clip_b": "clip19",
+    "mode": "declared same-scene pair",
+    "links": [
+      {
+        "a": {
+          "clip_id": "clip18",
+          "track_id": 7,
+          "plate": null
+        },
+        "b": {
+          "clip_id": "clip19",
+          "track_id": 1,
+          "plate": null
+        },
+        "link": "probable (same-scene pair: appearance / type / colour, by elimination)",
+        "link_score": 80.9,
+        "evidence": [
+          "appearance similarity 0.94 (CLIP cosine 0.952)",
+          "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+          "colour green vs grey (0.0)"
+        ],
+        "final": {
+          "plate": null,
+          "type": "motorcycle/scooter",
+          "colour": "grey",
+          "reads_pooled": 0,
+          "decision": "no_confident_match",
+          "registry_top1": null,
+          "match_score": null,
+          "reason": "no readable plate in either camera"
+        }
+      }
+    ],
+    "duplicates_folded": {
+      "a": {},
+      "b": {}
+    },
+    "unlinked_a": [
+      100004
+    ],
+    "unlinked_b": [],
+    "note": "Pair declared by the owner (same vehicles, two angles). Only plate-confirmed links give a confident identity."
+  }
 }

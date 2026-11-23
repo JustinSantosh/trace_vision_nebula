@@ -19,7 +19,9 @@
     },
     "t_link": 70.0,
     "t_margin": 8.0,
-    "appearance_only_min": "neg_p99"
+    "appearance_only_min": "neg_p99",
+    "plate_confirm": 0.9,
+    "pair_min_score": 50.0
   },
   "calibration": {
     "clips": [
@@ -187,5 +189,54 @@
       ]
     }
   ],
-  "note": "link_score is a heuristic ranking score, not a probability. Plate vetoes are never overridden by looks."
+  "note": "link_score is a heuristic ranking score, not a probability. Plate vetoes are never overridden by looks.",
+  "pair_linking": {
+    "clip_a": "clip12",
+    "clip_b": "clip13",
+    "mode": "declared same-scene pair",
+    "links": [
+      {
+        "a": {
+          "clip_id": "clip12",
+          "track_id": 1,
+          "plate": "CG04NL3024"
+        },
+        "b": {
+          "clip_id": "clip13",
+          "track_id": 1,
+          "plate": "CG04NL3024"
+        },
+        "link": "confirmed (plate)",
+        "link_score": 96.2,
+        "evidence": [
+          "plates agree: CG04NL3024 vs CG04NL3024 (similarity 1.00 on 10 readable characters)",
+          "appearance similarity 1.00 (CLIP cosine 0.977)",
+          "type SUV vs car (0.5)",
+          "colour white vs white (1.0)"
+        ],
+        "final": {
+          "plate": "CG04NL3024",
+          "type": "car",
+          "colour": "white",
+          "reads_pooled": 16,
+          "decision": "match",
+          "registry_top1": "CG04NL3024",
+          "match_score": 100.0,
+          "reason": "best match score 100.0, clear of the next candidate"
+        }
+      }
+    ],
+    "duplicates_folded": {
+      "a": {},
+      "b": {}
+    },
+    "unlinked_a": [
+      100005
+    ],
+    "unlinked_b": [
+      100002,
+      100004
+    ],
+    "note": "Pair declared by the owner (same vehicles, two angles). Only plate-confirmed links give a confident identity."
+  }
 }

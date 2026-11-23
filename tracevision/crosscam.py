@@ -42,7 +42,8 @@ CALIB = ROOT / "TRACEVISION_DATA/reports/crosscam_calibration.json"
 DEFAULTS = {"min_known": 5, "plate_veto": 0.6, "lookalike_cost": 0.4, "n_crops": 6,
             "w_plate": {"plate": 0.60, "appearance": 0.25, "type": 0.075, "colour": 0.075},
             "w_noplate": {"appearance": 0.70, "type": 0.15, "colour": 0.15},
-            "t_link": 70.0, "t_margin": 8.0, "appearance_only_min": "neg_p99"}
+            "t_link": 70.0, "t_margin": 8.0, "appearance_only_min": "neg_p99",
+            "plate_confirm": 0.9, "pair_min_score": 50.0}
 
 
 def cfg_of(cfg=None):
@@ -290,6 +291,157 @@ def calibrate(clips=None, n_crops=4, min_gap_s=1.0):
     return res
 
 
+# ------------------------------------------------------------------ declared same-scene pairs (M16)
+def _reads_of(run_dir, track_id):
+    r = json.loads((Path(run_dir) / "result.json").read_text(encoding="utf-8"))
+    v = next(x for x in r["vehicles"] if x["track_id"] == track_id)
+    out = []
+    for rd in v["plate"].get("per_frame_reads", []):
+        t, ps = rd.get("text") or "", rd.get("char_probs") or []
+        if t and len(ps) == len(t):
+            out.append({"frame": rd["frame"], "quality": rd.get("quality", 1.0), "height_px": rd.get("height_px"),
+                        "text": t, "chars": [{"char": ch, "prob": p, "top3": [[ch, p]]} for ch, p in zip(t, ps)]})
+    return v, out
+
+
+def _pool(v_a, v_b, reads, registry, cfg):
+    """One final answer for a physical vehicle seen by two cameras: fused plate over BOTH cameras' reads,
+    pooled type and colour, one registry check."""
+    from .fuse import fuse
+    from .match import decide, rank
+    fused = fuse(reads, cfg).text if reads else ""
+    ta, tb = v_a["type"], v_b["type"]
+    vtype = ta["label"] if (type_sim(ta["label"], tb["label"]) or 0) >= 0.5 and ta.get("detector_conf_mean", 0) >= tb.get("detector_conf_mean", 0) \
+        else (tb["label"] if (type_sim(ta["label"], tb["label"]) or 0) >= 0.5 else
+              max((ta, tb), key=lambda t: t.get("detector_conf_mean", 0))["label"])
+    ca, cb = v_a["colour"], v_b["colour"]
+    colour = ca["label"] if ca["label"] == cb["label"] else max((ca, cb), key=lambda c: c.get("confidence", 0))["label"]
+    res = {"plate": fused or None, "type": vtype, "colour": colour, "reads_pooled": len(reads),
+           "decision": "no_confident_match", "registry_top1": None, "match_score": None, "reason": "no readable plate in either camera"}
+    if fused and fused.strip("?"):
+        q, known, cands = rank(fused, colour, vtype, registry, cfg)
+        m = decide(q, colour, vtype, known, cands, cfg)
+        res.update(decision=m.decision, reason=m.decision_reason,
+                   registry_top1=(m.candidates[0].registration_number if m.candidates else None),
+                   match_score=(round(m.candidates[0].match_score, 1) if m.candidates else None))
+    return res
+
+
+def duplicate_tracks(run_dir, min_contain=0.85, min_frac=0.7, min_area_ratio=0.3):
+    """C12: one vehicle sometimes gets a second, nested box. Track S is a duplicate of track L when, on >= min_frac of
+    S's frames that L also has, S's box lies >= min_contain inside L's box, S is not tiny relative to L
+    (area ratio >= min_area_ratio, so a small vehicle in front of a big one is not swallowed) and the types are
+    compatible. Returns {duplicate_track_id: kept_track_id}."""
+    r = json.loads((Path(run_dir) / "result.json").read_text(encoding="utf-8"))
+    vs = r["vehicles"]
+    tb = {v["track_id"]: {t[0]: t[1:5] for t in v["track"]} for v in vs}
+    area = lambda b: max(0.0, b[2] - b[0]) * max(0.0, b[3] - b[1])
+    dup = {}
+    for x, p in enumerate(vs):
+        for q in vs[x + 1:]:
+            if (type_sim(p["type"]["label"], q["type"]["label"]) or 0) < 0.5:
+                continue
+            P, Q = tb[p["track_id"]], tb[q["track_id"]]
+            fs = [f for f in P if f in Q]
+            if len(fs) < 3 or len(fs) < min_frac * min(len(P), len(Q)):
+                continue
+            ok = 0
+            for f in fs:     # on each shared frame: is the smaller box (whichever it is) inside the larger one?
+                a, b = sorted((P[f], Q[f]), key=area)
+                ix = max(0.0, min(a[2], b[2]) - max(a[0], b[0])); iy = max(0.0, min(a[3], b[3]) - max(a[1], b[1]))
+                if area(a) and area(b) and ix * iy / area(a) >= min_contain and area(a) / area(b) >= min_area_ratio:
+                    ok += 1
+            if ok >= min_frac * len(fs):     # duplicates: fold the track with fewer detections into the other
+                small, big = (p, q) if len(P) < len(Q) else (q, p)
+                dup[small["track_id"]] = big["track_id"]
+    # resolve chains (a -> b -> c) to the outermost track
+    for k in list(dup):
+        seen = {k}
+        while dup[k] in dup and dup[k] not in seen:
+            seen.add(dup[k]); dup[k] = dup[dup[k]]
+    return dup
+
+
+def link_pair(run_a, run_b, cfg=None, calib=None):
+    """Clips the owner declared a SAME-SCENE pair (same vehicles, two angles; clips.csv cam_parking_pairN_a/b).
+    1. plate-confirmed links: plate similarity >= plate_confirm on >= min_known jointly read characters (one-to-one)
+    2. the rest: one-to-one assignment (Hungarian) maximising the link score; accepted only if the types are
+       compatible, no plate veto, and score >= pair_min_score -> 'probable' (appearance / elimination)
+    3. per link: pooled evidence -> one final answer (fused plate over both cameras, type, colour, registry).
+       A registry identity is CONFIDENT only for plate-confirmed links; for probable links it is reported as a
+       candidate inherited through the link, never as a match."""
+    from scipy.optimize import linear_sum_assignment
+    from .match import load_registry
+    full_cfg = cfg or load_config()
+    c = cfg_of(full_cfg)
+    calib = calib or json.loads(CALIB.read_text(encoding="utf-8"))
+    ra, A = signatures(run_a, c["n_crops"])
+    rb, B = signatures(run_b, c["n_crops"])
+    # fold duplicate (nested) tracks into the track they sit inside: their plate becomes the group's best plate
+    dups = {}
+    for side, run, sig in (("a", run_a, A), ("b", run_b, B)):
+        d = duplicate_tracks(run)
+        dups[side] = d
+        by_id = {s["track_id"]: s for s in sig}
+        for small, big in d.items():
+            if small in by_id and big in by_id and by_id[small]["known"] > by_id[big]["known"]:
+                by_id[big]["plate"], by_id[big]["known"] = by_id[small]["plate"], by_id[small]["known"]
+        sig[:] = [s for s in sig if s["track_id"] not in d]
+    S = {(i, j): score_pair(a, b, calib, c) for i, a in enumerate(A) for j, b in enumerate(B)}
+    used_a, used_b, links = set(), set(), []
+    plate_pairs = sorted(((S[i, j][1].get("plate", 0), S[i, j][0], i, j) for (i, j) in S
+                          if S[i, j][3] == "plate + appearance" and S[i, j][1].get("plate", 0) >= c["plate_confirm"]), reverse=True)
+    for _, sc, i, j in plate_pairs:
+        if i in used_a or j in used_b:
+            continue
+        used_a.add(i); used_b.add(j)
+        links.append((i, j, "confirmed (plate)", sc))
+    ra_i = [i for i in range(len(A)) if i not in used_a]
+    rb_j = [j for j in range(len(B)) if j not in used_b]
+    if ra_i and rb_j:
+        M = np.array([[S[i, j][0] if S[i, j][3] != "veto" else -1e6 for j in rb_j] for i in ra_i])
+        for r, k in zip(*linear_sum_assignment(-M)):
+            i, j = ra_i[r], rb_j[k]
+            ts = type_sim(A[i]["type"], B[j]["type"])
+            if S[i, j][3] != "veto" and M[r, k] >= c["pair_min_score"] and (ts is None or ts >= 0.5):
+                links.append((i, j, "probable (same-scene pair: appearance / type / colour, by elimination)", S[i, j][0]))
+    # last resort, only because the owner declared the clips show the SAME vehicles: if exactly one compatible
+    # vehicle is left on each side and whatever plate characters both read agree, they are linked by elimination
+    la = [i for i in range(len(A)) if i not in {l[0] for l in links}]
+    lb = [j for j in range(len(B)) if j not in {l[1] for l in links}]
+    comp = lambda i, j: (type_sim(A[i]["type"], B[j]["type"]) or 0) >= 0.5 and S[i, j][3] != "veto"
+    for i in la:
+        cj = [j for j in lb if comp(i, j)]
+        if len(cj) == 1 and len([k for k in la if comp(k, cj[0])]) == 1:
+            j = cj[0]
+            sim, joint = plate_similarity(A[i]["plate"], B[j]["plate"], c["lookalike_cost"]) if A[i]["plate"] and B[j]["plate"] else (1.0, 0)
+            if joint == 0 or sim >= c["plate_confirm"]:
+                links.append((i, j, "probable (elimination: the only remaining compatible vehicle on each side"
+                              + (f"; partial plates agree on {joint} characters" if joint else "") + ")", S[i, j][0]))
+    registry = load_registry()
+    out = []
+    for i, j, kind, sc in sorted(links, key=lambda x: (x[2] != "confirmed (plate)", -x[3])):
+        va, reads_a = _reads_of(run_a, A[i]["track_id"])
+        vb, reads_b = _reads_of(run_b, B[j]["track_id"])
+        for side, run, tid, reads in (("a", run_a, A[i]["track_id"], reads_a), ("b", run_b, B[j]["track_id"], reads_b)):
+            for small, big in dups[side].items():       # reads of folded duplicates belong to the same vehicle
+                if big == tid:
+                    reads += _reads_of(run, small)[1]
+        pooled = _pool(va, vb, reads_a + reads_b, registry, full_cfg)
+        if not kind.startswith("confirmed") and pooled["decision"] == "match":
+            pooled["decision"] = "candidate_via_probable_link"
+            pooled["reason"] = "plate evidence comes through a probable (not plate-confirmed) cross-camera link: candidate only, " + pooled["reason"]
+        out.append({"a": {"clip_id": ra["clip_id"], "track_id": A[i]["track_id"], "plate": A[i]["plate"] or None},
+                    "b": {"clip_id": rb["clip_id"], "track_id": B[j]["track_id"], "plate": B[j]["plate"] or None},
+                    "link": kind, "link_score": round(sc, 1), "evidence": S[i, j][2], "final": pooled})
+    linked_a = {o["a"]["track_id"] for o in out}; linked_b = {o["b"]["track_id"] for o in out}
+    return {"clip_a": ra["clip_id"], "clip_b": rb["clip_id"], "mode": "declared same-scene pair",
+            "links": out, "duplicates_folded": {"a": dups["a"], "b": dups["b"]},
+            "unlinked_a": [a["track_id"] for a in A if a["track_id"] not in linked_a],
+            "unlinked_b": [b["track_id"] for b in B if b["track_id"] not in linked_b],
+            "note": "Pair declared by the owner (same vehicles, two angles). Only plate-confirmed links give a confident identity."}
+
+
 def evaluate_links(pairs):
     """Score runs/crosscam/<a>__<b>.json against evaluation/cross_camera_ground_truth.csv.
     Each labelled vehicle is associated with a system track by BOX POSITION ONLY (tracevision.evaluate.associate,
@@ -312,11 +464,23 @@ def evaluate_links(pairs):
                 track_of[tid] = v["track_id"]
         label_of = {(labels[t]["clip_id"], k): t for t, k in track_of.items()}
         group_of = {t: g for g, m in groups.items() for t in m.values()}
-        link_of = {l["track_id"]: (l["linked_to"]["track_id"] if l["linked_to"] else None) for l in res["links"]}
-        for l in res["links"]:
-            if l["linked_to"]:
+        if "pair_linking" in res:      # declared same-scene pair: score the joint links (M16)
+            # the system folded nested duplicate tracks into one vehicle: a label on a folded track means the kept one
+            fold = res["pair_linking"].get("duplicates_folded", {})
+            for tid in list(track_of):
+                side = "a" if labels[tid]["clip_id"] == ca else "b"
+                track_of[tid] = int(fold.get(side, {}).get(str(track_of[tid]), track_of[tid]))
+            label_of = {(labels[t]["clip_id"], k): t for t, k in track_of.items()}
+            pl = res["pair_linking"]["links"]
+            link_of = {l["a"]["track_id"]: l["b"]["track_id"] for l in pl}
+            kind_of = {l["a"]["track_id"]: l["link"] for l in pl}
+        else:
+            link_of = {l["track_id"]: (l["linked_to"]["track_id"] if l["linked_to"] else None) for l in res["links"]}
+            kind_of = {}
+        for ta_id, tb_id in link_of.items():
+            if tb_id is not None:
                 total_links += 1
-                ta, tb = label_of.get((ca, l["track_id"])), label_of.get((cb, l["linked_to"]["track_id"]))
+                ta, tb = label_of.get((ca, ta_id)), label_of.get((cb, tb_id))
                 if ta and tb and group_of.get(ta) != group_of.get(tb):
                     wrong_links += 1
         for g, members in groups.items():
@@ -326,14 +490,14 @@ def evaluate_links(pairs):
             if a not in track_of or b not in track_of:
                 outcome = "not tracked at the labelled frame"
             elif link_of.get(track_of[a]) == track_of[b]:
-                outcome = "correct link"
+                outcome = "correct link" + (f" [{kind_of[track_of[a]].split(' (')[0]}]" if track_of[a] in kind_of else "")
             elif link_of.get(track_of[a]) is None:
                 outcome = "no link (missed)"
             else:
                 outcome = "WRONG link"
             rows.append({"group": g, "clip_a": ca, "clip_b": cb, "a": a, "b": b, "outcome": outcome,
                          "plate_a": labels[a]["plate_text_truth"], "plate_b": labels[b]["plate_text_truth"]})
-    summary = {"groups": len(rows), "correct_links": sum(r["outcome"] == "correct link" for r in rows),
+    summary = {"groups": len(rows), "correct_links": sum(r["outcome"].startswith("correct link") for r in rows),
                "missed": sum(r["outcome"].startswith("no link") for r in rows),
                "wrong_links_on_groups": sum(r["outcome"] == "WRONG link" for r in rows),
                "not_tracked": sum(r["outcome"].startswith("not tracked") for r in rows),
@@ -371,7 +535,17 @@ def main():
     out_dir = RUNS / "crosscam"; out_dir.mkdir(parents=True, exist_ok=True)
     for ca, cb in pairs:
         res = link(RUNS / ca, RUNS / cb)
+        if a.pairs:   # clips.csv pairs are owner-declared same-scene pairs -> joint linking + pooled evidence (M16)
+            res["pair_linking"] = link_pair(RUNS / ca, RUNS / cb)
         (out_dir / f"{ca}__{cb}.json").write_text(json.dumps(res, indent=2, default=str), encoding="utf-8")
+        if "pair_linking" in res:
+            print(f"== {ca} <-> {cb} (declared same-scene pair)")
+            for l in res["pair_linking"]["links"]:
+                f = l["final"]
+                print(f"  #{l['a']['track_id']} <-> #{l['b']['track_id']}  {l['link']:<14.14} score {l['link_score']:<5}  final: plate {f['plate'] or '-':<11} "
+                      f"{f['type']:<18} {f['colour']:<7} {f['decision']} {f['registry_top1'] or ''}")
+            print("  unlinked:", res["pair_linking"]["unlinked_a"], "|", res["pair_linking"]["unlinked_b"])
+            continue
         print(f"== {ca} -> {cb}")
         for l in res["links"]:
             tgt = l["linked_to"]
