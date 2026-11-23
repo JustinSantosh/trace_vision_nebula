@@ -77,6 +77,59 @@ def track_clip(video, model, pc):
     return tracks, {"fps": fps, "width": W, "height": H, "frames": idx + 1}
 
 
+COCO_VEHICLES = {"car", "truck", "bus", "motorcycle", "bicycle"}
+
+
+def _iou(a, b):
+    ix = max(0.0, min(a[2], b[2]) - max(a[0], b[0])); iy = max(0.0, min(a[3], b[3]) - max(a[1], b[1]))
+    inter = ix * iy; u = (a[2] - a[0]) * (a[3] - a[1]) + (b[2] - b[0]) * (b[3] - b[1]) - inter
+    return inter / u if u > 0 else 0.0
+
+
+def verify_large_tracks(video, tracks, meta, coco, pc):
+    """Cross-check LARGE tracks with an independent detector (COCO YOLOv8n). UVH-26 can hallucinate a frame-wide
+    'Truck' over empty road or sky (sunset / wide-road footage, C11): such a track is kept only if COCO sees a
+    vehicle at its box in >= verify_min_share of up to verify_samples sampled frames. Small tracks are not checked.
+    Returns (kept tracks, list of dropped track ids with their evidence)."""
+    if coco is None or not pc.get("verify_large_frac"):
+        return tracks, []
+    A = meta["width"] * meta["height"]
+    large = {t: ds for t, ds in tracks.items() if np.median([d["area"] for d in ds]) / A >= pc["verify_large_frac"]}
+    if not large:
+        return tracks, []
+    want = defaultdict(list)                       # frame -> [(tid, box)]
+    for t, ds in large.items():
+        n = min(pc.get("verify_samples", 6), len(ds))
+        for i in np.linspace(0, len(ds) - 1, n).round().astype(int):
+            want[ds[i]["frame"]].append((t, ds[i]["box"]))
+    hits = defaultdict(int); tried = defaultdict(int)
+    cap = cv2.VideoCapture(str(video))
+    for fi in sorted(want):
+        cap.set(cv2.CAP_PROP_POS_FRAMES, fi)
+        ok, f = cap.read()
+        if not ok:
+            continue
+        r = coco.predict(f, conf=pc.get("verify_conf", 0.25), device=0, verbose=False)[0]
+        boxes = [b for b, c in zip(r.boxes.xyxy.cpu().numpy().tolist(), r.boxes.cls.int().cpu().numpy())
+                 if coco.names[int(c)] in COCO_VEHICLES]
+        for t, box in want[fi]:
+            tried[t] += 1
+            if any(_iou(box, b) >= pc.get("verify_min_iou", 0.3) for b in boxes):
+                hits[t] += 1
+    cap.release()
+    dropped = []
+    for t in large:
+        share = hits[t] / tried[t] if tried[t] else 1.0   # unreadable frames: don't drop on missing evidence
+        if share < pc.get("verify_min_share", 0.34):
+            mid = large[t][len(large[t]) // 2]
+            dropped.append({"track_id": t, "confirmed": f"{hits[t]}/{tried[t]}",
+                            "median_area_frac": round(float(np.median([d["area"] for d in large[t]]) / A), 3),
+                            "frames": [large[t][0]["frame"], large[t][-1]["frame"]],
+                            "sample": {"frame": mid["frame"], "box": [round(v) for v in mid["box"]], "type": mid["type"]}})
+    gone = {d["track_id"] for d in dropped}
+    return {t: ds for t, ds in tracks.items() if t not in gone}, dropped
+
+
 def track_type(dets):
     use = [d for d in dets if not d["edge"]] or dets          # edge-cut boxes don't vote (C6)
     votes = Counter()
@@ -163,7 +216,8 @@ def find_plate(vcrop, plate_model, conf):
 # ---------------------------------------------------------------- one clip
 def run_clip(video, out_dir, models, ocr, registry, cfg):
     pc, mcfg = cfg["pipeline"], cfg
-    veh_model, plate_model = models
+    veh_model, plate_model = models[0], models[1]
+    coco_model = models[2] if len(models) > 2 else None
     clip_id = Path(video).stem
     t0 = time.perf_counter(); timing = {}
     raw, meta = track_clip(video, veh_model, pc)
@@ -171,6 +225,7 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
     min_area = pc["min_vehicle_area_frac"] * meta["width"] * meta["height"]
     kept = {k: v for k, v in raw.items() if len(v) >= pc["min_track_dets"] and max(d["area"] for d in v) >= min_area}
     tracks, parent = relink(kept, pc)
+    tracks, unverified = verify_large_tracks(video, tracks, meta, coco_model, pc)   # C11: hallucinated big boxes
 
     # second pass: read only the frames we need
     t1 = time.perf_counter()
@@ -342,7 +397,8 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
     timing["total_s"] = round(time.perf_counter() - t0, 1)
     result = {"clip_id": clip_id, "camera_type": camera_type(clip_id), "video": meta,
               "processed_at": time.strftime("%Y-%m-%dT%H:%M:%S"), "config": {k: cfg[k] for k in ("pipeline", "plate_detector", "fusion", "match")},
-              "summary": {"raw_tracks": len(raw), "kept_tracks": len(kept), "vehicles_after_relink": len(vehicles),
+              "summary": {"raw_tracks": len(raw), "kept_tracks": len(kept),
+                          "dropped_unverified_large": unverified, "vehicles_after_relink": len(vehicles),
                           "plates_read": sum(1 for v in vehicles if v["plate"]["status"] == "read"),
                           "decisions": dict(Counter(v["decision"] for v in vehicles))},
               "timing": timing, "vehicles": vehicles,
@@ -363,11 +419,13 @@ class Engine:
         from ultralytics import YOLO
         self.veh = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/UVH-26-MV-YOLOv11-S.pt"))
         self.plate = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/plate_yolov8n_quobotic.pt"))
+        # independent cross-check for large vehicle tracks (C11); COCO-pretrained, ships with the repo
+        self.coco = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/yolov8n.pt"))
         self.registry = load_registry()
         return self
 
     def run(self, video, out_dir):
-        return run_clip(Path(video), Path(out_dir), (self.veh, self.plate), self.ocr, self.registry, self.cfg)
+        return run_clip(Path(video), Path(out_dir), (self.veh, self.plate, self.coco), self.ocr, self.registry, self.cfg)
 
     def __exit__(self, *exc):
         self.ocr.__exit__(*exc)

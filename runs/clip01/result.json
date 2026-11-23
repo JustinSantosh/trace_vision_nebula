@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 489
   },
-  "processed_at": "2026-11-23T02:57:09",
+  "processed_at": "2026-11-23T09:30:55",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -21,6 +21,10 @@
       "min_frame_gap": 4,
       "ocr_top_k": 5,
       "colour_frames": 3,
+      "verify_large_frac": 0.1,
+      "verify_samples": 6,
+      "verify_min_iou": 0.3,
+      "verify_min_share": 0.34,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -51,6 +55,27 @@
   "summary": {
     "raw_tracks": 29,
     "kept_tracks": 13,
+    "dropped_unverified_large": [
+      {
+        "track_id": 80,
+        "confirmed": "0/5",
+        "median_area_frac": 0.291,
+        "frames": [
+          404,
+          428
+        ],
+        "sample": {
+          "frame": 418,
+          "box": [
+            25,
+            541,
+            408,
+            850
+          ],
+          "type": "truck"
+        }
+      }
+    ],
     "vehicles_after_relink": 11,
     "plates_read": 4,
     "decisions": {
@@ -59,9 +84,9 @@
     }
   },
   "timing": {
-    "detect_track_s": 7.2,
-    "plates_s": 1.5,
-    "ocr_s": 0.7,
+    "detect_track_s": 6.5,
+    "plates_s": 1.3,
+    "ocr_s": 0.6,
     "assemble_s": 0.2,
     "total_s": 9.5
   },
@@ -6553,13 +6578,12 @@
     {
       "track_id": 74,
       "merged_track_ids": [
-        74,
-        80
+        74
       ],
       "first_frame": 388,
       "last_frame": 476,
       "first_time_s": 12.93,
-      "n_detections": 32,
+      "n_detections": 27,
       "first_box": [
         207,
         541,
@@ -6631,20 +6655,6 @@
           847
         ],
         [
-          404,
-          97,
-          541,
-          478,
-          850
-        ],
-        [
-          406,
-          97,
-          541,
-          478,
-          850
-        ],
-        [
           410,
           149,
           590,
@@ -6664,27 +6674,6 @@
           583,
           293,
           803
-        ],
-        [
-          418,
-          25,
-          541,
-          408,
-          850
-        ],
-        [
-          420,
-          20,
-          541,
-          405,
-          850
-        ],
-        [
-          428,
-          0,
-          503,
-          394,
-          841
         ],
         [
           444,
@@ -6795,15 +6784,15 @@
       "type": {
         "label": "motorcycle/scooter",
         "vote_share": 0.747,
-        "detector_conf_mean": 0.544
+        "detector_conf_mean": 0.585
       },
       "colour": {
-        "label": "grey",
-        "confidence": 0.578,
+        "label": "black",
+        "confidence": 0.563,
         "per_frame": [
-          "grey",
-          "grey",
-          "grey"
+          "black",
+          "black",
+          "black"
         ],
         "note": ""
       },
@@ -6815,151 +6804,131 @@
           {
             "pos": 1,
             "char": "U",
-            "confidence": 0.9963,
-            "share": 0.9968,
-            "support": 5,
+            "confidence": 0.9941,
+            "share": 0.9948,
+            "support": 3,
             "best_candidate": "U",
             "frames": [
               404,
-              404,
               410,
-              418,
-              420
+              418
             ]
           },
           {
             "pos": 2,
             "char": "P",
-            "confidence": 0.9927,
-            "share": 0.9928,
-            "support": 5,
+            "confidence": 0.9885,
+            "share": 0.9887,
+            "support": 3,
             "best_candidate": "P",
             "frames": [
               404,
-              404,
               410,
-              418,
-              420
+              418
             ]
           },
           {
             "pos": 3,
             "char": "3",
-            "confidence": 0.9768,
-            "share": 0.9834,
-            "support": 5,
+            "confidence": 0.962,
+            "share": 0.9726,
+            "support": 3,
             "best_candidate": "3",
             "frames": [
               404,
-              404,
               410,
-              418,
-              420
+              418
             ]
           },
           {
             "pos": 4,
             "char": "7",
-            "confidence": 0.9958,
-            "share": 0.9971,
-            "support": 5,
+            "confidence": 0.9935,
+            "share": 0.9957,
+            "support": 3,
             "best_candidate": "7",
             "frames": [
               404,
-              404,
               410,
-              418,
-              420
+              418
             ]
           },
           {
             "pos": 5,
             "char": "A",
-            "confidence": 0.998,
-            "share": 0.9989,
-            "support": 5,
+            "confidence": 0.9984,
+            "share": 0.9998,
+            "support": 3,
             "best_candidate": "A",
             "frames": [
               404,
-              404,
               410,
-              418,
-              420
+              418
             ]
           },
           {
             "pos": 6,
             "char": "A",
-            "confidence": 0.9995,
-            "share": 0.9998,
-            "support": 5,
+            "confidence": 0.9992,
+            "share": 0.9996,
+            "support": 3,
             "best_candidate": "A",
             "frames": [
               404,
-              404,
               410,
-              418,
-              420
+              418
             ]
           },
           {
             "pos": 7,
             "char": "8",
-            "confidence": 0.9553,
-            "share": 0.9978,
-            "support": 5,
+            "confidence": 0.9303,
+            "share": 0.9967,
+            "support": 3,
             "best_candidate": "8",
             "frames": [
               404,
-              404,
               410,
-              418,
-              420
+              418
             ]
           },
           {
             "pos": 8,
             "char": "4",
-            "confidence": 0.9444,
-            "share": 0.9585,
-            "support": 5,
+            "confidence": 0.91,
+            "share": 0.9325,
+            "support": 3,
             "best_candidate": "4",
             "frames": [
               404,
-              404,
               410,
-              418,
-              420
+              418
             ]
           },
           {
             "pos": 9,
             "char": "0",
-            "confidence": 0.9752,
-            "share": 0.9861,
-            "support": 5,
+            "confidence": 0.9593,
+            "share": 0.9771,
+            "support": 3,
             "best_candidate": "0",
             "frames": [
               404,
-              404,
               410,
-              418,
-              420
+              418
             ]
           },
           {
             "pos": 10,
             "char": "4",
-            "confidence": 0.9575,
-            "share": 0.9648,
-            "support": 5,
+            "confidence": 0.9301,
+            "share": 0.9419,
+            "support": 3,
             "best_candidate": "4",
             "frames": [
               404,
-              404,
               410,
-              418,
-              420
+              418
             ]
           }
         ],
@@ -6980,24 +6949,6 @@
               0.9923,
               0.999,
               0.9999,
-              1.0
-            ]
-          },
-          {
-            "frame": 404,
-            "text": "UP37AA8404",
-            "height_px": 33,
-            "quality": 0.87,
-            "char_probs": [
-              0.9997,
-              0.9986,
-              0.9999,
-              0.9998,
-              0.9996,
-              1.0,
-              0.9938,
-              0.9997,
-              1.0,
               1.0
             ]
           },
@@ -7036,42 +6987,24 @@
               0.9998,
               1.0
             ]
-          },
-          {
-            "frame": 420,
-            "text": "UP37AA8404",
-            "height_px": 25,
-            "quality": 0.772,
-            "char_probs": [
-              1.0,
-              0.9999,
-              0.9996,
-              0.9987,
-              0.995,
-              1.0,
-              0.9947,
-              0.9955,
-              0.9997,
-              0.9997
-            ]
           }
         ],
-        "plates_detected": 7
+        "plates_detected": 5
       },
       "decision": "match",
-      "decision_reason": "best match score 85.0, clear of the next candidate",
+      "decision_reason": "best match score 100.0, clear of the next candidate",
       "candidates": [
         {
           "rank": 1,
           "synthetic_vehicle_id": "SV037967",
           "registration_number": "UP37AA8404",
-          "match_score": 85.0,
+          "match_score": 100.0,
           "plate_score": 1.0,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
             "plate: 10 of 10 readable characters match exactly",
-            "colour conflict: observed grey, registry black",
+            "colour black matches",
             "type motorcycle matches"
           ]
         },
@@ -7079,14 +7012,14 @@
           "rank": 2,
           "synthetic_vehicle_id": "SV191897",
           "registration_number": "UP32AA8404",
-          "match_score": 71.7,
+          "match_score": 86.7,
           "plate_score": 0.81,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
             "plate: 9 of 10 readable characters match exactly",
             "plate differs from UP32AA8404 (edit cost 1.0)",
-            "colour conflict: observed grey, registry black",
+            "colour black matches",
             "type motorcycle matches"
           ]
         },
@@ -7094,19 +7027,34 @@
           "rank": 3,
           "synthetic_vehicle_id": "SV294936",
           "registration_number": "UP36KA8404",
-          "match_score": 59.8,
+          "match_score": 74.8,
           "plate_score": 0.64,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
             "plate: 8 of 10 readable characters match exactly",
             "plate differs from UP36KA8404 (edit cost 2.0)",
-            "colour conflict: observed grey, registry black",
+            "colour black matches",
             "type motorcycle matches"
           ]
         },
         {
           "rank": 4,
+          "synthetic_vehicle_id": "SV122364",
+          "registration_number": "UP37AA8406",
+          "match_score": 71.7,
+          "plate_score": 0.81,
+          "colour_score": 1.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from UP37AA8406 (edit cost 1.0)",
+            "colour black matches",
+            "type conflict: observed motorcycle/scooter, registry truck"
+          ]
+        },
+        {
+          "rank": 5,
           "synthetic_vehicle_id": "SV735559",
           "registration_number": "UP37AA3405",
           "match_score": 59.8,
@@ -7116,23 +7064,8 @@
           "reasons": [
             "plate: 8 of 10 readable characters match exactly",
             "plate differs from UP37AA3405 (edit cost 2.0)",
-            "colour conflict: observed grey, registry blue",
+            "colour conflict: observed black, registry blue",
             "type motorcycle matches"
-          ]
-        },
-        {
-          "rank": 5,
-          "synthetic_vehicle_id": "SV122364",
-          "registration_number": "UP37AA8406",
-          "match_score": 56.7,
-          "plate_score": 0.81,
-          "colour_score": 0.0,
-          "type_score": 0.0,
-          "reasons": [
-            "plate: 9 of 10 readable characters match exactly",
-            "plate differs from UP37AA8406 (edit cost 1.0)",
-            "colour conflict: observed grey, registry black",
-            "type conflict: observed motorcycle/scooter, registry truck"
           ]
         }
       ]

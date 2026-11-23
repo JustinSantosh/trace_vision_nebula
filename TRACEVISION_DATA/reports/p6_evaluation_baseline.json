@@ -26,8 +26,8 @@
       "detected_and_tracked": "30/37 (81%)",
       "type_exact": "18/30 (60%)",
       "type_compatible": "28/30 (93%)",
-      "colour_exact": "8/30 (27%)",
-      "colour_near": "16/30 (53%)",
+      "colour_exact": "9/30 (30%)",
+      "colour_near": "17/30 (57%)",
       "colour_unknown_answers": "2/30 (7%)",
       "plates_with_readable_truth_and_a_read": 14,
       "plate_chars_correct": "112/132 (85%)",
@@ -46,8 +46,8 @@
       "detected_and_tracked": "44/51 (86%)",
       "type_exact": "30/44 (68%)",
       "type_compatible": "41/44 (93%)",
-      "colour_exact": "11/44 (25%)",
-      "colour_near": "24/44 (55%)",
+      "colour_exact": "12/44 (27%)",
+      "colour_near": "25/44 (57%)",
       "colour_unknown_answers": "4/44 (9%)",
       "plates_with_readable_truth_and_a_read": 14,
       "plate_chars_correct": "112/132 (85%)",
@@ -69,43 +69,43 @@
     },
     "clip02": {
       "video_s": 4.1,
-      "processing_s": 3.5
+      "processing_s": 3.9
     },
     "clip03": {
       "video_s": 18.4,
-      "processing_s": 9.4
+      "processing_s": 8.2
     },
     "clip04": {
       "video_s": 12.8,
-      "processing_s": 11.4
+      "processing_s": 4.0
     },
     "clip05": {
       "video_s": 16.4,
-      "processing_s": 16.8
+      "processing_s": 5.6
     },
     "clip06": {
       "video_s": 17.1,
-      "processing_s": 20.0
+      "processing_s": 12.2
     },
     "clip07": {
       "video_s": 16.6,
-      "processing_s": 14.0
+      "processing_s": 11.5
     },
     "clip08": {
       "video_s": 18.5,
-      "processing_s": 6.8
+      "processing_s": 12.3
     },
     "clip09": {
       "video_s": 30.3,
-      "processing_s": 22.4
+      "processing_s": 23.3
     },
     "clip10": {
       "video_s": 18.8,
-      "processing_s": 28.8
+      "processing_s": 37.4
     },
     "clip11": {
       "video_s": 9.4,
-      "processing_s": 10.5
+      "processing_s": 16.2
     }
   },
   "per_vehicle": [
@@ -172,7 +172,7 @@
       "truth_plate": "UP37AA8404",
       "in_registry": "yes",
       "pred_type": "motorcycle/scooter",
-      "pred_colour": "grey",
+      "pred_colour": "black",
       "pred_plate": "UP37AA8404",
       "decision": "match",
       "top1": "SV037967",
@@ -180,14 +180,14 @@
         "SV037967",
         "SV191897",
         "SV294936",
-        "SV735559",
-        "SV122364"
+        "SV122364",
+        "SV735559"
       ],
       "plate_status": "read",
       "type_exact": true,
       "type_compatible": true,
-      "colour_exact": false,
-      "colour_near": false,
+      "colour_exact": true,
+      "colour_near": true,
       "colour_unknown": false,
       "chars_truth_known": 10,
       "chars_correct": 10,

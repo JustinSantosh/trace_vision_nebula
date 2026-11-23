@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 493
   },
-  "processed_at": "2026-11-23T02:57:51",
+  "processed_at": "2026-11-23T09:31:18",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -21,6 +21,10 @@
       "min_frame_gap": 4,
       "ocr_top_k": 5,
       "colour_frames": 3,
+      "verify_large_frac": 0.1,
+      "verify_samples": 6,
+      "verify_min_iou": 0.3,
+      "verify_min_share": 0.34,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -51,18 +55,39 @@
   "summary": {
     "raw_tracks": 22,
     "kept_tracks": 18,
-    "vehicles_after_relink": 17,
+    "dropped_unverified_large": [
+      {
+        "track_id": 6,
+        "confirmed": "0/6",
+        "median_area_frac": 0.309,
+        "frames": [
+          0,
+          56
+        ],
+        "sample": {
+          "frame": 20,
+          "box": [
+            97,
+            0,
+            478,
+            329
+          ],
+          "type": "truck"
+        }
+      }
+    ],
+    "vehicles_after_relink": 16,
     "plates_read": 2,
     "decisions": {
-      "no_confident_match": 17
+      "no_confident_match": 16
     }
   },
   "timing": {
-    "detect_track_s": 10.8,
-    "plates_s": 5.1,
-    "ocr_s": 0.6,
-    "assemble_s": 0.3,
-    "total_s": 16.8
+    "detect_track_s": 3.3,
+    "plates_s": 1.5,
+    "ocr_s": 0.2,
+    "assemble_s": 0.1,
+    "total_s": 5.6
   },
   "vehicles": [
     {
@@ -2545,198 +2570,6 @@
       "colour": {
         "label": "white",
         "confidence": 0.388,
-        "per_frame": [
-          "white",
-          "white",
-          "white"
-        ],
-        "note": ""
-      },
-      "plate": {
-        "status": "no plate detected",
-        "fused": null,
-        "unknown_positions": null,
-        "positions": [],
-        "warnings": [],
-        "per_frame_reads": [],
-        "plates_detected": 0
-      },
-      "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
-      "candidates": []
-    },
-    {
-      "track_id": 6,
-      "merged_track_ids": [
-        6
-      ],
-      "first_frame": 0,
-      "last_frame": 56,
-      "first_time_s": 0.0,
-      "n_detections": 21,
-      "first_box": [
-        97,
-        0,
-        478,
-        329
-      ],
-      "track": [
-        [
-          0,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          2,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          4,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          6,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          8,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          10,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          12,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          14,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          16,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          18,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          20,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          22,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          28,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          30,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          34,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          36,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          44,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          46,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          52,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          54,
-          97,
-          0,
-          478,
-          329
-        ],
-        [
-          56,
-          97,
-          0,
-          478,
-          329
-        ]
-      ],
-      "type": {
-        "label": "truck",
-        "vote_share": 1.0,
-        "detector_conf_mean": 0.264
-      },
-      "colour": {
-        "label": "white",
-        "confidence": 0.96,
         "per_frame": [
           "white",
           "white",

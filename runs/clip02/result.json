@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 123
   },
-  "processed_at": "2026-11-23T02:57:12",
+  "processed_at": "2026-11-23T09:30:59",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -21,6 +21,10 @@
       "min_frame_gap": 4,
       "ocr_top_k": 5,
       "colour_frames": 3,
+      "verify_large_frac": 0.1,
+      "verify_samples": 6,
+      "verify_min_iou": 0.3,
+      "verify_min_share": 0.34,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -51,6 +55,7 @@
   "summary": {
     "raw_tracks": 57,
     "kept_tracks": 32,
+    "dropped_unverified_large": [],
     "vehicles_after_relink": 31,
     "plates_read": 0,
     "decisions": {
@@ -58,11 +63,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 1.2,
-    "plates_s": 2.3,
+    "detect_track_s": 1.4,
+    "plates_s": 2.4,
     "ocr_s": 0.0,
     "assemble_s": 0.1,
-    "total_s": 3.5
+    "total_s": 3.9
   },
   "vehicles": [
     {

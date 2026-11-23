@@ -7,7 +7,7 @@
     "height": 2160,
     "frames": 564
   },
-  "processed_at": "2026-11-23T02:59:24",
+  "processed_at": "2026-11-23T09:32:56",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -21,6 +21,10 @@
       "min_frame_gap": 4,
       "ocr_top_k": 5,
       "colour_frames": 3,
+      "verify_large_frac": 0.1,
+      "verify_samples": 6,
+      "verify_min_iou": 0.3,
+      "verify_min_share": 0.34,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -51,18 +55,39 @@
   "summary": {
     "raw_tracks": 20,
     "kept_tracks": 10,
-    "vehicles_after_relink": 9,
+    "dropped_unverified_large": [
+      {
+        "track_id": 30,
+        "confirmed": "0/6",
+        "median_area_frac": 0.273,
+        "frames": [
+          278,
+          290
+        ],
+        "sample": {
+          "frame": 286,
+          "box": [
+            711,
+            1225,
+            2530,
+            2159
+          ],
+          "type": "truck"
+        }
+      }
+    ],
+    "vehicles_after_relink": 8,
     "plates_read": 5,
     "decisions": {
-      "no_confident_match": 9
+      "no_confident_match": 8
     }
   },
   "timing": {
-    "detect_track_s": 21.4,
-    "plates_s": 6.5,
-    "ocr_s": 0.4,
-    "assemble_s": 0.5,
-    "total_s": 28.8
+    "detect_track_s": 17.3,
+    "plates_s": 5.8,
+    "ocr_s": 0.3,
+    "assemble_s": 0.4,
+    "total_s": 37.4
   },
   "vehicles": [
     {
@@ -2885,181 +2910,6 @@
           ]
         }
       ]
-    },
-    {
-      "track_id": 30,
-      "merged_track_ids": [
-        30
-      ],
-      "first_frame": 278,
-      "last_frame": 290,
-      "first_time_s": 9.27,
-      "n_detections": 6,
-      "first_box": [
-        554,
-        1068,
-        2687,
-        2160
-      ],
-      "track": [
-        [
-          278,
-          554,
-          1068,
-          2687,
-          2160
-        ],
-        [
-          280,
-          530,
-          1040,
-          2710,
-          2160
-        ],
-        [
-          284,
-          683,
-          1196,
-          2558,
-          2159
-        ],
-        [
-          286,
-          711,
-          1225,
-          2530,
-          2159
-        ],
-        [
-          288,
-          449,
-          1091,
-          2509,
-          2159
-        ],
-        [
-          290,
-          375,
-          1050,
-          2495,
-          2159
-        ]
-      ],
-      "type": {
-        "label": "truck",
-        "vote_share": 1.0,
-        "detector_conf_mean": 0.349
-      },
-      "colour": {
-        "label": "blue",
-        "confidence": 0.491,
-        "per_frame": [
-          "blue",
-          "blue",
-          "blue"
-        ],
-        "note": ""
-      },
-      "plate": {
-        "status": "unreadable (low OCR confidence)",
-        "fused": "???????",
-        "unknown_positions": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
-        "positions": [
-          {
-            "pos": 1,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.8945,
-            "support": 1,
-            "best_candidate": "M",
-            "frames": []
-          },
-          {
-            "pos": 2,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.7466,
-            "support": 1,
-            "best_candidate": "H",
-            "frames": []
-          },
-          {
-            "pos": 3,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.3991,
-            "support": 1,
-            "best_candidate": "6",
-            "frames": []
-          },
-          {
-            "pos": 4,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.0,
-            "support": 1,
-            "best_candidate": "",
-            "frames": []
-          },
-          {
-            "pos": 5,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5466,
-            "support": 1,
-            "best_candidate": "6",
-            "frames": []
-          },
-          {
-            "pos": 6,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.3852,
-            "support": 1,
-            "best_candidate": "7",
-            "frames": []
-          },
-          {
-            "pos": 7,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.4446,
-            "support": 1,
-            "best_candidate": "6",
-            "frames": []
-          }
-        ],
-        "warnings": [],
-        "per_frame_reads": [
-          {
-            "frame": 280,
-            "text": "MH6H676",
-            "height_px": 136,
-            "quality": 0.927,
-            "char_probs": [
-              0.7913,
-              0.5337,
-              0.211,
-              0.3368,
-              0.2383,
-              0.2616,
-              0.2731
-            ]
-          }
-        ],
-        "plates_detected": 1
-      },
-      "decision": "no_confident_match",
-      "decision_reason": "plate unreadable (low OCR confidence): cannot identify from the plate",
-      "candidates": []
     },
     {
       "track_id": 32,

@@ -22,7 +22,7 @@
 | Readable labelled plates the system didn't read | 2/16 (12%) | | |
 | Plates humans marked unreadable but the system read | 2/28 (7%): **unverifiable**, see below | | |
 | Type exact / compatible | 30/44 (68%) / 41/44 (93%) | 60% / 93% | 86% / 93% |
-| Colour exact / near | 11/44 (25%) / 24/44 (55%) | | |
+| Colour exact / near | 12/44 (27%) / 25/44 (57%) | | |
 | Colour answered `unknown` | 4/44 (9%) | | |
 
 ### What the numbers mean
@@ -30,6 +30,9 @@
 2. **No unregistered vehicle was "identified" (0/42).** Wildcard matching plus the thresholds and the "≥ 5 readable characters" rule keep false identifications at zero on this set.
 3. **8 of 9 registered vehicles were identified**, one of them from a partial plate (`UP1?FT?44?` → `UP16FT9444`). The miss (clip07 `DL8CAH1004`) never shows a plate taller than 13 px, so it's below the 16 px bar (M8) and correctly not read.
 4. **CCTV-style clips:** every vehicle is found and typed (86% exact), but **no plate is large enough to read**, so every answer is "no confident match". That's correct behaviour, and it's why the split matters (E7).
+
+### Update 2026-11-23: phantom-box fix (PROBLEMS C11, DECISIONS M12)
+UVH-26 sometimes reports a frame-wide "Truck" over empty road, sky, sign boards or barriers. Large tracks are now cross-checked with COCO YOLOv8n; **13 phantom tracks were removed from 6 of the 11 clips** (every one checked by eye: road, sky, signs, barriers; real trucks such as the clip10 tanker are kept). Re-evaluated: **every detection, plate and matching metric is unchanged** (44/51 detected, 8/9 matched, 0/42 false matches, 0/132 wrong characters). Colour moved from 11 to 12 exact (one labelled vehicle is no longer linked to a phantom box). The robustness table below was produced before this fix and was not re-run.
 
 ## Error analysis
 - **Missed vehicles (7):** 4 have plates humans also marked `none`: far, tiny vehicles (about 30–60 px boxes, under the 0.4% minimum-area filter) or trucks cut off at the 4K frame edge. The other 3 are partly visible (an SUV behind others, a corner scooter, an edge truck).

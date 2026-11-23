@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 555
   },
-  "processed_at": "2026-11-23T02:58:32",
+  "processed_at": "2026-11-23T09:31:54",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -21,6 +21,10 @@
       "min_frame_gap": 4,
       "ocr_top_k": 5,
       "colour_frames": 3,
+      "verify_large_frac": 0.1,
+      "verify_samples": 6,
+      "verify_min_iou": 0.3,
+      "verify_min_share": 0.34,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -51,19 +55,40 @@
   "summary": {
     "raw_tracks": 21,
     "kept_tracks": 11,
-    "vehicles_after_relink": 10,
+    "dropped_unverified_large": [
+      {
+        "track_id": 84,
+        "confirmed": "0/6",
+        "median_area_frac": 0.319,
+        "frames": [
+          508,
+          554
+        ],
+        "sample": {
+          "frame": 532,
+          "box": [
+            97,
+            88,
+            478,
+            428
+          ],
+          "type": "truck"
+        }
+      }
+    ],
+    "vehicles_after_relink": 9,
     "plates_read": 3,
     "decisions": {
-      "no_confident_match": 9,
+      "no_confident_match": 8,
       "match": 1
     }
   },
   "timing": {
-    "detect_track_s": 5.1,
-    "plates_s": 1.3,
+    "detect_track_s": 9.4,
+    "plates_s": 1.1,
     "ocr_s": 0.3,
-    "assemble_s": 0.1,
-    "total_s": 6.8
+    "assemble_s": 0.2,
+    "total_s": 12.3
   },
   "vehicles": [
     {
@@ -5943,218 +5968,6 @@
           ]
         }
       ]
-    },
-    {
-      "track_id": 84,
-      "merged_track_ids": [
-        84
-      ],
-      "first_frame": 508,
-      "last_frame": 554,
-      "first_time_s": 16.93,
-      "n_detections": 24,
-      "first_box": [
-        97,
-        31,
-        478,
-        372
-      ],
-      "track": [
-        [
-          508,
-          97,
-          31,
-          478,
-          372
-        ],
-        [
-          510,
-          97,
-          31,
-          478,
-          372
-        ],
-        [
-          512,
-          97,
-          31,
-          478,
-          372
-        ],
-        [
-          514,
-          97,
-          31,
-          478,
-          372
-        ],
-        [
-          516,
-          97,
-          31,
-          478,
-          372
-        ],
-        [
-          518,
-          97,
-          31,
-          478,
-          372
-        ],
-        [
-          520,
-          97,
-          31,
-          478,
-          372
-        ],
-        [
-          522,
-          101,
-          10,
-          474,
-          343
-        ],
-        [
-          524,
-          98,
-          23,
-          477,
-          361
-        ],
-        [
-          526,
-          97,
-          28,
-          478,
-          368
-        ],
-        [
-          528,
-          97,
-          30,
-          478,
-          370
-        ],
-        [
-          530,
-          97,
-          31,
-          478,
-          371
-        ],
-        [
-          532,
-          97,
-          88,
-          478,
-          428
-        ],
-        [
-          534,
-          97,
-          81,
-          478,
-          421
-        ],
-        [
-          536,
-          97,
-          78,
-          478,
-          418
-        ],
-        [
-          538,
-          97,
-          77,
-          478,
-          417
-        ],
-        [
-          540,
-          97,
-          76,
-          478,
-          416
-        ],
-        [
-          542,
-          97,
-          76,
-          478,
-          416
-        ],
-        [
-          544,
-          97,
-          75,
-          478,
-          416
-        ],
-        [
-          546,
-          97,
-          75,
-          478,
-          416
-        ],
-        [
-          548,
-          97,
-          75,
-          478,
-          415
-        ],
-        [
-          550,
-          97,
-          75,
-          478,
-          415
-        ],
-        [
-          552,
-          97,
-          75,
-          478,
-          415
-        ],
-        [
-          554,
-          76,
-          75,
-          460,
-          415
-        ]
-      ],
-      "type": {
-        "label": "truck",
-        "vote_share": 1.0,
-        "detector_conf_mean": 0.5
-      },
-      "colour": {
-        "label": "white",
-        "confidence": 0.583,
-        "per_frame": [
-          "white",
-          "white"
-        ],
-        "note": ""
-      },
-      "plate": {
-        "status": "no plate detected",
-        "fused": null,
-        "unknown_positions": null,
-        "positions": [],
-        "warnings": [],
-        "per_frame_reads": [],
-        "plates_detected": 0
-      },
-      "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
-      "candidates": []
     }
   ],
   "note": "match_score is a heuristic ranking score, not a probability. '?' marks characters that could not be read."

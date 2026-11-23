@@ -20,6 +20,10 @@ pipeline:
   min_frame_gap: 4           # candidate frames at least this far apart
   ocr_top_k: 5               # best plate crops per track sent to OCR
   colour_frames: 3
+  verify_large_frac: 0.10    # C11: tracks whose median box covers >= this fraction of the frame are cross-checked ...
+  verify_samples: 6          # ... on up to this many evenly spaced frames with COCO YOLOv8n ...
+  verify_min_iou: 0.3        # ... a COCO car/truck/bus/motorcycle/bicycle box must overlap the track box this much ...
+  verify_min_share: 0.34     # ... in at least this share of the sampled frames, else the track is dropped (logged)
   plate_link_min_known: 6    # merge tracks whose fused plates agree on >= this many readable characters (and never disagree)
 
 plate_detector:

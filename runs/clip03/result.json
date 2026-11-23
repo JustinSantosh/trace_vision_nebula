@@ -7,7 +7,7 @@
     "height": 1280,
     "frames": 553
   },
-  "processed_at": "2026-11-23T02:57:22",
+  "processed_at": "2026-11-23T09:31:08",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -21,6 +21,10 @@
       "min_frame_gap": 4,
       "ocr_top_k": 5,
       "colour_frames": 3,
+      "verify_large_frac": 0.1,
+      "verify_samples": 6,
+      "verify_min_iou": 0.3,
+      "verify_min_share": 0.34,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -51,19 +55,59 @@
   "summary": {
     "raw_tracks": 21,
     "kept_tracks": 16,
-    "vehicles_after_relink": 12,
+    "dropped_unverified_large": [
+      {
+        "track_id": 46,
+        "confirmed": "0/6",
+        "median_area_frac": 0.331,
+        "frames": [
+          332,
+          378
+        ],
+        "sample": {
+          "frame": 352,
+          "box": [
+            132,
+            299,
+            720,
+            811
+          ],
+          "type": "truck"
+        }
+      },
+      {
+        "track_id": 49,
+        "confirmed": "0/6",
+        "median_area_frac": 0.309,
+        "frames": [
+          340,
+          374
+        ],
+        "sample": {
+          "frame": 358,
+          "box": [
+            92,
+            0,
+            679,
+            496
+          ],
+          "type": "bus"
+        }
+      }
+    ],
+    "vehicles_after_relink": 10,
     "plates_read": 4,
     "decisions": {
       "match": 2,
-      "no_confident_match": 10
+      "no_confident_match": 8
     }
   },
   "timing": {
-    "detect_track_s": 4.9,
-    "plates_s": 3.3,
-    "ocr_s": 1.0,
+    "detect_track_s": 4.5,
+    "plates_s": 2.4,
+    "ocr_s": 0.7,
     "assemble_s": 0.2,
-    "total_s": 9.4
+    "total_s": 8.2
   },
   "vehicles": [
     {
@@ -1859,149 +1903,178 @@
             "char": "D",
             "confidence": 1.0,
             "share": 1.0,
-            "support": 5,
+            "support": 8,
             "best_candidate": "D",
             "frames": [
               548,
               538,
               552,
               518,
-              522
+              522,
+              188,
+              192,
+              184
             ]
           },
           {
             "pos": 2,
             "char": "L",
-            "confidence": 0.9584,
-            "share": 0.9584,
-            "support": 5,
+            "confidence": 0.9711,
+            "share": 0.9711,
+            "support": 8,
             "best_candidate": "L",
             "frames": [
               548,
               538,
               552,
               518,
-              522
+              522,
+              188,
+              192,
+              184
             ]
           },
           {
             "pos": 3,
             "char": "3",
-            "confidence": 1.0,
-            "share": 1.0,
-            "support": 5,
+            "confidence": 0.9824,
+            "share": 0.9843,
+            "support": 8,
             "best_candidate": "3",
             "frames": [
               548,
               538,
               552,
               518,
-              522
+              522,
+              188,
+              192,
+              184
             ]
           },
           {
             "pos": 4,
             "char": "C",
-            "confidence": 1.0,
-            "share": 1.0,
-            "support": 5,
+            "confidence": 0.9998,
+            "share": 0.9999,
+            "support": 8,
             "best_candidate": "C",
             "frames": [
               548,
               538,
               552,
               518,
-              522
+              522,
+              188,
+              192,
+              184
             ]
           },
           {
             "pos": 5,
             "char": "C",
-            "confidence": 0.9978,
-            "share": 1.0,
-            "support": 5,
+            "confidence": 0.9976,
+            "share": 0.9997,
+            "support": 8,
             "best_candidate": "C",
             "frames": [
               548,
               538,
               552,
               518,
-              522
+              522,
+              188,
+              192,
+              184
             ]
           },
           {
             "pos": 6,
             "char": "Y",
-            "confidence": 0.9998,
-            "share": 0.9998,
-            "support": 5,
+            "confidence": 0.9539,
+            "share": 0.961,
+            "support": 8,
             "best_candidate": "Y",
             "frames": [
               548,
               538,
               552,
               518,
-              522
+              522,
+              188,
+              192,
+              184
             ]
           },
           {
             "pos": 7,
             "char": "1",
-            "confidence": 1.0,
-            "share": 1.0,
-            "support": 5,
+            "confidence": 0.9989,
+            "share": 0.9991,
+            "support": 8,
             "best_candidate": "1",
             "frames": [
               548,
               538,
               552,
               518,
-              522
+              522,
+              188,
+              192,
+              184
             ]
           },
           {
             "pos": 8,
             "char": "0",
-            "confidence": 0.9151,
-            "share": 1.0,
-            "support": 5,
+            "confidence": 0.9408,
+            "share": 0.9998,
+            "support": 8,
             "best_candidate": "0",
             "frames": [
               548,
               538,
               552,
               518,
-              522
+              522,
+              188,
+              192,
+              184
             ]
           },
           {
             "pos": 9,
             "char": "2",
-            "confidence": 1.0,
-            "share": 1.0,
-            "support": 5,
+            "confidence": 0.9097,
+            "share": 0.8396,
+            "support": 8,
             "best_candidate": "2",
             "frames": [
               548,
               538,
               552,
               518,
-              522
+              522,
+              188,
+              192
             ]
           },
           {
             "pos": 10,
             "char": "5",
-            "confidence": 1.0,
-            "share": 1.0,
-            "support": 5,
+            "confidence": 0.9763,
+            "share": 0.9775,
+            "support": 8,
             "best_candidate": "5",
             "frames": [
               548,
               538,
               552,
               518,
-              522
+              522,
+              188,
+              192,
+              184
             ]
           }
         ],
@@ -2095,6 +2168,60 @@
               1.0,
               1.0,
               1.0
+            ]
+          },
+          {
+            "frame": 188,
+            "text": "DL3CCY1025",
+            "height_px": 19,
+            "quality": 0.655,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9099,
+              0.9992,
+              0.9954,
+              0.8248,
+              1.0,
+              0.9984,
+              0.5409,
+              0.9946
+            ]
+          },
+          {
+            "frame": 192,
+            "text": "DL3CCY1025",
+            "height_px": 18,
+            "quality": 0.639,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.9361,
+              0.9997,
+              0.9965,
+              0.8056,
+              0.9999,
+              0.9999,
+              0.6718,
+              0.9187
+            ]
+          },
+          {
+            "frame": 184,
+            "text": "DL3CCY1075",
+            "height_px": 18,
+            "quality": 0.627,
+            "char_probs": [
+              1.0,
+              1.0,
+              0.983,
+              0.9988,
+              0.9998,
+              0.9205,
+              0.9895,
+              0.9993,
+              0.7911,
+              0.8508
             ]
           }
         ],
@@ -9312,362 +9439,6 @@
         "per_frame": [
           "white",
           "white",
-          "white"
-        ],
-        "note": ""
-      },
-      "plate": {
-        "status": "no plate detected",
-        "fused": null,
-        "unknown_positions": null,
-        "positions": [],
-        "warnings": [],
-        "per_frame_reads": [],
-        "plates_detected": 0
-      },
-      "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
-      "candidates": []
-    },
-    {
-      "track_id": 46,
-      "merged_track_ids": [
-        46
-      ],
-      "first_frame": 332,
-      "last_frame": 378,
-      "first_time_s": 11.07,
-      "n_detections": 21,
-      "first_box": [
-        82,
-        431,
-        694,
-        944
-      ],
-      "track": [
-        [
-          332,
-          82,
-          431,
-          694,
-          944
-        ],
-        [
-          334,
-          82,
-          431,
-          694,
-          944
-        ],
-        [
-          336,
-          82,
-          431,
-          694,
-          944
-        ],
-        [
-          338,
-          117,
-          383,
-          720,
-          896
-        ],
-        [
-          340,
-          95,
-          414,
-          706,
-          926
-        ],
-        [
-          342,
-          87,
-          425,
-          698,
-          938
-        ],
-        [
-          344,
-          84,
-          385,
-          695,
-          897
-        ],
-        [
-          346,
-          83,
-          370,
-          694,
-          883
-        ],
-        [
-          348,
-          114,
-          322,
-          720,
-          834
-        ],
-        [
-          350,
-          127,
-          305,
-          720,
-          817
-        ],
-        [
-          352,
-          132,
-          299,
-          720,
-          811
-        ],
-        [
-          354,
-          134,
-          297,
-          720,
-          810
-        ],
-        [
-          356,
-          136,
-          254,
-          720,
-          767
-        ],
-        [
-          358,
-          105,
-          239,
-          705,
-          751
-        ],
-        [
-          360,
-          125,
-          234,
-          720,
-          746
-        ],
-        [
-          362,
-          133,
-          232,
-          720,
-          745
-        ],
-        [
-          364,
-          136,
-          232,
-          720,
-          745
-        ],
-        [
-          368,
-          138,
-          183,
-          720,
-          695
-        ],
-        [
-          370,
-          139,
-          173,
-          720,
-          685
-        ],
-        [
-          372,
-          140,
-          127,
-          720,
-          640
-        ],
-        [
-          378,
-          141,
-          160,
-          720,
-          672
-        ]
-      ],
-      "type": {
-        "label": "bus",
-        "vote_share": 0.87,
-        "detector_conf_mean": 0.352
-      },
-      "colour": {
-        "label": "silver",
-        "confidence": 0.735,
-        "per_frame": [
-          "silver",
-          "silver",
-          "silver"
-        ],
-        "note": ""
-      },
-      "plate": {
-        "status": "no own plate: the plate seen in this box belongs to the overlapping vehicle (track 27)",
-        "fused": null,
-        "unknown_positions": null,
-        "positions": [],
-        "warnings": [],
-        "per_frame_reads": [],
-        "plates_detected": 3
-      },
-      "decision": "no_confident_match",
-      "decision_reason": "plate no own plate: the plate seen in this box belongs to the overlapping vehicle (track 27): cannot identify from the plate",
-      "candidates": []
-    },
-    {
-      "track_id": 49,
-      "merged_track_ids": [
-        49
-      ],
-      "first_frame": 340,
-      "last_frame": 374,
-      "first_time_s": 11.33,
-      "n_detections": 17,
-      "first_box": [
-        146,
-        0,
-        720,
-        496
-      ],
-      "track": [
-        [
-          340,
-          146,
-          0,
-          720,
-          496
-        ],
-        [
-          344,
-          146,
-          0,
-          720,
-          496
-        ],
-        [
-          346,
-          111,
-          0,
-          687,
-          496
-        ],
-        [
-          348,
-          100,
-          0,
-          677,
-          496
-        ],
-        [
-          350,
-          96,
-          0,
-          675,
-          496
-        ],
-        [
-          352,
-          94,
-          0,
-          675,
-          496
-        ],
-        [
-          354,
-          93,
-          0,
-          676,
-          496
-        ],
-        [
-          356,
-          93,
-          0,
-          678,
-          496
-        ],
-        [
-          358,
-          92,
-          0,
-          679,
-          496
-        ],
-        [
-          360,
-          92,
-          0,
-          680,
-          496
-        ],
-        [
-          362,
-          113,
-          0,
-          659,
-          453
-        ],
-        [
-          364,
-          120,
-          0,
-          654,
-          437
-        ],
-        [
-          366,
-          120,
-          0,
-          654,
-          431
-        ],
-        [
-          368,
-          118,
-          0,
-          656,
-          429
-        ],
-        [
-          370,
-          138,
-          0,
-          636,
-          386
-        ],
-        [
-          372,
-          142,
-          0,
-          632,
-          370
-        ],
-        [
-          374,
-          140,
-          0,
-          635,
-          365
-        ]
-      ],
-      "type": {
-        "label": "bus",
-        "vote_share": 1.0,
-        "detector_conf_mean": 0.433
-      },
-      "colour": {
-        "label": "blue",
-        "confidence": 0.356,
-        "per_frame": [
-          "blue",
-          "blue",
           "white"
         ],
         "note": ""
