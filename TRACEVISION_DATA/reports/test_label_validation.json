@@ -1,34 +1,67 @@
 {
   "labels": "TRACEVISION_DATA/evaluation/test_clip_labels.csv",
-  "vehicles": 51,
-  "clips": 11,
-  "errors": 1,
-  "warnings": 0,
-  "in_registry_no": 42,
-  "cross_camera_groups": [],
+  "vehicles": 67,
+  "clips": 19,
+  "errors": 0,
+  "warnings": 6,
+  "in_registry_no": 46,
+  "cross_camera_groups": [
+    "X1",
+    "X2",
+    "X3",
+    "X5",
+    "X4",
+    "X6",
+    "X7"
+  ],
   "readability": {
-    "full": 11,
-    "partial": 8,
-    "none": 32
+    "full": 17,
+    "partial": 12,
+    "none": 38
   },
   "vehicle_types": {
-    "SUV": 12,
+    "SUV": 16,
     "auto_rickshaw": 6,
-    "bicycle": 0,
+    "bicycle": 1,
     "bus": 0,
-    "car": 24,
-    "motorcycle": 5,
+    "car": 27,
+    "motorcycle": 9,
     "other": 0,
-    "scooter": 1,
+    "scooter": 5,
     "truck": 3,
     "unknown": 0,
     "van": 0
   },
   "issues": [
     {
-      "severity": "error",
-      "target_vehicle_id": "(coverage)",
-      "issue": "no cross-camera group spanning 2 clips; the spec requires >= 1"
+      "severity": "warning",
+      "target_vehicle_id": "clip14_v01",
+      "issue": "in_registry = yes but the full plate is unknown (has `?` / blank) and registry_plate_full is empty - it cannot be seeded into the registry"
+    },
+    {
+      "severity": "warning",
+      "target_vehicle_id": "clip15_v01",
+      "issue": "in_registry = yes but the full plate is unknown (has `?` / blank) and registry_plate_full is empty - it cannot be seeded into the registry"
+    },
+    {
+      "severity": "warning",
+      "target_vehicle_id": "clip16_v01",
+      "issue": "in_registry = yes but the full plate is unknown (has `?` / blank) and registry_plate_full is empty - it cannot be seeded into the registry"
+    },
+    {
+      "severity": "warning",
+      "target_vehicle_id": "clip17_v01",
+      "issue": "in_registry = yes but the full plate is unknown (has `?` / blank) and registry_plate_full is empty - it cannot be seeded into the registry"
+    },
+    {
+      "severity": "warning",
+      "target_vehicle_id": "clip18_v01",
+      "issue": "in_registry = yes but the full plate is unknown (has `?` / blank) and registry_plate_full is empty - it cannot be seeded into the registry"
+    },
+    {
+      "severity": "warning",
+      "target_vehicle_id": "clip19_v01",
+      "issue": "in_registry = yes but the full plate is unknown (has `?` / blank) and registry_plate_full is empty - it cannot be seeded into the registry"
     }
   ]
 }

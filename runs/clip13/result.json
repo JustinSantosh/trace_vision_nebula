@@ -7,7 +7,7 @@
     "height": 478,
     "frames": 289
   },
-  "processed_at": "2026-11-23T11:14:24",
+  "processed_at": "2026-11-23T11:33:23",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -62,15 +62,15 @@
     "vehicles_after_relink": 1,
     "plates_read": 1,
     "decisions": {
-      "no_confident_match": 1
+      "match": 1
     }
   },
   "timing": {
-    "detect_track_s": 2.5,
-    "plates_s": 0.5,
-    "ocr_s": 0.3,
-    "assemble_s": 0.3,
-    "total_s": 4.4
+    "detect_track_s": 2.4,
+    "plates_s": 0.4,
+    "ocr_s": 0.2,
+    "assemble_s": 0.1,
+    "total_s": 3.9
   },
   "vehicles": [
     {
@@ -1416,37 +1416,81 @@
         ],
         "plates_detected": 19
       },
-      "decision": "no_confident_match",
-      "decision_reason": "best match score 32.5 is below the threshold 67.5",
+      "decision": "match",
+      "decision_reason": "best match score 85.0, clear of the next candidate",
       "candidates": [
         {
           "rank": 1,
-          "synthetic_vehicle_id": "SV547749",
-          "registration_number": "CG03YB3225",
-          "match_score": 32.5,
-          "plate_score": 0.25,
+          "synthetic_vehicle_id": "SV793292",
+          "registration_number": "CG04NL3024",
+          "match_score": 85.0,
+          "plate_score": 1.0,
           "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
-            "plate: 5 of 10 readable characters match exactly",
-            "plate differs from CG03YB3225 (edit cost 5.0)",
+            "plate: 10 of 10 readable characters match exactly",
             "colour white matches",
             "type conflict: observed truck, registry car"
           ]
         },
         {
           "rank": 2,
-          "synthetic_vehicle_id": "SV796073",
-          "registration_number": "CG04UE0723",
-          "match_score": 25.0,
-          "plate_score": 0.25,
+          "synthetic_vehicle_id": "SV287071",
+          "registration_number": "CG04NL3022",
+          "match_score": 71.7,
+          "plate_score": 0.81,
+          "colour_score": 1.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from CG04NL3022 (edit cost 1.0)",
+            "colour white matches",
+            "type conflict: observed truck, registry bus"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SV814907",
+          "registration_number": "CG01NL3024",
+          "match_score": 71.7,
+          "plate_score": 0.81,
+          "colour_score": 1.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from CG01NL3024 (edit cost 1.0)",
+            "colour white matches",
+            "type conflict: observed truck, registry car"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SV862017",
+          "registration_number": "CG00NL3021",
+          "match_score": 59.8,
+          "plate_score": 0.64,
+          "colour_score": 1.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 8 of 10 readable characters match exactly",
+            "plate differs from CG00NL3021 (edit cost 2.0)",
+            "colour white matches",
+            "type conflict: observed truck, registry car"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SV182418",
+          "registration_number": "CG04NL4029",
+          "match_score": 52.3,
+          "plate_score": 0.64,
           "colour_score": 0.5,
           "type_score": 0.0,
           "reasons": [
-            "plate: 6 of 10 readable characters match exactly",
-            "plate differs from CG04UE0723 (edit cost 5.0)",
+            "plate: 8 of 10 readable characters match exactly",
+            "plate differs from CG04NL4029 (edit cost 2.0)",
             "colour close: observed white, registry silver",
-            "type conflict: observed truck, registry scooter"
+            "type conflict: observed truck, registry car"
           ]
         }
       ]

@@ -12,7 +12,7 @@
 
 | Priority | Action | Status / unblocks |
 |---|---|---|
-| ✅ | **Test clips:** 11 Indian clips (clip01–11). 2 fixed CCTV-style (clip02, 06), 9 moving, including a night clip (clip11) and trucks (clip10). No more raised clips by team decision (E10, risk E7). | Done |
+| ✅ | **Test clips:** 19 Indian clips (clip01–11, plus clip12–19: 4 cross-camera parking pairs). 2 fixed CCTV-style (clip02, 06), 9 moving, including a night clip (clip11) and trucks (clip10). No more raised clips by team decision (E10, risk E7). | Done |
 | ✅ | **Hand labels:** owner verified all 51 vehicles → `evaluation/test_clip_labels.csv`. 0 field errors (E11, A23). | Done |
 | 🟠 1 | **Cross-camera pair:** film one car (yours) from **2 different spots** as 2 clips (send the original files, not WhatsApp). Label it in both with the same `cross_camera_group_id`, `in_registry = yes` and the real plate in `registry_plate_full`. | Clears the last label error. Needed for the cross-camera bonus and the Phase 0 report (A6). |
 | 🟡 2 | **More `in_registry = yes` vehicles** with readable plates: only 9 of 51 are `yes`, so positive-match evaluation on real clips is thin. | Stronger P6 match metrics |

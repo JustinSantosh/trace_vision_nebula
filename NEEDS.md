@@ -4,7 +4,7 @@
 
 ## 🔴 Must do before submission
 
-### 0. Label the cross-camera clips clip12–19 (about 20 min)
+### 0. ✅ Done: cross-camera clips clip12–19 labelled (AI draft, owner-verified 2026-11-23)
 - Fill `TRACEVISION_DATA/evaluation/labels_clip12-19_TODO.csv` (one row per vehicle, identified by position; contact sheets in `processed/test_video_frames/clipNN/`). Same `cross_camera_group_id` for the same vehicle in both clips of a pair; `registry_plate_full` for your own vehicles whose plate is hidden or missing.
 - **Then Claude:** merges into `test_clip_labels.csv`, validates, re-seeds the registry, re-runs pipeline + reports + evaluation, and scores the cross-camera links formally.
 

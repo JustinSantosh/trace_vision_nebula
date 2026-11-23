@@ -13,20 +13,23 @@ Give it a traffic clip. For every vehicle it:
 
 ---
 
-## Results on our 11 Indian test clips (51 owner-verified vehicles)
-From `python -m tracevision.evaluate` → `TRACEVISION_DATA/reports/p6_evaluation.md`. Labels were written and verified by the team. Each labelled vehicle is linked to the system's vehicle **by box position only**, so the plate scores aren't circular.
+## Results on our 19 Indian test clips (67 owner-verified vehicles)
+From `python -m tracevision.evaluate` → `TRACEVISION_DATA/reports/p6_evaluation.md`. Labels were written and verified by the team (clip12–19: AI draft, owner-verified). Each labelled vehicle is linked to the system's vehicle **by box position only**, so the plate scores aren't circular.
 
-| | All | Ground-level / dashcam (9 clips) | CCTV-style, raised (2 clips) |
+| | All | Ground-level / handheld (17 clips) | CCTV-style, raised (2 clips) |
 |---|---|---|---|
-| Registered vehicles matched to the right record | **8/9** | 8/9 | — (none registered) |
-| Unregistered vehicles given a false confident match | **0/42** | 0/28 | 0/14 |
-| **Wrong plate characters output** | **0/132** | 0/132 | — (plates too small) |
-| Plate characters read correctly / left as `?` | 85% / 15% | 85% / 15% | — |
-| Exact plate (fully readable labels) | 7/10 | 7/10 | — |
-| Vehicles detected and tracked | 44/51 | 30/37 | 14/14 |
-| Type exact / compatible (car≈SUV) | 68% / 93% | 60% / 93% | 86% / 93% |
-| Colour exact / near (white≈silver≈grey) | 64% / 75% (CLIP zero-shot; was 27% / 57% with the hue rule) | | |
-| Processing time | **4–19 s per clip** on an RTX 3050 laptop GPU (clips are 4–30 s long) | | |
+| Registered vehicles matched to the right record | **11/15** | 11/15 | — (none registered) |
+| Unregistered vehicles given a false confident match | **0/46** | 0/32 | 0/14 |
+| Vehicles marked "in registry" but whose full plate nobody knows (so not in the registry): false matches | **0/6** | 0/6 | — |
+| **Wrong plate characters output** | **0/181** | 0/181 | — (plates too small) |
+| Plate characters read correctly / left as `?` | 83% / 17% | 83% / 17% | — |
+| Exact plate (fully readable labels) | 10/14 | 10/14 | — |
+| Vehicles detected and tracked (at the labelled frame) | 52/67 | 38/53 | 14/14 |
+| Type exact / compatible (car≈SUV) | 67% / 90% | 61% / 89% | 86% / 93% |
+| Colour exact / near (white≈silver≈grey), CLIP zero-shot | 60% / 69% | 61% / 68% | 57% / 71% |
+| Processing time | **4–19 s per clip** on an RTX 3050 laptop GPU (clips are 3–30 s long) | | |
+
+*On the first 11 clips (before clip12–19 were added): 8/9 matched, 0/42 false, 0/132 wrong characters, colour 64% / 75%. The 4 registered misses on 19 clips: clip07 (plate never above 13 px), clip15 white SUV (plate unreadable from that spot), clip17 motorcycle (plate only read as `???????`), clip16 motorcycle (not tracked at the labelled frame).*
 
 **Robustness** (same clips blurred, downscaled to 480p/360p, JPEG q10, night, noise; `python -m tracevision.robustness`):
 **0 false identifications under every degradation**, but identification drops to 1/8 registered vehicles under strong blur, downscaling, compression or night, and **some wrong plate characters appear (up to 17% at 360p)**. Details: `TRACEVISION_DATA/reports/p6_evaluation.md`.
@@ -105,7 +108,7 @@ Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.p
 ## Cross-camera re-identification (bonus)
 `python -m tracevision.crosscam clip12 clip13` (or `--pairs` for every camera pair in `clips.csv`) links each vehicle in one clip to the same vehicle in another, or says **no link**. Evidence: **plate** (symmetric wildcard / look-alike similarity on ≥ 5 characters both clips read; clearly different plates **veto** a link), **CLIP appearance** (calibrated on clips 01–11 only), type and colour. A link must be a **mutual best match** with a clear margin; plate-agreeing candidates rank above appearance-only ones; appearance-only links need a CLIP cosine above 99% of different-vehicle pairs. Output: `runs/crosscam/<a>__<b>.json` with a link score (not a probability) and reasons.
 
-On our 4 parking pairs (clip12–19, labels pending):
+On our 4 parking pairs (clip12–19), with the owner-verified groups X1–X7:
 
 | Pair (clips) | Vehicle | System result | Evidence |
 |---|---|---|---|
@@ -116,7 +119,7 @@ On our 4 parking pairs (clip12–19, labels pending):
 | 3 | scooter, plate hidden | no link: appearance only, not distinctive | — |
 | 4 (clip18 ↔ clip19) | scooter, no plate | no link: appearance only; detector typed it "truck" in clip19 | — |
 
-**3 plate-supported links, 0 wrong links (by the plates; formal scoring needs the labels). Hidden-plate and no-plate vehicles are not linked:** whole-vehicle CLIP similarity overlaps heavily between same and different vehicles (calibration: 10% of same-vehicle pairs score below 0.905, 10% of different-vehicle pairs above 0.939), so the system says "no link" instead of guessing. A dedicated vehicle re-ID model would be the next step.
+**Formal score** (`python -m tracevision.crosscam --evaluate`, labels tied to tracks by box position only): **X1 correct; X2, X3 missed; X4–X7 not checkable (the system only starts tracking these close-up parked two-wheelers mid-clip, after the labelled frame); 0 of the 3 system links joins two different labelled vehicles.** By eye the X2 and X4 links are also correct (X2's label box fits the SUV's duplicate inner box, C12). **3 plate-supported links, 0 wrong links. Hidden-plate and no-plate vehicles are not linked:** whole-vehicle CLIP similarity overlaps heavily between same and different vehicles (calibration: 10% of same-vehicle pairs score below 0.905, 10% of different-vehicle pairs above 0.939), so the system says "no link" instead of guessing. A dedicated vehicle re-ID model would be the next step.
 
 ## Data and models
 | What | Source | Licence |
@@ -131,6 +134,6 @@ On our 4 parking pairs (clip12–19, labels pending):
 - **Footage:** 9 of the 11 clips are ground-level or dashcam and only 2 are CCTV-style. The problem statement is CCTV, so results are always reported separately (DECISIONS E10, PROBLEMS E7). On real CCTV, plates are often too small to read. The system then says so, rather than guessing.
 - **Small test set:** 51 vehicles and 9 registered. Several pipeline rules were diagnosed on these clips, so the numbers may be optimistic.
 - **Colour** uses CLIP zero-shot (64% exact, 75% near). It answers `unknown` at night and still slips on dark or warm-lit vehicles. **Car versus SUV** is often confused (types are compatible 93% of the time).
-- **Cross-camera re-identification** (bonus, `python -m tracevision.crosscam --pairs`) links vehicles **by plate**; generic CLIP appearance across viewpoints is unreliable (the same parking lot's background dominates), so appearance-only links need a very high similarity and were never made on our pairs. Formal scoring waits for the labels of clip12–19.
+- **Cross-camera re-identification** (bonus, `python -m tracevision.crosscam --pairs`) links vehicles **by plate**; generic CLIP appearance across viewpoints is unreliable (the same parking lot's background dominates), so appearance-only links need a very high similarity and were never made on our pairs. Formally: 1 of 7 groups verified correct, 0 wrong links (see the cross-camera section).
 - Most clips are WhatsApp copies (about 1.5 Mbit/s), which costs plate detail.
 - On strongly degraded footage (360p, heavy blur, night) the OCR can be confidently wrong (up to 17% wrong characters at 360p). A stricter confidence bar for low-quality plates is the next fix.

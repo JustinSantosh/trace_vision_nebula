@@ -43,6 +43,18 @@ The hue/k-means colour rule was replaced by **CLIP ViT-B/32 zero-shot** (OpenAI 
 | Moving / fixed CCTV-style (exact) | 30% / 21% | 67% / 57% |
 Remaining 12 errors are scattered (black→white ×2, black→red, black→green, white→silver/green/yellow, silver→grey/white/yellow, yellow→brown, grey→white); no systematic haze failure any more. Detection, plate and matching metrics are unchanged (8/9 matched, 0/42 false matches, 0/132 wrong characters). Cost: ~15 ms per vehicle on the RTX 3050. The colour lines of the robustness table below are from the old rule.
 
+### Update 2026-11-23: 19 clips (clip12–19 added: cross-camera parking pairs)
+67 owner-verified vehicles (clip12–19 drafted by Claude from the frames, verified by the owner). Registry re-seeded (3 new seeds: `CG04NL3024`, `CG14MW3529`, `CG04DK1578`); matcher thresholds recalibrated to the same values (67.5 / 4.0, holdout 36/36).
+**Evaluation change (DECISIONS E13):** vehicles labelled `in_registry = yes` whose full plate nobody knows cannot be in the registry, so they are reported separately (6: dark SUV `CG04?S9584`, Activa behind a tag, plate-less scooter, each in 2 clips) and still checked for false matches; the registry lookup now runs for every labelled vehicle (a not-found registered vehicle counts as a miss).
+| | 11 clips | **19 clips** |
+|---|---|---|
+| Registered matched | 8/9 | **11/15** |
+| False confident matches (unregistered) | 0/42 | **0/46** (+ 0/6 on the plate-unknown ones) |
+| Wrong plate characters | 0/132 | **0/181** |
+| Detected and tracked at the labelled frame | 44/51 | 52/67 |
+| Type compatible / colour exact | 93% / 64% | 90% / 60% |
+New misses: clip15 white SUV (plate unreadable there), clip17 motorcycle (plate read as `???????`), clip16 motorcycle (tracked only from about frame 126; the label is at frame 0). Close-up parked two-wheelers (clip16–19) are tracked late or not at all at the labelled frame: 5 of 9 not found (C12).
+
 ## Error analysis
 - **Missed vehicles (7):** 4 have plates humans also marked `none`: far, tiny vehicles (about 30–60 px boxes, under the 0.4% minimum-area filter) or trucks cut off at the 4K frame edge. The other 3 are partly visible (an SUV behind others, a corner scooter, an edge truck).
 - **Type (14 wrong):** 9 are **car → SUV** and 3 are SUV → car. UVH-26 separates Hatchback / Sedan / SUV / MUV, and compact SUVs and MPVs seen from behind confuse it. Since car and SUV are *compatible* in matching, these cost half credit, not a match. 1 truck → auto, 1 car → truck, 1 SUV → truck (at night).

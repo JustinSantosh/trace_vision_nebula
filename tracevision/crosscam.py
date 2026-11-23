@@ -290,6 +290,62 @@ def calibrate(clips=None, n_crops=4, min_gap_s=1.0):
     return res
 
 
+def evaluate_links(pairs):
+    """Score runs/crosscam/<a>__<b>.json against evaluation/cross_camera_ground_truth.csv.
+    Each labelled vehicle is associated with a system track by BOX POSITION ONLY (tracevision.evaluate.associate,
+    as in P6), never by plate. Per ground-truth group: correct link / missed (no link) / wrong link / not tracked.
+    Every system link is also checked: wrong = it joins two tracks that belong to different labelled vehicles."""
+    from .evaluate import associate
+    labels = {r["target_vehicle_id"]: r for r in csv.DictReader(open(ROOT / "TRACEVISION_DATA/evaluation/test_clip_labels.csv", encoding="utf-8"))}
+    gt = list(csv.DictReader(open(ROOT / "TRACEVISION_DATA/evaluation/cross_camera_ground_truth.csv", encoding="utf-8")))
+    groups = {}
+    for g in gt:
+        groups.setdefault(g["group_id"], {})[g["clip_id"]] = g["target_vehicle_id"]
+    rows, wrong_links, total_links = [], 0, 0
+    for ca, cb in pairs:
+        res = json.loads((RUNS / "crosscam" / f"{ca}__{cb}.json").read_text(encoding="utf-8"))
+        va = json.loads((RUNS / ca / "result.json").read_text(encoding="utf-8"))["vehicles"]
+        vb = json.loads((RUNS / cb / "result.json").read_text(encoding="utf-8"))["vehicles"]
+        track_of = {}                                       # target_vehicle_id -> system track id
+        for tid, lab in labels.items():
+            if lab["clip_id"] in (ca, cb):
+                v, _ = associate(lab, va if lab["clip_id"] == ca else vb)
+                if v:
+                    track_of[tid] = v["track_id"]
+        label_of = {(labels[t]["clip_id"], k): t for t, k in track_of.items()}
+        group_of = {t: g for g, m in groups.items() for t in m.values()}
+        link_of = {l["track_id"]: (l["linked_to"]["track_id"] if l["linked_to"] else None) for l in res["links"]}
+        for l in res["links"]:
+            if l["linked_to"]:
+                total_links += 1
+                ta, tb = label_of.get((ca, l["track_id"])), label_of.get((cb, l["linked_to"]["track_id"]))
+                if ta and tb and group_of.get(ta) != group_of.get(tb):
+                    wrong_links += 1
+        for g, members in groups.items():
+            if ca not in members or cb not in members:
+                continue
+            a, b = members[ca], members[cb]
+            if a not in track_of or b not in track_of:
+                outcome = "not tracked at the labelled frame"
+            elif link_of.get(track_of[a]) == track_of[b]:
+                outcome = "correct link"
+            elif link_of.get(track_of[a]) is None:
+                outcome = "no link (missed)"
+            else:
+                outcome = "WRONG link"
+            rows.append({"group": g, "clip_a": ca, "clip_b": cb, "a": a, "b": b, "outcome": outcome,
+                         "plate_a": labels[a]["plate_text_truth"], "plate_b": labels[b]["plate_text_truth"]})
+    summary = {"groups": len(rows), "correct_links": sum(r["outcome"] == "correct link" for r in rows),
+               "missed": sum(r["outcome"].startswith("no link") for r in rows),
+               "wrong_links_on_groups": sum(r["outcome"] == "WRONG link" for r in rows),
+               "not_tracked": sum(r["outcome"].startswith("not tracked") for r in rows),
+               "system_links_total": total_links, "system_links_joining_different_labelled_vehicles": wrong_links}
+    out = {"summary": summary, "groups": rows,
+           "note": "Labels linked to tracks by box position only (never by plate)."}
+    (ROOT / "TRACEVISION_DATA/reports/crosscam_evaluation.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+    return out
+
+
 def _pairs_from_clips_csv():
     groups = {}
     for r in csv.DictReader(open(CLIPS_CSV, encoding="utf-8")):
@@ -304,9 +360,15 @@ def main():
     ap.add_argument("clips", nargs="*", help="two clip ids (runs/<clip>)")
     ap.add_argument("--pairs", action="store_true", help="link every camera pair listed in clips.csv")
     ap.add_argument("--calibrate", action="store_true")
+    ap.add_argument("--evaluate", action="store_true", help="score the --pairs links against cross_camera_ground_truth.csv")
     a = ap.parse_args()
     if a.calibrate:
         print(json.dumps(calibrate(), indent=2)); return
+    if a.evaluate:
+        ev = evaluate_links(_pairs_from_clips_csv())
+        for r in ev["groups"]:
+            print(f"  {r['group']} {r['a']} <-> {r['b']}: {r['outcome']}")
+        print(json.dumps(ev["summary"], indent=2)); return
     pairs = _pairs_from_clips_csv() if a.pairs else [tuple(a.clips)]
     out_dir = RUNS / "crosscam"; out_dir.mkdir(parents=True, exist_ok=True)
     for ca, cb in pairs:

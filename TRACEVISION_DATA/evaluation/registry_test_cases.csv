@@ -89,57 +89,104 @@ RC0087,synthetic_query,conflicting_colour,,,KA53MH3895,white,SUV,match:SV144143,
 RC0088,synthetic_query,similar_colour_different_type,,,KA53MH38??,red,SUV,ambiguous,SV144143;SV258008,"decoy shares colour and nearly the plate but is a different type [auto-check: 1 other registry vehicle(s) fit every readable character, colour and type equally -> ambiguous]"
 RC0089,synthetic_query,similar_looking_vehicles,,,KA????????,red,SUV,ambiguous,SV144143;SV047551;SV733987,only the state code is readable; several identical-looking vehicles -> no confident single match
 RC0090,synthetic_query,multiple_plausible,,,??????3895,unknown,unknown,ambiguous,SV144143,only the last 4 digits are known
-RC0091,synthetic_query,no_matching_entry,,,CG06FT6161,blue,truck,no_match,,plate is >= 3 edits from every registry plate
-RC0092,synthetic_query,no_matching_entry,,,GJ03D9662,green,auto_rickshaw,no_match,,plate is >= 3 edits from every registry plate
-RC0093,synthetic_query,no_matching_entry,,,AP34CT4859,blue,truck,no_match,,plate is >= 3 edits from every registry plate
-RC0094,clip,clip,clip01,clip01_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV656881,SV656881,ground truth plate DL3CCK2475
-RC0095,clip,clip,clip01,clip01_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate HR87T?1284
-RC0096,clip,clip,clip01,clip01_v03,<from pipeline>,<from pipeline>,<from pipeline>,match:SV037967,SV037967,ground truth plate UP37AA8404
-RC0097,clip,clip,clip02,clip02_v01,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0098,clip,clip,clip02,clip02_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0099,clip,clip,clip02,clip02_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0100,clip,clip,clip02,clip02_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0101,clip,clip,clip03,clip03_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV843240,SV843240,ground truth plate DL9CAZ8556
-RC0102,clip,clip,clip03,clip03_v02,<from pipeline>,<from pipeline>,<from pipeline>,match:SV457965,SV457965,ground truth plate DL3CCY1025
-RC0103,clip,clip,clip03,clip03_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate DL5CX2452
-RC0104,clip,clip,clip03,clip03_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate UP14?T3?6?
-RC0105,clip,clip,clip04,clip04_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV237860,SV237860,ground truth plate UP16FT9444
-RC0106,clip,clip,clip04,clip04_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate HR55A?1605
-RC0107,clip,clip,clip04,clip04_v03,<from pipeline>,<from pipeline>,<from pipeline>,match:SV417920,SV417920,ground truth plate UK05D5883
-RC0108,clip,clip,clip05,clip05_v01,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate UK08TA9?97
-RC0109,clip,clip,clip05,clip05_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0110,clip,clip,clip05,clip05_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0111,clip,clip,clip06,clip06_v01,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0112,clip,clip,clip06,clip06_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0113,clip,clip,clip06,clip06_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0114,clip,clip,clip06,clip06_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0115,clip,clip,clip07,clip07_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV986046,SV986046,ground truth plate DL8CAH1004
-RC0116,clip,clip,clip07,clip07_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0117,clip,clip,clip07,clip07_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0118,clip,clip,clip08,clip08_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV950896,SV950896,ground truth plate UP14GP5085
-RC0119,clip,clip,clip08,clip08_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0120,clip,clip,clip08,clip08_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0121,clip,clip,clip08,clip08_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0122,clip,clip,clip09,clip09_v01,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate MH04JK19?5
-RC0123,clip,clip,clip09,clip09_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0124,clip,clip,clip09,clip09_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0125,clip,clip,clip10,clip10_v01,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate MH43BL0234
-RC0126,clip,clip,clip10,clip10_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate MH43?K0516
-RC0127,clip,clip,clip10,clip10_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0128,clip,clip,clip11,clip11_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV144143,SV144143,ground truth plate KA53MH3895
-RC0129,clip,clip,clip11,clip11_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate KA1?U7544
-RC0130,clip,clip,clip01,clip01_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0131,clip,clip,clip02,clip02_v05,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0132,clip,clip,clip02,clip02_v06,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0133,clip,clip,clip02,clip02_v07,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0134,clip,clip,clip03,clip03_v05,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0135,clip,clip,clip03,clip03_v06,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0136,clip,clip,clip03,clip03_v07,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate UP14?R5195
-RC0137,clip,clip,clip04,clip04_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0138,clip,clip,clip05,clip05_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0139,clip,clip,clip05,clip05_v05,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0140,clip,clip,clip05,clip05_v06,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0141,clip,clip,clip06,clip06_v05,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0142,clip,clip,clip06,clip06_v06,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0143,clip,clip,clip06,clip06_v07,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
-RC0144,clip,clip,clip07,clip07_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0091,synthetic_query,exact_match,,,CG04NL3024,white,car,match:SV793292,SV793292,
+RC0092,synthetic_query,partial_plate_match,,,CG04NL3???,white,car,match:SV793292,SV793292;SV862017,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high"
+RC0093,synthetic_query,unknown_characters,,,CG04NL?02?,white,car,match:SV793292,SV793292;SV182418,decoy fits every known character; only colour separates them
+RC0094,synthetic_query,unknown_characters_no_colour,,,CG04NL?02?,unknown,car,ambiguous,SV793292;SV182418,plate alone cannot separate anchor and decoy -> should not claim a confident single match
+RC0095,synthetic_query,cross_class_ocr_confusion,,,CG04NL30Z4,white,car,match:SV793292,SV793292;SV814907,query has 2->Z at position 9; look-alike credit should recover the anchor
+RC0096,synthetic_query,confusable_candidates,,,CG04NL3024,white,car,match:SV793292,SV793292;SV814907,exact plate must beat its confusable twin
+RC0097,synthetic_query,conflicting_colour,,,CG04NL3024,silver,car,match:SV793292,SV793292,"plate is exact, colour disagrees -> still the anchor, with a colour-conflict reason and a lower match score"
+RC0098,synthetic_query,similar_colour_different_type,,,CG04NL30??,white,car,match:SV793292,SV793292;SV287071,decoy shares colour and nearly the plate but is a different type
+RC0099,synthetic_query,similar_looking_vehicles,,,CG????????,white,car,ambiguous,SV793292;SV572767;SV928469,only the state code is readable; several identical-looking vehicles -> no confident single match
+RC0100,synthetic_query,multiple_plausible,,,??????3024,unknown,unknown,ambiguous,SV793292;SV814907,only the last 4 digits are known
+RC0101,synthetic_query,exact_match,,,CG14MW3529,white,SUV,match:SV984666,SV984666,
+RC0102,synthetic_query,partial_plate_match,,,CG14MW3???,white,SUV,match:SV984666,SV984666;SV632373,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high"
+RC0103,synthetic_query,unknown_characters,,,CG14MW?52?,white,SUV,match:SV984666,SV984666;SV148711,decoy fits every known character; only colour separates them
+RC0104,synthetic_query,unknown_characters_no_colour,,,CG14MW?52?,unknown,SUV,ambiguous,SV984666;SV148711,plate alone cannot separate anchor and decoy -> should not claim a confident single match
+RC0105,synthetic_query,cross_class_ocr_confusion,,,CG14MW3S29,white,SUV,match:SV984666,SV984666;SV044242,query has 5->S at position 8; look-alike credit should recover the anchor
+RC0106,synthetic_query,confusable_candidates,,,CG14MW3529,white,SUV,match:SV984666,SV984666;SV044242,exact plate must beat its confusable twin
+RC0107,synthetic_query,conflicting_colour,,,CG14MW3529,red,SUV,match:SV984666,SV984666,"plate is exact, colour disagrees -> still the anchor, with a colour-conflict reason and a lower match score"
+RC0108,synthetic_query,similar_colour_different_type,,,CG14MW35??,white,SUV,match:SV984666,SV984666;SV574834,decoy shares colour and nearly the plate but is a different type
+RC0109,synthetic_query,similar_looking_vehicles,,,CG????????,white,SUV,ambiguous,SV984666;SV093856;SV373913,only the state code is readable; several identical-looking vehicles -> no confident single match
+RC0110,synthetic_query,multiple_plausible,,,??????3529,unknown,unknown,ambiguous,SV984666;SV044242,only the last 4 digits are known
+RC0111,synthetic_query,exact_match,,,CG04DK1578,blue,motorcycle,match:SV725737,SV725737,
+RC0112,synthetic_query,partial_plate_match,,,CG04DK1???,blue,motorcycle,match:SV725737,SV725737;SV132475,"last 3 unknown; type+colour should rank the anchor first, the partial decoy may rank high"
+RC0113,synthetic_query,unknown_characters,,,CG04DK1??8,blue,motorcycle,match:SV725737,SV725737;SV297227,decoy fits every known character; only colour separates them
+RC0114,synthetic_query,unknown_characters_no_colour,,,CG04DK1??8,unknown,motorcycle,ambiguous,SV725737;SV297227,plate alone cannot separate anchor and decoy -> should not claim a confident single match
+RC0115,synthetic_query,cross_class_ocr_confusion,,,CG04DKI578,blue,motorcycle,match:SV725737,SV725737;SV873861,query has 1->I at position 7; look-alike credit should recover the anchor
+RC0116,synthetic_query,confusable_candidates,,,CG04DK1578,blue,motorcycle,match:SV725737,SV725737;SV873861,exact plate must beat its confusable twin
+RC0117,synthetic_query,conflicting_colour,,,CG04DK1578,yellow,motorcycle,match:SV725737,SV725737,"plate is exact, colour disagrees -> still the anchor, with a colour-conflict reason and a lower match score"
+RC0118,synthetic_query,similar_colour_different_type,,,CG04DK15??,blue,motorcycle,match:SV725737,SV725737;SV207526,decoy shares colour and nearly the plate but is a different type
+RC0119,synthetic_query,similar_looking_vehicles,,,CG????????,blue,motorcycle,ambiguous,SV725737;SV349583;SV045759,only the state code is readable; several identical-looking vehicles -> no confident single match
+RC0120,synthetic_query,multiple_plausible,,,??????1578,unknown,unknown,ambiguous,SV725737;SV873861,only the last 4 digits are known
+RC0121,synthetic_query,no_matching_entry,,,TG05ME8054,white,SUV,no_match,,plate is >= 3 edits from every registry plate
+RC0122,synthetic_query,no_matching_entry,,,JH27Z9862,blue,motorcycle,no_match,,plate is >= 3 edits from every registry plate
+RC0123,synthetic_query,no_matching_entry,,,TG21ET3063,red,motorcycle,no_match,,plate is >= 3 edits from every registry plate
+RC0124,synthetic_query,no_matching_entry,,,CG01GL5395,white,SUV,no_match,,plate is >= 3 edits from every registry plate
+RC0125,clip,clip,clip01,clip01_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV656881,SV656881,ground truth plate DL3CCK2475
+RC0126,clip,clip,clip01,clip01_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate HR87T?1284
+RC0127,clip,clip,clip01,clip01_v03,<from pipeline>,<from pipeline>,<from pipeline>,match:SV037967,SV037967,ground truth plate UP37AA8404
+RC0128,clip,clip,clip02,clip02_v01,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0129,clip,clip,clip02,clip02_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0130,clip,clip,clip02,clip02_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0131,clip,clip,clip02,clip02_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0132,clip,clip,clip03,clip03_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV843240,SV843240,ground truth plate DL9CAZ8556
+RC0133,clip,clip,clip03,clip03_v02,<from pipeline>,<from pipeline>,<from pipeline>,match:SV457965,SV457965,ground truth plate DL3CCY1025
+RC0134,clip,clip,clip03,clip03_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate DL5CX2452
+RC0135,clip,clip,clip03,clip03_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate UP14?T3?6?
+RC0136,clip,clip,clip04,clip04_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV237860,SV237860,ground truth plate UP16FT9444
+RC0137,clip,clip,clip04,clip04_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate HR55A?1605
+RC0138,clip,clip,clip04,clip04_v03,<from pipeline>,<from pipeline>,<from pipeline>,match:SV417920,SV417920,ground truth plate UK05D5883
+RC0139,clip,clip,clip05,clip05_v01,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate UK08TA9?97
+RC0140,clip,clip,clip05,clip05_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0141,clip,clip,clip05,clip05_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0142,clip,clip,clip06,clip06_v01,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0143,clip,clip,clip06,clip06_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0144,clip,clip,clip06,clip06_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0145,clip,clip,clip06,clip06_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0146,clip,clip,clip07,clip07_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV986046,SV986046,ground truth plate DL8CAH1004
+RC0147,clip,clip,clip07,clip07_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0148,clip,clip,clip07,clip07_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0149,clip,clip,clip08,clip08_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV950896,SV950896,ground truth plate UP14GP5085
+RC0150,clip,clip,clip08,clip08_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0151,clip,clip,clip08,clip08_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0152,clip,clip,clip08,clip08_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0153,clip,clip,clip09,clip09_v01,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate MH04JK19?5
+RC0154,clip,clip,clip09,clip09_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0155,clip,clip,clip09,clip09_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0156,clip,clip,clip10,clip10_v01,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate MH43BL0234
+RC0157,clip,clip,clip10,clip10_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate MH43?K0516
+RC0158,clip,clip,clip10,clip10_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0159,clip,clip,clip11,clip11_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV144143,SV144143,ground truth plate KA53MH3895
+RC0160,clip,clip,clip11,clip11_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate KA1?U7544
+RC0161,clip,clip,clip01,clip01_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0162,clip,clip,clip02,clip02_v05,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0163,clip,clip,clip02,clip02_v06,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0164,clip,clip,clip02,clip02_v07,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0165,clip,clip,clip03,clip03_v05,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0166,clip,clip,clip03,clip03_v06,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0167,clip,clip,clip03,clip03_v07,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate UP14?R5195
+RC0168,clip,clip,clip04,clip04_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0169,clip,clip,clip05,clip05_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0170,clip,clip,clip05,clip05_v05,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0171,clip,clip,clip05,clip05_v06,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0172,clip,clip,clip06,clip06_v05,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0173,clip,clip,clip06,clip06_v06,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0174,clip,clip,clip06,clip06_v07,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0175,clip,clip,clip07,clip07_v04,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0176,clip,clip,clip12,clip12_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV793292,SV793292,ground truth plate CG04NL3024
+RC0177,clip,clip,clip13,clip13_v01,<from pipeline>,<from pipeline>,<from pipeline>,match:SV793292,SV793292,ground truth plate CG04NL3024
+RC0178,clip,clip,clip13,clip13_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0179,clip,clip,clip14,clip14_v01,<from pipeline>,<from pipeline>,<from pipeline>,unseedable_full_plate_unknown,,ground truth plate CG04?S9584
+RC0180,clip,clip,clip14,clip14_v02,<from pipeline>,<from pipeline>,<from pipeline>,match:SV984666,SV984666,ground truth plate CG14MW3529
+RC0181,clip,clip,clip15,clip15_v01,<from pipeline>,<from pipeline>,<from pipeline>,unseedable_full_plate_unknown,,ground truth plate CG04?S9584
+RC0182,clip,clip,clip15,clip15_v02,<from pipeline>,<from pipeline>,<from pipeline>,match:SV984666,SV984666,ground truth plate (none)
+RC0183,clip,clip,clip16,clip16_v01,<from pipeline>,<from pipeline>,<from pipeline>,unseedable_full_plate_unknown,,ground truth plate ????????14
+RC0184,clip,clip,clip16,clip16_v02,<from pipeline>,<from pipeline>,<from pipeline>,match:SV725737,SV725737,ground truth plate CG04DK1578
+RC0185,clip,clip,clip16,clip16_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate CG04PB6426
+RC0186,clip,clip,clip17,clip17_v01,<from pipeline>,<from pipeline>,<from pipeline>,unseedable_full_plate_unknown,,ground truth plate CG0???????
+RC0187,clip,clip,clip17,clip17_v02,<from pipeline>,<from pipeline>,<from pipeline>,match:SV725737,SV725737,ground truth plate CG04DK1578
+RC0188,clip,clip,clip17,clip17_v03,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0189,clip,clip,clip18,clip18_v01,<from pipeline>,<from pipeline>,<from pipeline>,unseedable_full_plate_unknown,,ground truth plate (none)
+RC0190,clip,clip,clip18,clip18_v02,<from pipeline>,<from pipeline>,<from pipeline>,no_match,,ground truth plate (none)
+RC0191,clip,clip,clip19,clip19_v01,<from pipeline>,<from pipeline>,<from pipeline>,unseedable_full_plate_unknown,,ground truth plate (none)

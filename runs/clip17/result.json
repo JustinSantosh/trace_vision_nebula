@@ -7,7 +7,7 @@
     "height": 478,
     "frames": 253
   },
-  "processed_at": "2026-11-23T11:14:43",
+  "processed_at": "2026-11-23T11:33:36",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -66,11 +66,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 2.4,
-    "plates_s": 0.7,
-    "ocr_s": 0.3,
-    "assemble_s": 0.2,
-    "total_s": 4.3
+    "detect_track_s": 1.7,
+    "plates_s": 0.5,
+    "ocr_s": 0.2,
+    "assemble_s": 0.1,
+    "total_s": 3.0
   },
   "vehicles": [
     {
@@ -722,10 +722,55 @@
         "plates_detected": 4
       },
       "decision": "no_confident_match",
-      "decision_reason": "best match score 32.8 is below the threshold 67.5",
+      "decision_reason": "best match score 46.7 is below the threshold 67.5",
       "candidates": [
         {
           "rank": 1,
+          "synthetic_vehicle_id": "SV725737",
+          "registration_number": "CG04DK1578",
+          "match_score": 46.7,
+          "plate_score": 0.453,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 5 of 5 readable characters match exactly; 6 unreadable",
+            "plate differs from CG04DK1578 (edit cost 1.0)",
+            "colour conflict: observed green, registry blue",
+            "type motorcycle matches"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SV873861",
+          "registration_number": "CG04DH1578",
+          "match_score": 46.7,
+          "plate_score": 0.453,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 4 of 5 readable characters match exactly; 6 unreadable",
+            "plate differs from CG04DH1578 (edit cost 1.0)",
+            "colour conflict: observed green, registry blue",
+            "type motorcycle matches"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SV207526",
+          "registration_number": "CG04DK1278",
+          "match_score": 32.8,
+          "plate_score": 0.255,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 4 of 5 readable characters match exactly; 6 unreadable",
+            "plate differs from CG04DK1278 (edit cost 2.0)",
+            "colour conflict: observed green, registry blue",
+            "type scooter matches"
+          ]
+        },
+        {
+          "rank": 4,
           "synthetic_vehicle_id": "SV658848",
           "registration_number": "MP10ME1576",
           "match_score": 32.8,
@@ -740,18 +785,18 @@
           ]
         },
         {
-          "rank": 2,
-          "synthetic_vehicle_id": "SV944909",
-          "registration_number": "UP15FS1538",
+          "rank": 5,
+          "synthetic_vehicle_id": "SV255991",
+          "registration_number": "DL06WP1573",
           "match_score": 17.8,
           "plate_score": 0.255,
           "colour_score": 0.0,
           "type_score": 0.0,
           "reasons": [
             "plate: 3 of 5 readable characters match exactly; 6 unreadable",
-            "plate differs from UP15FS1538 (edit cost 2.0)",
-            "colour conflict: observed green, registry white",
-            "type conflict: observed motorcycle/scooter, registry car"
+            "plate differs from DL06WP1573 (edit cost 2.0)",
+            "colour conflict: observed green, registry brown",
+            "type conflict: observed motorcycle/scooter, registry SUV"
           ]
         }
       ]
@@ -1198,6 +1243,48 @@
       "candidates": [
         {
           "rank": 1,
+          "synthetic_vehicle_id": "SV207526",
+          "registration_number": "CG04DK1278",
+          "match_score": 62.8,
+          "plate_score": 0.548,
+          "colour_score": null,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 3 of 3 readable characters match exactly; 7 unreadable",
+            "colour not compared (unknown)",
+            "type scooter matches"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SV725737",
+          "registration_number": "CG04DK1578",
+          "match_score": 62.8,
+          "plate_score": 0.548,
+          "colour_score": null,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 3 of 3 readable characters match exactly; 7 unreadable",
+            "colour not compared (unknown)",
+            "type motorcycle matches"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SV873861",
+          "registration_number": "CG04DH1578",
+          "match_score": 62.8,
+          "plate_score": 0.548,
+          "colour_score": null,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 3 of 3 readable characters match exactly; 7 unreadable",
+            "colour not compared (unknown)",
+            "type motorcycle matches"
+          ]
+        },
+        {
+          "rank": 4,
           "synthetic_vehicle_id": "SV085495",
           "registration_number": "MH26DR1775",
           "match_score": 45.1,
@@ -1211,63 +1298,18 @@
           ]
         },
         {
-          "rank": 2,
-          "synthetic_vehicle_id": "SV302777",
-          "registration_number": "CG11DM6570",
-          "match_score": 37.7,
-          "plate_score": 0.243,
-          "colour_score": null,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 2 of 3 readable characters match exactly; 7 unreadable",
-            "plate differs from CG11DM6570 (edit cost 1.0)",
-            "colour not compared (unknown)",
-            "type scooter matches"
-          ]
-        },
-        {
-          "rank": 3,
-          "synthetic_vehicle_id": "SV658848",
-          "registration_number": "MP10ME1576",
-          "match_score": 37.7,
-          "plate_score": 0.243,
-          "colour_score": null,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 2 of 3 readable characters match exactly; 7 unreadable",
-            "plate differs from MP10ME1576 (edit cost 1.0)",
-            "colour not compared (unknown)",
-            "type motorcycle matches"
-          ]
-        },
-        {
-          "rank": 4,
-          "synthetic_vehicle_id": "SV107783",
-          "registration_number": "TG11B6137",
-          "match_score": 22.9,
-          "plate_score": 0.064,
-          "colour_score": null,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 2 of 3 readable characters match exactly; 7 unreadable",
-            "plate differs from TG11B6137 (edit cost 2.0)",
-            "colour not compared (unknown)",
-            "type motorcycle matches"
-          ]
-        },
-        {
           "rank": 5,
-          "synthetic_vehicle_id": "SV354082",
-          "registration_number": "PB01F1439",
-          "match_score": 22.9,
-          "plate_score": 0.064,
+          "synthetic_vehicle_id": "SV132475",
+          "registration_number": "CG04DK7570",
+          "match_score": 37.7,
+          "plate_score": 0.243,
           "colour_score": null,
           "type_score": 1.0,
           "reasons": [
-            "plate: 1 of 3 readable characters match exactly; 7 unreadable",
-            "plate differs from PB01F1439 (edit cost 2.0)",
+            "plate: 2 of 3 readable characters match exactly; 7 unreadable",
+            "plate differs from CG04DK7570 (edit cost 1.0)",
             "colour not compared (unknown)",
-            "type scooter matches"
+            "type motorcycle matches"
           ]
         }
       ]

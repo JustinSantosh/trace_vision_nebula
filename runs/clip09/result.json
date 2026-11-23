@@ -7,7 +7,7 @@
     "height": 1280,
     "frames": 909
   },
-  "processed_at": "2026-11-23T09:44:46",
+  "processed_at": "2026-11-23T11:32:12",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -181,11 +181,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 7.0,
-    "plates_s": 1.9,
+    "detect_track_s": 7.8,
+    "plates_s": 2.4,
     "ocr_s": 0.1,
     "assemble_s": 0.2,
-    "total_s": 10.5
+    "total_s": 11.8
   },
   "vehicles": [
     {
@@ -2183,8 +2183,24 @@
         "plates_detected": 8
       },
       "decision": "no_confident_match",
-      "decision_reason": "no registry vehicle is close to the observed plate",
-      "candidates": []
+      "decision_reason": "best match score 34.1 is below the threshold 67.5",
+      "candidates": [
+        {
+          "rank": 1,
+          "synthetic_vehicle_id": "SV297227",
+          "registration_number": "CG04DK1928",
+          "match_score": 34.1,
+          "plate_score": 0.273,
+          "colour_score": 1.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 4 of 7 readable characters match exactly; 3 unreadable",
+            "plate differs from CG04DK1928 (edit cost 3.0)",
+            "colour yellow matches",
+            "type conflict: observed SUV, registry motorcycle"
+          ]
+        }
+      ]
     },
     {
       "track_id": 166,

@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 385
   },
-  "processed_at": "2026-11-23T09:44:08",
+  "processed_at": "2026-11-23T11:31:29",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -67,11 +67,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 2.9,
-    "plates_s": 0.9,
+    "detect_track_s": 3.4,
+    "plates_s": 1.1,
     "ocr_s": 0.2,
-    "assemble_s": 0.3,
-    "total_s": 4.3
+    "assemble_s": 0.4,
+    "total_s": 5.0
   },
   "vehicles": [
     {

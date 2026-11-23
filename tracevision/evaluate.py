@@ -85,6 +85,10 @@ def evaluate(runs: Path, labels_path=LABELS, clip_filter=None, scale_of=None):
         row = {"clip_id": cid, "target": lab["target_vehicle_id"], "camera": res["camera_type"], "found": v is not None, "iou": ov,
                "label_type": lab["vehicle_type"], "label_colour": lab["colour"], "readability": lab["plate_readability"],
                "truth_plate": truth, "in_registry": lab["in_registry"]}
+        if lab["in_registry"] == "yes":   # look the registry up for EVERY labelled vehicle (found or not)
+            row["registry_id"] = reg_by_plate.get(truth) or reg_by_plate.get(normalise(lab.get("registry_plate_full", "")))
+            row["match_correct"] = False
+            row["top5_hit"] = False
         if v:
             pred = v["plate"]["fused"] or ""
             row.update(pred_type=v["type"]["label"], pred_colour=v["colour"]["label"], pred_plate=pred, decision=v["decision"],
@@ -125,7 +129,10 @@ def summarise(rows):
         c = [r for r in F if r.get("colour_exact") is not None]
         p = [r for r in F if r.get("chars_truth_known")]
         known = sum(r["chars_truth_known"] for r in p)
-        yes = [r for r in R if r["in_registry"] == "yes"]
+        # in_registry = yes but nobody knows the full plate -> the registry can't contain them (generator skips them).
+        # They are reported separately and still checked for false confident matches; they are not "should match".
+        yes = [r for r in R if r["in_registry"] == "yes" and r.get("registry_id")]
+        unseedable = [r for r in R if r["in_registry"] == "yes" and not r.get("registry_id")]
         no = [r for r in R if r["in_registry"] == "no"]
         none_plates = [r for r in F if r["readability"] == "none"]
         out[cam] = {
@@ -144,6 +151,8 @@ def summarise(rows):
             "registered_vehicles_matched_correctly": frac(sum(1 for r in yes if r.get("match_correct")), len(yes)),
             "registered_top5_hit": frac(sum(1 for r in yes if r.get("top5_hit")), len(yes)),
             "unregistered_with_false_confident_match": frac(sum(1 for r in no if r.get("false_confident_match")), len(no)),
+            "registered_but_full_plate_unknown_(not_in_registry)": len(unseedable),
+            "false_confident_match_on_those": frac(sum(1 for r in unseedable if r.get("false_confident_match")), len(unseedable)),
             "no_match_correct_on_unregistered": frac(sum(1 for r in no if r["found"] and r.get("decision") != "match"), sum(1 for r in no if r["found"])),
         }
     return out

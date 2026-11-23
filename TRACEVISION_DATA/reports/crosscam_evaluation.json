@@ -1,0 +1,84 @@
+{
+  "summary": {
+    "groups": 7,
+    "correct_links": 1,
+    "missed": 2,
+    "wrong_links_on_groups": 0,
+    "not_tracked": 4,
+    "system_links_total": 3,
+    "system_links_joining_different_labelled_vehicles": 0
+  },
+  "groups": [
+    {
+      "group": "X1",
+      "clip_a": "clip12",
+      "clip_b": "clip13",
+      "a": "clip12_v01",
+      "b": "clip13_v01",
+      "outcome": "correct link",
+      "plate_a": "CG04NL3024",
+      "plate_b": "CG04NL3024"
+    },
+    {
+      "group": "X2",
+      "clip_a": "clip14",
+      "clip_b": "clip15",
+      "a": "clip14_v01",
+      "b": "clip15_v01",
+      "outcome": "no link (missed)",
+      "plate_a": "CG04?S9584",
+      "plate_b": "CG04?S9584"
+    },
+    {
+      "group": "X3",
+      "clip_a": "clip14",
+      "clip_b": "clip15",
+      "a": "clip14_v02",
+      "b": "clip15_v02",
+      "outcome": "no link (missed)",
+      "plate_a": "CG14MW3529",
+      "plate_b": ""
+    },
+    {
+      "group": "X5",
+      "clip_a": "clip16",
+      "clip_b": "clip17",
+      "a": "clip16_v01",
+      "b": "clip17_v01",
+      "outcome": "not tracked at the labelled frame",
+      "plate_a": "????????14",
+      "plate_b": "CG0???????"
+    },
+    {
+      "group": "X4",
+      "clip_a": "clip16",
+      "clip_b": "clip17",
+      "a": "clip16_v02",
+      "b": "clip17_v02",
+      "outcome": "not tracked at the labelled frame",
+      "plate_a": "CG04DK1578",
+      "plate_b": "CG04DK1578"
+    },
+    {
+      "group": "X6",
+      "clip_a": "clip16",
+      "clip_b": "clip17",
+      "a": "clip16_v03",
+      "b": "clip17_v03",
+      "outcome": "not tracked at the labelled frame",
+      "plate_a": "CG04PB6426",
+      "plate_b": ""
+    },
+    {
+      "group": "X7",
+      "clip_a": "clip18",
+      "clip_b": "clip19",
+      "a": "clip18_v01",
+      "b": "clip19_v01",
+      "outcome": "not tracked at the labelled frame",
+      "plate_a": "",
+      "plate_b": ""
+    }
+  ],
+  "note": "Labels linked to tracks by box position only (never by plate)."
+}

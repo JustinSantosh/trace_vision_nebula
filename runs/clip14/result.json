@@ -7,7 +7,7 @@
     "height": 478,
     "frames": 228
   },
-  "processed_at": "2026-11-23T11:14:29",
+  "processed_at": "2026-11-23T11:33:27",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -62,15 +62,16 @@
     "vehicles_after_relink": 3,
     "plates_read": 2,
     "decisions": {
-      "no_confident_match": 3
+      "match": 1,
+      "no_confident_match": 2
     }
   },
   "timing": {
-    "detect_track_s": 2.6,
-    "plates_s": 0.7,
-    "ocr_s": 0.5,
-    "assemble_s": 0.3,
-    "total_s": 5.4
+    "detect_track_s": 1.9,
+    "plates_s": 0.6,
+    "ocr_s": 0.3,
+    "assemble_s": 0.1,
+    "total_s": 4.0
   },
   "vehicles": [
     {
@@ -1487,22 +1488,81 @@
         ],
         "plates_detected": 18
       },
-      "decision": "no_confident_match",
-      "decision_reason": "best match score 32.5 is below the threshold 67.5",
+      "decision": "match",
+      "decision_reason": "best match score 85.0, clear of the next candidate",
       "candidates": [
         {
           "rank": 1,
-          "synthetic_vehicle_id": "SV835033",
-          "registration_number": "CG24W2555",
-          "match_score": 32.5,
-          "plate_score": 0.25,
+          "synthetic_vehicle_id": "SV984666",
+          "registration_number": "CG14MW3529",
+          "match_score": 85.0,
+          "plate_score": 1.0,
           "colour_score": 0.0,
           "type_score": 1.0,
           "reasons": [
-            "plate: 5 of 10 readable characters match exactly",
-            "plate differs from CG24W2555 (edit cost 5.0)",
-            "colour conflict: observed green, registry grey",
+            "plate: 10 of 10 readable characters match exactly",
+            "colour conflict: observed green, registry white",
             "type SUV matches"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SV044242",
+          "registration_number": "CG74MW3529",
+          "match_score": 71.7,
+          "plate_score": 0.81,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from CG74MW3529 (edit cost 1.0)",
+            "colour conflict: observed green, registry white",
+            "type SUV matches"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SV148711",
+          "registration_number": "CG14MW7524",
+          "match_score": 59.8,
+          "plate_score": 0.64,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 8 of 10 readable characters match exactly",
+            "plate differs from CG14MW7524 (edit cost 2.0)",
+            "colour conflict: observed green, registry red",
+            "type SUV matches"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SV632373",
+          "registration_number": "CG14MU2529",
+          "match_score": 59.8,
+          "plate_score": 0.64,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 8 of 10 readable characters match exactly",
+            "plate differs from CG14MU2529 (edit cost 2.0)",
+            "colour conflict: observed green, registry white",
+            "type SUV matches"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SV574834",
+          "registration_number": "CG14MW3519",
+          "match_score": 56.7,
+          "plate_score": 0.81,
+          "colour_score": 0.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from CG14MW3519 (edit cost 1.0)",
+            "colour conflict: observed green, registry white",
+            "type conflict: observed SUV, registry scooter"
           ]
         }
       ]

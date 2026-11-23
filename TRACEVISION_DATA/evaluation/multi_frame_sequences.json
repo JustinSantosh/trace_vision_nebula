@@ -6916,6 +6916,1496 @@
         "method": null,
         "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
       }
+    },
+    {
+      "sequence_id": "seq_clip12_v01",
+      "clip_id": "clip12",
+      "target_vehicle_id": "clip12_v01",
+      "first_frame": 0,
+      "last_frame": 491,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip12/fps2/clip12_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 30,
+          "timestamp_s": 0.504,
+          "frame_path": "clip12/fps2/clip12_f000030.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 60,
+          "timestamp_s": 1.006,
+          "frame_path": "clip12/fps2/clip12_f000060.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 90,
+          "timestamp_s": 1.508,
+          "frame_path": "clip12/fps2/clip12_f000090.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 120,
+          "timestamp_s": 2.01,
+          "frame_path": "clip12/fps2/clip12_f000120.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 150,
+          "timestamp_s": 2.512,
+          "frame_path": "clip12/fps2/clip12_f000150.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 180,
+          "timestamp_s": 3.012,
+          "frame_path": "clip12/fps2/clip12_f000180.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 210,
+          "timestamp_s": 3.513,
+          "frame_path": "clip12/fps2/clip12_f000210.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 270,
+          "timestamp_s": 4.516,
+          "frame_path": "clip12/fps2/clip12_f000270.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 299,
+          "timestamp_s": 5.003,
+          "frame_path": "clip12/fps2/clip12_f000299.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 329,
+          "timestamp_s": 5.505,
+          "frame_path": "clip12/fps2/clip12_f000329.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 359,
+          "timestamp_s": 6.007,
+          "frame_path": "clip12/fps2/clip12_f000359.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 389,
+          "timestamp_s": 6.508,
+          "frame_path": "clip12/fps2/clip12_f000389.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 419,
+          "timestamp_s": 7.01,
+          "frame_path": "clip12/fps2/clip12_f000419.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 449,
+          "timestamp_s": 7.512,
+          "frame_path": "clip12/fps2/clip12_f000449.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 478,
+          "timestamp_s": 8.013,
+          "frame_path": "clip12/fps2/clip12_f000478.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": "CG04NL3024",
+        "visible_characters": {
+          "1": "C",
+          "2": "G",
+          "3": "0",
+          "4": "4",
+          "5": "N",
+          "6": "L",
+          "7": "3",
+          "8": "0",
+          "9": "2",
+          "10": "4"
+        },
+        "unknown_positions": [],
+        "plate_readability": "full",
+        "colour": "white",
+        "vehicle_type": "car",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip13_v01",
+      "clip_id": "clip13",
+      "target_vehicle_id": "clip13_v01",
+      "first_frame": 0,
+      "last_frame": 288,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip13/fps2/clip13_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 30,
+          "timestamp_s": 0.502,
+          "frame_path": "clip13/fps2/clip13_f000030.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 60,
+          "timestamp_s": 1.003,
+          "frame_path": "clip13/fps2/clip13_f000060.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 90,
+          "timestamp_s": 1.505,
+          "frame_path": "clip13/fps2/clip13_f000090.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 120,
+          "timestamp_s": 2.006,
+          "frame_path": "clip13/fps2/clip13_f000120.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 150,
+          "timestamp_s": 2.508,
+          "frame_path": "clip13/fps2/clip13_f000150.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 180,
+          "timestamp_s": 3.01,
+          "frame_path": "clip13/fps2/clip13_f000180.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 240,
+          "timestamp_s": 4.013,
+          "frame_path": "clip13/fps2/clip13_f000240.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": "CG04NL3024",
+        "visible_characters": {
+          "1": "C",
+          "2": "G",
+          "3": "0",
+          "4": "4",
+          "5": "N",
+          "6": "L",
+          "7": "3",
+          "8": "0",
+          "9": "2",
+          "10": "4"
+        },
+        "unknown_positions": [],
+        "plate_readability": "full",
+        "colour": "white",
+        "vehicle_type": "car",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip13_v02",
+      "clip_id": "clip13",
+      "target_vehicle_id": "clip13_v02",
+      "first_frame": 0,
+      "last_frame": 288,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip13/fps2/clip13_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 30,
+          "timestamp_s": 0.502,
+          "frame_path": "clip13/fps2/clip13_f000030.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 60,
+          "timestamp_s": 1.003,
+          "frame_path": "clip13/fps2/clip13_f000060.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 90,
+          "timestamp_s": 1.505,
+          "frame_path": "clip13/fps2/clip13_f000090.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 120,
+          "timestamp_s": 2.006,
+          "frame_path": "clip13/fps2/clip13_f000120.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 150,
+          "timestamp_s": 2.508,
+          "frame_path": "clip13/fps2/clip13_f000150.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 180,
+          "timestamp_s": 3.01,
+          "frame_path": "clip13/fps2/clip13_f000180.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 240,
+          "timestamp_s": 4.013,
+          "frame_path": "clip13/fps2/clip13_f000240.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": null,
+        "visible_characters": {},
+        "unknown_positions": [],
+        "plate_readability": "none",
+        "colour": "white",
+        "vehicle_type": "car",
+        "in_registry": "no"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip14_v01",
+      "clip_id": "clip14",
+      "target_vehicle_id": "clip14_v01",
+      "first_frame": 0,
+      "last_frame": 227,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip14/fps2/clip14_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 25,
+          "timestamp_s": 0.5,
+          "frame_path": "clip14/fps2/clip14_f000025.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 50,
+          "timestamp_s": 1.0,
+          "frame_path": "clip14/fps2/clip14_f000050.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 76,
+          "timestamp_s": 1.52,
+          "frame_path": "clip14/fps2/clip14_f000076.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 101,
+          "timestamp_s": 2.02,
+          "frame_path": "clip14/fps2/clip14_f000101.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 151,
+          "timestamp_s": 3.02,
+          "frame_path": "clip14/fps2/clip14_f000151.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 176,
+          "timestamp_s": 3.52,
+          "frame_path": "clip14/fps2/clip14_f000176.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 201,
+          "timestamp_s": 4.02,
+          "frame_path": "clip14/fps2/clip14_f000201.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": "CG04?S9584",
+        "visible_characters": {
+          "1": "C",
+          "2": "G",
+          "3": "0",
+          "4": "4",
+          "6": "S",
+          "7": "9",
+          "8": "5",
+          "9": "8",
+          "10": "4"
+        },
+        "unknown_positions": [
+          5
+        ],
+        "plate_readability": "partial",
+        "colour": "black",
+        "vehicle_type": "SUV",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip14_v02",
+      "clip_id": "clip14",
+      "target_vehicle_id": "clip14_v02",
+      "first_frame": 0,
+      "last_frame": 227,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip14/fps2/clip14_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 25,
+          "timestamp_s": 0.5,
+          "frame_path": "clip14/fps2/clip14_f000025.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 50,
+          "timestamp_s": 1.0,
+          "frame_path": "clip14/fps2/clip14_f000050.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 76,
+          "timestamp_s": 1.52,
+          "frame_path": "clip14/fps2/clip14_f000076.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 101,
+          "timestamp_s": 2.02,
+          "frame_path": "clip14/fps2/clip14_f000101.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 151,
+          "timestamp_s": 3.02,
+          "frame_path": "clip14/fps2/clip14_f000151.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 176,
+          "timestamp_s": 3.52,
+          "frame_path": "clip14/fps2/clip14_f000176.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 201,
+          "timestamp_s": 4.02,
+          "frame_path": "clip14/fps2/clip14_f000201.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": "CG14MW3529",
+        "visible_characters": {
+          "1": "C",
+          "2": "G",
+          "3": "1",
+          "4": "4",
+          "5": "M",
+          "6": "W",
+          "7": "3",
+          "8": "5",
+          "9": "2",
+          "10": "9"
+        },
+        "unknown_positions": [],
+        "plate_readability": "full",
+        "colour": "white",
+        "vehicle_type": "SUV",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip15_v01",
+      "clip_id": "clip15",
+      "target_vehicle_id": "clip15_v01",
+      "first_frame": 0,
+      "last_frame": 244,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip15/fps2/clip15_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 25,
+          "timestamp_s": 0.5,
+          "frame_path": "clip15/fps2/clip15_f000025.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 50,
+          "timestamp_s": 1.0,
+          "frame_path": "clip15/fps2/clip15_f000050.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 75,
+          "timestamp_s": 1.5,
+          "frame_path": "clip15/fps2/clip15_f000075.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 100,
+          "timestamp_s": 2.0,
+          "frame_path": "clip15/fps2/clip15_f000100.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 150,
+          "timestamp_s": 3.0,
+          "frame_path": "clip15/fps2/clip15_f000150.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 175,
+          "timestamp_s": 3.5,
+          "frame_path": "clip15/fps2/clip15_f000175.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 200,
+          "timestamp_s": 4.0,
+          "frame_path": "clip15/fps2/clip15_f000200.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 225,
+          "timestamp_s": 4.5,
+          "frame_path": "clip15/fps2/clip15_f000225.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": "CG04?S9584",
+        "visible_characters": {
+          "1": "C",
+          "2": "G",
+          "3": "0",
+          "4": "4",
+          "6": "S",
+          "7": "9",
+          "8": "5",
+          "9": "8",
+          "10": "4"
+        },
+        "unknown_positions": [
+          5
+        ],
+        "plate_readability": "partial",
+        "colour": "black",
+        "vehicle_type": "SUV",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip15_v02",
+      "clip_id": "clip15",
+      "target_vehicle_id": "clip15_v02",
+      "first_frame": 0,
+      "last_frame": 244,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip15/fps2/clip15_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 25,
+          "timestamp_s": 0.5,
+          "frame_path": "clip15/fps2/clip15_f000025.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 50,
+          "timestamp_s": 1.0,
+          "frame_path": "clip15/fps2/clip15_f000050.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 75,
+          "timestamp_s": 1.5,
+          "frame_path": "clip15/fps2/clip15_f000075.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 100,
+          "timestamp_s": 2.0,
+          "frame_path": "clip15/fps2/clip15_f000100.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 150,
+          "timestamp_s": 3.0,
+          "frame_path": "clip15/fps2/clip15_f000150.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 175,
+          "timestamp_s": 3.5,
+          "frame_path": "clip15/fps2/clip15_f000175.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 200,
+          "timestamp_s": 4.0,
+          "frame_path": "clip15/fps2/clip15_f000200.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 225,
+          "timestamp_s": 4.5,
+          "frame_path": "clip15/fps2/clip15_f000225.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": null,
+        "visible_characters": {},
+        "unknown_positions": [],
+        "plate_readability": "none",
+        "colour": "white",
+        "vehicle_type": "SUV",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip16_v01",
+      "clip_id": "clip16",
+      "target_vehicle_id": "clip16_v01",
+      "first_frame": 0,
+      "last_frame": 162,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip16/fps2/clip16_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 26,
+          "timestamp_s": 0.52,
+          "frame_path": "clip16/fps2/clip16_f000026.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 51,
+          "timestamp_s": 1.019,
+          "frame_path": "clip16/fps2/clip16_f000051.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 101,
+          "timestamp_s": 2.019,
+          "frame_path": "clip16/fps2/clip16_f000101.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 126,
+          "timestamp_s": 2.52,
+          "frame_path": "clip16/fps2/clip16_f000126.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": "????????14",
+        "visible_characters": {
+          "9": "1",
+          "10": "4"
+        },
+        "unknown_positions": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "plate_readability": "partial",
+        "colour": "black",
+        "vehicle_type": "scooter",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip16_v02",
+      "clip_id": "clip16",
+      "target_vehicle_id": "clip16_v02",
+      "first_frame": 0,
+      "last_frame": 162,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip16/fps2/clip16_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 26,
+          "timestamp_s": 0.52,
+          "frame_path": "clip16/fps2/clip16_f000026.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 51,
+          "timestamp_s": 1.019,
+          "frame_path": "clip16/fps2/clip16_f000051.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 101,
+          "timestamp_s": 2.019,
+          "frame_path": "clip16/fps2/clip16_f000101.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 126,
+          "timestamp_s": 2.52,
+          "frame_path": "clip16/fps2/clip16_f000126.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": "CG04DK1578",
+        "visible_characters": {
+          "1": "C",
+          "2": "G",
+          "3": "0",
+          "4": "4",
+          "5": "D",
+          "6": "K",
+          "7": "1",
+          "8": "5",
+          "9": "7",
+          "10": "8"
+        },
+        "unknown_positions": [],
+        "plate_readability": "full",
+        "colour": "blue",
+        "vehicle_type": "motorcycle",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip16_v03",
+      "clip_id": "clip16",
+      "target_vehicle_id": "clip16_v03",
+      "first_frame": 0,
+      "last_frame": 162,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip16/fps2/clip16_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 26,
+          "timestamp_s": 0.52,
+          "frame_path": "clip16/fps2/clip16_f000026.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 51,
+          "timestamp_s": 1.019,
+          "frame_path": "clip16/fps2/clip16_f000051.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 101,
+          "timestamp_s": 2.019,
+          "frame_path": "clip16/fps2/clip16_f000101.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 126,
+          "timestamp_s": 2.52,
+          "frame_path": "clip16/fps2/clip16_f000126.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": "CG04PB6426",
+        "visible_characters": {
+          "1": "C",
+          "2": "G",
+          "3": "0",
+          "4": "4",
+          "5": "P",
+          "6": "B",
+          "7": "6",
+          "8": "4",
+          "9": "2",
+          "10": "6"
+        },
+        "unknown_positions": [],
+        "plate_readability": "full",
+        "colour": "black",
+        "vehicle_type": "motorcycle",
+        "in_registry": "no"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip17_v01",
+      "clip_id": "clip17",
+      "target_vehicle_id": "clip17_v01",
+      "first_frame": 0,
+      "last_frame": 252,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip17/fps2/clip17_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 30,
+          "timestamp_s": 0.501,
+          "frame_path": "clip17/fps2/clip17_f000030.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 60,
+          "timestamp_s": 1.003,
+          "frame_path": "clip17/fps2/clip17_f000060.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 90,
+          "timestamp_s": 1.502,
+          "frame_path": "clip17/fps2/clip17_f000090.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 121,
+          "timestamp_s": 2.016,
+          "frame_path": "clip17/fps2/clip17_f000121.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 151,
+          "timestamp_s": 2.517,
+          "frame_path": "clip17/fps2/clip17_f000151.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 180,
+          "timestamp_s": 3.008,
+          "frame_path": "clip17/fps2/clip17_f000180.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 210,
+          "timestamp_s": 3.512,
+          "frame_path": "clip17/fps2/clip17_f000210.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": "CG0???????",
+        "visible_characters": {
+          "1": "C",
+          "2": "G",
+          "3": "0"
+        },
+        "unknown_positions": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "plate_readability": "partial",
+        "colour": "black",
+        "vehicle_type": "scooter",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip17_v02",
+      "clip_id": "clip17",
+      "target_vehicle_id": "clip17_v02",
+      "first_frame": 0,
+      "last_frame": 252,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip17/fps2/clip17_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 30,
+          "timestamp_s": 0.501,
+          "frame_path": "clip17/fps2/clip17_f000030.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 60,
+          "timestamp_s": 1.003,
+          "frame_path": "clip17/fps2/clip17_f000060.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 90,
+          "timestamp_s": 1.502,
+          "frame_path": "clip17/fps2/clip17_f000090.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 121,
+          "timestamp_s": 2.016,
+          "frame_path": "clip17/fps2/clip17_f000121.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 151,
+          "timestamp_s": 2.517,
+          "frame_path": "clip17/fps2/clip17_f000151.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 180,
+          "timestamp_s": 3.008,
+          "frame_path": "clip17/fps2/clip17_f000180.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 210,
+          "timestamp_s": 3.512,
+          "frame_path": "clip17/fps2/clip17_f000210.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": "CG04DK1578",
+        "visible_characters": {
+          "1": "C",
+          "2": "G",
+          "3": "0",
+          "4": "4",
+          "5": "D",
+          "6": "K",
+          "7": "1",
+          "8": "5",
+          "9": "7",
+          "10": "8"
+        },
+        "unknown_positions": [],
+        "plate_readability": "full",
+        "colour": "blue",
+        "vehicle_type": "motorcycle",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip17_v03",
+      "clip_id": "clip17",
+      "target_vehicle_id": "clip17_v03",
+      "first_frame": 0,
+      "last_frame": 252,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip17/fps2/clip17_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 30,
+          "timestamp_s": 0.501,
+          "frame_path": "clip17/fps2/clip17_f000030.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 60,
+          "timestamp_s": 1.003,
+          "frame_path": "clip17/fps2/clip17_f000060.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 90,
+          "timestamp_s": 1.502,
+          "frame_path": "clip17/fps2/clip17_f000090.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 121,
+          "timestamp_s": 2.016,
+          "frame_path": "clip17/fps2/clip17_f000121.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 151,
+          "timestamp_s": 2.517,
+          "frame_path": "clip17/fps2/clip17_f000151.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 180,
+          "timestamp_s": 3.008,
+          "frame_path": "clip17/fps2/clip17_f000180.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 210,
+          "timestamp_s": 3.512,
+          "frame_path": "clip17/fps2/clip17_f000210.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": null,
+        "visible_characters": {},
+        "unknown_positions": [],
+        "plate_readability": "none",
+        "colour": "black",
+        "vehicle_type": "motorcycle",
+        "in_registry": "no"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip18_v01",
+      "clip_id": "clip18",
+      "target_vehicle_id": "clip18_v01",
+      "first_frame": 0,
+      "last_frame": 128,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip18/fps2/clip18_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 25,
+          "timestamp_s": 0.512,
+          "frame_path": "clip18/fps2/clip18_f000025.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 50,
+          "timestamp_s": 1.01,
+          "frame_path": "clip18/fps2/clip18_f000050.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 75,
+          "timestamp_s": 1.511,
+          "frame_path": "clip18/fps2/clip18_f000075.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 100,
+          "timestamp_s": 2.012,
+          "frame_path": "clip18/fps2/clip18_f000100.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": null,
+        "visible_characters": {},
+        "unknown_positions": [],
+        "plate_readability": "none",
+        "colour": "black",
+        "vehicle_type": "scooter",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip18_v02",
+      "clip_id": "clip18",
+      "target_vehicle_id": "clip18_v02",
+      "first_frame": 0,
+      "last_frame": 128,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip18/fps2/clip18_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 25,
+          "timestamp_s": 0.512,
+          "frame_path": "clip18/fps2/clip18_f000025.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 50,
+          "timestamp_s": 1.01,
+          "frame_path": "clip18/fps2/clip18_f000050.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 75,
+          "timestamp_s": 1.511,
+          "frame_path": "clip18/fps2/clip18_f000075.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 100,
+          "timestamp_s": 2.012,
+          "frame_path": "clip18/fps2/clip18_f000100.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": null,
+        "visible_characters": {},
+        "unknown_positions": [],
+        "plate_readability": "none",
+        "colour": "green",
+        "vehicle_type": "bicycle",
+        "in_registry": "no"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
+    },
+    {
+      "sequence_id": "seq_clip19_v01",
+      "clip_id": "clip19",
+      "target_vehicle_id": "clip19_v01",
+      "first_frame": 0,
+      "last_frame": 158,
+      "timestamp_first": "0.0",
+      "fps_setting": 2.0,
+      "frames": [
+        {
+          "frame_index": 0,
+          "timestamp_s": 0.0,
+          "frame_path": "clip19/fps2/clip19_f000000.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 25,
+          "timestamp_s": 0.505,
+          "frame_path": "clip19/fps2/clip19_f000025.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 50,
+          "timestamp_s": 1.004,
+          "frame_path": "clip19/fps2/clip19_f000050.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 100,
+          "timestamp_s": 2.005,
+          "frame_path": "clip19/fps2/clip19_f000100.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        },
+        {
+          "frame_index": 125,
+          "timestamp_s": 2.506,
+          "frame_path": "clip19/fps2/clip19_f000125.jpg",
+          "plate_crop_path": null,
+          "ocr_text": null,
+          "ocr_char_probs": null
+        }
+      ],
+      "ground_truth": {
+        "plate_text": null,
+        "visible_characters": {},
+        "unknown_positions": [],
+        "plate_readability": "none",
+        "colour": "black",
+        "vehicle_type": "scooter",
+        "in_registry": "yes"
+      },
+      "aggregated_result": {
+        "plate_text": null,
+        "per_position": null,
+        "method": null,
+        "note": "filled by the multi-frame fusion in Phase 2; unreadable positions stay '?'"
+      }
     }
   ]
 }

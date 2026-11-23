@@ -43,7 +43,7 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
   - P2: plate detector, **leakage-free mAP50 0.995**
   - P3: **multi-frame fusion + registry matching** in `tracevision/`, 26 tests (`python -m pytest tests`)
 - **Awiros OCR:** 81.5% exact / 4.4% CER on 965 plates. **Run it on the GPU** (15 ms per crop). It must run in a **separate process** from torch/YOLO on Windows (C5).
-- **11 test clips and 51 owner-verified labelled vehicles** are in. Most plates in the WhatsApp-quality and CCTV-style clips are under 16 px, so they're reported unreadable (C7).
+- **19 test clips and 67 owner-verified labelled vehicles** are in (clip12–19: cross-camera parking pairs). Most plates in the WhatsApp-quality and CCTV-style clips are under 16 px, so they're reported unreadable (C7).
 - **Windows:** anything that trains or validates with ultralytics must run from a `.py` file, not from stdin (it hangs otherwise).
 - **All phases P1–P6 done (2026-11-23):** pipeline, app (`python -m tracevision.api`), reports for all clips, evaluation. **What's left: [NEEDS.md](NEEDS.md).**
 - **Since then:** video viewer with live playback (`/viewer/runs/clipNN`), phantom-box fix (C11), CLIP colour **64% exact** (C8). Install `open_clip_torch` too (README install line); the CLIP weights (~580 MB) download on first run.
@@ -85,7 +85,7 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 - [x] **Multi-frame fusion** `tracevision/fuse.py`: aligned, confidence-weighted vote per position, `?` instead of guesses
 - [x] **Matcher** `tracevision/match.py`: wildcard and look-alike aware **match score** (not a probability) + reasons + match / ambiguous / no-match
 - [x] 26 unit tests; thresholds calibrated with a split by anchor (`python -m tracevision.calibrate`, held-out 62/62). See `reports/p3_fusion_and_matching.md`.
-- [x] Checked on real clips (P6): 8/9 registered matched, 0/42 false matches
+- [x] Checked on real clips (P6, 19 clips): 11/15 registered matched, 0/46 false matches
 
 **Done.**
 

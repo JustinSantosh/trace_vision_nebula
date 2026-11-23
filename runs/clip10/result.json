@@ -7,7 +7,7 @@
     "height": 2160,
     "frames": 564
   },
-  "processed_at": "2026-11-23T09:45:21",
+  "processed_at": "2026-11-23T11:32:53",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -86,11 +86,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 12.5,
-    "plates_s": 6.7,
-    "ocr_s": 0.4,
-    "assemble_s": 0.8,
-    "total_s": 34.4
+    "detect_track_s": 14.8,
+    "plates_s": 7.0,
+    "ocr_s": 0.5,
+    "assemble_s": 1.3,
+    "total_s": 39.9
   },
   "vehicles": [
     {
@@ -528,6 +528,21 @@
       "candidates": [
         {
           "rank": 1,
+          "synthetic_vehicle_id": "SV676854",
+          "registration_number": "MP29VL7347",
+          "match_score": 32.8,
+          "plate_score": 0.04,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 2 of 4 readable characters match exactly; 5 unreadable",
+            "plate differs from MP29VL7347 (edit cost 3.0)",
+            "colour blue matches",
+            "type SUV matches"
+          ]
+        },
+        {
+          "rank": 2,
           "synthetic_vehicle_id": "SV294156",
           "registration_number": "GJ07X8456",
           "match_score": 30.0,
@@ -542,7 +557,22 @@
           ]
         },
         {
-          "rank": 2,
+          "rank": 3,
+          "synthetic_vehicle_id": "SV726648",
+          "registration_number": "UK14G2826",
+          "match_score": 30.0,
+          "plate_score": 0.0,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 1 of 4 readable characters match exactly; 5 unreadable",
+            "plate differs from UK14G2826 (edit cost 4.0)",
+            "colour blue matches",
+            "type SUV matches"
+          ]
+        },
+        {
+          "rank": 4,
           "synthetic_vehicle_id": "SV877009",
           "registration_number": "BR35DW8196",
           "match_score": 30.0,
@@ -557,7 +587,7 @@
           ]
         },
         {
-          "rank": 3,
+          "rank": 5,
           "synthetic_vehicle_id": "SV021938",
           "registration_number": "MP25M0924",
           "match_score": 26.2,
@@ -569,36 +599,6 @@
             "plate differs from MP25M0924 (edit cost 1.0)",
             "colour conflict: observed blue, registry black",
             "type conflict: observed SUV, registry scooter"
-          ]
-        },
-        {
-          "rank": 4,
-          "synthetic_vehicle_id": "SV506149",
-          "registration_number": "PB13SJ7127",
-          "match_score": 22.5,
-          "plate_score": 0.0,
-          "colour_score": 1.0,
-          "type_score": 0.5,
-          "reasons": [
-            "plate: 1 of 4 readable characters match exactly; 5 unreadable",
-            "plate differs from PB13SJ7127 (edit cost 5.0)",
-            "colour blue matches",
-            "type compatible: observed SUV, registry car"
-          ]
-        },
-        {
-          "rank": 5,
-          "synthetic_vehicle_id": "SV608543",
-          "registration_number": "CG16YJ3063",
-          "match_score": 22.5,
-          "plate_score": 0.0,
-          "colour_score": 1.0,
-          "type_score": 0.5,
-          "reasons": [
-            "plate: 1 of 4 readable characters match exactly; 5 unreadable",
-            "plate differs from CG16YJ3063 (edit cost 5.0)",
-            "colour blue matches",
-            "type compatible: observed SUV, registry car"
           ]
         }
       ]
@@ -1030,6 +1030,36 @@
         },
         {
           "rank": 2,
+          "synthetic_vehicle_id": "SV676854",
+          "registration_number": "MP29VL7347",
+          "match_score": 30.0,
+          "plate_score": 0.0,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 1 of 2 readable characters match exactly; 7 unreadable",
+            "plate differs from MP29VL7347 (edit cost 2.0)",
+            "colour blue matches",
+            "type SUV matches"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SV726648",
+          "registration_number": "UK14G2826",
+          "match_score": 30.0,
+          "plate_score": 0.0,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 1 of 2 readable characters match exactly; 7 unreadable",
+            "plate differs from UK14G2826 (edit cost 2.0)",
+            "colour blue matches",
+            "type SUV matches"
+          ]
+        },
+        {
+          "rank": 4,
           "synthetic_vehicle_id": "SV877009",
           "registration_number": "BR35DW8196",
           "match_score": 30.0,
@@ -1044,7 +1074,7 @@
           ]
         },
         {
-          "rank": 3,
+          "rank": 5,
           "synthetic_vehicle_id": "SV123967",
           "registration_number": "MH14R8912",
           "match_score": 23.2,
@@ -1056,36 +1086,6 @@
             "plate differs from MH14R8912 (edit cost 1.0)",
             "colour conflict: observed blue, registry white",
             "type SUV matches"
-          ]
-        },
-        {
-          "rank": 4,
-          "synthetic_vehicle_id": "SV542884",
-          "registration_number": "MP23B6657",
-          "match_score": 23.2,
-          "plate_score": 0.118,
-          "colour_score": 0.0,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 1 of 2 readable characters match exactly; 7 unreadable",
-            "plate differs from MP23B6657 (edit cost 1.0)",
-            "colour conflict: observed blue, registry white",
-            "type SUV matches"
-          ]
-        },
-        {
-          "rank": 5,
-          "synthetic_vehicle_id": "SV506149",
-          "registration_number": "PB13SJ7127",
-          "match_score": 22.5,
-          "plate_score": 0.0,
-          "colour_score": 1.0,
-          "type_score": 0.5,
-          "reasons": [
-            "plate: 0 of 2 readable characters match exactly; 7 unreadable",
-            "plate differs from PB13SJ7127 (edit cost 3.0)",
-            "colour blue matches",
-            "type compatible: observed SUV, registry car"
           ]
         }
       ]
@@ -2531,17 +2531,17 @@
         },
         {
           "rank": 4,
-          "synthetic_vehicle_id": "SV848669",
-          "registration_number": "JH11B6475",
-          "match_score": 33.0,
-          "plate_score": 0.257,
-          "colour_score": 0.0,
-          "type_score": 1.0,
+          "synthetic_vehicle_id": "SV106821",
+          "registration_number": "JH14NU0475",
+          "match_score": 32.0,
+          "plate_score": 0.243,
+          "colour_score": 1.0,
+          "type_score": 0.0,
           "reasons": [
             "plate: 2 of 3 readable characters match exactly; 7 unreadable",
-            "plate differs from JH11B6475 (edit cost 1.0)",
-            "colour conflict: observed white, registry yellow",
-            "type truck matches"
+            "plate differs from JH14NU0475 (edit cost 1.0)",
+            "colour white matches",
+            "type conflict: observed truck, registry car"
           ]
         },
         {

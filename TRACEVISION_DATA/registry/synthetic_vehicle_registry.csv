@@ -1,314 +1,335 @@
 synthetic_vehicle_id,registration_number,state_code,vehicle_type,vehicle_colour,manufacturer,model,model_year,source,synthetic
-SV098781,HR21B0182,HR,car,silver,Hyundai,i20,2020,fictional,true
-SV855011,CG30UP6409,CG,motorcycle,white,Royal Enfield,Classic 350,2011,fictional,true
-SV423983,MH35VM4657,MH,scooter,brown,Ola,S1,2014,fictional,true
-SV001324,CG08MT0792,CG,car,yellow,Hyundai,Grand i10,2008,fictional,true
-SV735194,UP14GP5487,UP,car,yellow,Maruti Suzuki,Baleno,2010,fictional,true
-SV234828,BR35WS4960,BR,van,silver,Force,Traveller,2024,fictional,true
-SV801643,JH30TY2152,JH,car,blue,Maruti Suzuki,Baleno,2010,fictional,true
-SV524766,DL01XM3163,DL,car,white,Hyundai,Grand i10,2019,fictional,true
-SV035023,TG03E9829,TG,van,white,Maruti Suzuki,Eeco,2015,fictional,true
-SV123967,MH14R8912,MH,SUV,white,Tata,Nexon,2012,fictional,true
-SV457965,DL3CCY1025,DL,SUV,black,Hyundai,Creta,2023,evaluation_seed,true
-SV294936,UP36KA8404,UP,motorcycle,black,Hero,Splendor Plus,2011,fictional,true
-SV035409,JH08L5710,JH,auto_rickshaw,yellow,Bajaj,RE,2020,fictional,true
-SV783676,UP16YF6950,UP,car,grey,Maruti Suzuki,Swift,2020,fictional,true
-SV802644,MP12YR3889,MP,motorcycle,grey,Honda,Shine,2011,fictional,true
-SV797124,PB33FW8793,PB,car,white,Maruti Suzuki,Dzire,2020,fictional,true
-SV417920,UK05D5883,UK,car,white,Hyundai,Grand i10,2024,evaluation_seed,true
-SV544850,UP21Y0928,UP,bus,yellow,Tata,Starbus,2023,fictional,true
-SV681123,UP01TR3235,UP,car,brown,Tata,Altroz,2017,fictional,true
-SV533841,MP13N9412,MP,car,yellow,Hyundai,i20,2025,fictional,true
-SV666770,JH13JE8836,JH,van,white,Force,Traveller,2019,fictional,true
-SV900061,UP30F9935,UP,car,silver,Honda,City,2021,fictional,true
-SV102725,CG30LT0025,CG,scooter,brown,Ola,S1,2013,fictional,true
-SV077781,TG29WX1640,TG,motorcycle,blue,Honda,Shine,2024,fictional,true
-SV304462,TG26CB1736,TG,motorcycle,blue,Royal Enfield,Classic 350,2024,fictional,true
-SV397809,OD15B1486,OD,motorcycle,white,Royal Enfield,Classic 350,2017,fictional,true
-SV551538,TG28WN0503,TG,scooter,silver,TVS,Jupiter,2018,fictional,true
-SV854303,AP25FJ0002,AP,motorcycle,brown,Royal Enfield,Classic 350,2017,fictional,true
-SV531783,GJ30R8148,GJ,motorcycle,blue,TVS,Apache RTR 160,2019,fictional,true
-SV021818,UK05O5883,UK,car,white,Hyundai,i20,2020,fictional,true
-SV524415,AP30MS8458,AP,car,orange,Maruti Suzuki,Swift,2009,fictional,true
-SV991163,CG26WF4282,CG,car,silver,Maruti Suzuki,Swift,2013,fictional,true
-SV611012,DL3CCK4775,DL,car,white,Hyundai,Grand i10,2015,fictional,true
-SV535843,UK16UG0920,UK,motorcycle,brown,TVS,Apache RTR 160,2023,fictional,true
-SV315800,DL8CAH1064,DL,SUV,white,Mahindra,XUV700,2017,fictional,true
-SV576297,AP06E7389,AP,SUV,orange,Tata,Nexon,2025,fictional,true
-SV568675,CG22LZ2857,CG,car,grey,Tata,Altroz,2015,fictional,true
-SV957926,TG07HF6539,TG,car,blue,Tata,Altroz,2017,fictional,true
-SV229092,CG26HE5107,CG,auto_rickshaw,green,Piaggio,Ape City,2018,fictional,true
-SV882380,DL3EAH1004,DL,car,white,Tata,Altroz,2022,fictional,true
-SV064747,UK25D5884,UK,car,white,Tata,Tiago,2014,fictional,true
-SV818768,HP14CV1168,HP,car,silver,Maruti Suzuki,Dzire,2008,fictional,true
-SV963114,UP34PK7222,UP,bus,white,Eicher,Skyline,2023,fictional,true
-SV193194,AP34CG9878,AP,car,green,Tata,Tiago,2018,fictional,true
-SV603116,KL19HT7165,KL,auto_rickshaw,black,Bajaj,RE,2019,fictional,true
-SV811202,JH20GP3761,JH,motorcycle,white,Royal Enfield,Classic 350,2013,fictional,true
-SV544355,CG23NL4261,CG,car,green,Tata,Altroz,2015,fictional,true
-SV967984,PB11FY3895,PB,motorcycle,silver,Bajaj,Pulsar 150,2015,fictional,true
-SV313430,RJ17UY9545,RJ,SUV,orange,Mahindra,Scorpio,2021,fictional,true
-SV021938,MP25M0924,MP,scooter,black,Suzuki,Access 125,2023,fictional,true
-SV723397,MP32BN6463,MP,car,grey,Maruti Suzuki,Dzire,2024,fictional,true
-SV261469,24BH0483F,BH,car,grey,Honda,City,2011,fictional,true
-SV964860,AP15BM5867,AP,SUV,brown,Maruti Suzuki,Brezza,2022,fictional,true
-SV451560,CG25PL7451,CG,SUV,red,Toyota,Fortuner,2011,fictional,true
-SV477386,26BH1965NU,BH,SUV,silver,Mahindra,Scorpio,2014,fictional,true
-SV575223,MP03JW6481,MP,motorcycle,blue,Bajaj,Pulsar 150,2013,fictional,true
-SV725030,CG14T2936,CG,car,blue,Tata,Tiago,2019,fictional,true
-SV377783,24BH2017V,BH,auto_rickshaw,yellow,Mahindra,Treo,2016,fictional,true
-SV330091,CG25RU3111,CG,car,silver,Maruti Suzuki,Swift,2025,fictional,true
-SV231738,OD29YL5415,OD,scooter,grey,Ola,S1,2013,fictional,true
-SV382048,UP33DW7825,UP,car,white,Tata,Altroz,2010,fictional,true
-SV005875,TG07HJ9293,TG,motorcycle,black,Royal Enfield,Classic 350,2022,fictional,true
-SV823508,UP16UW3920,UP,van,red,Maruti Suzuki,Eeco,2020,fictional,true
-SV333097,MH29U0715,MH,scooter,orange,Honda,Activa 6G,2022,fictional,true
-SV704535,DL07CU4609,DL,SUV,black,Hyundai,Creta,2018,fictional,true
-SV990323,CG16LF6186,CG,car,brown,Maruti Suzuki,Dzire,2016,fictional,true
-SV011548,GJ34DW4163,GJ,SUV,silver,Kia,Seltos,2012,fictional,true
-SV783941,AP26XU7101,AP,car,brown,Hyundai,i20,2009,fictional,true
-SV618633,23BH0237XC,BH,car,blue,Maruti Suzuki,Dzire,2014,fictional,true
-SV880311,TG33HD0952,TG,scooter,white,Ola,S1,2019,fictional,true
-SV107783,TG11B6137,TG,motorcycle,black,Bajaj,Pulsar 150,2014,fictional,true
-SV545732,UP29VJ2468,UP,car,silver,Maruti Suzuki,Swift,2016,fictional,true
-SV500714,CG08Z6879,CG,car,silver,Maruti Suzuki,Baleno,2023,fictional,true
-SV567976,CG21F1981,CG,auto_rickshaw,yellow,Piaggio,Ape City,2024,fictional,true
-SV209609,DL07Y0978,DL,car,silver,Honda,City,2017,fictional,true
-SV562499,DL9CAZ8656,DL,car,silver,Hyundai,i20,2025,fictional,true
-SV341263,BR14X1211,BR,car,white,Honda,City,2015,fictional,true
-SV240956,HP12UW0569,HP,SUV,white,Mahindra,Scorpio,2024,fictional,true
-SV986046,DL8CAH1004,DL,car,white,Hyundai,Grand i10,2024,evaluation_seed,true
-SV947138,GJ32YE9958,GJ,car,black,Honda,City,2025,fictional,true
-SV536242,AP25CS9563,AP,scooter,black,Honda,Activa 6G,2014,fictional,true
-SV746304,UP76FT9444,UP,car,white,Honda,City,2015,fictional,true
-SV843240,DL9CAZ8556,DL,car,silver,Honda,City,2008,evaluation_seed,true
-SV621338,JH06R4148,JH,auto_rickshaw,yellow,Mahindra,Treo,2017,fictional,true
-SV943813,CG17DG5490,CG,car,orange,Maruti Suzuki,Dzire,2014,fictional,true
-SV443097,HR02VD6210,HR,car,silver,Maruti Suzuki,Dzire,2010,fictional,true
-SV656079,22BH1590M,BH,car,silver,Maruti Suzuki,Baleno,2014,fictional,true
-SV878730,DL7MAZ8556,DL,car,silver,Maruti Suzuki,Baleno,2021,fictional,true
-SV506149,PB13SJ7127,PB,car,blue,Honda,City,2024,fictional,true
-SV088321,TG15SG4113,TG,car,white,Honda,City,2018,fictional,true
-SV106580,KA53MH0890,KA,SUV,red,Kia,Seltos,2019,fictional,true
-SV800826,UK28HF5839,UK,SUV,brown,Tata,Nexon,2023,fictional,true
-SV316802,25BH6170ZS,BH,bus,yellow,Eicher,Skyline,2013,fictional,true
-SV160315,AP24ZF0487,AP,motorcycle,silver,Honda,Shine,2009,fictional,true
-SV542884,MP23B6657,MP,SUV,white,Mahindra,Scorpio,2023,fictional,true
-SV500305,DL3CCY1022,DL,bus,black,Tata,Starbus,2015,fictional,true
-SV372204,MP14Y8315,MP,scooter,yellow,Honda,Activa 6G,2010,fictional,true
-SV379601,PB03WF3013,PB,car,brown,Maruti Suzuki,Swift,2011,fictional,true
-SV407918,UP06F1941,UP,motorcycle,black,TVS,Apache RTR 160,2015,fictional,true
-SV455077,JH34TS3222,JH,car,white,Maruti Suzuki,Swift,2017,fictional,true
-SV826698,WB29FE8252,WB,SUV,grey,Hyundai,Creta,2021,fictional,true
-SV272927,CG24EF9636,CG,motorcycle,green,Honda,Shine,2015,fictional,true
-SV419227,DL27TW0261,DL,car,white,Hyundai,i20,2014,fictional,true
-SV931285,UK09AW8959,UK,car,white,Hyundai,Grand i10,2024,fictional,true
-SV657667,KL24PV7493,KL,motorcycle,white,Honda,Shine,2015,fictional,true
-SV161104,CG04AD9230,CG,truck,yellow,Ashok Leyland,Ecomet,2023,fictional,true
-SV461017,CG05KB6686,CG,car,yellow,Hyundai,i20,2025,fictional,true
-SV237860,UP16FT9444,UP,car,white,Tata,Altroz,2019,evaluation_seed,true
-SV699643,AP03F9400,AP,truck,white,BharatBenz,1617R,2025,fictional,true
-SV600085,TN15WT4398,TN,auto_rickshaw,yellow,Mahindra,Treo,2009,fictional,true
-SV655191,MP12SM8583,MP,scooter,yellow,Ola,S1,2023,fictional,true
-SV728731,DL04GJ8224,DL,SUV,green,Hyundai,Creta,2019,fictional,true
-SV205176,CG10C3491,CG,auto_rickshaw,black,Bajaj,RE,2012,fictional,true
-SV115970,AP33EE6145,AP,van,blue,Force,Traveller,2014,fictional,true
-SV752571,MH30HE6822,MH,car,grey,Hyundai,i20,2021,fictional,true
-SV045228,UK16CW4752,UK,truck,blue,Tata,Ultra 1918,2019,fictional,true
-SV302777,CG11DM6570,CG,scooter,green,TVS,Jupiter,2012,fictional,true
-SV608687,AP06KR8815,AP,truck,orange,Ashok Leyland,Ecomet,2025,fictional,true
-SV527320,DL15FU7620,DL,truck,white,Ashok Leyland,Ecomet,2011,fictional,true
-SV991535,AP22PG5838,AP,car,red,Tata,Altroz,2020,fictional,true
-SV831680,MP29P7058,MP,motorcycle,brown,Bajaj,Pulsar 150,2024,fictional,true
-SV735559,UP37AA3405,UP,motorcycle,blue,Royal Enfield,Classic 350,2015,fictional,true
-SV285565,JH11TD7006,JH,car,orange,Maruti Suzuki,Baleno,2021,fictional,true
-SV484116,UP35BR8448,UP,car,white,Tata,Altroz,2013,fictional,true
-SV925278,JH30EP5281,JH,auto_rickshaw,green,Piaggio,Ape City,2009,fictional,true
-SV679162,UP08S7617,UP,car,white,Tata,Altroz,2009,fictional,true
-SV658848,MP10ME1576,MP,motorcycle,white,Bajaj,Pulsar 150,2023,fictional,true
-SV796073,CG04UE0723,CG,scooter,silver,Honda,Activa 6G,2021,fictional,true
-SV563626,CG13AK0501,CG,motorcycle,white,Bajaj,Pulsar 150,2024,fictional,true
-SV668002,MH28D4112,MH,car,white,Maruti Suzuki,Dzire,2018,fictional,true
-SV670784,TN13XC7199,TN,car,brown,Tata,Tiago,2014,fictional,true
-SV146190,MP23JJ1581,MP,car,brown,Honda,City,2025,fictional,true
-SV481710,PB17W1865,PB,motorcycle,white,Bajaj,Pulsar 150,2025,fictional,true
-SV096632,CG05DU2889,CG,motorcycle,silver,Hero,Splendor Plus,2014,fictional,true
-SV820371,RJ34P3451,RJ,motorcycle,orange,Hero,Splendor Plus,2011,fictional,true
-SV779855,MH14CU4186,MH,car,brown,Hyundai,i20,2009,fictional,true
-SV756109,UP09VD0495,UP,car,orange,Maruti Suzuki,Dzire,2011,fictional,true
-SV003353,DL25ZY9964,DL,SUV,black,Hyundai,Creta,2023,fictional,true
-SV683973,GA05W4295,GA,motorcycle,orange,TVS,Apache RTR 160,2021,fictional,true
-SV223965,MH24HK7957,MH,car,silver,Hyundai,Grand i10,2023,fictional,true
-SV117951,KA53MH3890,KA,van,red,Force,Traveller,2011,fictional,true
 SV597545,GA14UK9949,GA,SUV,green,Mahindra,Scorpio,2025,fictional,true
-SV616055,PB11U1842,PB,van,red,Maruti Suzuki,Eeco,2022,fictional,true
-SV491229,UP14CP5085,UP,car,white,Maruti Suzuki,Dzire,2019,fictional,true
-SV047551,KA06NN4948,KA,SUV,red,Tata,Nexon,2008,fictional,true
-SV018287,UP19CH7732,UP,car,silver,Tata,Tiago,2019,fictional,true
+SV843240,DL9CAZ8556,DL,car,silver,Honda,City,2008,evaluation_seed,true
+SV820371,RJ34P3451,RJ,motorcycle,orange,Hero,Splendor Plus,2011,fictional,true
 SV590969,CG01GM9135,CG,truck,yellow,BharatBenz,1617R,2023,fictional,true
-SV981491,TG19YT4440,TG,motorcycle,green,Hero,Splendor Plus,2010,fictional,true
-SV493960,CG06GU7227,CG,SUV,grey,Maruti Suzuki,Brezza,2012,fictional,true
-SV161457,CG10N1679,CG,SUV,grey,Kia,Seltos,2019,fictional,true
-SV332686,GJ23WR9504,GJ,car,white,Tata,Tiago,2013,fictional,true
-SV241350,OD11V2173,OD,car,white,Tata,Tiago,2025,fictional,true
-SV734130,UK34R3018,UK,truck,white,Eicher,Pro 2049,2018,fictional,true
-SV287253,UK20TX6407,UK,car,white,Hyundai,Grand i10,2008,fictional,true
-SV766113,CG11PA9762,CG,bus,blue,Eicher,Skyline,2016,fictional,true
-SV667961,MH06FP3874,MH,truck,yellow,Eicher,Pro 2049,2017,fictional,true
-SV944846,OD22J3038,OD,motorcycle,green,Royal Enfield,Classic 350,2022,fictional,true
-SV889115,UK24FC8279,UK,scooter,brown,Honda,Activa 6G,2011,fictional,true
-SV656881,DL3CCK2475,DL,car,white,Hyundai,i20,2020,evaluation_seed,true
-SV944909,UP15FS1538,UP,car,white,Tata,Altroz,2008,fictional,true
-SV495819,MP25RL8759,MP,SUV,white,Kia,Seltos,2015,fictional,true
-SV165154,OD09ZH4419,OD,SUV,brown,Hyundai,Creta,2013,fictional,true
-SV573375,JH10LW4488,JH,motorcycle,grey,Royal Enfield,Classic 350,2019,fictional,true
-SV519066,UP34KP5085,UP,car,white,Maruti Suzuki,Baleno,2017,fictional,true
-SV349583,UP15LS6154,UP,car,red,Tata,Altroz,2023,fictional,true
-SV061408,JH28C7167,JH,truck,orange,BharatBenz,1617R,2019,fictional,true
-SV706856,MH02RR2099,MH,motorcycle,yellow,Royal Enfield,Classic 350,2022,fictional,true
-SV181349,CG19NN2952,CG,motorcycle,red,Honda,Shine,2012,fictional,true
-SV980550,TG22RB6063,TG,car,yellow,Maruti Suzuki,Swift,2010,fictional,true
-SV439256,UP24R4682,UP,auto_rickshaw,green,Mahindra,Treo,2008,fictional,true
-SV608543,CG16YJ3063,CG,car,blue,Honda,City,2012,fictional,true
-SV164026,BR03SJ4413,BR,bus,red,Eicher,Skyline,2014,fictional,true
-SV243824,HR16DD2508,HR,motorcycle,white,Bajaj,Pulsar 150,2015,fictional,true
-SV364902,KL30UZ9874,KL,car,orange,Honda,City,2011,fictional,true
-SV024953,AS28DG4929,AS,auto_rickshaw,yellow,Bajaj,RE,2022,fictional,true
-SV992057,UP14GP5081,UP,bus,white,Tata,Starbus,2019,fictional,true
-SV261456,TG32PA8938,TG,motorcycle,green,Bajaj,Pulsar 150,2016,fictional,true
-SV848669,JH11B6475,JH,truck,yellow,Ashok Leyland,Ecomet,2016,fictional,true
-SV651900,KL28GZ6344,KL,truck,yellow,Tata,Ultra 1918,2020,fictional,true
-SV717133,24BH3131RT,BH,motorcycle,white,Hero,Splendor Plus,2009,fictional,true
-SV736268,JH13NM9788,JH,motorcycle,red,Bajaj,Pulsar 150,2017,fictional,true
-SV058942,MH34KA3569,MH,van,brown,Maruti Suzuki,Eeco,2009,fictional,true
-SV982914,OD32MC0789,OD,scooter,white,Ola,S1,2020,fictional,true
-SV532962,PB14SU0299,PB,bus,red,Eicher,Skyline,2009,fictional,true
-SV346087,DL9CAZ8580,DL,car,black,Hyundai,i20,2015,fictional,true
-SV595990,OD08KP0614,OD,SUV,white,Kia,Seltos,2025,fictional,true
-SV005955,JH35JC3482,JH,car,orange,Tata,Altroz,2015,fictional,true
-SV509600,DL8CAH1092,DL,car,red,Hyundai,i20,2022,fictional,true
-SV877527,TG04Y3560,TG,SUV,grey,Tata,Nexon,2012,fictional,true
-SV882554,TN30YC5296,TN,car,black,Maruti Suzuki,Baleno,2024,fictional,true
-SV071264,RJ24K0650,RJ,bus,yellow,Eicher,Skyline,2008,fictional,true
-SV191897,UP32AA8404,UP,motorcycle,black,Bajaj,Pulsar 150,2012,fictional,true
-SV581252,DL8CAH1084,DL,car,white,Maruti Suzuki,Swift,2018,fictional,true
-SV510889,25BH4516S,BH,motorcycle,brown,Hero,Splendor Plus,2013,fictional,true
-SV935830,PB11WA8531,PB,SUV,silver,Maruti Suzuki,Brezza,2017,fictional,true
-SV921886,AS25RL6305,AS,car,brown,Maruti Suzuki,Swift,2015,fictional,true
-SV211114,HR31GM2892,HR,car,silver,Hyundai,i20,2012,fictional,true
-SV627569,UK23U8092,UK,SUV,brown,Toyota,Fortuner,2018,fictional,true
-SV027637,PB18FT1540,PB,motorcycle,red,TVS,Apache RTR 160,2018,fictional,true
-SV483074,DL8CCY1025,DL,SUV,black,Maruti Suzuki,Brezza,2017,fictional,true
 SV608837,CG25YW2171,CG,car,green,Maruti Suzuki,Dzire,2012,fictional,true
-SV950896,UP14GP5085,UP,car,white,Tata,Altroz,2017,evaluation_seed,true
-SV695747,UP08X8227,UP,car,grey,Maruti Suzuki,Baleno,2009,fictional,true
-SV589688,UP16FT9944,UP,bus,white,Tata,Starbus,2010,fictional,true
-SV473533,MH14LJ4071,MH,motorcycle,silver,Hero,Splendor Plus,2019,fictional,true
-SV926202,CG20UT9417,CG,bus,red,Eicher,Skyline,2010,fictional,true
-SV064477,OD16ES2330,OD,bus,red,Ashok Leyland,Viking,2010,fictional,true
-SV003513,AS21CW5385,AS,motorcycle,white,Bajaj,Pulsar 150,2017,fictional,true
-SV833657,KA15UJ0361,KA,motorcycle,silver,Hero,Splendor Plus,2022,fictional,true
-SV772795,UP29BP3519,UP,motorcycle,white,Honda,Shine,2014,fictional,true
-SV712037,CG13PM8232,CG,car,yellow,Maruti Suzuki,Dzire,2012,fictional,true
-SV206308,JH31KJ8802,JH,car,white,Tata,Altroz,2019,fictional,true
-SV679195,CG25UC5211,CG,motorcycle,silver,Royal Enfield,Classic 350,2010,fictional,true
-SV597097,HP15D6018,HP,car,silver,Tata,Altroz,2009,fictional,true
-SV425998,DL22LP5280,DL,car,white,Hyundai,i20,2012,fictional,true
-SV696709,TG32CZ4803,TG,car,orange,Honda,City,2008,fictional,true
-SV340854,CG23JK8013,CG,SUV,silver,Toyota,Fortuner,2021,fictional,true
-SV294156,GJ07X8456,GJ,SUV,blue,Toyota,Fortuner,2009,fictional,true
-SV005257,DL3CTY1825,DL,SUV,black,Hyundai,Creta,2014,fictional,true
-SV087027,KA09BT1928,KA,scooter,white,Suzuki,Access 125,2014,fictional,true
-SV799448,UP23ET9997,UP,motorcycle,black,TVS,Apache RTR 160,2013,fictional,true
-SV095104,MP13HM7216,MP,car,white,Tata,Tiago,2025,fictional,true
-SV091775,KA11SY3092,KA,scooter,blue,Ola,S1,2023,fictional,true
-SV593961,JH20DR4400,JH,SUV,silver,Hyundai,Creta,2014,fictional,true
-SV188279,JH34ZD3129,JH,motorcycle,grey,Honda,Shine,2024,fictional,true
-SV722959,UP34N8379,UP,car,blue,Maruti Suzuki,Dzire,2012,fictional,true
-SV703681,CG28KR9357,CG,auto_rickshaw,green,Bajaj,RE,2023,fictional,true
-SV654217,OD09DN8653,OD,van,white,Force,Traveller,2018,fictional,true
-SV621728,KL35AJ7243,KL,scooter,brown,Honda,Activa 6G,2020,fictional,true
-SV976857,HR22MG6537,HR,motorcycle,silver,Honda,Shine,2019,fictional,true
-SV161201,KA53MH8855,KA,SUV,white,Mahindra,XUV700,2024,fictional,true
-SV521397,MH05D0535,MH,motorcycle,white,Bajaj,Pulsar 150,2012,fictional,true
-SV654888,AP29JZ6266,AP,scooter,white,Honda,Activa 6G,2018,fictional,true
-SV393735,DL29PB8961,DL,car,white,Maruti Suzuki,Swift,2019,fictional,true
-SV359382,OD06WM5201,OD,scooter,white,Suzuki,Access 125,2016,fictional,true
-SV144143,KA53MH3895,KA,SUV,red,Tata,Nexon,2020,evaluation_seed,true
-SV825792,AP15ZV7969,AP,van,red,Maruti Suzuki,Eeco,2011,fictional,true
-SV897683,UP01MM3080,UP,van,silver,Force,Traveller,2021,fictional,true
-SV329715,AP06C9994,AP,SUV,yellow,Kia,Seltos,2011,fictional,true
-SV652690,UP16ZT9445,UP,car,white,Tata,Tiago,2020,fictional,true
-SV161772,CG15WS6047,CG,auto_rickshaw,black,Bajaj,RE,2011,fictional,true
-SV349991,WB27JF6523,WB,scooter,white,Suzuki,Access 125,2024,fictional,true
-SV766068,TG05ED3745,TG,car,silver,Honda,City,2024,fictional,true
-SV191347,DL3CCK2175,DL,car,white,Maruti Suzuki,Dzire,2025,fictional,true
-SV319219,CG11VR1842,CG,car,orange,Tata,Altroz,2024,fictional,true
-SV733987,KA24ZY1066,KA,SUV,red,Tata,Nexon,2012,fictional,true
-SV977706,JH06PF0383,JH,auto_rickshaw,black,Bajaj,RE,2019,fictional,true
-SV676353,AS07N9065,AS,auto_rickshaw,green,Piaggio,Ape City,2013,fictional,true
-SV734519,JH31VJ6445,JH,car,orange,Maruti Suzuki,Dzire,2017,fictional,true
-SV988008,AS08AZ0907,AS,van,black,Force,Traveller,2015,fictional,true
 SV486610,DL15ED7108,DL,car,white,Hyundai,Grand i10,2016,fictional,true
-SV547749,CG03YB3225,CG,car,white,Tata,Tiago,2024,fictional,true
-SV835033,CG24W2555,CG,SUV,grey,Maruti Suzuki,Brezza,2008,fictional,true
-SV354082,PB01F1439,PB,scooter,grey,Honda,Activa 6G,2015,fictional,true
-SV683636,GJ30TX0612,GJ,motorcycle,white,Honda,Shine,2011,fictional,true
-SV870776,OD15GR2212,OD,scooter,orange,Ola,S1,2012,fictional,true
-SV963425,AP29TA2957,AP,car,green,Honda,City,2022,fictional,true
-SV686932,24BH9413NN,BH,car,grey,Honda,City,2023,fictional,true
-SV730871,DL02YV0440,DL,car,silver,Honda,City,2017,fictional,true
-SV122364,UP37AA8406,UP,truck,black,Tata,Ultra 1918,2021,fictional,true
-SV391325,UP16FT9458,UP,car,yellow,Maruti Suzuki,Baleno,2011,fictional,true
-SV804673,DL24HH0597,DL,car,grey,Hyundai,i20,2024,fictional,true
-SV407525,DL3CCY1080,DL,SUV,grey,Kia,Seltos,2025,fictional,true
-SV369736,AP23DJ3834,AP,motorcycle,orange,Bajaj,Pulsar 150,2019,fictional,true
-SV793845,UP15VN7310,UP,car,white,Tata,Altroz,2024,fictional,true
-SV616642,26BH4508U,BH,SUV,white,Mahindra,Scorpio,2018,fictional,true
-SV617942,TG01SZ7317,TG,truck,white,Tata,Ultra 1918,2011,fictional,true
-SV564211,DL3CCK2474,DL,scooter,white,TVS,Jupiter,2012,fictional,true
-SV417194,OD29W4816,OD,auto_rickshaw,green,Piaggio,Ape City,2021,fictional,true
-SV064186,CG07UZ3583,CG,car,black,Maruti Suzuki,Swift,2013,fictional,true
-SV703819,OD14MX5661,OD,scooter,silver,TVS,Jupiter,2025,fictional,true
-SV618657,DL9CAZ8756,DL,auto_rickshaw,silver,Mahindra,Treo,2009,fictional,true
-SV742687,KL18AV8118,KL,scooter,silver,Honda,Activa 6G,2016,fictional,true
-SV861092,AP27EH4143,AP,car,black,Maruti Suzuki,Dzire,2019,fictional,true
-SV196909,GA14KV5327,GA,car,green,Honda,City,2012,fictional,true
-SV802752,CG02LE8571,CG,bus,red,Eicher,Skyline,2015,fictional,true
-SV378109,22BH4541MP,BH,car,white,Maruti Suzuki,Dzire,2022,fictional,true
-SV258008,KA53MH3896,KA,SUV,red,Mahindra,Scorpio,2023,fictional,true
-SV450149,CG25SM5383,CG,motorcycle,silver,TVS,Apache RTR 160,2017,fictional,true
-SV784595,JH16BH2882,JH,car,white,Honda,City,2015,fictional,true
-SV106396,DL3CCK5477,DL,car,orange,Maruti Suzuki,Swift,2022,fictional,true
-SV397144,UP31AU0194,UP,scooter,white,TVS,Jupiter,2019,fictional,true
-SV223931,CG20ZZ7167,CG,SUV,grey,Mahindra,XUV700,2023,fictional,true
-SV249670,MH14NT5296,MH,car,orange,Tata,Tiago,2008,fictional,true
-SV085495,MH26DR1775,MH,SUV,silver,Mahindra,XUV700,2015,fictional,true
-SV178500,HP12HK3828,HP,truck,blue,Ashok Leyland,Ecomet,2014,fictional,true
-SV155048,CG24ZE0718,CG,scooter,blue,TVS,Jupiter,2015,fictional,true
-SV163823,TG17RF5742,TG,car,silver,Maruti Suzuki,Swift,2012,fictional,true
-SV566632,UK05D5785,UK,car,orange,Tata,Altroz,2012,fictional,true
-SV037967,UP37AA8404,UP,motorcycle,black,TVS,Apache RTR 160,2009,evaluation_seed,true
-SV935636,RJ18AM7984,RJ,motorcycle,brown,Hero,Splendor Plus,2022,fictional,true
+SV319219,CG11VR1842,CG,car,orange,Tata,Altroz,2024,fictional,true
+SV261469,24BH0483F,BH,car,grey,Honda,City,2011,fictional,true
+SV683973,GA05W4295,GA,motorcycle,orange,TVS,Apache RTR 160,2021,fictional,true
+SV632373,CG14MU2529,CG,SUV,white,Maruti Suzuki,Brezza,2025,fictional,true
+SV928469,CG19MN7069,CG,car,white,Honda,Amaze,2012,fictional,true
 SV911900,GJ30AV6993,GJ,car,silver,Honda,City,2008,fictional,true
-SV192628,TN28RS6607,TN,van,brown,Maruti Suzuki,Eeco,2012,fictional,true
-SV890979,MP02MB7698,MP,auto_rickshaw,black,Bajaj,RE,2013,fictional,true
-SV428160,TG17WG8887,TG,car,green,Tata,Altroz,2021,fictional,true
-SV877009,BR35DW8196,BR,SUV,blue,Maruti Suzuki,Brezza,2012,fictional,true
-SV428987,PB12AG8124,PB,car,silver,Honda,City,2010,fictional,true
-SV889265,MP16H4408,MP,scooter,orange,Honda,Activa 6G,2008,fictional,true
-SV775297,CG30NP5389,CG,motorcycle,white,Honda,Shine,2017,fictional,true
-SV044315,MP24YX0318,MP,scooter,orange,Suzuki,Access 125,2009,fictional,true
-SV213024,26BH7639Z,BH,scooter,green,TVS,Jupiter,2016,fictional,true
-SV411949,AS12SN1986,AS,car,white,Hyundai,i20,2018,fictional,true
-SV583718,TG22J1888,TG,car,silver,Maruti Suzuki,Swift,2012,fictional,true
-SV424753,MP09LL4440,MP,SUV,white,Maruti Suzuki,Brezza,2023,fictional,true
-SV266991,HP35DZ1023,HP,truck,yellow,Eicher,Pro 2049,2014,fictional,true
-SV333792,MH33WT2568,MH,motorcycle,black,TVS,Apache RTR 160,2021,fictional,true
-SV264827,CG14SV6970,CG,SUV,white,Hyundai,Creta,2013,fictional,true
+SV654217,OD09DN8653,OD,van,white,Force,Traveller,2018,fictional,true
+SV419227,DL27TW0261,DL,car,white,Hyundai,i20,2014,fictional,true
+SV722959,UP34N8379,UP,car,blue,Maruti Suzuki,Dzire,2012,fictional,true
+SV349583,CG13SP7341,CG,motorcycle,blue,TVS,Apache RTR 160,2023,fictional,true
+SV943813,CG17DG5490,CG,car,orange,Maruti Suzuki,Dzire,2014,fictional,true
 SV457882,TG29SM4419,TG,car,silver,Honda,City,2025,fictional,true
+SV793292,CG04NL3024,CG,car,white,Honda,Amaze,2024,evaluation_seed,true
+SV735194,UP14GP5487,UP,car,yellow,Maruti Suzuki,Baleno,2010,fictional,true
+SV608825,OD28DX9184,OD,car,silver,Maruti Suzuki,Dzire,2008,fictional,true
+SV107783,TG11B6137,TG,motorcycle,black,Bajaj,Pulsar 150,2014,fictional,true
+SV329715,AP06C9994,AP,SUV,yellow,Kia,Seltos,2011,fictional,true
+SV439349,GA10L3396,GA,car,white,Maruti Suzuki,Baleno,2024,fictional,true
+SV652690,UP16ZT9445,UP,car,white,Tata,Tiago,2020,fictional,true
+SV627569,UK23U8092,UK,SUV,brown,Toyota,Fortuner,2018,fictional,true
+SV699643,AP03F9400,AP,truck,white,BharatBenz,1617R,2025,fictional,true
+SV115970,AP33EE6145,AP,van,blue,Force,Traveller,2014,fictional,true
+SV726648,UK14G2826,UK,SUV,blue,Maruti Suzuki,Brezza,2013,fictional,true
+SV547749,CG03YB3225,CG,car,white,Tata,Tiago,2024,fictional,true
+SV982914,OD32MC0789,OD,scooter,white,Ola,S1,2020,fictional,true
+SV477386,26BH1965NU,BH,SUV,silver,Mahindra,Scorpio,2014,fictional,true
+SV644276,AP21CL6598,AP,car,white,Maruti Suzuki,Baleno,2014,fictional,true
+SV003353,DL25ZY9964,DL,SUV,black,Hyundai,Creta,2023,fictional,true
+SV123967,MH14R8912,MH,SUV,white,Tata,Nexon,2012,fictional,true
+SV572767,CG15W3111,CG,car,white,Honda,Amaze,2008,fictional,true
+SV119347,PB34SB1302,PB,truck,yellow,Eicher,Pro 2049,2014,fictional,true
+SV524415,AP30MS8458,AP,car,orange,Maruti Suzuki,Swift,2009,fictional,true
+SV723397,MP32BN6463,MP,car,grey,Maruti Suzuki,Dzire,2024,fictional,true
+SV144143,KA53MH3895,KA,SUV,red,Tata,Nexon,2020,evaluation_seed,true
+SV772795,UP29BP3519,UP,motorcycle,white,Honda,Shine,2014,fictional,true
+SV524766,DL01XM3163,DL,car,white,Hyundai,Grand i10,2019,fictional,true
+SV102725,CG30LT0025,CG,scooter,brown,Ola,S1,2013,fictional,true
+SV882380,DL3EAH1004,DL,car,white,Tata,Altroz,2022,fictional,true
+SV964860,AP15BM5867,AP,SUV,brown,Maruti Suzuki,Brezza,2022,fictional,true
+SV005875,TG07HJ9293,TG,motorcycle,black,Royal Enfield,Classic 350,2022,fictional,true
+SV510889,25BH4516S,BH,motorcycle,brown,Hero,Splendor Plus,2013,fictional,true
+SV451560,CG25PL7451,CG,SUV,red,Toyota,Fortuner,2011,fictional,true
+SV195992,JH23B5941,JH,van,black,Force,Traveller,2020,fictional,true
+SV064186,CG07UZ3583,CG,car,black,Maruti Suzuki,Swift,2013,fictional,true
+SV397144,UP31AU0194,UP,scooter,white,TVS,Jupiter,2019,fictional,true
+SV304462,TG26CB1736,TG,motorcycle,blue,Royal Enfield,Classic 350,2024,fictional,true
+SV608687,AP06KR8815,AP,truck,orange,Ashok Leyland,Ecomet,2025,fictional,true
+SV001324,CG08MT0792,CG,car,yellow,Hyundai,Grand i10,2008,fictional,true
+SV364902,KL30UZ9874,KL,car,orange,Honda,City,2011,fictional,true
+SV182418,CG04NL4029,CG,car,silver,Maruti Suzuki,Dzire,2012,fictional,true
+SV234828,BR35WS4960,BR,van,silver,Force,Traveller,2024,fictional,true
+SV087027,KA09BT1928,KA,scooter,white,Suzuki,Access 125,2014,fictional,true
+SV889115,UK24FC8279,UK,scooter,brown,Honda,Activa 6G,2011,fictional,true
+SV618657,DL9CAZ8756,DL,auto_rickshaw,silver,Mahindra,Treo,2009,fictional,true
+SV925278,JH30EP5281,JH,auto_rickshaw,green,Piaggio,Ape City,2009,fictional,true
+SV818768,HP14CV1168,HP,car,silver,Maruti Suzuki,Dzire,2008,fictional,true
+SV581252,DL8CAH1084,DL,car,white,Maruti Suzuki,Swift,2018,fictional,true
+SV944909,UP15FS1538,UP,car,white,Tata,Altroz,2008,fictional,true
+SV779855,MH14CU4186,MH,car,brown,Hyundai,i20,2009,fictional,true
+SV862017,CG00NL3021,CG,car,white,Maruti Suzuki,Swift,2017,fictional,true
+SV064747,UK25D5884,UK,car,white,Tata,Tiago,2014,fictional,true
+SV457965,DL3CCY1025,DL,SUV,black,Hyundai,Creta,2023,evaluation_seed,true
+SV011548,GJ34DW4163,GJ,SUV,silver,Kia,Seltos,2012,fictional,true
+SV106821,JH14NU0475,JH,car,white,Maruti Suzuki,Dzire,2024,fictional,true
+SV921886,AS25RL6305,AS,car,brown,Maruti Suzuki,Swift,2015,fictional,true
+SV484116,UP35BR8448,UP,car,white,Tata,Altroz,2013,fictional,true
+SV734519,JH31VJ6445,JH,car,orange,Maruti Suzuki,Dzire,2017,fictional,true
+SV943253,CG03A4093,CG,car,red,Hyundai,Grand i10,2008,fictional,true
+SV783941,AP26XU7101,AP,car,brown,Hyundai,i20,2009,fictional,true
+SV341263,BR14X1211,BR,car,white,Honda,City,2015,fictional,true
+SV168098,PB12HY4045,PB,car,grey,Hyundai,Grand i10,2024,fictional,true
+SV734130,UK34R3018,UK,truck,white,Eicher,Pro 2049,2018,fictional,true
+SV125459,AP06FC3912,AP,car,green,Hyundai,i20,2020,fictional,true
+SV686932,24BH9413NN,BH,car,grey,Honda,City,2023,fictional,true
+SV737232,TG20D9842,TG,motorcycle,white,Honda,Shine,2023,fictional,true
+SV676353,AS07N9065,AS,auto_rickshaw,green,Piaggio,Ape City,2013,fictional,true
+SV231738,OD29YL5415,OD,scooter,grey,Ola,S1,2013,fictional,true
+SV285565,JH11TD7006,JH,car,orange,Maruti Suzuki,Baleno,2021,fictional,true
+SV562499,DL9CAZ8656,DL,car,silver,Hyundai,i20,2025,fictional,true
+SV695747,UP08X8227,UP,car,grey,Maruti Suzuki,Baleno,2009,fictional,true
+SV223931,CG20ZZ7167,CG,SUV,grey,Mahindra,XUV700,2023,fictional,true
+SV521397,MH05D0535,MH,motorcycle,white,Bajaj,Pulsar 150,2012,fictional,true
+SV576297,AP06E7389,AP,SUV,orange,Tata,Nexon,2025,fictional,true
+SV027637,PB18FT1540,PB,motorcycle,red,TVS,Apache RTR 160,2018,fictional,true
+SV093856,CG05LL0300,CG,SUV,white,Mahindra,XUV 3XO,2017,fictional,true
+SV699852,MH09Y6507,MH,motorcycle,yellow,TVS,Apache RTR 160,2009,fictional,true
+SV567976,CG21F1981,CG,auto_rickshaw,yellow,Piaggio,Ape City,2024,fictional,true
+SV240956,HP12UW0569,HP,SUV,white,Mahindra,Scorpio,2024,fictional,true
+SV679162,UP08S7617,UP,car,white,Tata,Altroz,2009,fictional,true
+SV287071,CG04NL3022,CG,bus,white,Ashok Leyland,Viking,2023,fictional,true
+SV264827,CG14SV6970,CG,SUV,white,Hyundai,Creta,2013,fictional,true
+SV044242,CG74MW3529,CG,SUV,white,Mahindra,Scorpio,2019,fictional,true
+SV407525,DL3CCY1080,DL,SUV,grey,Kia,Seltos,2025,fictional,true
+SV058869,GJ24UG1206,GJ,truck,orange,BharatBenz,1617R,2025,fictional,true
+SV890979,MP02MB7698,MP,auto_rickshaw,black,Bajaj,RE,2013,fictional,true
+SV302777,CG11DM6570,CG,scooter,green,TVS,Jupiter,2012,fictional,true
+SV148711,CG14MW7524,CG,SUV,red,Mahindra,XUV700,2016,fictional,true
+SV349991,WB27JF6523,WB,scooter,white,Suzuki,Access 125,2024,fictional,true
+SV564211,DL3CCK2474,DL,scooter,white,TVS,Jupiter,2012,fictional,true
+SV096632,CG05DU2889,CG,motorcycle,silver,Hero,Splendor Plus,2014,fictional,true
+SV861092,AP27EH4143,AP,car,black,Maruti Suzuki,Dzire,2019,fictional,true
+SV191897,UP32AA8404,UP,motorcycle,black,Bajaj,Pulsar 150,2012,fictional,true
+SV654888,AP29JZ6266,AP,scooter,white,Honda,Activa 6G,2018,fictional,true
+SV151591,RJ12ES7563,RJ,van,white,Maruti Suzuki,Eeco,2016,fictional,true
+SV533841,MP13N9412,MP,car,yellow,Hyundai,i20,2025,fictional,true
+SV611012,DL3CCY2495,DL,car,white,Hyundai,Grand i10,2015,fictional,true
+SV947138,GJ32YE9958,GJ,car,black,Honda,City,2025,fictional,true
+SV213024,26BH7639Z,BH,scooter,green,TVS,Jupiter,2016,fictional,true
+SV211114,HR31GM2892,HR,car,silver,Hyundai,i20,2012,fictional,true
+SV670784,TN13XC7199,TN,car,brown,Tata,Tiago,2014,fictional,true
+SV877527,TG04Y3560,TG,SUV,grey,Tata,Nexon,2012,fictional,true
+SV491229,UP14CP5085,UP,car,white,Maruti Suzuki,Dzire,2019,fictional,true
+SV804673,DL24HH0597,DL,car,grey,Hyundai,i20,2024,fictional,true
+SV207526,CG04DK1278,CG,scooter,blue,Ola,S1,2016,fictional,true
+SV544850,UP21Y0928,UP,bus,yellow,Tata,Starbus,2023,fictional,true
+SV035023,TG03E9829,TG,van,white,Maruti Suzuki,Eeco,2015,fictional,true
+SV566632,UK05D5785,UK,car,orange,Tata,Altroz,2012,fictional,true
+SV656079,22BH1590M,BH,car,silver,Maruti Suzuki,Baleno,2014,fictional,true
+SV854303,AP25FJ0002,AP,motorcycle,brown,Royal Enfield,Classic 350,2017,fictional,true
+SV117951,KA53MH3890,KA,van,red,Force,Traveller,2011,fictional,true
+SV831680,MP29P7058,MP,motorcycle,brown,Bajaj,Pulsar 150,2024,fictional,true
+SV600085,TN15WT4398,TN,auto_rickshaw,yellow,Mahindra,Treo,2009,fictional,true
+SV403610,TG04MV2332,TG,car,black,Maruti Suzuki,Swift,2011,fictional,true
+SV509600,DL8CAH1092,DL,car,red,Hyundai,i20,2022,fictional,true
 SV026064,UK05D6883,UK,van,white,Force,Traveller,2024,fictional,true
-SV906308,HR22B3675,HR,motorcycle,blue,Honda,Shine,2024,fictional,true
+SV986046,DL8CAH1004,DL,car,white,Hyundai,Grand i10,2024,evaluation_seed,true
+SV825792,AP15ZV7969,AP,van,red,Maruti Suzuki,Eeco,2011,fictional,true
+SV679195,CG25UC5211,CG,motorcycle,silver,Royal Enfield,Classic 350,2010,fictional,true
+SV407918,UP06F1941,UP,motorcycle,black,TVS,Apache RTR 160,2015,fictional,true
+SV161457,CG10N1679,CG,SUV,grey,Kia,Seltos,2019,fictional,true
+SV037967,UP37AA8404,UP,motorcycle,black,TVS,Apache RTR 160,2009,evaluation_seed,true
+SV746304,UP76FT9444,UP,car,white,Honda,City,2015,fictional,true
+SV535843,UK16UG0920,UK,motorcycle,brown,TVS,Apache RTR 160,2023,fictional,true
+SV742687,KL18AV8118,KL,scooter,silver,Honda,Activa 6G,2016,fictional,true
+SV003513,AS21CW5385,AS,motorcycle,white,Bajaj,Pulsar 150,2017,fictional,true
+SV991535,AP22PG5838,AP,car,red,Tata,Altroz,2020,fictional,true
+SV193194,AP34CG9878,AP,car,green,Tata,Tiago,2018,fictional,true
+SV417920,UK05D5883,UK,car,white,Hyundai,Grand i10,2024,evaluation_seed,true
+SV568675,CG22LZ2857,CG,car,grey,Tata,Altroz,2015,fictional,true
+SV369736,AP23DJ3834,AP,motorcycle,orange,Bajaj,Pulsar 150,2019,fictional,true
+SV382048,UP33DW7825,UP,car,white,Tata,Altroz,2010,fictional,true
+SV544355,CG23NL4261,CG,car,green,Tata,Altroz,2015,fictional,true
+SV191347,DL3CCK2175,DL,car,white,Maruti Suzuki,Dzire,2025,fictional,true
+SV935636,RJ18AM7984,RJ,motorcycle,brown,Hero,Splendor Plus,2022,fictional,true
+SV681123,UP01TR3235,UP,car,brown,Tata,Altroz,2017,fictional,true
+SV122364,UP37AA8406,UP,truck,black,Tata,Ultra 1918,2021,fictional,true
+SV877009,BR35DW8196,BR,SUV,blue,Maruti Suzuki,Brezza,2012,fictional,true
+SV531783,GJ30R8148,GJ,motorcycle,blue,TVS,Apache RTR 160,2019,fictional,true
+SV931285,UK09AW8959,UK,car,white,Hyundai,Grand i10,2024,fictional,true
+SV728731,DL04GJ8224,DL,SUV,green,Hyundai,Creta,2019,fictional,true
+SV161201,KA53MH8855,KA,SUV,white,Mahindra,XUV700,2024,fictional,true
+SV563626,CG13AK0501,CG,motorcycle,white,Bajaj,Pulsar 150,2024,fictional,true
+SV424753,MP09LL4440,MP,SUV,white,Maruti Suzuki,Brezza,2023,fictional,true
+SV161772,CG15WS6047,CG,auto_rickshaw,black,Bajaj,RE,2011,fictional,true
+SV237860,UP16FT9444,UP,car,white,Tata,Altroz,2019,evaluation_seed,true
+SV106580,KA53MH0890,KA,SUV,red,Kia,Seltos,2019,fictional,true
+SV766113,CG11PA9762,CG,bus,blue,Eicher,Skyline,2016,fictional,true
+SV616055,PB11U1842,PB,van,red,Maruti Suzuki,Eeco,2022,fictional,true
+SV489390,AS19S6055,AS,car,white,Hyundai,Grand i10,2016,fictional,true
+SV963425,AP29TA2957,AP,car,green,Honda,City,2022,fictional,true
+SV132475,CG04DK7570,CG,motorcycle,blue,Hero,Splendor Plus,2008,fictional,true
+SV603116,KL19HT7165,KL,auto_rickshaw,black,Bajaj,RE,2019,fictional,true
+SV976857,HR22MG6537,HR,motorcycle,silver,Honda,Shine,2019,fictional,true
+SV045759,CG15ZA7261,CG,motorcycle,blue,TVS,Apache RTR 160,2011,fictional,true
+SV667961,MH06FP3874,MH,truck,yellow,Eicher,Pro 2049,2017,fictional,true
+SV988008,AS08AZ0907,AS,van,black,Force,Traveller,2015,fictional,true
+SV272927,CG24EF9636,CG,motorcycle,green,Honda,Shine,2015,fictional,true
+SV372204,MP14Y8315,MP,scooter,yellow,Honda,Activa 6G,2010,fictional,true
+SV209609,DL07Y0978,DL,car,silver,Honda,City,2017,fictional,true
+SV595990,OD08KP0614,OD,SUV,white,Kia,Seltos,2025,fictional,true
+SV088321,TG15SG4113,TG,car,white,Honda,City,2018,fictional,true
+SV483074,DL8CCY1025,DL,SUV,black,Maruti Suzuki,Brezza,2017,fictional,true
+SV411949,AS12SN1986,AS,car,white,Hyundai,i20,2018,fictional,true
+SV855011,CG30UP6409,CG,motorcycle,white,Royal Enfield,Classic 350,2011,fictional,true
+SV085495,MH26DR1775,MH,SUV,silver,Mahindra,XUV700,2015,fictional,true
+SV796073,CG04UE0723,CG,scooter,silver,Honda,Activa 6G,2021,fictional,true
+SV294936,UP36KA8404,UP,motorcycle,black,Hero,Splendor Plus,2011,fictional,true
+SV621728,KL35AJ7243,KL,scooter,brown,Honda,Activa 6G,2020,fictional,true
+SV897683,UP01MM3080,UP,van,silver,Force,Traveller,2021,fictional,true
+SV519066,UP34KP5085,UP,car,white,Maruti Suzuki,Baleno,2017,fictional,true
+SV181349,CG19NN2952,CG,motorcycle,red,Honda,Shine,2012,fictional,true
+SV935830,PB11WA8531,PB,SUV,silver,Maruti Suzuki,Brezza,2017,fictional,true
+SV098781,HR21B0182,HR,car,silver,Hyundai,i20,2020,fictional,true
+SV287253,UK20TX6407,UK,car,white,Hyundai,Grand i10,2008,fictional,true
+SV926202,CG20UT9417,CG,bus,red,Eicher,Skyline,2010,fictional,true
+SV294156,GJ07X8456,GJ,SUV,blue,Toyota,Fortuner,2009,fictional,true
+SV106396,DL3CCK5477,DL,car,orange,Maruti Suzuki,Swift,2022,fictional,true
+SV981491,TG19YT4440,TG,motorcycle,green,Hero,Splendor Plus,2010,fictional,true
+SV725030,CG14T2936,CG,car,blue,Tata,Tiago,2019,fictional,true
 SV886552,CG29GS7128,CG,truck,blue,BharatBenz,1617R,2016,fictional,true
+SV993774,CG22LE6079,CG,motorcycle,grey,TVS,Apache RTR 160,2024,fictional,true
+SV500714,CG08Z6879,CG,car,silver,Maruti Suzuki,Baleno,2023,fictional,true
+SV425998,DL22LP5280,DL,car,white,Hyundai,i20,2012,fictional,true
+SV797124,PB33FW8793,PB,car,white,Maruti Suzuki,Dzire,2020,fictional,true
+SV443097,HR02VD6210,HR,car,silver,Maruti Suzuki,Dzire,2010,fictional,true
+SV799448,UP23ET9997,UP,motorcycle,black,TVS,Apache RTR 160,2013,fictional,true
+SV574834,CG14MW3519,CG,scooter,white,Honda,Activa 6G,2023,fictional,true
+SV706856,MH02RR2099,MH,motorcycle,yellow,Royal Enfield,Classic 350,2022,fictional,true
 SV263859,UP12NK6970,UP,bus,white,Ashok Leyland,Viking,2018,fictional,true
+SV589688,UP16FT9944,UP,bus,white,Tata,Starbus,2010,fictional,true
+SV196909,GA14KV5327,GA,car,green,Honda,City,2012,fictional,true
+SV583718,TG22J1888,TG,car,silver,Maruti Suzuki,Swift,2012,fictional,true
+SV542884,MP23B6657,MP,SUV,white,Mahindra,Scorpio,2023,fictional,true
 SV600863,RJ01PE9215,RJ,scooter,green,Honda,Activa 6G,2020,fictional,true
+SV889265,MP16H4408,MP,scooter,orange,Honda,Activa 6G,2008,fictional,true
+SV223965,MH24HK7957,MH,car,silver,Hyundai,Grand i10,2023,fictional,true
+SV906308,HR22B3675,HR,motorcycle,blue,Honda,Shine,2024,fictional,true
+SV766068,TG05ED3745,TG,car,silver,Honda,City,2024,fictional,true
+SV071264,RJ24K0650,RJ,bus,yellow,Eicher,Skyline,2008,fictional,true
+SV005955,JH35JC3482,JH,car,orange,Tata,Altroz,2015,fictional,true
+SV984666,CG14MW3529,CG,SUV,white,Mahindra,XUV 3XO,2019,evaluation_seed,true
+SV417194,OD29W4816,OD,auto_rickshaw,green,Piaggio,Ape City,2021,fictional,true
+SV373913,CG30NP5389,CG,SUV,white,Mahindra,XUV 3XO,2017,fictional,true
+SV249670,MH14NT5296,MH,car,orange,Tata,Tiago,2008,fictional,true
+SV811202,JH20GP3761,JH,motorcycle,white,Royal Enfield,Classic 350,2013,fictional,true
+SV756109,UP09VD0495,UP,car,orange,Maruti Suzuki,Dzire,2011,fictional,true
+SV668002,MH28D4112,MH,car,white,Maruti Suzuki,Dzire,2018,fictional,true
+SV752571,MH30HE6822,MH,car,grey,Hyundai,i20,2021,fictional,true
+SV800826,UK28HF5839,UK,SUV,brown,Tata,Nexon,2023,fictional,true
+SV473533,MH14LJ4071,MH,motorcycle,silver,Hero,Splendor Plus,2019,fictional,true
+SV500305,DL3CCY1022,DL,bus,black,Tata,Starbus,2015,fictional,true
+SV393735,DL29PB8961,DL,car,white,Maruti Suzuki,Swift,2019,fictional,true
+SV783676,UP16YF6950,UP,car,grey,Maruti Suzuki,Swift,2020,fictional,true
+SV021938,MP25M0924,MP,scooter,black,Suzuki,Access 125,2023,fictional,true
+SV717133,24BH3131RT,BH,motorcycle,white,Hero,Splendor Plus,2009,fictional,true
+SV991163,CG26WF4282,CG,car,silver,Maruti Suzuki,Swift,2013,fictional,true
+SV428160,TG17WG8887,TG,car,green,Tata,Altroz,2021,fictional,true
+SV536242,AP25CS9563,AP,scooter,black,Honda,Activa 6G,2014,fictional,true
+SV712037,CG13PM8232,CG,car,yellow,Maruti Suzuki,Dzire,2012,fictional,true
+SV146190,MP23JJ1581,MP,car,brown,Honda,City,2025,fictional,true
+SV618633,23BH0237XC,BH,car,blue,Maruti Suzuki,Dzire,2014,fictional,true
+SV826698,WB29FE8252,WB,SUV,grey,Hyundai,Creta,2021,fictional,true
+SV450149,CG25SM5383,CG,motorcycle,silver,TVS,Apache RTR 160,2017,fictional,true
+SV266991,HP35DZ1023,HP,truck,yellow,Eicher,Pro 2049,2014,fictional,true
+SV255991,DL06WP1573,DL,SUV,brown,Mahindra,Scorpio,2020,fictional,true
+SV651900,KL28GZ6344,KL,truck,yellow,Tata,Ultra 1918,2020,fictional,true
+SV205176,CG10C3491,CG,auto_rickshaw,black,Bajaj,RE,2012,fictional,true
+SV439256,UP24R4682,UP,auto_rickshaw,green,Mahindra,Treo,2008,fictional,true
+SV035409,JH08L5710,JH,auto_rickshaw,yellow,Bajaj,RE,2020,fictional,true
+SV047551,KA06NN4948,KA,SUV,red,Tata,Nexon,2008,fictional,true
+SV155048,CG24ZE0718,CG,scooter,blue,TVS,Jupiter,2015,fictional,true
+SV829747,TN34SW1360,TN,car,yellow,Hyundai,Grand i10,2017,fictional,true
+SV802644,MP12YR3889,MP,motorcycle,grey,Honda,Shine,2011,fictional,true
+SV532962,PB14SU0299,PB,bus,red,Eicher,Skyline,2009,fictional,true
+SV835033,CG24W2555,CG,SUV,grey,Maruti Suzuki,Brezza,2008,fictional,true
+SV703819,OD14MX5661,OD,scooter,silver,TVS,Jupiter,2025,fictional,true
+SV593961,JH20DR4400,JH,SUV,silver,Hyundai,Creta,2014,fictional,true
+SV391325,UP16FT9458,UP,car,yellow,Maruti Suzuki,Baleno,2011,fictional,true
+SV730871,DL02YV0440,DL,car,silver,Honda,City,2017,fictional,true
+SV696709,TG32CZ4803,TG,car,orange,Honda,City,2008,fictional,true
+SV878730,DL7MAZ8556,DL,car,silver,Maruti Suzuki,Baleno,2021,fictional,true
+SV044315,MP24YX0318,MP,scooter,orange,Suzuki,Access 125,2009,fictional,true
+SV229092,CG26HE5107,CG,auto_rickshaw,green,Piaggio,Ape City,2018,fictional,true
+SV656881,DL3CCK2475,DL,car,white,Hyundai,i20,2020,evaluation_seed,true
+SV313430,RJ17UY9545,RJ,SUV,orange,Mahindra,Scorpio,2021,fictional,true
+SV658848,MP10ME1576,MP,motorcycle,white,Bajaj,Pulsar 150,2023,fictional,true
+SV773226,MH14DB2773,MH,car,orange,Maruti Suzuki,Dzire,2024,fictional,true
+SV243824,HR16DD2508,HR,motorcycle,white,Bajaj,Pulsar 150,2015,fictional,true
+SV178500,HP12HK3828,HP,truck,blue,Ashok Leyland,Ecomet,2014,fictional,true
+SV346087,DL9CAZ8580,DL,car,black,Hyundai,i20,2015,fictional,true
+SV793845,UP15VN7310,UP,car,white,Tata,Altroz,2024,fictional,true
+SV957926,TG07HF6539,TG,car,blue,Tata,Altroz,2017,fictional,true
+SV870776,OD15GR2212,OD,scooter,orange,Ola,S1,2012,fictional,true
+SV725737,CG04DK1578,CG,motorcycle,blue,TVS,Apache RTR 160,2021,evaluation_seed,true
+SV980550,TG22RB6063,TG,car,yellow,Maruti Suzuki,Swift,2010,fictional,true
+SV164026,BR03SJ4413,BR,bus,red,Eicher,Skyline,2014,fictional,true
+SV784595,JH16BH2882,JH,car,white,Honda,City,2015,fictional,true
+SV828648,TG20DS6444,TG,scooter,red,TVS,Jupiter,2016,fictional,true
+SV379601,PB03WF3013,PB,car,brown,Maruti Suzuki,Swift,2011,fictional,true
+SV005257,DL3CTY1825,DL,SUV,black,Hyundai,Creta,2014,fictional,true
+SV061408,JH28C7167,JH,truck,orange,BharatBenz,1617R,2019,fictional,true
+SV882554,TN30YC5296,TN,car,black,Maruti Suzuki,Baleno,2024,fictional,true
+SV944846,OD22J3038,OD,motorcycle,green,Royal Enfield,Classic 350,2022,fictional,true
+SV359382,OD06WM5201,OD,scooter,white,Suzuki,Access 125,2016,fictional,true
+SV423983,MH35VM4657,MH,scooter,brown,Ola,S1,2014,fictional,true
+SV297227,CG04DK1928,CG,motorcycle,yellow,Bajaj,Pulsar 150,2024,fictional,true
+SV021818,UK05O5883,UK,car,white,Hyundai,i20,2020,fictional,true
+SV506149,PB13SJ7127,PB,car,blue,Honda,City,2024,fictional,true
+SV455077,JH34TS3222,JH,car,white,Maruti Suzuki,Swift,2017,fictional,true
+SV992057,UP14GP5081,UP,bus,white,Tata,Starbus,2019,fictional,true
+SV160315,AP24ZF0487,AP,motorcycle,silver,Honda,Shine,2009,fictional,true
+SV683636,GJ30TX0612,GJ,motorcycle,white,Honda,Shine,2011,fictional,true
+SV397809,OD15B1486,OD,motorcycle,white,Royal Enfield,Classic 350,2017,fictional,true
+SV735559,UP37AA3405,UP,motorcycle,blue,Royal Enfield,Classic 350,2015,fictional,true
+SV655191,MP12SM8583,MP,scooter,yellow,Ola,S1,2023,fictional,true
+SV814907,CG01NL3024,CG,car,white,Hyundai,i20,2013,fictional,true
+SV963114,UP34PK7222,UP,bus,white,Eicher,Skyline,2023,fictional,true
+SV045228,UK16CW4752,UK,truck,blue,Tata,Ultra 1918,2019,fictional,true
+SV950896,UP14GP5085,UP,car,white,Tata,Altroz,2017,evaluation_seed,true
+SV990323,CG16LF6186,CG,car,brown,Maruti Suzuki,Dzire,2016,fictional,true
+SV315800,DL8CAH1064,DL,SUV,white,Mahindra,XUV700,2017,fictional,true
+SV575223,MP03JW6481,MP,motorcycle,blue,Bajaj,Pulsar 150,2013,fictional,true
+SV621338,JH06R4148,JH,auto_rickshaw,yellow,Mahindra,Treo,2017,fictional,true
+SV733987,KA24ZY1066,KA,SUV,red,Tata,Nexon,2012,fictional,true
+SV378109,22BH4541MP,BH,car,white,Maruti Suzuki,Dzire,2022,fictional,true
+SV735813,CG28J4125,CG,car,blue,Honda,City,2016,fictional,true
+SV312442,WB11B4264,WB,motorcycle,white,Bajaj,Pulsar 150,2014,fictional,true
+SV616642,26BH4508U,BH,SUV,white,Mahindra,Scorpio,2018,fictional,true
+SV527320,DL15FU7620,DL,truck,white,Ashok Leyland,Ecomet,2011,fictional,true
+SV666770,JH13JE8836,JH,van,white,Force,Traveller,2019,fictional,true
+SV206308,JH31KJ8802,JH,car,white,Tata,Altroz,2019,fictional,true
+SV704535,DL07CU4609,DL,SUV,black,Hyundai,Creta,2018,fictional,true
+SV058942,MH34KA3569,MH,van,brown,Maruti Suzuki,Eeco,2009,fictional,true
+SV192628,TN28RS6607,TN,van,brown,Maruti Suzuki,Eeco,2012,fictional,true
+SV064477,OD16ES2330,OD,bus,red,Ashok Leyland,Viking,2010,fictional,true
+SV332686,GJ23WR9504,GJ,car,white,Tata,Tiago,2013,fictional,true
+SV676854,MP29VL7347,MP,SUV,blue,Mahindra,Scorpio,2016,fictional,true
+SV261456,TG32PA8938,TG,motorcycle,green,Bajaj,Pulsar 150,2016,fictional,true
+SV024953,AS28DG4929,AS,auto_rickshaw,yellow,Bajaj,RE,2022,fictional,true
+SV163823,TG17RF5742,TG,car,silver,Maruti Suzuki,Swift,2012,fictional,true
+SV880311,TG33HD0952,TG,scooter,white,Ola,S1,2019,fictional,true
+SV258008,KA53MH3896,KA,SUV,red,Mahindra,Scorpio,2023,fictional,true
+SV316802,25BH6170ZS,BH,bus,yellow,Eicher,Skyline,2013,fictional,true
+SV873861,CG04DH1578,CG,motorcycle,blue,Honda,Shine,2022,fictional,true
+SV188279,JH34ZD3129,JH,motorcycle,grey,Honda,Shine,2024,fictional,true
+SV495819,MP25RL8759,MP,SUV,white,Kia,Seltos,2015,fictional,true
+SV091775,KA11SY3092,KA,scooter,blue,Ola,S1,2023,fictional,true
+SV340854,CG23JK8013,CG,SUV,silver,Toyota,Fortuner,2021,fictional,true
+SV833657,KA15UJ0361,KA,motorcycle,silver,Hero,Splendor Plus,2022,fictional,true
+SV551538,TG28WN0503,TG,scooter,silver,TVS,Jupiter,2018,fictional,true
+SV617942,TG01SZ7317,TG,truck,white,Tata,Ultra 1918,2011,fictional,true
+SV545732,UP29VJ2468,UP,car,silver,Maruti Suzuki,Swift,2016,fictional,true
+SV095104,MP13HM7216,MP,car,white,Tata,Tiago,2025,fictional,true
+SV428987,PB12AG8124,PB,car,silver,Honda,City,2010,fictional,true
+SV241350,OD11V2173,OD,car,white,Tata,Tiago,2025,fictional,true
+SV597097,HP15D6018,HP,car,silver,Tata,Altroz,2009,fictional,true
+SV900061,UP30F9935,UP,car,silver,Honda,City,2021,fictional,true
+SV461017,CG05KB6686,CG,car,yellow,Hyundai,i20,2025,fictional,true
