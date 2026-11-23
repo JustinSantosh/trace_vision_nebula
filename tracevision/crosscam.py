@@ -364,6 +364,8 @@ def duplicate_tracks(run_dir, min_contain=0.85, min_frac=0.7, min_area_ratio=0.3
 
 def link_pair(run_a, run_b, cfg=None, calib=None):
     """Clips the owner declared a SAME-SCENE pair (same vehicles, two angles; clips.csv cam_parking_pairN_a/b).
+    ONLY for cross-angled cameras watching the same spot (overlapping views): the closed-world assumption (both clips
+    show the same vehicles) is false for cameras at different places, which must use link() (open world, plate-led).
     1. plate-confirmed links: plate similarity >= plate_confirm on >= min_known jointly read characters (one-to-one)
     2. the rest: one-to-one assignment (Hungarian) maximising the link score; accepted only if the types are
        compatible, no plate veto, and score >= pair_min_score -> 'probable' (appearance / elimination)

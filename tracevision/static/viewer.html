@@ -190,7 +190,7 @@ function xlinks(d) {          // links for this vehicle (a nested duplicate box 
 function xcHtml(d) {
   const ls = xlinks(d);
   if (!ls.length) return "";
-  return `<h4>Same vehicle in another camera</h4>` + ls.map(l => {
+  return `<h4>Same vehicle in another camera</h4><div class="note" style="margin-top:0">Cross-angled camera pair (same spot, different angle): linked jointly, evidence pooled.</div>` + ls.map(l => {
     const f = l.final || {}, conf = l.link.startsWith("confirmed");
     const dec = f.decision === "match" ? `<b style="color:${css("--match")}">MATCH ${esc(f.registry_top1 || "")}</b>`
               : f.decision === "candidate_via_probable_link" ? `<b style="color:${css("--plate")}">candidate ${esc(f.registry_top1 || "")}</b> (via a probable link, not confirmed)`
