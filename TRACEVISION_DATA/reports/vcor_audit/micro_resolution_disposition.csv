@@ -1,0 +1,31 @@
+path,split,class,dimensions,manifest_status,manifest_reason,exact_duplicate_group,perceptual_duplicate_group,disposition_explanation
+TRACEVISION_DATA/datasets/vcor/train/beige/236195baee.jpg,train,beige,43x21,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/black/a81eaabdc7.jpg,train,black,29x32,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/brown/0e8bbae31a.jpg,train,brown,19x76,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/gold/6d4258d363.jpg,train,gold,23x13,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/gold/f0833c5a88.jpg,train,gold,26x43,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/green/695a51645d.jpg,train,green,18x10,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/green/73bae80f50 - Copy.jpg,train,green,30x28,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/grey/6ab227cb75.jpg,train,grey,11x10,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/grey/770c8dd86c.jpg,train,grey,14x12,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/grey/bc1c569bf3.jpg,train,grey,30x11,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/orange/9fd421fe38.jpg,train,orange,83x13,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/pink/c0d50d2398.jpg,train,pink,43x23,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/tan/2a7aa714b9.jpg,train,tan,51x30,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/tan/998c0e76f4.jpg,train,tan,39x23,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/yellow/58d38c7f69.jpg,train,yellow,20x62,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/yellow/5a403ec1e3.jpg,train,yellow,21x15,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/train/yellow/ffe322f18a.jpg,train,yellow,18x10,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/val/blue/0b2ca4bb14.jpg,val,blue,10x7,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/val/grey/8e786ef027.jpg,val,grey,19x12,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/val/orange/5192aa8cc2.jpg,val,orange,52x31,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/val/pink/ef2ecd7adb.jpg,val,pink,82x29,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/val/tan/a57111d5c8.jpg,val,tan,67x30,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/test/beige/9087a1d408.jpg,test,beige,50x17,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/test/black/2b869ea3ef.jpg,test,black,9x10,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/test/black/40c75b2df4.jpg,test,black,53x21,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/test/gold/a78ab2cc47.jpg,test,gold,59x26,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/test/green/e5657997ac.jpg,test,green,25x15,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/test/grey/b0f83493d7.jpg,test,grey,24x58,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/test/red/0c098b9636.jpg,test,red,44x20,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.
+TRACEVISION_DATA/datasets/vcor/test/yellow/b270b946b3.jpg,test,yellow,56x30,EXCLUDE,TINY_IMAGE_SUB_32PX,NONE,NONE,Excluded primarily under TINY_IMAGE_SUB_32PX rule.

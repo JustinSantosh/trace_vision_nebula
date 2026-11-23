@@ -1,0 +1,1299 @@
+{
+  "summary": {
+    "cross_split_exact_leakage_count": 2,
+    "cross_split_perceptual_leakage_count": 47,
+    "train_val_exact_leaked_count": 1,
+    "train_test_exact_leaked_count": 1,
+    "val_test_exact_leaked_count": 0
+  },
+  "exact_leakage_groups": [
+    {
+      "sha256": "c5442af6c74fb2967f12760a51ab42813a6bf937170fe4977b138def0ba7df64",
+      "count": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "beige",
+        "gold"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/beige/353630f86d.jpg",
+          "split": "train",
+          "class": "beige"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/gold/353630f86d.jpg",
+          "split": "val",
+          "class": "gold"
+        }
+      ]
+    },
+    {
+      "sha256": "1a321700c90456b2bf0670d35b7c6cbec63e7cd1c5f0409485619e8185e20f8e",
+      "count": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "silver",
+        "white"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/white/31721f80c1.jpg",
+          "split": "train",
+          "class": "white"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/silver/31721f80c1.jpg",
+          "split": "test",
+          "class": "silver"
+        }
+      ]
+    }
+  ],
+  "perceptual_leakage_groups": [
+    {
+      "dhash": "38383ebe9edadcf8",
+      "distinct_sha256_count": 1,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "beige",
+        "gold"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/beige/353630f86d.jpg",
+          "split": "train",
+          "class": "beige",
+          "sha256": "c5442af6c74f"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/gold/353630f86d.jpg",
+          "split": "val",
+          "class": "gold",
+          "sha256": "c5442af6c74f"
+        }
+      ]
+    },
+    {
+      "dhash": "f1d0d806b6a7ba70",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "beige"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/beige/4a1f596897.jpg",
+          "split": "train",
+          "class": "beige",
+          "sha256": "63f9f4c5b0d9"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/beige/3710effc69.jpg",
+          "split": "val",
+          "class": "beige",
+          "sha256": "767427aa2b48"
+        }
+      ]
+    },
+    {
+      "dhash": "ae87430f87e7e674",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "beige"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/beige/5f593f05cd.jpg",
+          "split": "train",
+          "class": "beige",
+          "sha256": "8ae7f695d8ef"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/beige/da5a78d35c.jpg",
+          "split": "test",
+          "class": "beige",
+          "sha256": "81cf748dcfcb"
+        }
+      ]
+    },
+    {
+      "dhash": "6cf8ee87849e8ad0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "beige"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/beige/8d5feed42b.jpg",
+          "split": "train",
+          "class": "beige",
+          "sha256": "6b7b01b550ad"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/beige/46ab06ba50.jpg",
+          "split": "val",
+          "class": "beige",
+          "sha256": "f1e0fff5e851"
+        }
+      ]
+    },
+    {
+      "dhash": "707ce8fa86868cf0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "beige"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/beige/ba4786d750.jpg",
+          "split": "train",
+          "class": "beige",
+          "sha256": "3e8465777f84"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/beige/05aeb6ddec.jpg",
+          "split": "test",
+          "class": "beige",
+          "sha256": "ee2147009740"
+        }
+      ]
+    },
+    {
+      "dhash": "78f8e2c2f8b18c8c",
+      "distinct_sha256_count": 3,
+      "total_items": 3,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "black"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/black/02db69e20c.jpg",
+          "split": "train",
+          "class": "black",
+          "sha256": "0428011ca115"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/black/054c3c45c9.jpg",
+          "split": "train",
+          "class": "black",
+          "sha256": "394fd59eeeef"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/black/01f557e075.jpg",
+          "split": "val",
+          "class": "black",
+          "sha256": "de7abc9125e7"
+        }
+      ]
+    },
+    {
+      "dhash": "7cf8f6d498e8c8e0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "black"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/black/04b2cbd14a.jpg",
+          "split": "train",
+          "class": "black",
+          "sha256": "558b3400da60"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/black/cf9bcb7b0b.jpg",
+          "split": "test",
+          "class": "black",
+          "sha256": "1f253d472128"
+        }
+      ]
+    },
+    {
+      "dhash": "78f8f8cec4a2b2b0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "black"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/black/6f5e8db263.jpg",
+          "split": "train",
+          "class": "black",
+          "sha256": "51e1a19db6c6"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/black/ea8b91194d.jpg",
+          "split": "val",
+          "class": "black",
+          "sha256": "ba0149c5db93"
+        }
+      ]
+    },
+    {
+      "dhash": "78f8fade9884a4e0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "black"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/black/d992606869.jpg",
+          "split": "train",
+          "class": "black",
+          "sha256": "c32e648adaec"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/black/fcdc2a73c5.jpg",
+          "split": "val",
+          "class": "black",
+          "sha256": "f3f7bdd0b1f6"
+        }
+      ]
+    },
+    {
+      "dhash": "8fc7ee90b0b8bafa",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "black"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/black/efae457cd0.jpg",
+          "split": "train",
+          "class": "black",
+          "sha256": "63b8da91b886"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/black/911d9c4737.jpg",
+          "split": "test",
+          "class": "black",
+          "sha256": "091d7aa4ed8b"
+        }
+      ]
+    },
+    {
+      "dhash": "c7c3809898b4ecfc",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "blue"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/blue/8367aa76c2.jpg",
+          "split": "train",
+          "class": "blue",
+          "sha256": "cea5677646e1"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/blue/188fb65472.jpg",
+          "split": "test",
+          "class": "blue",
+          "sha256": "e372818bdb4f"
+        }
+      ]
+    },
+    {
+      "dhash": "80c484c8c8eaeae8",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "blue"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/blue/cf51ebe9ca.jpg",
+          "split": "train",
+          "class": "blue",
+          "sha256": "dab40aaf5951"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/blue/1cd929dd79.jpg",
+          "split": "val",
+          "class": "blue",
+          "sha256": "59d4747f6fe5"
+        }
+      ]
+    },
+    {
+      "dhash": "3874eee6d6869cdc",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "blue"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/blue/ec43a1fddd.jpg",
+          "split": "train",
+          "class": "blue",
+          "sha256": "dbb7f44880e4"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/blue/1ba60bd1db.jpg",
+          "split": "val",
+          "class": "blue",
+          "sha256": "c782e698fe8a"
+        }
+      ]
+    },
+    {
+      "dhash": "1fcd038bc6c2f4e8",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "brown"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/brown/04e5f93e07.jpg",
+          "split": "train",
+          "class": "brown",
+          "sha256": "15ab7ef27dab"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/brown/1cb489a8ea.jpg",
+          "split": "val",
+          "class": "brown",
+          "sha256": "5e168dec9e3e"
+        }
+      ]
+    },
+    {
+      "dhash": "e0b01f5c60e6ecec",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "gold"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/gold/510de9c443.jpg",
+          "split": "train",
+          "class": "gold",
+          "sha256": "78f40ef84e20"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/gold/cfb09c412d.jpg",
+          "split": "test",
+          "class": "gold",
+          "sha256": "eb45c4b4d6d7"
+        }
+      ]
+    },
+    {
+      "dhash": "191941c70b0b8f47",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "green"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/green/92e2e4a29f.jpg",
+          "split": "train",
+          "class": "green",
+          "sha256": "88c3cf163ca8"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/green/1b203c6b70.jpg",
+          "split": "test",
+          "class": "green",
+          "sha256": "5fc6c5eb3b15"
+        }
+      ]
+    },
+    {
+      "dhash": "90a08e7e4a1694fc",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "green"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/green/d1d0d5e3f6.jpg",
+          "split": "train",
+          "class": "green",
+          "sha256": "b07817866a11"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/green/1d8c22e15a.jpg",
+          "split": "test",
+          "class": "green",
+          "sha256": "bad9a0a87b43"
+        }
+      ]
+    },
+    {
+      "dhash": "6e674e3ce4f4e4f0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "green"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/green/e0e3a49ec2.jpg",
+          "split": "train",
+          "class": "green",
+          "sha256": "8e276b5d30e6"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/green/501a92a709.jpg",
+          "split": "test",
+          "class": "green",
+          "sha256": "7d1108a40e04"
+        }
+      ]
+    },
+    {
+      "dhash": "1878713f183888e0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "green"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/green/f17fef3135.jpg",
+          "split": "train",
+          "class": "green",
+          "sha256": "dbc0d6413028"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/green/51a99cd620.jpg",
+          "split": "test",
+          "class": "green",
+          "sha256": "89e5626f78eb"
+        }
+      ]
+    },
+    {
+      "dhash": "1119316b6bdbdc98",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "green",
+        "orange"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/orange/660712bfac.jpg",
+          "split": "train",
+          "class": "orange",
+          "sha256": "2d2e7ad44c7c"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/green/5cf2f60e34.jpg",
+          "split": "test",
+          "class": "green",
+          "sha256": "5c1fbdaa48a1"
+        }
+      ]
+    },
+    {
+      "dhash": "c7cd0c1f3736b8a0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "pink"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/pink/3d13aa5184.jpg",
+          "split": "train",
+          "class": "pink",
+          "sha256": "a2d0375de557"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/pink/0e42e72b3d.jpg",
+          "split": "test",
+          "class": "pink",
+          "sha256": "eb49c815840b"
+        }
+      ]
+    },
+    {
+      "dhash": "c1e0e084a6eefef8",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "purple"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/purple/6b2ff6522c.jpg",
+          "split": "train",
+          "class": "purple",
+          "sha256": "e872b9093a99"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/purple/f58ad8d2f9.jpg",
+          "split": "test",
+          "class": "purple",
+          "sha256": "368c3400caf9"
+        }
+      ]
+    },
+    {
+      "dhash": "7878f8ec9c9a96c0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "purple"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/purple/771f685f0d.jpg",
+          "split": "train",
+          "class": "purple",
+          "sha256": "916b81505536"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/purple/623723725d.jpg",
+          "split": "val",
+          "class": "purple",
+          "sha256": "41740d836900"
+        }
+      ]
+    },
+    {
+      "dhash": "38fce4714b919170",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "purple"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/purple/b46b590e8b.jpg",
+          "split": "train",
+          "class": "purple",
+          "sha256": "3082a6371d56"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/purple/f6ce086bf3.jpg",
+          "split": "test",
+          "class": "purple",
+          "sha256": "1cb5ccc1ecfb"
+        }
+      ]
+    },
+    {
+      "dhash": "7470799e5e7ebef8",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "red"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/red/31aeec159e.jpg",
+          "split": "train",
+          "class": "red",
+          "sha256": "4013e9d13070"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/red/f195146de0.jpg",
+          "split": "test",
+          "class": "red",
+          "sha256": "75cfafaff643"
+        }
+      ]
+    },
+    {
+      "dhash": "b8f8fefe9db59ef4",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "red"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/red/461f541c5b.jpg",
+          "split": "train",
+          "class": "red",
+          "sha256": "124fb9648103"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/red/923729d82c.jpg",
+          "split": "val",
+          "class": "red",
+          "sha256": "4f991d46acfe"
+        }
+      ]
+    },
+    {
+      "dhash": "78f8f8de9c98d0f0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "red"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/red/8397f68db6.jpg",
+          "split": "train",
+          "class": "red",
+          "sha256": "f78e8b418489"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/red/ef805191c2.jpg",
+          "split": "test",
+          "class": "red",
+          "sha256": "c1ea09608459"
+        }
+      ]
+    },
+    {
+      "dhash": "4b5d1c1c1a9490e0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "red"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/red/c67cedfbe3.jpg",
+          "split": "train",
+          "class": "red",
+          "sha256": "fb4e95ae6933"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/red/ea2d889d9c.jpg",
+          "split": "val",
+          "class": "red",
+          "sha256": "99427d495990"
+        }
+      ]
+    },
+    {
+      "dhash": "78f1c5878d8989c0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "silver"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/silver/3b2ad112c9.jpg",
+          "split": "train",
+          "class": "silver",
+          "sha256": "904dd4fd13c6"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/silver/e8743c46e6.jpg",
+          "split": "test",
+          "class": "silver",
+          "sha256": "1cb2c11cc8a1"
+        }
+      ]
+    },
+    {
+      "dhash": "0706070f3733abec",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "silver"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/silver/65316e9cb9.jpg",
+          "split": "train",
+          "class": "silver",
+          "sha256": "5bfc47c45e2d"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/silver/0aca9bb6fb.jpg",
+          "split": "val",
+          "class": "silver",
+          "sha256": "6340828e5487"
+        }
+      ]
+    },
+    {
+      "dhash": "c78d0d1f93139ea8",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "silver"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/silver/745bb2a532.jpg",
+          "split": "train",
+          "class": "silver",
+          "sha256": "9f48a29b83d9"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/silver/f9fb655416.jpg",
+          "split": "test",
+          "class": "silver",
+          "sha256": "9142e2f872dc"
+        }
+      ]
+    },
+    {
+      "dhash": "7878fedcdac8b0b0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "tan"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/tan/3ce286b8c4.jpg",
+          "split": "train",
+          "class": "tan",
+          "sha256": "3c22b5d77a53"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/tan/c13347d859.jpg",
+          "split": "val",
+          "class": "tan",
+          "sha256": "a8cf27341799"
+        }
+      ]
+    },
+    {
+      "dhash": "035b1f1f1e3c1cc8",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "tan"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/tan/86f86edbcd.jpg",
+          "split": "train",
+          "class": "tan",
+          "sha256": "6919988fa4d8"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/tan/5ec6ae5958.jpg",
+          "split": "val",
+          "class": "tan",
+          "sha256": "125aeb1a96f6"
+        }
+      ]
+    },
+    {
+      "dhash": "8fce643626e6e6e4",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "tan"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/tan/9f7a11990f.jpg",
+          "split": "train",
+          "class": "tan",
+          "sha256": "1204b0df3eeb"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/tan/31555f86ad.jpg",
+          "split": "val",
+          "class": "tan",
+          "sha256": "9eace8558180"
+        }
+      ]
+    },
+    {
+      "dhash": "10249ece476eeef0",
+      "distinct_sha256_count": 1,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "silver",
+        "white"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/white/31721f80c1.jpg",
+          "split": "train",
+          "class": "white",
+          "sha256": "1a321700c904"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/silver/31721f80c1.jpg",
+          "split": "test",
+          "class": "silver",
+          "sha256": "1a321700c904"
+        }
+      ]
+    },
+    {
+      "dhash": "8784092933339290",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "white"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/white/34722f4baf.jpg",
+          "split": "train",
+          "class": "white",
+          "sha256": "fb5faedefb7a"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/white/860c93ae44.jpg",
+          "split": "val",
+          "class": "white",
+          "sha256": "dcb77c63a23e"
+        }
+      ]
+    },
+    {
+      "dhash": "f0c0e0031692e6fc",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "white"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/white/491f30fff2.jpg",
+          "split": "train",
+          "class": "white",
+          "sha256": "45eea6a053d4"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/white/a688507a63.jpg",
+          "split": "val",
+          "class": "white",
+          "sha256": "196b44a4ef82"
+        }
+      ]
+    },
+    {
+      "dhash": "b960034fe3c397c7",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "white"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/white/d546aa64f5.jpg",
+          "split": "train",
+          "class": "white",
+          "sha256": "78fde79670b7"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/white/b5a75694a5.jpg",
+          "split": "test",
+          "class": "white",
+          "sha256": "caa158f6253c"
+        }
+      ]
+    },
+    {
+      "dhash": "7064e0e626e6e0e0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "train"
+      ],
+      "classes": [
+        "white"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/white/ff3196c12d.jpg",
+          "split": "train",
+          "class": "white",
+          "sha256": "cf15cda21d31"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/white/2e0acdcc4c.jpg",
+          "split": "test",
+          "class": "white",
+          "sha256": "f448209da3e8"
+        }
+      ]
+    },
+    {
+      "dhash": "198f070383e6e4f0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "train",
+        "val"
+      ],
+      "classes": [
+        "yellow"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/train/yellow/8b529fa274.jpg",
+          "split": "train",
+          "class": "yellow",
+          "sha256": "bb829d65ed50"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/yellow/61bf1dbada.jpg",
+          "split": "val",
+          "class": "yellow",
+          "sha256": "0d3ad531949e"
+        }
+      ]
+    },
+    {
+      "dhash": "70f0f020a291f378",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "val"
+      ],
+      "classes": [
+        "beige"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/beige/3dac5a8b1f.jpg",
+          "split": "val",
+          "class": "beige",
+          "sha256": "9bd7d4dc9f1e"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/beige/5d556e361e.jpg",
+          "split": "test",
+          "class": "beige",
+          "sha256": "43506ca72942"
+        }
+      ]
+    },
+    {
+      "dhash": "f0f0f0ce9d383230",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "val"
+      ],
+      "classes": [
+        "blue"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/blue/7822022bf5.jpg",
+          "split": "val",
+          "class": "blue",
+          "sha256": "ded9157655fa"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/blue/2a433ab3a9.jpg",
+          "split": "test",
+          "class": "blue",
+          "sha256": "3600855e9b2a"
+        }
+      ]
+    },
+    {
+      "dhash": "e0e8a2e4f9aab0b0",
+      "distinct_sha256_count": 2,
+      "total_items": 3,
+      "splits": [
+        "test",
+        "val"
+      ],
+      "classes": [
+        "green",
+        "yellow"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/green/833c0f0701.jpg",
+          "split": "val",
+          "class": "green",
+          "sha256": "f2d88bcc4fec"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/yellow/833c0f0701.jpg",
+          "split": "val",
+          "class": "yellow",
+          "sha256": "f2d88bcc4fec"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/yellow/db84bbc431.jpg",
+          "split": "test",
+          "class": "yellow",
+          "sha256": "fba950f00d11"
+        }
+      ]
+    },
+    {
+      "dhash": "f1c8e000e96903a2",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "val"
+      ],
+      "classes": [
+        "orange"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/orange/e474343ee6.jpg",
+          "split": "val",
+          "class": "orange",
+          "sha256": "a72fbe866bf8"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/orange/c48aa32b67.jpg",
+          "split": "test",
+          "class": "orange",
+          "sha256": "988e4af7f782"
+        }
+      ]
+    },
+    {
+      "dhash": "5ccc8789c6d4d4d6",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "val"
+      ],
+      "classes": [
+        "red"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/red/515d6cd8b2.jpg",
+          "split": "val",
+          "class": "red",
+          "sha256": "8c323bd102a2"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/red/1fc0badd4a.jpg",
+          "split": "test",
+          "class": "red",
+          "sha256": "e490daeb5bc3"
+        }
+      ]
+    },
+    {
+      "dhash": "e465630032b3f2f8",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "val"
+      ],
+      "classes": [
+        "red"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/red/d7554ca485.jpg",
+          "split": "val",
+          "class": "red",
+          "sha256": "6867ae891aaf"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/red/485a638a93.jpg",
+          "split": "test",
+          "class": "red",
+          "sha256": "bd352d795b84"
+        }
+      ]
+    },
+    {
+      "dhash": "78f8f8de373298c0",
+      "distinct_sha256_count": 2,
+      "total_items": 2,
+      "splits": [
+        "test",
+        "val"
+      ],
+      "classes": [
+        "silver"
+      ],
+      "items": [
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/val/silver/106f9b5ac4.jpg",
+          "split": "val",
+          "class": "silver",
+          "sha256": "739eea18b49e"
+        },
+        {
+          "path": "TRACEVISION_DATA/datasets/vcor/test/silver/72d3810627.jpg",
+          "split": "test",
+          "class": "silver",
+          "sha256": "fb53ea254e0a"
+        }
+      ]
+    }
+  ]
+}

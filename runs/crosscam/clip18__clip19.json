@@ -56,21 +56,21 @@
       "colour": "green",
       "plate": "",
       "decision": "no_link",
-      "decision_reason": "appearance only and not distinctive enough (CLIP cosine 0.952 < 0.965, the 99th percentile of different-vehicle pairs)",
+      "decision_reason": "appearance only and not distinctive enough (CLIP cosine 0.951 < 0.965, the 99th percentile of different-vehicle pairs)",
       "linked_to": null,
       "candidates": [
         {
           "clip_id": "clip19",
           "track_id": 1,
-          "link_score": 80.9,
+          "link_score": 80.6,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
-            "appearance": 0.941,
+            "appearance": 0.937,
             "type": 1.0,
             "colour": 0.0
           },
           "reasons": [
-            "appearance similarity 0.94 (CLIP cosine 0.952)",
+            "appearance similarity 0.94 (CLIP cosine 0.951)",
             "type motorcycle/scooter vs motorcycle/scooter (1.0)",
             "colour green vs grey (0.0)"
           ]
@@ -98,7 +98,7 @@
             "colour": 0.0
           },
           "reasons": [
-            "appearance similarity 0.00 (CLIP cosine 0.823)",
+            "appearance similarity 0.00 (CLIP cosine 0.818)",
             "type bicycle vs motorcycle/scooter (0.0)",
             "colour green vs grey (0.0)"
           ]
@@ -124,9 +124,9 @@
           "plate": null
         },
         "link": "probable (same-scene pair: appearance / type / colour, by elimination)",
-        "link_score": 80.9,
+        "link_score": 80.6,
         "evidence": [
-          "appearance similarity 0.94 (CLIP cosine 0.952)",
+          "appearance similarity 0.94 (CLIP cosine 0.951)",
           "type motorcycle/scooter vs motorcycle/scooter (1.0)",
           "colour green vs grey (0.0)"
         ],

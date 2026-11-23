@@ -1,0 +1,82 @@
+{
+  "overall_status": "PASS",
+  "timestamp": "2026-11-23T21:52:00",
+  "checks": {
+    "every_manifest_path_exists": {
+      "status": "PASS",
+      "missing_count": 0,
+      "missing_samples": []
+    },
+    "no_duplicate_paths_in_manifest": {
+      "status": "PASS",
+      "duplicate_count": 0,
+      "duplicate_samples": []
+    },
+    "all_disk_images_in_manifest_completeness": {
+      "status": "PASS",
+      "disk_count": 10373,
+      "manifest_count": 10373,
+      "untracked_count": 0,
+      "untracked_samples": []
+    },
+    "source_images_unmodified": {
+      "status": "PASS",
+      "min_size_bytes": 740,
+      "max_size_bytes": 3439628,
+      "matches_audit_min_max": true
+    },
+    "included_and_excluded_mutually_exclusive_and_exhaustive": {
+      "status": "PASS",
+      "included_count": 10295,
+      "excluded_count": 78,
+      "overlap_count": 0,
+      "total_union": 10373
+    },
+    "every_exclusion_has_documented_reason": {
+      "status": "PASS",
+      "blank_reason_count": 0
+    },
+    "all_mapped_labels_in_approved_vocabulary": {
+      "status": "PASS",
+      "invalid_label_count": 0,
+      "approved_vocabulary": [
+        "black",
+        "blue",
+        "brown",
+        "green",
+        "grey",
+        "orange",
+        "other",
+        "red",
+        "silver",
+        "unknown",
+        "white",
+        "yellow"
+      ]
+    }
+  },
+  "reconciliation_summary": {
+    "total_disk_images": 10373,
+    "total_manifest_images": 10373,
+    "total_included_images": 10295,
+    "total_excluded_images": 78,
+    "split_accounting": {
+      "train": {
+        "total": 7267,
+        "included": 7208,
+        "excluded": 59
+      },
+      "val": {
+        "total": 1550,
+        "included": 1542,
+        "excluded": 8
+      },
+      "test": {
+        "total": 1556,
+        "included": 1545,
+        "excluded": 11
+      }
+    },
+    "overlapping_exclusion_reasons_count": 6
+  }
+}

@@ -18,8 +18,11 @@ SCRIPTS = ROOT / "TRACEVISION_DATA/scripts"
 
 def _serve(q_in, q_out, device):
     sys.path.insert(0, str(SCRIPTS))
-    import awiros_feasibility_check as a
     try:
+        import paddle
+        if device == "gpu" and not paddle.is_compiled_with_cuda():
+            device = "cpu"
+        import awiros_feasibility_check as a
         paddle, model, chars, _ = a.load_model(ROOT / "TRACEVISION_DATA/models/awiros", ROOT / "third_party/PaddleOCR", device)
     except Exception as e:  # report start-up failure instead of hanging the caller
         q_out.put(("error", repr(e)))

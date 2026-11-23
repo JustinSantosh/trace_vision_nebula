@@ -56,21 +56,21 @@
       "colour": "green",
       "plate": "CG14MW3529",
       "decision": "no_link",
-      "decision_reason": "best link score 44.2 is below 70.0",
+      "decision_reason": "best link score 43.2 is below 70.0",
       "linked_to": null,
       "candidates": [
         {
           "clip_id": "clip15",
           "track_id": 3,
-          "link_score": 44.2,
+          "link_score": 43.2,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
-            "appearance": 0.202,
+            "appearance": 0.189,
             "type": 1.0,
             "colour": 1.0
           },
           "reasons": [
-            "appearance similarity 0.20 (CLIP cosine 0.891)",
+            "appearance similarity 0.19 (CLIP cosine 0.890)",
             "type SUV vs SUV (1.0)",
             "colour green vs green (1.0)"
           ]
@@ -78,15 +78,15 @@
         {
           "clip_id": "clip15",
           "track_id": 1,
-          "link_score": 25.4,
+          "link_score": 20.9,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
-            "appearance": 0.148,
+            "appearance": 0.084,
             "type": 1.0,
             "colour": 0.0
           },
           "reasons": [
-            "appearance similarity 0.15 (CLIP cosine 0.886)",
+            "appearance similarity 0.08 (CLIP cosine 0.881)",
             "type SUV vs SUV (1.0)",
             "colour green vs grey (0.0)"
           ]
@@ -97,7 +97,7 @@
           "link_score": 0.0,
           "evidence": "veto",
           "parts": {
-            "appearance": 0.461
+            "appearance": 0.436
           },
           "reasons": [
             "plates differ: CG14MW3529 vs CG04QS9584 (similarity 0.40) - veto"
@@ -112,14 +112,14 @@
       "colour": "green",
       "plate": "??0S9584",
       "decision": "link",
-      "decision_reason": "link score 81.6, clear of the next candidate, mutual best match (plate + appearance)",
+      "decision_reason": "link score 81.5, clear of the next candidate, mutual best match (plate + appearance)",
       "linked_to": {
         "clip_id": "clip15",
         "track_id": 11,
-        "link_score": 81.6,
+        "link_score": 81.5,
         "evidence": "plate + appearance",
         "parts": {
-          "appearance": 0.423,
+          "appearance": 0.421,
           "plate": 0.933,
           "type": 1.0,
           "colour": 1.0
@@ -135,10 +135,10 @@
         {
           "clip_id": "clip15",
           "track_id": 11,
-          "link_score": 81.6,
+          "link_score": 81.5,
           "evidence": "plate + appearance",
           "parts": {
-            "appearance": 0.423,
+            "appearance": 0.421,
             "plate": 0.933,
             "type": 1.0,
             "colour": 1.0
@@ -153,15 +153,15 @@
         {
           "clip_id": "clip15",
           "track_id": 1,
-          "link_score": 83.0,
+          "link_score": 81.0,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
-            "appearance": 0.972,
+            "appearance": 0.943,
             "type": 1.0,
             "colour": 0.0
           },
           "reasons": [
-            "appearance similarity 0.97 (CLIP cosine 0.954)",
+            "appearance similarity 0.94 (CLIP cosine 0.952)",
             "type SUV vs SUV (1.0)",
             "colour green vs grey (0.0)"
           ]
@@ -169,15 +169,15 @@
         {
           "clip_id": "clip15",
           "track_id": 3,
-          "link_score": 72.6,
+          "link_score": 71.4,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
-            "appearance": 0.609,
+            "appearance": 0.592,
             "type": 1.0,
             "colour": 1.0
           },
           "reasons": [
-            "appearance similarity 0.61 (CLIP cosine 0.924)",
+            "appearance similarity 0.59 (CLIP cosine 0.923)",
             "type SUV vs SUV (1.0)",
             "colour green vs green (1.0)"
           ]
@@ -207,7 +207,7 @@
           },
           "reasons": [
             "plates agree: CG04?S9584 vs CG04QS9584 (similarity 1.00 on 9 readable characters)",
-            "appearance similarity 0.00 (CLIP cosine 0.809)",
+            "appearance similarity 0.00 (CLIP cosine 0.804)",
             "type SUV vs SUV (1.0)",
             "colour brown vs green (0.0)"
           ]
@@ -215,15 +215,15 @@
         {
           "clip_id": "clip15",
           "track_id": 1,
-          "link_score": 79.9,
+          "link_score": 79.4,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
-            "appearance": 0.927,
+            "appearance": 0.919,
             "type": 1.0,
             "colour": 0.0
           },
           "reasons": [
-            "appearance similarity 0.93 (CLIP cosine 0.951)",
+            "appearance similarity 0.92 (CLIP cosine 0.950)",
             "type SUV vs SUV (1.0)",
             "colour brown vs grey (0.0)"
           ]
@@ -231,15 +231,15 @@
         {
           "clip_id": "clip15",
           "track_id": 3,
-          "link_score": 20.1,
+          "link_score": 15.0,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
-            "appearance": 0.072,
+            "appearance": 0.0,
             "type": 1.0,
             "colour": 0.0
           },
           "reasons": [
-            "appearance similarity 0.07 (CLIP cosine 0.880)",
+            "appearance similarity 0.00 (CLIP cosine 0.874)",
             "type SUV vs SUV (1.0)",
             "colour brown vs green (0.0)"
           ]
@@ -268,7 +268,7 @@
         "link_score": 67.5,
         "evidence": [
           "plates agree: CG04?S9584 vs CG04QS9584 (similarity 1.00 on 9 readable characters)",
-          "appearance similarity 0.00 (CLIP cosine 0.809)",
+          "appearance similarity 0.00 (CLIP cosine 0.804)",
           "type SUV vs SUV (1.0)",
           "colour brown vs green (0.0)"
         ],
@@ -295,9 +295,9 @@
           "plate": "C?14???5??"
         },
         "link": "probable (elimination: the only remaining compatible vehicle on each side; partial plates agree on 4 characters)",
-        "link_score": 25.4,
+        "link_score": 20.9,
         "evidence": [
-          "appearance similarity 0.15 (CLIP cosine 0.886)",
+          "appearance similarity 0.08 (CLIP cosine 0.881)",
           "type SUV vs SUV (1.0)",
           "colour green vs grey (0.0)"
         ],

@@ -1,0 +1,76 @@
+{
+  "dataset_root": "TRACEVISION_DATA/datasets/vcor",
+  "splits_found": [
+    "train",
+    "val",
+    "test"
+  ],
+  "splits_missing": [],
+  "classes_per_split": {
+    "train": [
+      "beige",
+      "black",
+      "blue",
+      "brown",
+      "gold",
+      "green",
+      "grey",
+      "orange",
+      "pink",
+      "purple",
+      "red",
+      "silver",
+      "tan",
+      "white",
+      "yellow"
+    ],
+    "val": [
+      "beige",
+      "black",
+      "blue",
+      "brown",
+      "gold",
+      "green",
+      "grey",
+      "orange",
+      "pink",
+      "purple",
+      "red",
+      "silver",
+      "tan",
+      "white",
+      "yellow"
+    ],
+    "test": [
+      "beige",
+      "black",
+      "blue",
+      "brown",
+      "gold",
+      "green",
+      "grey",
+      "orange",
+      "pink",
+      "purple",
+      "red",
+      "silver",
+      "tan",
+      "white",
+      "yellow"
+    ]
+  },
+  "missing_classes_per_split": {
+    "train": [],
+    "val": [],
+    "test": []
+  },
+  "unexpected_files": [],
+  "empty_folders": [],
+  "file_counts": {
+    "train": 7267,
+    "val": 1550,
+    "test": 1556
+  },
+  "total_files": 10373,
+  "image_files_count": 10373
+}

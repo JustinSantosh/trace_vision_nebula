@@ -17,11 +17,14 @@ from pathlib import Path
 
 import cv2
 import numpy as np
+import torch
 
 from . import ROOT, load_config
 from .colour import estimate_colour
 from .fuse import fuse
 from .match import decide, load_registry, rank
+
+DEVICE = 0 if torch.cuda.is_available() else "cpu"
 
 CMAP = json.loads((ROOT / "TRACEVISION_DATA/models/class_mapping.json").read_text(encoding="utf-8"))
 VIDEOS = ROOT / "TRACEVISION_DATA/raw/test_videos"
@@ -69,7 +72,7 @@ def track_clip(video, model, pc, classes=None, type_of=None, src="uvh"):
             continue
         # agnostic_nms: one vehicle must not survive as two boxes of different classes (P4: SUV + truck on one car)
         r = model.track(f, persist=True, tracker="bytetrack.yaml", imgsz=pc["imgsz"], conf=pc["vehicle_conf"],
-                        agnostic_nms=True, device=0, verbose=False, classes=classes)[0]
+                        agnostic_nms=True, device=DEVICE, verbose=False, classes=classes)[0]
         if r.boxes.id is None:
             continue
         for b, tid, c, s in zip(r.boxes.xyxy.cpu().numpy(), r.boxes.id.int().cpu().numpy(),
@@ -180,7 +183,7 @@ def verify_large_tracks(video, tracks, meta, coco, pc):
         ok, f = cap.read()
         if not ok:
             continue
-        r = coco.predict(f, conf=pc.get("verify_conf", 0.25), device=0, verbose=False)[0]
+        r = coco.predict(f, conf=pc.get("verify_conf", 0.25), device=DEVICE, verbose=False)[0]
         boxes = [b for b, c in zip(r.boxes.xyxy.cpu().numpy().tolist(), r.boxes.cls.int().cpu().numpy())
                  if coco.names[int(c)] in COCO_VEHICLES]
         for t, box in want[fi]:
@@ -262,7 +265,7 @@ def crop(img, box, pad=0.04):
 def find_plate(vcrop, plate_model, conf):
     s = 640 / max(vcrop.shape[:2])
     up = cv2.resize(vcrop, None, fx=s, fy=s, interpolation=cv2.INTER_CUBIC) if s > 1 else vcrop
-    r = plate_model.predict(up, imgsz=640, conf=conf, device=0, verbose=False)[0]
+    r = plate_model.predict(up, imgsz=640, conf=conf, device=DEVICE, verbose=False)[0]
     if not len(r.boxes):
         return None
     i = int(r.boxes.conf.argmax())
@@ -492,7 +495,7 @@ class Engine:
 
     def __enter__(self):
         from .ocr_worker import OCRWorker
-        self.ocr = OCRWorker(device="gpu").__enter__()      # Paddle in its own process (M7)
+        self.ocr = OCRWorker(device="gpu" if torch.cuda.is_available() else "cpu").__enter__()      # Paddle in its own process (M7)
         from ultralytics import YOLO
         self.veh = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/UVH-26-MV-YOLOv11-S.pt"))
         self.plate = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/plate_yolov8n_quobotic.pt"))

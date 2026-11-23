@@ -1,0 +1,601 @@
+{
+  "total_valid_images": 10373,
+  "total_corrupt_images": 0,
+  "formats": {
+    "JPEG": 10373
+  },
+  "modes": {
+    "RGB": 10373
+  },
+  "width": {
+    "min": 9,
+    "max": 4003,
+    "mean": 413.03,
+    "median": 251.0,
+    "std": 376.73,
+    "p10": 185.0,
+    "p25": 220.0,
+    "p75": 469.0,
+    "p90": 930.0
+  },
+  "height": {
+    "min": 7,
+    "max": 2790,
+    "mean": 212.15,
+    "median": 136.0,
+    "std": 198.63,
+    "p10": 85.0,
+    "p25": 107.0,
+    "p75": 240.0,
+    "p90": 468.0
+  },
+  "aspect_ratio": {
+    "min": 0.25,
+    "max": 6.385,
+    "mean": 2.022,
+    "median": 1.953,
+    "std": 0.498,
+    "p10": 1.471,
+    "p90": 2.687
+  },
+  "file_size_bytes": {
+    "min": 740,
+    "max": 3439628,
+    "mean": 58202.7,
+    "median": 18604.0,
+    "p10": 10632.2,
+    "p90": 148602.8
+  },
+  "extremely_small_images_under_64px": {
+    "count": 198,
+    "paths": [
+      "TRACEVISION_DATA/datasets/vcor/train/beige/236195baee.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/beige/5b646a8167.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/beige/75c87a8a27.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/beige/8dcf1a2c9c.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/beige/9b340dad9e.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/beige/bc412d839b.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/beige/d9ef627b74.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/black/5d2ed9454c.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/black/68dd237189.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/black/a81eaabdc7.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/black/afad730e28.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/black/d0cec1b80f.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/black/f63414a2e8.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/blue/3eb751c61a.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/blue/6c4c585049.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/blue/6da296de95.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/blue/733e046b07.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/blue/a348fa7dab.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/blue/a9314e99ea.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/blue/c0b579d074.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/blue/e127306343.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/brown/0e8bbae31a.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/brown/13310695bf.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/brown/15f5e7147e.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/brown/2244962f1c.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/brown/28cf8bb615.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/brown/4507578f39.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/brown/5413ad5fd8.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/brown/f4c682b09e.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/gold/1490de534d.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/gold/170235711a.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/gold/603c76f950.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/gold/674aaab337.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/gold/6d4258d363.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/gold/7847db192e.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/gold/a982e2d905.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/gold/f0833c5a88.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/0a85e4b4a4.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/3707d5656d.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/646922c0e8.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/695a51645d.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/73bae80f50 - Copy.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/78c70d7889.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/92df2bb5da.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/9f1a65f418.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/b90981df5b.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/c2c4d6ae7e.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/c5138efc21.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/c8be1c146a.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/d98a3294b9.jpg"
+    ]
+  },
+  "tiny_images_under_32px": {
+    "count": 30,
+    "paths": [
+      "TRACEVISION_DATA/datasets/vcor/train/beige/236195baee.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/black/a81eaabdc7.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/brown/0e8bbae31a.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/gold/6d4258d363.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/gold/f0833c5a88.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/695a51645d.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/green/73bae80f50 - Copy.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/grey/6ab227cb75.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/grey/770c8dd86c.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/grey/bc1c569bf3.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/orange/9fd421fe38.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/pink/c0d50d2398.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/tan/2a7aa714b9.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/tan/998c0e76f4.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/yellow/58d38c7f69.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/yellow/5a403ec1e3.jpg",
+      "TRACEVISION_DATA/datasets/vcor/train/yellow/ffe322f18a.jpg",
+      "TRACEVISION_DATA/datasets/vcor/val/blue/0b2ca4bb14.jpg",
+      "TRACEVISION_DATA/datasets/vcor/val/grey/8e786ef027.jpg",
+      "TRACEVISION_DATA/datasets/vcor/val/orange/5192aa8cc2.jpg",
+      "TRACEVISION_DATA/datasets/vcor/val/pink/ef2ecd7adb.jpg",
+      "TRACEVISION_DATA/datasets/vcor/val/tan/a57111d5c8.jpg",
+      "TRACEVISION_DATA/datasets/vcor/test/beige/9087a1d408.jpg",
+      "TRACEVISION_DATA/datasets/vcor/test/black/2b869ea3ef.jpg",
+      "TRACEVISION_DATA/datasets/vcor/test/black/40c75b2df4.jpg",
+      "TRACEVISION_DATA/datasets/vcor/test/gold/a78ab2cc47.jpg",
+      "TRACEVISION_DATA/datasets/vcor/test/green/e5657997ac.jpg",
+      "TRACEVISION_DATA/datasets/vcor/test/grey/b0f83493d7.jpg",
+      "TRACEVISION_DATA/datasets/vcor/test/red/0c098b9636.jpg",
+      "TRACEVISION_DATA/datasets/vcor/test/yellow/b270b946b3.jpg"
+    ]
+  },
+  "unusual_aspect_ratios": {
+    "count": 479,
+    "samples": [
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/1c880ff70f.jpg",
+        "width": 232,
+        "height": 73,
+        "aspect_ratio": 3.1781,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/2166421c0a.jpg",
+        "width": 309,
+        "height": 96,
+        "aspect_ratio": 3.2188,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/246c9fe95b.jpg",
+        "width": 228,
+        "height": 69,
+        "aspect_ratio": 3.3043,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/3c9ee5ac1b.jpg",
+        "width": 310,
+        "height": 95,
+        "aspect_ratio": 3.2632,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/66d0bb9360.jpg",
+        "width": 242,
+        "height": 79,
+        "aspect_ratio": 3.0633,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/6c8eaebb0e.jpg",
+        "width": 291,
+        "height": 91,
+        "aspect_ratio": 3.1978,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/7d6cfa09d1.jpg",
+        "width": 245,
+        "height": 75,
+        "aspect_ratio": 3.2667,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/8dcf1a2c9c.jpg",
+        "width": 221,
+        "height": 63,
+        "aspect_ratio": 3.5079,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/91f58b9854.jpg",
+        "width": 253,
+        "height": 79,
+        "aspect_ratio": 3.2025,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/a08db66883.jpg",
+        "width": 1118,
+        "height": 335,
+        "aspect_ratio": 3.3373,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/ba4786d750.jpg",
+        "width": 251,
+        "height": 72,
+        "aspect_ratio": 3.4861,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/bbb5a4f085.jpg",
+        "width": 237,
+        "height": 71,
+        "aspect_ratio": 3.338,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/d287bd4e4f.jpg",
+        "width": 249,
+        "height": 81,
+        "aspect_ratio": 3.0741,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/df3379fbb8.jpg",
+        "width": 246,
+        "height": 80,
+        "aspect_ratio": 3.075,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/beige/ffac34b592.jpg",
+        "width": 248,
+        "height": 82,
+        "aspect_ratio": 3.0244,
+        "class": "beige"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/black/03e58e36d0.jpg",
+        "width": 932,
+        "height": 296,
+        "aspect_ratio": 3.1486,
+        "class": "black"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/black/095bfe97cb.jpg",
+        "width": 223,
+        "height": 68,
+        "aspect_ratio": 3.2794,
+        "class": "black"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/black/1d4013153e.jpg",
+        "width": 292,
+        "height": 89,
+        "aspect_ratio": 3.2809,
+        "class": "black"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/black/423c4aa406.jpg",
+        "width": 263,
+        "height": 72,
+        "aspect_ratio": 3.6528,
+        "class": "black"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/black/64b3724df6.jpg",
+        "width": 484,
+        "height": 150,
+        "aspect_ratio": 3.2267,
+        "class": "black"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/black/dcf8fadafc.jpg",
+        "width": 1073,
+        "height": 357,
+        "aspect_ratio": 3.0056,
+        "class": "black"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/black/ff566ae8e2.jpg",
+        "width": 236,
+        "height": 78,
+        "aspect_ratio": 3.0256,
+        "class": "black"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/00becb1397.jpg",
+        "width": 288,
+        "height": 85,
+        "aspect_ratio": 3.3882,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/0d54ffef81.jpg",
+        "width": 242,
+        "height": 79,
+        "aspect_ratio": 3.0633,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/0dc4569418.jpg",
+        "width": 227,
+        "height": 68,
+        "aspect_ratio": 3.3382,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/1823cab19c.jpg",
+        "width": 264,
+        "height": 83,
+        "aspect_ratio": 3.1807,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/19c8b12925.jpg",
+        "width": 232,
+        "height": 72,
+        "aspect_ratio": 3.2222,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/1f2ec4c534.jpg",
+        "width": 258,
+        "height": 72,
+        "aspect_ratio": 3.5833,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/27e98bedbe.jpg",
+        "width": 251,
+        "height": 83,
+        "aspect_ratio": 3.0241,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/28f3e1cc06.jpg",
+        "width": 247,
+        "height": 79,
+        "aspect_ratio": 3.1266,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/2f451eca2c.jpg",
+        "width": 317,
+        "height": 89,
+        "aspect_ratio": 3.5618,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/3bbef8013e.jpg",
+        "width": 274,
+        "height": 90,
+        "aspect_ratio": 3.0444,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/43cd3d4d5c.jpg",
+        "width": 1462,
+        "height": 443,
+        "aspect_ratio": 3.3002,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/450c808034.jpg",
+        "width": 804,
+        "height": 241,
+        "aspect_ratio": 3.3361,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/4bc948de2d.jpg",
+        "width": 228,
+        "height": 75,
+        "aspect_ratio": 3.04,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/5bc0d80117.jpg",
+        "width": 859,
+        "height": 215,
+        "aspect_ratio": 3.9953,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/5f3a1cd73a.jpg",
+        "width": 1046,
+        "height": 304,
+        "aspect_ratio": 3.4408,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/6109f110df.jpg",
+        "width": 325,
+        "height": 97,
+        "aspect_ratio": 3.3505,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/637b1ebbe4.jpg",
+        "width": 287,
+        "height": 80,
+        "aspect_ratio": 3.5875,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/63ba7d162a.jpg",
+        "width": 391,
+        "height": 125,
+        "aspect_ratio": 3.128,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/6b4b8ff344.jpg",
+        "width": 246,
+        "height": 75,
+        "aspect_ratio": 3.28,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/6da296de95.jpg",
+        "width": 226,
+        "height": 57,
+        "aspect_ratio": 3.9649,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/75b325302b.jpg",
+        "width": 234,
+        "height": 77,
+        "aspect_ratio": 3.039,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/872f277b1d.jpg",
+        "width": 328,
+        "height": 98,
+        "aspect_ratio": 3.3469,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/8a710c7645.jpg",
+        "width": 865,
+        "height": 268,
+        "aspect_ratio": 3.2276,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/8b9cd571fa.jpg",
+        "width": 273,
+        "height": 86,
+        "aspect_ratio": 3.1744,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/943c3e8088.jpg",
+        "width": 224,
+        "height": 68,
+        "aspect_ratio": 3.2941,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/a348fa7dab.jpg",
+        "width": 213,
+        "height": 61,
+        "aspect_ratio": 3.4918,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/b8401d29fa.jpg",
+        "width": 252,
+        "height": 77,
+        "aspect_ratio": 3.2727,
+        "class": "blue"
+      },
+      {
+        "path": "TRACEVISION_DATA/datasets/vcor/train/blue/bdb13a7788.jpg",
+        "width": 241,
+        "height": 78,
+        "aspect_ratio": 3.0897,
+        "class": "blue"
+      }
+    ]
+  },
+  "per_class_summary": {
+    "beige": {
+      "count": 601,
+      "width_mean": 329.2,
+      "height_mean": 177.6,
+      "aspect_ratio_mean": 1.92,
+      "aspect_ratio_median": 1.82
+    },
+    "black": {
+      "count": 579,
+      "width_mean": 472.0,
+      "height_mean": 243.7,
+      "aspect_ratio_mean": 2.0,
+      "aspect_ratio_median": 1.98
+    },
+    "blue": {
+      "count": 1060,
+      "width_mean": 517.6,
+      "height_mean": 251.6,
+      "aspect_ratio_mean": 2.13,
+      "aspect_ratio_median": 2.06
+    },
+    "brown": {
+      "count": 807,
+      "width_mean": 394.5,
+      "height_mean": 205.4,
+      "aspect_ratio_mean": 1.99,
+      "aspect_ratio_median": 1.89
+    },
+    "gold": {
+      "count": 300,
+      "width_mean": 290.0,
+      "height_mean": 149.8,
+      "aspect_ratio_mean": 2.06,
+      "aspect_ratio_median": 1.97
+    },
+    "green": {
+      "count": 804,
+      "width_mean": 472.3,
+      "height_mean": 235.0,
+      "aspect_ratio_mean": 2.1,
+      "aspect_ratio_median": 2.02
+    },
+    "grey": {
+      "count": 611,
+      "width_mean": 330.3,
+      "height_mean": 169.9,
+      "aspect_ratio_mean": 2.03,
+      "aspect_ratio_median": 1.98
+    },
+    "orange": {
+      "count": 762,
+      "width_mean": 359.7,
+      "height_mean": 186.4,
+      "aspect_ratio_mean": 1.99,
+      "aspect_ratio_median": 1.93
+    },
+    "pink": {
+      "count": 689,
+      "width_mean": 385.1,
+      "height_mean": 219.9,
+      "aspect_ratio_mean": 1.86,
+      "aspect_ratio_median": 1.77
+    },
+    "purple": {
+      "count": 765,
+      "width_mean": 430.9,
+      "height_mean": 233.4,
+      "aspect_ratio_mean": 1.96,
+      "aspect_ratio_median": 1.88
+    },
+    "red": {
+      "count": 909,
+      "width_mean": 426.4,
+      "height_mean": 210.4,
+      "aspect_ratio_mean": 2.07,
+      "aspect_ratio_median": 2.03
+    },
+    "silver": {
+      "count": 516,
+      "width_mean": 407.5,
+      "height_mean": 201.2,
+      "aspect_ratio_mean": 2.09,
+      "aspect_ratio_median": 2.05
+    },
+    "tan": {
+      "count": 571,
+      "width_mean": 354.9,
+      "height_mean": 194.7,
+      "aspect_ratio_mean": 1.89,
+      "aspect_ratio_median": 1.8
+    },
+    "white": {
+      "count": 575,
+      "width_mean": 441.4,
+      "height_mean": 226.6,
+      "aspect_ratio_mean": 2.02,
+      "aspect_ratio_median": 1.95
+    },
+    "yellow": {
+      "count": 824,
+      "width_mean": 430.0,
+      "height_mean": 211.2,
+      "aspect_ratio_mean": 2.11,
+      "aspect_ratio_median": 2.04
+    }
+  }
+}

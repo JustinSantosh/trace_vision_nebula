@@ -1,0 +1,12 @@
+mapped_class,train_clean,val_clean,test_clean,total_clean,pct_of_clean_dataset
+black,402,86,85,573,5.57
+blue,738,158,159,1055,10.25
+brown,957,205,207,1369,13.3
+green,557,119,120,796,7.73
+grey,423,90,90,603,5.86
+orange,532,113,114,759,7.37
+other,1638,350,351,2339,22.72
+red,633,136,135,904,8.78
+silver,357,77,75,509,4.94
+white,398,86,86,570,5.54
+yellow,573,122,123,818,7.95

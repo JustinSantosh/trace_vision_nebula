@@ -70,7 +70,7 @@
         },
         "reasons": [
           "plates agree: CG04NL3024 vs CG04NL3024 (similarity 1.00 on 10 readable characters)",
-          "appearance similarity 1.00 (CLIP cosine 0.977)",
+          "appearance similarity 1.00 (CLIP cosine 0.979)",
           "type SUV vs car (0.5)",
           "colour white vs white (1.0)"
         ]
@@ -89,7 +89,7 @@
           },
           "reasons": [
             "plates agree: CG04NL3024 vs CG04NL3024 (similarity 1.00 on 10 readable characters)",
-            "appearance similarity 1.00 (CLIP cosine 0.977)",
+            "appearance similarity 1.00 (CLIP cosine 0.979)",
             "type SUV vs car (0.5)",
             "colour white vs white (1.0)"
           ]
@@ -105,7 +105,7 @@
             "colour": 1.0
           },
           "reasons": [
-            "appearance similarity 0.00 (CLIP cosine 0.804)",
+            "appearance similarity 0.00 (CLIP cosine 0.795)",
             "type SUV vs car (0.5)",
             "colour white vs white (1.0)"
           ]
@@ -121,7 +121,7 @@
             "colour": 1.0
           },
           "reasons": [
-            "appearance similarity 0.00 (CLIP cosine 0.872)",
+            "appearance similarity 0.00 (CLIP cosine 0.868)",
             "type SUV vs car (0.5)",
             "colour white vs white (1.0)"
           ]
@@ -149,7 +149,7 @@
             "colour": 0.5
           },
           "reasons": [
-            "appearance similarity 0.00 (CLIP cosine 0.655)",
+            "appearance similarity 0.00 (CLIP cosine 0.649)",
             "type bicycle vs car (0.0)",
             "colour grey vs white (0.5)"
           ]
@@ -165,7 +165,7 @@
             "colour": 0.5
           },
           "reasons": [
-            "appearance similarity 0.00 (CLIP cosine 0.861)",
+            "appearance similarity 0.00 (CLIP cosine 0.858)",
             "type bicycle vs car (0.0)",
             "colour grey vs white (0.5)"
           ]
@@ -181,7 +181,7 @@
             "colour": 0.5
           },
           "reasons": [
-            "appearance similarity 0.00 (CLIP cosine 0.798)",
+            "appearance similarity 0.00 (CLIP cosine 0.789)",
             "type bicycle vs car (0.0)",
             "colour grey vs white (0.5)"
           ]
@@ -210,7 +210,7 @@
         "link_score": 96.2,
         "evidence": [
           "plates agree: CG04NL3024 vs CG04NL3024 (similarity 1.00 on 10 readable characters)",
-          "appearance similarity 1.00 (CLIP cosine 0.977)",
+          "appearance similarity 1.00 (CLIP cosine 0.979)",
           "type SUV vs car (0.5)",
           "colour white vs white (1.0)"
         ],
