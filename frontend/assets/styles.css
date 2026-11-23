@@ -427,3 +427,57 @@ a.metric { text-decoration: none; color: inherit; }
 .link-row-plain .more { padding-top: 0; }
 #ws-list .metric { grid-template-columns: 110px minmax(0, 1fr) auto; }
 .metric .tag { flex-direction: row; align-self: center; }
+
+/* ---------- motion: a little life, never in the way (all disabled by prefers-reduced-motion above) ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes type { from { opacity: 0; transform: translateY(-4px) scale(.9); } to { opacity: 1; transform: none; } }
+@keyframes cursor { 0%, 72%, 100% { opacity: 1; } 80%, 92% { opacity: .2; } }
+@keyframes ping { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 45%, transparent); } 100% { box-shadow: 0 0 0 7px transparent; } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+.view-enter .page-head { animation: rise .45s cubic-bezier(.2, .8, .2, 1) both; }
+.view-enter .page-head ~ * { animation: rise .5s cubic-bezier(.2, .8, .2, 1) .06s both; }
+.ev-enter > * { animation: rise .38s cubic-bezier(.2, .8, .2, 1) both; }
+.ev-enter > :nth-child(2) { animation-delay: .03s; } .ev-enter > :nth-child(3) { animation-delay: .06s; }
+.ev-enter > :nth-child(4) { animation-delay: .09s; } .ev-enter > :nth-child(5) { animation-delay: .12s; }
+.ev-enter > :nth-child(6) { animation-delay: .15s; } .ev-enter > :nth-child(n+7) { animation-delay: .18s; }
+
+/* lists arrive one row after another */
+#case-rows tr, #vehicle-list li, #finding-list li, .metric-list > li, .link-list > li, .totals > div { animation: rise .4s cubic-bezier(.2, .8, .2, 1) both; }
+:is(#case-rows tr, #vehicle-list li, #finding-list li, .metric-list > li, .link-list > li, .totals > div):nth-child(2) { animation-delay: .03s; }
+:is(#case-rows tr, #vehicle-list li, #finding-list li, .metric-list > li, .link-list > li, .totals > div):nth-child(3) { animation-delay: .06s; }
+:is(#case-rows tr, #vehicle-list li, #finding-list li, .metric-list > li, .link-list > li, .totals > div):nth-child(4) { animation-delay: .09s; }
+:is(#case-rows tr, #vehicle-list li, #finding-list li, .metric-list > li, .link-list > li, .totals > div):nth-child(5) { animation-delay: .12s; }
+:is(#case-rows tr, #vehicle-list li, #finding-list li, .metric-list > li, .link-list > li, .totals > div):nth-child(6) { animation-delay: .15s; }
+:is(#case-rows tr, #vehicle-list li, #finding-list li, .metric-list > li, .link-list > li, .totals > div):nth-child(n+7) { animation-delay: .18s; }
+
+/* bars grow, big plates type in */
+.bar i { transform-origin: left center; animation: grow .7s cubic-bezier(.2, .8, .2, 1) both; }
+.plate.lg i { animation: type .3s cubic-bezier(.2, .8, .2, 1) both; }
+.plate.lg i:nth-child(2) { animation-delay: .03s; } .plate.lg i:nth-child(3) { animation-delay: .06s; }
+.plate.lg i:nth-child(4) { animation-delay: .09s; } .plate.lg i:nth-child(5) { animation-delay: .12s; }
+.plate.lg i:nth-child(6) { animation-delay: .15s; } .plate.lg i:nth-child(7) { animation-delay: .18s; }
+.plate.lg i:nth-child(8) { animation-delay: .21s; } .plate.lg i:nth-child(9) { animation-delay: .24s; }
+.plate.lg i:nth-child(n+10) { animation-delay: .27s; }
+.plate i.u { animation: cursor 3.2s ease-in-out infinite; }
+
+/* live accents */
+.bm-unknown { animation: cursor 4s ease-in-out infinite; }
+.engine[data-state="ready"] i { color: var(--match); animation: ping 2.4s ease-out infinite; }
+.engine[data-state="starting"] i { background: var(--unsure); color: var(--unsure); animation: ping 1.2s ease-out infinite; }
+.play[aria-label="Pause"] { border-color: var(--mark); color: var(--mark); animation: ping 1.6s ease-out infinite; }
+.drop:hover svg { animation: bob 1.2s ease-in-out infinite; }
+.flash { animation: rise .35s cubic-bezier(.2, .8, .2, 1) both; }
+.tag.match::before { animation: cursor 3.6s ease-in-out infinite; }
+
+/* hover and selection feel physical */
+.tabs a, .finding, .metric, .link-row, #vehicle-list li button, .cases tbody tr, .group-toggle, .more, .btn, .play {
+  transition: background-color .18s, border-color .18s, color .18s, transform .18s, box-shadow .18s, opacity .18s;
+}
+.finding:hover, .metric:hover, .link-row:hover, #vehicle-list li button:hover { transform: translateX(2px); }
+.cases tbody tr[data-href]:hover td:first-child { box-shadow: inset 3px 0 0 var(--mark); }
+.btn:active, .play:active { transform: scale(.96); }
+.table-wrap, .player, .findings, .mini, .link-list, .metric-list, .robust { transition: box-shadow .25s, border-color .25s; }
+.table-wrap:hover, .player:hover, .findings:hover, .mini:hover, .link-list:hover, .metric-list:hover { box-shadow: 0 10px 30px -18px rgba(20, 22, 26, .35); border-color: var(--line-strong); }
