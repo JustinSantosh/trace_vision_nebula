@@ -144,7 +144,7 @@ h4{margin:14px 0 6px;font-size:12.5px;text-transform:uppercase;letter-spacing:.0
 const BASE = "__DATA__";
 const $ = id => document.getElementById(id);
 const v = $("v"), cv = $("c"), ctx = cv.getContext("2d");
-let R, FPS = 30, VEH = [], FILES = new Set(), sel = null, curFrame = 0;
+let R, FPS = 30, VEH = [], FILES = new Set(), sel = null, curFrame = 0, XC = {links: [], fold: {}};
 
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const decColour = d => d.decision === "match" ? css("--match") : (d.plate && d.plate.per_frame_reads && d.plate.per_frame_reads.length ? css("--plate") : css("--none"));
@@ -180,6 +180,29 @@ function masked(r) {
   const t = r.text || "", p = r.char_probs || [];
   if (p.length !== t.length) return t;
   return t.split("").map((c, i) => p[i] >= TAU() ? c : "?").join("");
+}
+
+// ---------------------------------------------------------------- cross-camera (owner-declared same-scene pairs, M16)
+function xlinks(d) {          // links for this vehicle (a nested duplicate box uses the vehicle it was folded into)
+  const ids = [d.track_id, ...(d.merged_track_ids || [])].map(t => +(XC.fold[String(t)] ?? t));
+  return XC.links.filter(l => ids.includes(+l.track_id));
+}
+function xcHtml(d) {
+  const ls = xlinks(d);
+  if (!ls.length) return "";
+  return `<h4>Same vehicle in another camera</h4>` + ls.map(l => {
+    const f = l.final || {}, conf = l.link.startsWith("confirmed");
+    const dec = f.decision === "match" ? `<b style="color:${css("--match")}">MATCH ${esc(f.registry_top1 || "")}</b>`
+              : f.decision === "candidate_via_probable_link" ? `<b style="color:${css("--plate")}">candidate ${esc(f.registry_top1 || "")}</b> (via a probable link, not confirmed)`
+              : `no confident match`;
+    return `<div class="cand"><div class="top"><span class="badge" style="background:${conf ? css("--match") : css("--plate")}">${conf ? "confirmed" : "probable"}</span>
+        <a href="/viewer/runs/${esc(l.other_clip)}?track=${+l.other_track}" style="color:var(--accent)">${esc(l.other_clip)} #${+l.other_track} ↗</a>
+        <span style="margin-left:auto;color:var(--muted)">link score ${(+l.link_score).toFixed(1)}</span></div>
+      <div style="font-size:12.5px;margin:4px 0 2px">${esc(l.link)}</div>
+      <div style="font-size:13px">Final answer from both cameras: plate <b style="font-family:var(--mono)">${esc(f.plate || "-")}</b>
+        (${+f.reads_pooled || 0} reads pooled) · ${esc(f.type || "")} · ${esc(f.colour || "")} → ${dec}</div>
+      <ul>${(l.evidence || []).slice(0, 3).map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`;
+  }).join("");
 }
 
 // ---------------------------------------------------------------- live playback
@@ -291,6 +314,7 @@ async function init() {
     [R, FILES] = await Promise.all([
       fetch(`${BASE}/result.json`).then(r => { if (!r.ok) throw new Error("result " + r.status); return r.json(); }),
       fetch(`${BASE}/files`).then(r => r.json()).then(a => new Set(a))]);
+    XC = await fetch(`${BASE}/crosscam`).then(r => r.ok ? r.json() : XC).catch(() => XC);
   } catch (e) { document.querySelector(".wrap").innerHTML = `<div class="err">Could not load this run: ${esc(e.message)}</div>`; return; }
   FPS = R.video.fps || 30;
   const rank = d => d.decision === "match" ? 0 : reads(d).length ? 1 : 2;
@@ -304,6 +328,13 @@ async function init() {
   v.addEventListener("loadedmetadata", () => { fit(); drawTimeline(); paint(); });
   new ResizeObserver(fit).observe($("stage"));
   buildStages(); applyLiveUi(); renderList(); tick();
+  const want = +new URLSearchParams(location.search).get("track");
+  if (want) {                                       // opened from another camera's link: select that vehicle
+    const d = VEH.find(x => x.track_id === want || (x.merged_track_ids || []).includes(want));
+    if (d) { $("live").checked = false; applyLiveUi(); select(d);
+             const best = reads(d).slice().sort((a, b) => b.height_px - a.height_px)[0];
+             v.addEventListener("loadedmetadata", () => seekFrame(best ? best.frame : d.first_frame), {once: true}); }
+  }
 }
 
 function fit() {
@@ -413,7 +444,7 @@ function renderList() {
     const st = rowState(d, f);
     return `<div class="row${d === sel ? " sel" : ""}" data-id="${d.track_id}">
       <span class="dot" style="background:${st.col}"></span>
-      <span class="t">#${d.track_id} ${esc(d.type.label)} · ${esc(d.colour.label)}</span>
+      <span class="t">#${d.track_id} ${esc(d.type.label)} · ${esc(d.colour.label)}${xlinks(d).length ? ` <span title="also seen in ${esc(xlinks(d).map(l => l.other_clip).join(', '))}" style="color:var(--accent)">⇄ ${esc(xlinks(d)[0].other_clip)}</span>` : ""}</span>
       <span class="p">${esc(st.plate)}</span>
       <span class="badge${st.badge.startsWith("checking") ? " pulse" : ""}" style="background:${st.col}">${esc(st.badge)}</span></div>`;
   }).join("");
@@ -474,6 +505,7 @@ function renderDetails() {
         <div class="bar"><div style="width:${Math.max(0, Math.min(100, c.match_score))}%"></div></div><b>${c.match_score.toFixed(1)}</b></div>
         <ul>${(c.reasons || []).map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
   }
+  if (done || !isLive()) h += xcHtml(d);
   h += `</div>`;
   det.innerHTML = h;
   det.querySelectorAll(".fcard").forEach(el => el.onclick = () => seekFrame(+el.dataset.f));

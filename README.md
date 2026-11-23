@@ -121,6 +121,8 @@ Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.p
 | X5 Activa, plate hidden (clip16↔17) | probable (appearance / elimination) | plate unknown |
 | X6, X7 | not checkable (tracked only after the labelled frame) | — |
 
+**In the app:** the video viewer shows a ⇄ badge on linked vehicles and a "Same vehicle in another camera" panel (link type, pooled final answer, reasons) with a link that opens the other clip at that vehicle (`/viewer/runs/clip15?track=1`).
+
 **Score** (`python -m tracevision.crosscam --evaluate`, labels tied to tracks one-to-one by box position): **5 of 5 checkable groups correct, 0 wrong links.** Without the pair declaration (open world, `python -m tracevision.crosscam clipA clipB`) only plate evidence links, and appearance alone is unreliable across viewpoints (C12).
 
 ## Data and models

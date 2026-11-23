@@ -12,6 +12,7 @@ One background worker processes jobs in order on the local GPU. Models load once
 """
 from __future__ import annotations
 
+import json
 import queue
 import re
 import threading
@@ -175,6 +176,32 @@ def data_video(kind: str, rid: str):
     if not vids or not vids[0].exists():
         raise HTTPException(404, "video not found")
     return FileResponse(vids[0], media_type="video/mp4")  # FileResponse answers Range requests (seeking)
+
+
+@app.get("/data/{kind}/{rid}/crosscam")
+def data_crosscam(kind: str, rid: str):
+    """Cross-camera links involving this clip (from runs/crosscam/<a>__<b>.json, owner-declared same-scene pairs, M16).
+    Each entry is written from THIS clip's point of view; `fold` maps nested duplicate tracks to the kept track."""
+    _run_dir(kind, rid)
+    out = {"links": [], "fold": {}}
+    if kind != "runs":
+        return JSONResponse(out)
+    for p in sorted((RUNS / "crosscam").glob("*__*.json")):
+        try:
+            res = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        pl = res.get("pair_linking")
+        if not pl or rid not in (res.get("clip_a"), res.get("clip_b")):
+            continue
+        me, other = ("a", "b") if res["clip_a"] == rid else ("b", "a")
+        out["fold"].update(pl.get("duplicates_folded", {}).get(me, {}))
+        for l in pl["links"]:
+            out["links"].append({"track_id": l[me]["track_id"], "other_clip": l[other]["clip_id"],
+                                 "other_track": l[other]["track_id"], "link": l["link"], "link_score": l["link_score"],
+                                 "evidence": l["evidence"], "final": l["final"],
+                                 "this_plate": l[me]["plate"], "other_plate": l[other]["plate"]})
+    return JSONResponse(out)
 
 
 @app.get("/data/{kind}/{rid}/files")
