@@ -416,3 +416,14 @@ a.metric { text-decoration: none; color: inherit; }
 .compare .plate { font-size: 10.5px; padding: 2px 3px; gap: 0; }
 .compare .plate i { min-width: .62em; }
 .compare .tag { font-size: 11px; padding: 1px 6px; white-space: normal; }
+
+/* enforcement queue: reviewed items leave the queue */
+.flash { background: var(--mark-soft); border-left: 3px solid var(--mark); border-radius: 6px; padding: 8px 10px; font-size: 13px; margin-bottom: 14px; }
+.group-toggle { width: 100%; text-align: left; border: 0; background: none; padding: 10px 14px; font-size: 13px; font-weight: 500; color: var(--ink-2); border-radius: 8px; }
+.group-toggle:hover { background: var(--sunken); color: var(--ink); }
+.reviewed-row .metric { opacity: .7; }
+.reviewed-row .metric:hover, .reviewed-row .metric[aria-current="true"] { opacity: 1; }
+.link-row-plain { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 16px; }
+.link-row-plain .more { padding-top: 0; }
+#ws-list .metric { grid-template-columns: 110px minmax(0, 1fr) auto; }
+.metric .tag { flex-direction: row; align-self: center; }

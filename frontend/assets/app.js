@@ -694,10 +694,23 @@
     await Promise.all([...new Set(vs.map((x) => x.run))].filter((r) => !S.enfFiles[r]).map(async (r) => {
       S.enfFiles[r] = await getJSON("/data/" + r + "/files").catch(() => []);
     }));
-    const rows = vs.map((x) => el("li", null, el("button", { class: "metric", type: "button", "data-k": x.violation_id, onclick: () => selectViolation(x) },
+    /* Pending items form the queue; reviewed ones leave it and fold into a "Reviewed" group (still reachable to reset). */
+    const pending = vs.filter((x) => x.review.status === "pending");
+    const reviewed = vs.filter((x) => x.review.status !== "pending");
+    S.enfPending = pending.map((x) => x.violation_id);
+    const row = (x) => el("li", { class: x.review.status === "pending" ? null : "reviewed-row" }, el("button", { class: "metric", type: "button", "data-k": x.violation_id, onclick: () => selectViolation(x) },
       el("b", { class: x.registration_number ? "mono-sm" : "none", text: x.registration_number || "No plate match" }),
       el("span", null, x.label + " · " + x.clip_id + " T" + x.track_id, el("small", { text: [cap(x.colour), x.vehicle_type, clock(x.time_s[0]) + "–" + clock(x.time_s[1])].filter(Boolean).join(" · ") })),
-      reviewTag(x.review.status))));
+      reviewTag(x.review.status)));
+    const rows = pending.map(row);
+    if (vs.length && !pending.length) rows.push(el("li", { class: "muted", style: "padding:12px 14px", text: "All caught up: every suspected violation has been reviewed." }));
+    if (reviewed.length) {
+      const toggle = el("button", { class: "group-toggle", type: "button", "aria-expanded": String(!!S.enfShowReviewed),
+        onclick: () => { S.enfShowReviewed = !S.enfShowReviewed; openEnforcement(); } },
+        (S.enfShowReviewed ? "▾ " : "▸ ") + "Reviewed (" + reviewed.length + ")");
+      rows.push(el("li", null, toggle));
+      if (S.enfShowReviewed) rows.push(...reviewed.map(row));
+    }
     const fixedCams = as.filter((c) => c.method === "zone_direction");
     const moving = as.filter((c) => c.method === "head_on_pass");
     const checked = fixedCams.map((c) => el("li", null, el("a", { class: "metric", href: "#case/" + c.run },
@@ -722,6 +735,13 @@
     renderAudit();
     const keep = vs.find((x) => x.violation_id === S.enfSel);
     if (keep) selectViolation(keep); else if (!S.enfManual) manualLookup();
+  }
+  /* One-off note about the review just made, shown at the top of whatever the panel shows next. */
+  function flashNode() {
+    if (!S.enfFlash) return null;
+    const n = el("p", { class: "flash", role: "status", text: S.enfFlash });
+    S.enfFlash = null;
+    return n;
   }
   async function renderAudit() {
     const r = await apiCall("/api/audit");
@@ -755,7 +775,7 @@
     }, "Look up");
     input.addEventListener("keydown", (e) => { if (e.key === "Enter") form.querySelector(".btn").click(); });
     form.prepend(input);
-    $("enf-evidence").replaceChildren(...evHead("Look up a vehicle", "Registration lookup", "Shows everything on record for a registration, and lets you issue a simulated challan for it."), form, holder);
+    $("enf-evidence").replaceChildren(...[flashNode(), ...evHead("Look up a vehicle", "Registration lookup", "Shows everything on record for a registration, and lets you issue a simulated challan for it."), form, holder].filter(Boolean));
   }
   function selectViolation(x) {
     S.enfSel = x.violation_id;
@@ -770,11 +790,23 @@
         body: JSON.stringify({ violation_id: x.violation_id, decision, note: note.value }) });
       if (!r.ok) { msg.textContent = r.error; return; }
       S.rec.clear();
+      const who = x.clip_id + " T" + x.track_id;
+      S.enfFlash = decision === "pending" ? who + " is back in the queue."
+        : (decision === "confirmed" ? "Confirmed " : "Rejected ") + who + ". " +
+          (r.data.challan ? "Simulated challan " + r.data.challan.challan_id + " raised." : (r.data.message || "").replace(/^(confirmed|rejected)\.\s*/i, ""));
+      if (decision !== "pending") {
+        // Move on to the next item still waiting for review (or the lookup when none are left).
+        const ids = S.enfPending || [];
+        const i = ids.indexOf(x.violation_id);
+        const next = ids.slice(i + 1).concat(ids.slice(0, Math.max(i, 0))).find((id) => id !== x.violation_id);
+        S.enfSel = next || null;
+        S.enfManual = false;
+      }
       await openEnforcement();
-      const after = $("enf-evidence").querySelector("[role=status]");
-      if (after) after.textContent = r.data.challan ? "Confirmed. Simulated challan " + r.data.challan.challan_id + " raised." : (r.data.message || "Saved as " + decision + ".");
     };
+    const isPending = x.review.status === "pending";
     $("enf-evidence").replaceChildren(...[
+      flashNode(),
       evHead("Suspected violation", x.label, x.clip_id + " · vehicle T" + x.track_id + " · " + clock(x.time_s[0]) + "–" + clock(x.time_s[1])),
       crops.length ? el("div", { class: "crops" }, ...crops.slice(0, 3).map((f) => el("img", { src: "/data/" + x.run + "/vehicles/" + f, alt: "Vehicle crop", style: "height:64px" }))) : null,
       section("Vehicle", null, kv([["Plate read", x.plate ? plateEl(x.plate) : "not read"], ["Registry", x.registration_number ? plateEl(x.registration_number) : "no confident match"],
@@ -782,12 +814,15 @@
       m.method === "head_on_pass" ? section("Measured", "moving camera · head-on pass", ...headOnNodes(m, (x.time_s[1] && x.evidence_frames[2] / x.time_s[1]) || 30), el("p", { class: "ev-note", text: "Road layout: " + cap(m.layout) }))
         : section("Measured", null, dirs(m, true), kv([["Angle off permitted", deg(m.cos_to_allowed) + "°"], ["Steps against the flow", pct(m.against_flow_share)], ["Zone", m.zone]])),
       section("Review", null, kv([["Status", reviewTag(x.review.status)], ["Note", x.review.note]]),
-        el("div", { class: "lookup" }, note, el("div", { class: "btn-row" },
-          el("button", { class: "btn", type: "button", text: "Confirm", onclick: act("confirmed") }),
-          el("button", { class: "btn ghost", type: "button", text: "Reject", onclick: act("rejected") }),
-          x.review.status !== "pending" ? el("button", { class: "more", type: "button", text: "Reset to pending", onclick: act("pending") }) : null), msg)),
-      el("a", { class: "more", href: "#case/" + x.run, text: "Open the case and play the clip" }),
-      el("button", { class: "more", type: "button", text: "Registration lookup", onclick: manualLookup }),
+        isPending
+          ? el("div", { class: "lookup" }, note, el("div", { class: "btn-row" },
+            el("button", { class: "btn", type: "button", text: "Confirm", onclick: act("confirmed") }),
+            el("button", { class: "btn ghost", type: "button", text: "Reject", onclick: act("rejected") })), msg)
+          : el("div", { class: "lookup" }, el("p", { class: "ev-note", text: "Reviewed. It has left the queue." }),
+            el("button", { class: "btn ghost", type: "button", text: "Reset to pending", onclick: act("pending") }), msg)),
+      el("div", { class: "link-row-plain" },
+        el("a", { class: "more", href: "#case/" + x.run, text: "Open the case and play the clip" }),
+        el("button", { class: "more", type: "button", text: "Registration lookup", onclick: manualLookup })),
     ].flat().filter(Boolean));
   }
 
