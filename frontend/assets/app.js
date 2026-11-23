@@ -555,15 +555,39 @@
     holder.replaceChildren(...recordNodes(r.data, context, () => loadRecord(reg, context, holder, "Refresh after change")));
     return r.data;
   }
+  /* Record holder for `reg`: the cached record, or the lookup form. `context` (runs/clip03:T1 or "") ties it to a case vehicle. */
+  function recordHolder(reg, context, note) {
+    const holder = el("div");
+    if (S.rec.has(reg)) holder.replaceChildren(...recordNodes(S.rec.get(reg), context, () => loadRecord(reg, context, holder, "Refresh after change")));
+    else holder.replaceChildren(lookupForm((reason, msg) => loadRecord(reg, context, holder, reason, msg), "Show record and challans"),
+      el("p", { class: "ev-note", text: note }));
+    return holder;
+  }
   function evRecord(v) {
     const reg = v.candidates.slice().sort((a, b) => a.rank - b.rank)[0].registration_number;
     const context = S.route.kind + "/" + S.route.id + ":T" + v.track_id;
-    const holder = el("div");
     const head = evHead("Vehicle record · synthetic", plateEl(reg, true), "Attached because this vehicle is a confident registry match.");
-    if (S.rec.has(reg)) holder.replaceChildren(...recordNodes(S.rec.get(reg), context, () => loadRecord(reg, context, holder, "Refresh after change")));
-    else holder.replaceChildren(lookupForm((reason, msg) => loadRecord(reg, context, holder, reason, msg)),
-      el("p", { class: "ev-note", text: "Each lookup is written to the audit log with this case." }));
-    return [head, holder];
+    return [head, recordHolder(reg, context, "Each lookup is written to the audit log with this case.")];
+  }
+  /* Cross-camera: a record is attached only when the plate pooled from both cameras gives a confident registry match.
+   * The lookup is tied to whichever camera's own vehicle is also a confident match to that record, so the server can check it. */
+  function ccRecord(l) {
+    const f = l.final;
+    if (!f || f.decision !== "match" || !f.registry_top1) {
+      return section("Registry history and e-challans", null, el("p", { class: "muted", text: "Not shown: the pooled plate isn't a confident registry match, so no record is attached to this vehicle." }));
+    }
+    const reg = f.registry_top1;
+    const own = (r, side) => {
+      const veh = r && (r.vehicles || []).find((x) => x.track_id === l[side].track_id);
+      const top = veh && (veh.candidates || []).slice().sort((a, b) => a.rank - b.rank)[0];
+      return veh && veh.decision === "match" && top && top.registration_number === reg ? "runs/" + l[side].clip_id + ":T" + l[side].track_id : null;
+    };
+    const context = own(S.cc.ra, "a") || own(S.cc.rb, "b") || "";
+    return el("section", { class: "ev-section" },
+      el("div", { class: "ev-kicker", text: "Vehicle record · synthetic" }),
+      el("h3", null, plateEl(reg, true)),
+      el("p", { class: "ev-summary", text: "Registration details, compliance and e-challan history for the record both cameras matched. You can issue a simulated challan from here." }),
+      recordHolder(reg, context, "Each lookup is written to the audit log" + (context ? " with " + context.replace("runs/", "") + "." : " as a cross-camera lookup.")));
   }
   const COMPLIANCE = { valid: ["Valid", "match"], expiring: ["Expiring", "unsure"], expired: ["Expired", "fail"], unknown: ["Unknown", ""] };
   function compl(c) {
@@ -943,6 +967,7 @@
         ["Decision", f.decision ? tag(f.decision) : null], ["Top record", f.registry_top1 ? plateEl(f.registry_top1) : null], ["Match score", f.match_score]])) : null,
       f && f.reason ? el("p", { class: "ev-note", text: cap(f.reason) + "." }) : null,
       el("p", { class: "ev-note", text: "Link scores rank candidates; they are not probabilities. Only plate-confirmed links give an identity." }),
+      ccRecord(l),
     ].flat().filter(Boolean));
     ccSeek();
   }
