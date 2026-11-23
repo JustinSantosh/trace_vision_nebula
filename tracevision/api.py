@@ -12,11 +12,11 @@ Endpoints
   GET  /runs/{clip}/report    report of a clip already in runs/ (demo)
   GET  /data/{kind}/{id}/violations   wrong-side driving check for one run (fixed cameras only)
   GET  /api/violations        all suspected violations + review status + simulated challans raised
-  POST /api/violations/review officer confirms / rejects a suspected violation
-  GET  /api/intel/meta        roles and lookup reasons       GET /api/intel/{registration}   role-gated vehicle record
-  GET  /api/audit             lookup + review audit log (officer)
-Vehicle records and challans are SYNTHETIC demo data (intel.py). Roles come from the X-TV-Role header and are not
-authenticated: this demonstrates the access model, it is not access control.
+  POST /api/violations/review confirm / reject a suspected violation
+  GET  /api/intel/meta        lookup reasons, violation types and fines    GET /api/intel/{registration}   full record
+  POST /api/challans          issue a simulated challan     POST /api/challans/cancel   cancel one
+  GET  /api/audit             lookup / issue / review audit log
+Vehicle records and challans are SYNTHETIC demo data (intel.py); nothing is sent to any external system.
 One background worker processes jobs in order on the local GPU. Models load once at start-up.
 """
 from __future__ import annotations
@@ -30,7 +30,7 @@ import time
 import uuid
 from pathlib import Path
 
-from fastapi import Body, FastAPI, File, Header, HTTPException, UploadFile
+from fastapi import Body, FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -475,13 +475,6 @@ def run_pdf(clip: str):
 
 
 # ---------------------------------------------------------------- vehicle intelligence + violations (synthetic demo)
-def _who(role: str | None, user: str | None):
-    try:
-        return intel.role_of(role), intel.clean_user(user)
-    except intel.Refused as e:
-        raise HTTPException(e.status, str(e))
-
-
 def _result_for(run: str):
     """'runs/clip03' or 'jobs/<id>' -> (run dir, result dict)."""
     kind, _, rid = run.partition("/")
@@ -489,40 +482,65 @@ def _result_for(run: str):
     return d, json.loads((d / "result.json").read_text(encoding="utf-8"))
 
 
+def _check_context(context: str, registration: str, action: str):
+    """A record (or challan) is only tied to a vehicle in a case when that vehicle is a CONFIDENT registry match."""
+    m = re.fullmatch(r"((?:runs|jobs)/[\w]+):T(\d+)", context)
+    if not m:
+        raise HTTPException(400, "context must look like runs/clip03:T1")
+    _, res = _result_for(m.group(1))
+    veh = next((v for v in res.get("vehicles", []) if str(v.get("track_id")) == m.group(2)), None)
+    top = (veh or {}).get("candidates") or []
+    if not veh or veh.get("decision") != "match" or not top or top[0]["registration_number"] != intel.norm_reg(registration):
+        intel.audit({"registration": intel.norm_reg(registration), "context": context, "action": action,
+                     "outcome": "refused: not a confident match"})
+        raise HTTPException(409, "this vehicle has no confident registry match, so no record is attached to it")
+
+
+def _refused(e: "intel.Refused"):
+    return HTTPException(e.status, str(e))
+
+
 @app.get("/api/intel/meta")
 def intel_meta():
-    return JSONResponse({"roles": intel.ROLES, "reasons": intel.REASONS, "available": intel.available(),
-                         "notice": "Synthetic demo data. Roles are chosen in the browser and not authenticated."})
+    return JSONResponse({"reasons": intel.REASONS, "violations": intel.VIOLATION_FINES, "available": intel.available(),
+                         "notice": "Synthetic demo data. Not connected to VAHAN or the e-Challan system."})
 
 
 @app.get("/api/intel/{registration}")
-def intel_lookup(registration: str, reason: str = "", context: str = "",
-                 x_tv_role: str | None = Header(None), x_tv_user: str | None = Header(None)):
-    role, user = _who(x_tv_role, x_tv_user)
+def intel_lookup(registration: str, reason: str = "", context: str = ""):
     reason, context = reason.strip()[:120], context.strip()[:80]
     if context:
-        # Records are only attached to a CONFIDENT match: never to a candidate list or a partly read plate.
-        m = re.fullmatch(r"((?:runs|jobs)/[\w]+):T(\d+)", context)
-        if not m:
-            raise HTTPException(400, "context must look like runs/clip03:T1")
-        _, res = _result_for(m.group(1))
-        veh = next((v for v in res.get("vehicles", []) if str(v.get("track_id")) == m.group(2)), None)
-        top = (veh or {}).get("candidates") or []
-        if not veh or veh.get("decision") != "match" or not top or top[0]["registration_number"] != registration.upper():
-            intel.audit({"user": user, "role": role, "registration": registration.upper(), "reason": reason or None,
-                         "context": context, "action": "lookup", "outcome": "refused: not a confident match"})
-            raise HTTPException(409, "this vehicle has no confident registry match, so no record is attached to it")
+        _check_context(context, registration, "lookup")
     try:
-        return JSONResponse(intel.lookup(registration, role, user, reason, context or "manual search"))
+        return JSONResponse(intel.lookup(registration, reason, context or "manual search"))
     except intel.Refused as e:
-        raise HTTPException(e.status, str(e))
+        raise _refused(e)
+
+
+@app.post("/api/challans")
+def issue_challan(payload: dict = Body(...)):
+    """Issue a SIMULATED challan for a vehicle (stored locally, never sent anywhere)."""
+    reg, context = str(payload.get("registration_number", "")), str(payload.get("context", "")).strip()[:80]
+    if context:
+        _check_context(context, reg, "issue challan")
+    try:
+        c = intel.issue_challan(reg, payload.get("violation", ""), payload.get("fine_inr"), payload.get("location", ""),
+                                payload.get("note", ""), context)
+    except intel.Refused as e:
+        raise _refused(e)
+    return JSONResponse(c)
+
+
+@app.post("/api/challans/cancel")
+def cancel_challan(payload: dict = Body(...)):
+    try:
+        return JSONResponse(intel.cancel_challan(str(payload.get("challan_id", ""))))
+    except intel.Refused as e:
+        raise _refused(e)
 
 
 @app.get("/api/audit")
-def audit_log(x_tv_role: str | None = Header(None), x_tv_user: str | None = Header(None)):
-    role, _ = _who(x_tv_role, x_tv_user)
-    if not intel.ROLES[role]["audit"]:
-        raise HTTPException(403, "the audit log is visible to traffic officers only")
+def audit_log():
     return JSONResponse(intel.audit_log())
 
 
@@ -548,10 +566,7 @@ def all_violations():
 
 
 @app.post("/api/violations/review")
-def review_violation(payload: dict = Body(...), x_tv_role: str | None = Header(None), x_tv_user: str | None = Header(None)):
-    role, user = _who(x_tv_role, x_tv_user)
-    if not intel.ROLES[role]["review"]:
-        raise HTTPException(403, "only a traffic officer can review violations")
+def review_violation(payload: dict = Body(...)):
     vid, decision = str(payload.get("violation_id", "")), payload.get("decision")
     note = str(payload.get("note", "")).strip()[:300]
     if decision not in ("confirmed", "rejected", "pending"):
@@ -563,20 +578,16 @@ def review_violation(payload: dict = Body(...), x_tv_role: str | None = Header(N
     found = next((v for v in violations.detect(res, m.group(1))["violations"] if v["violation_id"] == vid), None)
     if not found:
         raise HTTPException(404, "no such suspected violation")
-    review = {"status": decision, "by": user, "at": time.strftime("%Y-%m-%dT%H:%M:%S"), "note": note or None}
+    review = {"status": decision, "at": time.strftime("%Y-%m-%dT%H:%M:%S"), "note": note or None}
     violations.save_review(vid, review)
     challan = None
     if decision == "confirmed" and found["registration_number"]:
-        challan = {"challan_id": f"SYN-SIM-{uuid.uuid4().hex[:8].upper()}", "violation_id": vid,
-                   "registration_number": found["registration_number"], "violation": found["label"],
-                   "date": time.strftime("%Y-%m-%dT%H:%M"), "location": f"{found['clip_id']} ({res.get('camera_type')})",
-                   "fine_inr": 1000, "status": "Pending", "source": "simulated_from_review",
-                   "issuing_authority": "TraceVision demo (simulated, not sent anywhere)", "confirmed_by": user}
-        intel.add_issued_challan(challan)
+        challan = intel.issue_challan(found["registration_number"], found["label"], None,
+                                      f"{found['clip_id']} ({res.get('camera_type')})", note, violation_id=vid)
     else:
-        intel.remove_issued_challan(vid)
-    intel.audit({"user": user, "role": role, "action": "review", "violation_id": vid, "outcome": decision,
-                 "note": note or None, "challan": challan["challan_id"] if challan else None})
+        intel.cancel_for_violation(vid)
+    intel.audit({"action": "review", "violation_id": vid, "outcome": decision, "note": note or None,
+                 "challan": challan["challan_id"] if challan else None})
     return JSONResponse({"review": review, "challan": challan,
                          "message": None if challan or decision != "confirmed" else
                          "Confirmed. No challan raised: the vehicle has no confident registry match."})

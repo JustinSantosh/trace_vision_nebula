@@ -25,10 +25,6 @@ def _tmp_state(tmp_path, monkeypatch):
     monkeypatch.setattr(violations, "REVIEWS", tmp_path / "reviews.json")
 
 
-def H(role, user="tester"):
-    return {"X-TV-Role": role, "X-TV-User": user}
-
-
 def matched_vehicle():
     for p in sorted((ROOT / "runs").glob("clip*/result.json")):
         r = json.loads(p.read_text(encoding="utf-8"))
@@ -55,44 +51,50 @@ def test_every_registry_vehicle_has_a_synthetic_record():
     assert all(c["challan_id"].startswith("SYN-") for cs in t["challans"].values() for c in cs)
 
 
-# ---------------------------------------------------------------- roles
-def test_analyst_sees_vehicle_but_not_owner_or_challans():
+# ---------------------------------------------------------------- lookup + issuing
+def test_lookup_returns_everything_and_is_logged():
     run, v = matched_vehicle()
-    reg = v["candidates"][0]["registration_number"]
-    r = client.get(f"/api/intel/{reg}", params={"context": f"{run}:T{v['track_id']}"}, headers=H("analyst"))
+    reg, ctx = v["candidates"][0]["registration_number"], f"{run}:T{v['track_id']}"
+    r = client.get(f"/api/intel/{reg}", params={"context": ctx})
     assert r.status_code == 200, r.text
     d = r.json()
     assert d["synthetic"] and d["vehicle"]["registration_number"] == reg
-    assert d["owner"]["masked"] and "•" in d["owner"]["name"]
-    assert d["challans"] is None and "pending" in d["challan_summary"]
-
-
-def test_investigator_needs_a_reason_and_then_sees_owner_and_challans():
-    run, v = matched_vehicle()
-    reg, ctx = v["candidates"][0]["registration_number"], f"{run}:T{v['track_id']}"
-    assert client.get(f"/api/intel/{reg}", params={"context": ctx}, headers=H("investigator")).status_code == 400
-    r = client.get(f"/api/intel/{reg}", params={"context": ctx, "reason": "Active investigation"}, headers=H("investigator"))
-    assert r.status_code == 200
-    d = r.json()
-    assert not d["owner"].get("masked") and isinstance(d["challans"], list)
+    assert d["owner"]["name"] and "•" not in d["owner"]["name"] and isinstance(d["challans"], list)
     log = [json.loads(x) for x in intel.AUDIT.read_text(encoding="utf-8").splitlines()]
-    assert [e["outcome"] for e in log] == ["refused: no reason given", "ok"]
-    assert log[1]["reason"] == "Active investigation" and log[1]["context"] == ctx
+    assert log[-1]["outcome"] == "ok" and log[-1]["context"] == ctx
 
 
 def test_no_record_is_attached_to_a_vehicle_without_a_confident_match():
     run, v = unmatched_vehicle()
-    reg = v["candidates"][0]["registration_number"]
-    r = client.get(f"/api/intel/{reg}", params={"context": f"{run}:T{v['track_id']}", "reason": "x"}, headers=H("officer"))
-    assert r.status_code == 409
-    assert "not a confident match" in intel.AUDIT.read_text(encoding="utf-8")
+    reg, ctx = v["candidates"][0]["registration_number"], f"{run}:T{v['track_id']}"
+    assert client.get(f"/api/intel/{reg}", params={"context": ctx}).status_code == 409
+    r = client.post("/api/challans", json={"registration_number": reg, "violation": "Over-speeding", "context": ctx})
+    assert r.status_code == 409 and intel.issued_challans() == []
 
 
-def test_audit_log_is_officer_only_and_unknown_role_is_rejected():
-    assert client.get("/api/audit", headers=H("investigator")).status_code == 403
-    assert client.get("/api/audit", headers=H("officer")).status_code == 200
-    assert client.get("/api/intel/meta").json()["available"] is True
-    assert client.get("/api/intel/XX00XX0000", headers=H("admin")).status_code == 400
+def test_issue_and_cancel_a_simulated_challan():
+    run, v = matched_vehicle()
+    reg, ctx = v["candidates"][0]["registration_number"], f"{run}:T{v['track_id']}"
+    before = client.get(f"/api/intel/{reg}").json()["challan_summary"]
+    r = client.post("/api/challans", json={"registration_number": reg, "violation": "Over-speeding", "location": "clip", "context": ctx})
+    assert r.status_code == 200, r.text
+    c = r.json()
+    assert c["challan_id"].startswith("SYN-SIM-") and c["fine_inr"] == intel.VIOLATION_FINES["Over-speeding"]
+    after = client.get(f"/api/intel/{reg}").json()
+    assert after["challans"][0]["challan_id"] == c["challan_id"]
+    assert after["challan_summary"]["pending"] == before["pending"] + 1
+    assert client.post("/api/challans", json={"registration_number": reg, "violation": ""}).status_code == 400
+    assert client.post("/api/challans", json={"registration_number": "ZZ00ZZ0000", "violation": "Over-speeding"}).status_code == 404
+    assert client.post("/api/challans/cancel", json={"challan_id": c["challan_id"]}).status_code == 200
+    assert client.post("/api/challans/cancel", json={"challan_id": "SYN-CG-2024-123456"}).status_code == 404
+    assert intel.issued_challans() == []
+    actions = [e["action"] for e in client.get("/api/audit").json()]
+    assert "issue challan" in actions and "cancel challan" in actions
+
+
+def test_meta_lists_violations_and_fines():
+    m = client.get("/api/intel/meta").json()
+    assert m["available"] is True and m["violations"]["Wrong-side driving"] > 0
 
 
 # ---------------------------------------------------------------- wrong-side driving
@@ -127,18 +129,16 @@ def test_real_fixed_clip_has_no_false_alarm_but_a_reversed_track_is_flagged():
     assert hits >= 5
 
 
-def test_review_is_officer_only_and_confirming_a_matched_vehicle_raises_a_simulated_challan(monkeypatch):
+def test_confirming_a_violation_on_a_matched_vehicle_raises_a_simulated_challan(monkeypatch):
     run, v = matched_vehicle()
     vid = f"{run}:T{v['track_id']}:wrong_side"
     fake = {"violation_id": vid, "label": "Wrong-side driving", "clip_id": run.split("/")[1],
             "registration_number": v["candidates"][0]["registration_number"]}
     monkeypatch.setattr(violations, "detect", lambda res, run_id: {"violations": [fake]})
     body = {"violation_id": vid, "decision": "confirmed"}
-    assert client.post("/api/violations/review", json=body, headers=H("investigator")).status_code == 403
-    r = client.post("/api/violations/review", json=body, headers=H("officer", "officer1"))
+    r = client.post("/api/violations/review", json=body)
     assert r.status_code == 200 and r.json()["challan"]["challan_id"].startswith("SYN-SIM-")
-    reg = fake["registration_number"]
-    rec = client.get(f"/api/intel/{reg}", params={"reason": "Violation review"}, headers=H("officer")).json()
-    assert rec["challans"][0]["source"] == "simulated_from_review"
-    client.post("/api/violations/review", json={**body, "decision": "rejected"}, headers=H("officer"))
+    rec = client.get(f"/api/intel/{fake['registration_number']}").json()
+    assert rec["challans"][0]["source"] == "simulated_issued"
+    client.post("/api/violations/review", json={**body, "decision": "rejected"})
     assert intel.issued_challans() == []

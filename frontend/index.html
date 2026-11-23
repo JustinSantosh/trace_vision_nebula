@@ -7,7 +7,7 @@
   <meta name="description" content="TraceVision: read what's there, mark what isn't. Vehicle traceability from CCTV footage, with the evidence behind every finding.">
   <title>TraceVision</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='7' width='28' height='18' rx='4' fill='%23fff' stroke='%2314161a' stroke-width='2.4'/%3E%3Crect x='7' y='12' width='4' height='8' rx='1' fill='%2314161a'/%3E%3Crect x='14' y='12' width='4' height='8' rx='1' fill='%2314161a'/%3E%3Crect x='21' y='12' width='4' height='8' rx='1' fill='%23f2c230'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="/frontend/styles.css?v=5">
+  <link rel="stylesheet" href="/frontend/styles.css?v=6">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -23,14 +23,6 @@
       <a href="#performance" data-tab="performance">Performance</a>
       <a href="#enforcement" data-tab="enforcement">Enforcement</a>
     </nav>
-    <label class="role" title="Demo role: chosen here, not authenticated. It decides what a vehicle-record lookup returns.">
-      <span class="visually-hidden">Acting as</span>
-      <select id="role" aria-label="Acting as (demo role)">
-        <option value="analyst">Analyst</option>
-        <option value="investigator">Investigator</option>
-        <option value="officer">Traffic officer</option>
-      </select>
-    </label>
     <span class="engine" id="engine" data-state="starting" title="Analysis engine status"><i></i><span id="engine-label">Checking engine</span></span>
   </header>
 
@@ -155,10 +147,10 @@
       <div class="page-head">
         <div>
           <h1 id="enf-title">Enforcement</h1>
-          <p class="lede">Suspected violations wait for an officer. Owner and challan records are only attached to a confident plate match, and every lookup is logged.</p>
+          <p class="lede">Look up any registered vehicle, see everything on record, and issue simulated challans. Suspected violations wait for review. Every lookup, challan and review is logged.</p>
         </div>
       </div>
-      <p class="demo-banner" role="note"><b>Synthetic demo data.</b> Owner records and e-challans are generated for this prototype. Nothing here queries VAHAN or the e-Challan system, and no challan is sent anywhere. The role picker is not a login.</p>
+      <p class="demo-banner" role="note"><b>Synthetic demo data.</b> Owner records and e-challans are generated for this prototype. Nothing here queries VAHAN or the e-Challan system, and no challan is sent anywhere.</p>
       <div class="perf">
         <div class="perf-main">
           <h2 class="label">Wrong-side driving <span id="ws-scope"></span></h2>
@@ -195,6 +187,6 @@
   <footer class="foot"><span>tracevision</span><span>Runs locally. Evidence stays on this machine.</span></footer>
 
   <script src="/frontend/explain.js?v=2" defer></script>
-  <script src="/frontend/app.js?v=4" defer></script>
+  <script src="/frontend/app.js?v=6" defer></script>
 </body>
 </html>

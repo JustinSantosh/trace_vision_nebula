@@ -9,7 +9,7 @@
   const S = {
     overview: null, review: null, route: null, result: null, files: [], cross: [], vid: null, finding: "plate",
     boxes: new Map(), req: 0, file: null, jobTimer: null, cc: { pair: null, link: null, results: {} }, perfKey: null,
-    viol: null, rec: new Map(), role: "analyst", meta: null, enfSel: null, enfFiles: {},
+    viol: null, rec: new Map(), meta: null, enfSel: null, enfManual: false, enfFiles: {},
   };
 
   /* ---------------------------------------------------------------- helpers */
@@ -30,14 +30,9 @@
   const clock = (s) => (Number.isFinite(s) && s >= 0 ? Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0") : "—");
   const cap = (s) => String(s || "").replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase());
   const plural = (n, word) => n + " " + word + (n === 1 ? "" : "s");
-  const store = {
-    get(k, d) { try { return localStorage.getItem(k) || d; } catch (_) { return d; } },
-    set(k, v) { try { localStorage.setItem(k, v); } catch (_) { /* private mode: the choice just isn't remembered */ } },
-  };
-  /* Calls that carry the demo role. The role is not authenticated: the server only uses it to shape the answer. */
+  /* JSON call that returns the error text instead of throwing (lookups, challans, reviews). */
   async function apiCall(url, opts = {}) {
-    const headers = Object.assign({ "X-TV-Role": S.role, "X-TV-User": "demo-" + S.role }, opts.headers || {});
-    const r = await fetch(url, Object.assign({ cache: "no-store" }, opts, { headers }));
+    const r = await fetch(url, Object.assign({ cache: "no-store" }, opts));
     let data = null;
     try { data = await r.json(); } catch (_) { /* empty body */ }
     return { ok: r.ok, status: r.status, data, error: data && data.detail ? data.detail : "HTTP " + r.status };
@@ -540,33 +535,34 @@
     return out;
   }
 
-  /* ---- evidence: vehicle record (synthetic, role-gated, logged) */
-  const roleLabel = () => ((S.meta && S.meta.roles && S.meta.roles[S.role]) || { label: cap(S.role) }).label.toLowerCase();
+  /* ---- evidence: vehicle record (synthetic, logged) */
   function lookupForm(onGo, label) {
-    const needs = S.role !== "analyst";
-    const reason = el("select", { class: "field", "aria-label": "Reason for this lookup" },
-      el("option", { value: "", text: needs ? "Choose a reason…" : "Reason (optional)" }),
+    const reason = el("select", { class: "field", "aria-label": "Reason for this lookup (optional)" },
+      el("option", { value: "", text: "Reason (optional, logged)" }),
       ...((S.meta && S.meta.reasons) || []).map((r) => el("option", { value: r, text: r })));
     const msg = el("p", { class: "ev-note", role: "status" });
-    const go = el("button", { class: "btn", type: "button", text: label || "Retrieve record", onclick: () => {
-      if (needs && !reason.value) { msg.textContent = "A reason is required to see owner and challan details. It goes into the audit log."; reason.focus(); return; }
-      onGo(reason.value, msg);
-    } });
+    const go = el("button", { class: "btn", type: "button", text: label || "Look up", onclick: () => onGo(reason.value, msg) });
     return el("div", { class: "lookup" }, reason, go, msg);
+  }
+  /* Fetch and show the full record for `reg` into `holder`, with the issue-challan form. `context` ties it to a case vehicle. */
+  async function loadRecord(reg, context, holder, reason, msg) {
+    if (msg) msg.textContent = "Looking up…";
+    const q = new URLSearchParams({ reason: reason || "" });
+    if (context) q.set("context", context);
+    const r = await apiCall("/api/intel/" + encodeURIComponent(reg) + "?" + q);
+    if (!r.ok) { if (msg) msg.textContent = r.error; else holder.replaceChildren(el("p", { class: "ev-note", text: r.error })); return null; }
+    S.rec.set(reg, r.data);
+    holder.replaceChildren(...recordNodes(r.data, context, () => loadRecord(reg, context, holder, "Refresh after change")));
+    return r.data;
   }
   function evRecord(v) {
     const reg = v.candidates.slice().sort((a, b) => a.rank - b.rank)[0].registration_number;
-    const key = reg + "|" + S.role;
+    const context = S.route.kind + "/" + S.route.id + ":T" + v.track_id;
     const holder = el("div");
-    const head = evHead("Vehicle record · synthetic", plateEl(reg, true), "Attached because this vehicle is a confident registry match. You are acting as " + roleLabel() + ".");
-    const show = (rec) => holder.replaceChildren(...recordNodes(rec));
-    if (S.rec.has(key)) show(S.rec.get(key));
-    else holder.replaceChildren(lookupForm(async (reason, msg) => {
-      msg.textContent = "Looking up…";
-      const r = await apiCall("/api/intel/" + encodeURIComponent(reg) + "?" + new URLSearchParams({ reason, context: S.route.kind + "/" + S.route.id + ":T" + v.track_id }));
-      if (!r.ok) { msg.textContent = r.error; return; }
-      S.rec.set(key, r.data); show(r.data);
-    }), el("p", { class: "ev-note", text: "Each lookup is logged with your role, the reason and this case." }));
+    const head = evHead("Vehicle record · synthetic", plateEl(reg, true), "Attached because this vehicle is a confident registry match.");
+    if (S.rec.has(reg)) holder.replaceChildren(...recordNodes(S.rec.get(reg), context, () => loadRecord(reg, context, holder, "Refresh after change")));
+    else holder.replaceChildren(lookupForm((reason, msg) => loadRecord(reg, context, holder, reason, msg)),
+      el("p", { class: "ev-note", text: "Each lookup is written to the audit log with this case." }));
     return [head, holder];
   }
   const COMPLIANCE = { valid: ["Valid", "match"], expiring: ["Expiring", "unsure"], expired: ["Expired", "fail"], unknown: ["Unknown", ""] };
@@ -574,30 +570,61 @@
     const [t, cls] = COMPLIANCE[c.state] || COMPLIANCE.unknown;
     return el("span", null, el("span", { class: "tag " + cls, text: t }), " ", el("small", { class: "muted", text: c.until || "" }));
   }
-  function recordNodes(rec) {
+  const statusTag = (s) => el("span", { class: "tag " + (s === "Paid" ? "match" : s === "Pending" ? "unsure" : ""), text: s });
+  async function cancelChallan(id, after) {
+    const r = await apiCall("/api/challans/cancel", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ challan_id: id }) });
+    if (r.ok && after) await after();
+    return r;
+  }
+  function issueForm(rec, context, after) {
+    const fines = (S.meta && S.meta.violations) || {};
+    const vio = el("select", { class: "field", "aria-label": "Violation" }, el("option", { value: "", text: "Choose a violation…" }),
+      ...Object.entries(fines).map(([k, f]) => el("option", { value: k, text: k + " · " + inr(f) })));
+    const fine = el("input", { class: "field", type: "number", min: 1, max: 100000, step: 1, placeholder: "Fine (₹)", "aria-label": "Fine in rupees" });
+    vio.addEventListener("change", () => { fine.value = fines[vio.value] || ""; });
+    const where = el("input", { class: "field", maxlength: 120, placeholder: "Location", "aria-label": "Location",
+      value: context ? context.split(":")[0].split("/")[1] + " (camera)" : "" });
+    const note = el("input", { class: "field", maxlength: 300, placeholder: "Note (optional)", "aria-label": "Note" });
+    const msg = el("p", { class: "ev-note", role: "status" });
+    const go = el("button", { class: "btn", type: "button", text: "Issue challan", onclick: async () => {
+      if (!vio.value) { msg.textContent = "Choose a violation."; vio.focus(); return; }
+      go.disabled = true;
+      const r = await apiCall("/api/challans", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ registration_number: rec.vehicle.registration_number, violation: vio.value, fine_inr: fine.value, location: where.value, note: note.value, context }) });
+      go.disabled = false;
+      if (!r.ok) { msg.textContent = r.error; return; }
+      await after();
+    } });
+    return section("Issue a challan", "simulated · never sent anywhere",
+      el("div", { class: "lookup", style: "margin-top:0" }, vio, el("div", { class: "two" }, fine, where), note, go, msg));
+  }
+  function recordNodes(rec, context, after) {
     const v = rec.vehicle, sum = rec.challan_summary;
     const out = [el("p", { class: "demo-banner small", text: rec.notice })];
     out.push(el("div", { class: "rec-stats" },
       el("div", null, el("b", { text: sum.pending }), el("span", { text: "pending challans" })),
       el("div", null, el("b", { text: inr(sum.pending_amount_inr) }), el("span", { text: "outstanding" })),
       el("div", null, el("b", { text: sum.total }), el("span", { text: "on record" }))));
-    out.push(section("Registered owner", rec.owner.masked ? "masked for " + roleLabel() : null,
-      kv([["Name", rec.owner.name], ["Owner", rec.owner.type ? rec.owner.type + (rec.owner.serial ? " · owner no. " + rec.owner.serial : "") : null]]),
-      rec.owner.masked ? el("p", { class: "ev-note", text: "Switch to investigator or officer and give a reason to see the name and challans." }) : null));
+    out.push(section("Registered owner", null,
+      kv([["Name", rec.owner.name], ["Owner", rec.owner.type + (rec.owner.serial ? " · owner no. " + rec.owner.serial : "")]])));
     out.push(section("Vehicle", null, kv([["Make / model", [v.manufacturer, v.model].filter(Boolean).join(" ")], ["Model year", v.model_year],
-      ["Class", v.vehicle_class], ["Fuel", v.fuel_type], ["Colour", cap(v.colour)], ["RTO", v.rto], ["Registered", v.registration_date]])));
+      ["Type", v.vehicle_type], ["Class", v.vehicle_class], ["Fuel", v.fuel_type], ["Colour", cap(v.colour)], ["RTO", v.rto], ["Registered", v.registration_date]])));
     out.push(section("Compliance", "checked against today", kv([["Registration / fitness", compl(rec.compliance.registration)],
       ["Insurance", compl(rec.compliance.insurance)], ["PUC", compl(rec.compliance.puc)]])));
-    if (rec.challans) {
-      const t = el("table", { class: "reads challans" }, el("thead", null, el("tr", null, el("th", { text: "Violation" }), el("th", { class: "num", text: "Fine" }), el("th", { text: "Status" }))));
-      const body = el("tbody");
-      rec.challans.forEach((c) => body.append(el("tr", { title: c.challan_id + " · " + c.issuing_authority },
-        el("td", null, c.violation, el("small", { class: "sub", text: c.date.slice(0, 10) + " · " + c.location })),
+    const t = el("table", { class: "reads challans" }, el("thead", null, el("tr", null, el("th", { text: "Violation" }), el("th", { class: "num", text: "Fine" }), el("th", { text: "Status" }))));
+    const body = el("tbody");
+    rec.challans.forEach((c) => {
+      const sim = c.source === "simulated_issued";
+      body.append(el("tr", { title: c.challan_id + " · " + c.issuing_authority + (c.note ? " · " + c.note : "") },
+        el("td", null, c.violation, sim ? el("span", { class: "tag plain sim", text: "issued here" }) : null,
+          el("small", { class: "sub", text: c.date.replace("T", " ").slice(0, 16) + " · " + c.location + " · " + c.challan_id })),
         el("td", { class: "num", text: inr(c.fine_inr) }),
-        el("td", null, el("span", { class: "tag " + (c.status === "Paid" ? "match" : c.status === "Pending" ? "unsure" : ""), text: c.status })))));
-      t.append(body);
-      out.push(section("e-Challan history", rec.challans.length ? "newest first" : null, rec.challans.length ? t : el("p", { class: "muted", text: "No challans on record." })));
-    } else out.push(section("e-Challan history", null, el("p", { class: "muted", text: "Hidden for " + roleLabel() + ". Totals only." })));
+        el("td", null, statusTag(c.status), sim && after ? el("button", { class: "more", type: "button", text: "Cancel", title: "Cancel this simulated challan",
+          onclick: () => cancelChallan(c.challan_id, after) }) : null)));
+    });
+    t.append(body);
+    out.push(section("e-Challan history", rec.challans.length ? "newest first" : null, rec.challans.length ? t : el("p", { class: "muted", text: "No challans on record." })));
+    if (after) out.push(issueForm(rec, context, after));
     return out;
   }
 
@@ -624,31 +651,33 @@
       el("span", null, c.clip_id + " · " + plural(c.flagged, "suspected violation"), el("small", { text: c.checked_vehicles + " vehicles checked" + (c.stabilisation ? " · camera pan up to " + c.stabilisation.max_pan_px + " px removed" : "") })),
       el("span", { class: "f-go", text: "›" }))));
     $("ws-list").replaceChildren(...rows, ...checked, el("li", { class: "muted small", style: "padding:12px",
-      text: vs.length ? "Officers confirm or reject each suspected violation. Only a confirmed one with a confident plate match raises a (simulated) challan."
-        : "No vehicle in the fixed-camera clips drove against the flow. Moving-camera clips are not assessed: their image motion isn't road direction." }));
-    const issued = data.issued_challans || [];
+      text: vs.length ? "Confirm or reject each suspected violation. A confirmed one on a vehicle with a confident plate match raises a simulated challan."
+        : "No wrong-side driving in the current clips. Only fixed cameras with a traffic rule are checked; moving-camera clips aren't, because their image motion isn't road direction." }));
+    const issued = (data.issued_challans || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
     $("issued").replaceChildren(issued.length ? el("table", { class: "cases" },
-      el("thead", null, el("tr", null, ...["Challan", "Registration", "Violation", "Fine", "Confirmed by"].map((h) => el("th", { text: h })))),
+      el("thead", null, el("tr", null, ...["Challan", "Registration", "Violation", "Fine", "Issued", ""].map((h) => el("th", { text: h })))),
       el("tbody", null, ...issued.map((c) => el("tr", null, el("td", { class: "clip", text: c.challan_id }), el("td", null, plateEl(c.registration_number)),
-        el("td", { text: c.violation }), el("td", { class: "num", text: inr(c.fine_inr) }), el("td", { class: "muted", text: c.confirmed_by })))))
-      : pad("None yet. One appears when an officer confirms a violation on a matched vehicle."));
+        el("td", { text: c.violation }), el("td", { class: "num", text: inr(c.fine_inr) }),
+        el("td", { class: "muted", text: (c.date || "").replace("T", " ") + (c.context ? " · " + c.context : "") }),
+        el("td", null, el("button", { class: "more", type: "button", text: "Cancel", onclick: () => cancelChallan(c.challan_id, async () => { S.rec.clear(); await openEnforcement(); }) }))))))
+      : pad("None yet. Look up a vehicle and use “Issue a challan”, or confirm a suspected violation on a matched vehicle."));
     renderAudit();
     const keep = vs.find((x) => x.violation_id === S.enfSel);
-    if (keep) selectViolation(keep); else manualLookup();
+    if (keep) selectViolation(keep); else if (!S.enfManual) manualLookup();
   }
   async function renderAudit() {
-    if (S.role !== "officer") { $("audit").replaceChildren(pad("Visible to traffic officers only. Switch the role at the top right.")); return; }
     const r = await apiCall("/api/audit");
     if (!r.ok) { $("audit").replaceChildren(pad(r.error)); return; }
     const rows = r.data.slice(0, 40);
     $("audit").replaceChildren(rows.length ? el("table", { class: "cases" },
-      el("thead", null, el("tr", null, ...["When", "Who", "Action", "Registration / item", "Reason / note", "Context", "Outcome"].map((h) => el("th", { text: h })))),
-      el("tbody", null, ...rows.map((e) => el("tr", null, el("td", { class: "muted", text: (e.at || "").replace("T", " ") }), el("td", { text: e.user + " (" + e.role + ")" }),
-        el("td", { text: e.action }), el("td", { class: "clip", text: e.registration || e.violation_id || "" }), el("td", { class: "muted", text: e.reason || e.note || "" }),
-        el("td", { class: "muted", text: e.context || "" }), el("td", { text: e.outcome }))))) : pad("No lookups yet."));
+      el("thead", null, el("tr", null, ...["When", "Action", "Registration / item", "Reason / note", "Context", "Outcome"].map((h) => el("th", { text: h })))),
+      el("tbody", null, ...rows.map((e) => el("tr", null, el("td", { class: "muted", text: (e.at || "").replace("T", " ") }),
+        el("td", { text: e.action + (e.violation ? ": " + e.violation : "") }), el("td", { class: "clip", text: e.registration || e.violation_id || "" }),
+        el("td", { class: "muted", text: e.reason || e.note || "" }), el("td", { class: "muted", text: e.context || "" }), el("td", { text: e.outcome }))))) : pad("No activity yet."));
   }
   function manualLookup() {
     S.enfSel = null;
+    S.enfManual = true;
     document.querySelectorAll("#ws-list .metric").forEach((b) => b.removeAttribute("aria-current"));
     const input = el("input", { class: "field mono", placeholder: "e.g. DL3CCY1025", "aria-label": "Registration number", maxlength: 12, autocomplete: "off", spellcheck: "false" });
     const holder = el("div");
@@ -658,14 +687,21 @@
       msg.textContent = "Looking up…";
       const r = await apiCall("/api/intel/" + encodeURIComponent(reg) + "?" + new URLSearchParams({ reason }));
       msg.textContent = r.ok ? "" : r.error;
-      holder.replaceChildren(...(r.ok ? recordNodes(r.data) : []));
+      const after = async () => {
+        const again = await apiCall("/api/intel/" + encodeURIComponent(reg) + "?" + new URLSearchParams({ reason: "Refresh after change" }));
+        if (again.ok) holder.replaceChildren(...recordNodes(again.data, "", after));
+        await openEnforcement();
+      };
+      holder.replaceChildren(...(r.ok ? recordNodes(r.data, "", after) : []));
       renderAudit();
     }, "Look up");
+    input.addEventListener("keydown", (e) => { if (e.key === "Enter") form.querySelector(".btn").click(); });
     form.prepend(input);
-    $("enf-evidence").replaceChildren(...evHead("Manual lookup", "Look up a registration", "For a plate the officer already has, such as one read off a photo. Logged as a manual search."), form, holder);
+    $("enf-evidence").replaceChildren(...evHead("Look up a vehicle", "Registration lookup", "Shows everything on record for a registration, and lets you issue a simulated challan for it."), form, holder);
   }
   function selectViolation(x) {
     S.enfSel = x.violation_id;
+    S.enfManual = false;
     document.querySelectorAll("#ws-list .metric").forEach((b) => b.setAttribute("aria-current", String(b.dataset.k === x.violation_id)));
     const m = x.measurement;
     const crops = (S.enfFiles[x.run] || []).filter((f) => f.startsWith("t" + x.track_id + "_vehicle_"));
@@ -680,35 +716,23 @@
       const after = $("enf-evidence").querySelector("[role=status]");
       if (after) after.textContent = r.data.challan ? "Confirmed. Simulated challan " + r.data.challan.challan_id + " raised." : (r.data.message || "Saved as " + decision + ".");
     };
-    const officer = S.role === "officer";
     $("enf-evidence").replaceChildren(...[
       evHead("Suspected violation", x.label, x.clip_id + " · vehicle T" + x.track_id + " · " + clock(x.time_s[0]) + "–" + clock(x.time_s[1])),
       crops.length ? el("div", { class: "crops" }, ...crops.slice(0, 3).map((f) => el("img", { src: "/data/" + x.run + "/vehicles/" + f, alt: "Vehicle crop", style: "height:64px" }))) : null,
       section("Vehicle", null, kv([["Plate read", x.plate ? plateEl(x.plate) : "not read"], ["Registry", x.registration_number ? plateEl(x.registration_number) : "no confident match"],
         ["Type / colour", [x.vehicle_type, x.colour].filter(Boolean).join(" · ")]])),
       section("Measured", null, dirs(m, true), kv([["Angle off permitted", deg(m.cos_to_allowed) + "°"], ["Steps against the flow", pct(m.against_flow_share)], ["Zone", m.zone]])),
-      section("Officer review", officer ? null : "officers only", kv([["Status", reviewTag(x.review.status)], ["By", x.review.by], ["Note", x.review.note]]),
-        officer ? el("div", { class: "lookup" }, note, el("div", { class: "btn-row" },
+      section("Review", null, kv([["Status", reviewTag(x.review.status)], ["Note", x.review.note]]),
+        el("div", { class: "lookup" }, note, el("div", { class: "btn-row" },
           el("button", { class: "btn", type: "button", text: "Confirm", onclick: act("confirmed") }),
           el("button", { class: "btn ghost", type: "button", text: "Reject", onclick: act("rejected") }),
-          x.review.status !== "pending" ? el("button", { class: "more", type: "button", text: "Reset to pending", onclick: act("pending") }) : null), msg)
-          : el("p", { class: "ev-note", text: "Switch to traffic officer to confirm or reject." })),
+          x.review.status !== "pending" ? el("button", { class: "more", type: "button", text: "Reset to pending", onclick: act("pending") }) : null), msg)),
       el("a", { class: "more", href: "#case/" + x.run, text: "Open the case and play the clip" }),
-      el("button", { class: "more", type: "button", text: "Manual registration lookup", onclick: manualLookup }),
+      el("button", { class: "more", type: "button", text: "Registration lookup", onclick: manualLookup }),
     ].flat().filter(Boolean));
   }
 
-  /* ---------------------------------------------------------------- role */
-  async function initRole() {
-    const sel = $("role");
-    S.role = store.get("tv-role", "analyst");
-    if (![...sel.options].some((o) => o.value === S.role)) S.role = "analyst";
-    sel.value = S.role;
-    sel.addEventListener("change", () => {
-      S.role = sel.value; store.set("tv-role", S.role); S.rec.clear();
-      if (!$("view-case").hidden && S.result && S.vid !== null) selectVehicle(S.vid, false);
-      if (!$("view-enforcement").hidden) openEnforcement();
-    });
+  async function initMeta() {
     try { S.meta = await getJSON("/api/intel/meta"); } catch (_) { S.meta = null; }
   }
 
@@ -1018,7 +1042,7 @@
   }
 
   /* ---------------------------------------------------------------- start */
-  initRole();
+  initMeta();
   initIntake();
   initPlayer();
   initCrosscam();

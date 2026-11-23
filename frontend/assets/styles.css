@@ -360,12 +360,7 @@ table.cases { width: 100%; border-collapse: collapse; font-size: 14px; }
 .link-row .side .plate { align-self: flex-start; }
 .evidence p { overflow-wrap: anywhere; }
 
-/* ---------- roles, vehicle record, enforcement ---------- */
-.role select { appearance: none; border: 1px solid var(--line-strong); background: var(--surface); border-radius: 999px; padding: 5px 28px 5px 12px; font-size: 13px;
-  background-image: linear-gradient(45deg, transparent 50%, var(--ink-2) 50%), linear-gradient(135deg, var(--ink-2) 50%, transparent 50%);
-  background-position: calc(100% - 14px) 52%, calc(100% - 9px) 52%; background-size: 5px 5px; background-repeat: no-repeat; }
-.topbar .role { margin-left: auto; }
-.topbar .role + .engine { margin-left: 0; }
+/* ---------- vehicle record, enforcement ---------- */
 .demo-banner { background: var(--mark-soft); border-left: 3px solid var(--mark); border-radius: 6px; padding: 10px 14px; font-size: 13.5px; color: var(--ink); margin-bottom: 24px; }
 .demo-banner.small { font-size: 12.5px; padding: 7px 10px; margin: 14px 0 0; }
 .tag.fail { background: color-mix(in srgb, var(--fail) 14%, transparent); color: var(--fail); }
@@ -389,8 +384,7 @@ table.cases { width: 100%; border-collapse: collapse; font-size: 14px; }
 .metric .mono-sm { font-family: var(--mono); font-size: 15px; letter-spacing: .02em; }
 a.metric { text-decoration: none; color: inherit; }
 #view-enforcement .table-wrap { margin-bottom: 8px; }
-@media (max-width: 900px) { .topbar .role select { max-width: 130px; } .rec-stats b { font-size: 17px; } }
-@media (max-width: 560px) { .topbar .role select { max-width: 150px; } }
+@media (max-width: 900px) { .rec-stats b { font-size: 17px; } }
 #ws-list .metric { grid-template-columns: 110px minmax(0, 1fr) auto; }
 #ws-list .metric b.none { font-family: var(--font); font-size: 14px; color: var(--ink-2); }
 .perf-main, .cc-main { min-width: 0; }
@@ -399,3 +393,6 @@ a.metric { text-decoration: none; color: inherit; }
   .topbar .tabs { order: 3; width: 100%; overflow-x: auto; scrollbar-width: none; }
   .tabs a { flex: none; }
 }
+.lookup .two { display: grid; grid-template-columns: 1fr 1.4fr; gap: 8px; }
+.tag.sim { margin-left: 6px; background: var(--mark-soft); color: var(--ink); font-size: 11px; padding: 0 6px; }
+.challans td .more { display: block; padding-top: 4px; font-size: 12px; }

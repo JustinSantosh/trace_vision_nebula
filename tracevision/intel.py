@@ -1,18 +1,11 @@
-"""Vehicle intelligence (registered-owner record + e-challan history) behind role checks and an audit log.
+"""Vehicle intelligence: registered-owner record + e-challan history, simulated challan issuing, audit log.
 
 SYNTHETIC DEMO DATA ONLY (DECISIONS E17). The records come from registry/synthetic_owner_records.csv and
 registry/synthetic_echallans.csv (TRACEVISION_DATA/scripts/generate_vehicle_intel.py). No VAHAN / e-Challan
-service is queried.
+service is queried, and an issued challan is only written to runs/enforcement/issued_challans.json.
 
-Roles (what a lookup returns)
-  analyst       vehicle particulars and compliance status; owner name masked; challan totals only
-  investigator  + owner name and the full challan list; a stated reason is required
-  officer       same as investigator, plus reviewing violations and reading the audit log
-
-Every lookup, allowed or refused, is appended to runs/audit/lookups.jsonl.
-
-The role arrives in a request header and is NOT authenticated: this shows the access model, it is not access control.
-A deployment would take the role from the identity provider instead.
+A lookup returns everything on record for the registration. Every lookup, issue and cancellation is appended to
+runs/audit/lookups.jsonl.
 """
 from __future__ import annotations
 
@@ -20,20 +13,22 @@ import csv
 import json
 import re
 import threading
+import uuid
 from datetime import date, datetime
-from pathlib import Path
 
 from . import ROOT
 
 REG_DIR = ROOT / "TRACEVISION_DATA" / "registry"
 AUDIT = ROOT / "runs" / "audit" / "lookups.jsonl"
 ISSUED = ROOT / "runs" / "enforcement" / "issued_challans.json"
-ROLES = {
-    "analyst": {"label": "Analyst", "owner": False, "challans": False, "review": False, "audit": False},
-    "investigator": {"label": "Investigator", "owner": True, "challans": True, "review": False, "audit": False},
-    "officer": {"label": "Traffic officer", "owner": True, "challans": True, "review": True, "audit": True},
-}
 REASONS = ["Active investigation", "Violation review", "Stolen vehicle check", "Court / legal request", "Training / demo"]
+# Illustrative fine amounts (INR) for issuing, demo only (same table as generate_vehicle_intel.py).
+VIOLATION_FINES = {
+    "Wrong-side driving": 1000, "Riding without helmet": 1000, "Triple riding": 1000, "Driving without seatbelt": 1000,
+    "Red light violation": 1000, "Over-speeding": 2000, "Stop-line violation": 500, "No parking / illegal parking": 500,
+    "Using mobile phone while driving": 5000, "Driving without valid PUC": 10000, "Driving without insurance": 2000,
+    "Overloading": 20000, "Carrying passengers beyond capacity": 2000,
+}
 _lock = threading.Lock()
 _cache: dict = {}
 
@@ -44,16 +39,12 @@ class Refused(Exception):
         self.status = status
 
 
-def role_of(raw: str | None) -> str:
-    r = (raw or "analyst").strip().lower()
-    if r not in ROLES:
-        raise Refused(400, f"unknown role {raw!r}; use one of {sorted(ROLES)}")
-    return r
+def norm_reg(raw: str | None) -> str:
+    return re.sub(r"[^A-Z0-9]", "", (raw or "").upper())
 
 
-def clean_user(raw: str | None) -> str:
-    u = re.sub(r"[^\w .@-]", "", (raw or "").strip())[:40]
-    return u or "anonymous"
+def clean(raw, n: int) -> str:
+    return re.sub(r"[\x00-\x1f]", " ", str(raw or "")).strip()[:n]
 
 
 def _tables():
@@ -63,12 +54,11 @@ def _tables():
         def rows(p):
             return list(csv.DictReader(open(p, encoding="utf-8"))) if p.exists() else []
         reg, own, ch = (rows(p) for p in paths)
-        by_reg = {r["registration_number"]: r for r in reg}
-        owners = {r["synthetic_vehicle_id"]: r for r in own}
         challans: dict[str, list] = {}
         for c in ch:
             challans.setdefault(c["registration_number"], []).append(c)
-        _cache.update(stamp=stamp, by_reg=by_reg, owners=owners, challans=challans)
+        _cache.update(stamp=stamp, by_reg={r["registration_number"]: r for r in reg},
+                      owners={r["synthetic_vehicle_id"]: r for r in own}, challans=challans)
     return _cache
 
 
@@ -76,6 +66,11 @@ def available() -> bool:
     return bool(_tables()["owners"])
 
 
+def in_registry(reg: str) -> bool:
+    return norm_reg(reg) in _tables()["by_reg"]
+
+
+# ---------------------------------------------------------------- simulated (issued) challans
 def issued_challans() -> list:
     try:
         return json.loads(ISSUED.read_text(encoding="utf-8"))
@@ -83,22 +78,62 @@ def issued_challans() -> list:
         return []
 
 
-def add_issued_challan(entry: dict):
+def _save_issued(items):
+    ISSUED.parent.mkdir(parents=True, exist_ok=True)
+    ISSUED.write_text(json.dumps(items, indent=1), encoding="utf-8")
+
+
+def issue_challan(registration: str, violation: str, fine_inr=None, location: str = "", note: str = "",
+                  context: str = "", violation_id: str | None = None) -> dict:
+    """Raise a SIMULATED challan for a registry vehicle. Stored locally; never sent anywhere."""
+    reg = norm_reg(registration)
+    if not in_registry(reg):
+        raise Refused(404, f"{reg} is not in the synthetic registry")
+    violation = clean(violation, 80)
+    if not violation:
+        raise Refused(400, "choose a violation")
+    try:
+        fine = int(fine_inr) if fine_inr not in (None, "") else VIOLATION_FINES.get(violation, 500)
+    except (TypeError, ValueError):
+        raise Refused(400, "fine must be a whole number of rupees")
+    if not 0 < fine <= 100000:
+        raise Refused(400, "fine must be between ₹1 and ₹1,00,000")
+    c = {"challan_id": f"SYN-SIM-{uuid.uuid4().hex[:8].upper()}", "registration_number": reg, "violation": violation,
+         "date": datetime.now().isoformat(timespec="minutes"), "location": clean(location, 120) or "Not stated",
+         "fine_inr": fine, "status": "Pending", "note": clean(note, 300) or None, "context": clean(context, 80) or None,
+         "violation_id": violation_id, "source": "simulated_issued",
+         "issuing_authority": "TraceVision demo (simulated, not sent anywhere)"}
     with _lock:
         items = issued_challans()
-        items = [c for c in items if c.get("violation_id") != entry.get("violation_id")]
-        items.append(entry)
-        ISSUED.parent.mkdir(parents=True, exist_ok=True)
-        ISSUED.write_text(json.dumps(items, indent=1), encoding="utf-8")
+        if violation_id:
+            items = [x for x in items if x.get("violation_id") != violation_id]
+        items.append(c)
+        _save_issued(items)
+    audit({"action": "issue challan", "registration": reg, "outcome": c["challan_id"], "note": c["note"],
+           "context": c["context"] or violation_id, "violation": violation, "fine_inr": fine})
+    return c
 
 
-def remove_issued_challan(violation_id: str):
+def cancel_challan(challan_id: str) -> dict:
     with _lock:
-        items = [c for c in issued_challans() if c.get("violation_id") != violation_id]
-        ISSUED.parent.mkdir(parents=True, exist_ok=True)
-        ISSUED.write_text(json.dumps(items, indent=1), encoding="utf-8")
+        items = issued_challans()
+        hit = next((x for x in items if x["challan_id"] == challan_id), None)
+        if not hit:
+            raise Refused(404, "only simulated challans raised here can be cancelled")
+        _save_issued([x for x in items if x["challan_id"] != challan_id])
+    audit({"action": "cancel challan", "registration": hit["registration_number"], "outcome": challan_id})
+    return hit
 
 
+def cancel_for_violation(violation_id: str):
+    with _lock:
+        items = issued_challans()
+        keep = [x for x in items if x.get("violation_id") != violation_id]
+        if len(keep) != len(items):
+            _save_issued(keep)
+
+
+# ---------------------------------------------------------------- audit
 def audit(event: dict):
     event = {"at": datetime.now().isoformat(timespec="seconds"), **event}
     with _lock:
@@ -121,6 +156,7 @@ def audit_log(limit: int = 200) -> list:
     return out
 
 
+# ---------------------------------------------------------------- lookup
 def _status(day: str, today: date) -> dict:
     try:
         d = date.fromisoformat(day)
@@ -130,30 +166,25 @@ def _status(day: str, today: date) -> dict:
     return {"until": day, "state": "valid" if left >= 30 else "expiring" if left >= 0 else "expired", "days_left": left}
 
 
-def lookup(registration: str, role: str, user: str, reason: str = "", context: str = "", today: date | None = None) -> dict:
-    """Role-filtered vehicle record. Raises Refused (and audits the refusal) when the request is not allowed."""
-    reg = re.sub(r"[^A-Z0-9]", "", (registration or "").upper())
-    perms = ROLES[role]
-    base = {"user": user, "role": role, "registration": reg, "reason": reason or None, "context": context or None}
-    if perms["owner"] and not reason.strip():
-        audit({**base, "action": "lookup", "outcome": "refused: no reason given"})
-        raise Refused(400, "a reason is required for an owner / challan lookup")
+def lookup(registration: str, reason: str = "", context: str = "", today: date | None = None) -> dict:
+    """Everything on record for a registration: vehicle, owner, compliance, e-challans (incl. simulated ones)."""
+    reg = norm_reg(registration)
+    base = {"registration": reg, "reason": reason or None, "context": context or None, "action": "lookup"}
     t = _tables()
     veh = t["by_reg"].get(reg)
     if veh is None:
-        audit({**base, "action": "lookup", "outcome": "not found"})
+        audit({**base, "outcome": "not found"})
         raise Refused(404, f"{reg} is not in the synthetic registry")
     own = t["owners"].get(veh["synthetic_vehicle_id"], {})
     today = today or date.today()
     history = sorted(t["challans"].get(reg, []), key=lambda c: c["date"], reverse=True)
-    issued = [c for c in issued_challans() if c.get("registration_number") == reg]
-    challans = [{k: c[k] for k in ("challan_id", "violation", "date", "location", "status", "issuing_authority", "source")}
-                | {"fine_inr": int(c["fine_inr"])} for c in issued + history]
+    issued = sorted((c for c in issued_challans() if c.get("registration_number") == reg), key=lambda c: c["date"], reverse=True)
+    keys = ("challan_id", "violation", "date", "location", "status", "issuing_authority", "source", "note")
+    challans = [{k: c.get(k) for k in keys} | {"fine_inr": int(c["fine_inr"])} for c in issued + history]
     pending = [c for c in challans if c["status"] != "Paid"]
     rec = {
         "synthetic": True,
         "notice": "Synthetic demo data. Not a VAHAN or e-Challan lookup.",
-        "role": role,
         "vehicle": {
             "registration_number": reg, "synthetic_vehicle_id": veh["synthetic_vehicle_id"],
             "manufacturer": veh.get("manufacturer"), "model": veh.get("model"), "model_year": veh.get("model_year"),
@@ -166,12 +197,10 @@ def lookup(registration: str, role: str, user: str, reason: str = "", context: s
             "insurance": _status(own.get("insurance_valid_until"), today),
             "puc": _status(own.get("puc_valid_until"), today),
         },
-        "owner": ({"name": own.get("owner_name"), "type": own.get("owner_type"), "serial": int(own.get("owner_serial") or 1)}
-                  if perms["owner"] else {"name": own.get("owner_name_masked"), "masked": True}),
+        "owner": {"name": own.get("owner_name"), "type": own.get("owner_type"), "serial": int(own.get("owner_serial") or 1)},
         "challan_summary": {"total": len(challans), "pending": len(pending),
                             "pending_amount_inr": sum(c["fine_inr"] for c in pending)},
-        "challans": challans if perms["challans"] else None,
+        "challans": challans,
     }
-    audit({**base, "action": "lookup", "outcome": "ok",
-           "fields": "vehicle+owner+challans" if perms["owner"] else "vehicle (owner masked)"})
+    audit({**base, "outcome": "ok"})
     return rec
