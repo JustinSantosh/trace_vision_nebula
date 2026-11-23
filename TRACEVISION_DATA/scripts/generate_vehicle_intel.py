@@ -6,6 +6,9 @@ the app never queries one. Every name is invented, every challan ID starts with 
 synthetic = true. Fine amounts are illustrative. The records are keyed by synthetic_vehicle_id, so the registry
 used for matching (and its evaluation) is untouched.
 
+Vehicles seeded from the evaluation clips (source = evaluation_seed: the ones the demo can match) always get 2-4
+challans, one of them recent and pending, so every matched vehicle has something to show.
+
 Inputs   registry/synthetic_vehicle_registry.csv
 Outputs  registry/synthetic_owner_records.csv   one row per registry vehicle
          registry/synthetic_echallans.csv       0-4 challans per vehicle
@@ -142,6 +145,10 @@ def build(seed: int):
             "synthetic": "true",
         })
         n = rng.choices([0, 1, 2, 3, 4], weights=[38, 26, 18, 11, 7])[0]
+        # Vehicles the system can actually match in the demo clips always get a history with something pending.
+        seed_row = row.get("source") == "evaluation_seed"
+        if seed_row:
+            n = max(n, rng.choice([2, 3, 4]))
         allowed = [v for v, (_, types) in VIOLATIONS.items() if types is None or vtype in types]
         earliest = max(reg_date, REFERENCE_DAY - timedelta(days=3 * 365))
         span = max(1, (REFERENCE_DAY - earliest).days - 1)
@@ -149,6 +156,9 @@ def build(seed: int):
             vio = rng.choice(allowed)
             when = datetime.combine(earliest, time(0)) + timedelta(days=rng.randint(0, span), minutes=rng.randint(7 * 60, 22 * 60))
             status = pick(rng, STATUS)
+            if seed_row and k == 0:                     # one recent, unpaid challan
+                when = datetime.combine(REFERENCE_DAY, time(0)) - timedelta(days=rng.randint(10, 120), minutes=-rng.randint(7 * 60, 22 * 60))
+                status = "Pending"
             if (REFERENCE_DAY - when.date()).days > 400 and status == "Pending":
                 status = "Paid"                         # very old challans are mostly settled
             challans.append({

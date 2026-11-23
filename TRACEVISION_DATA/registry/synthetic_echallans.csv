@@ -70,12 +70,16 @@ SYN-CG-2025-191706,SV873861,CG04DH1578,Driving without valid PUC,2025-02-16T15:5
 SYN-CG-2025-277448,SV873861,CG04DH1578,Using mobile phone while driving,2025-08-04T15:19,"Shastri Chowk, Raipur",5000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2026-669757,SV873861,CG04DH1578,No parking / illegal parking,2026-04-12T21:15,"Shastri Chowk, Raipur",500,Pending,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2026-814588,SV207526,CG04DK1278,Red light violation,2026-03-10T10:44,"Pachpedi Naka, Raipur",1000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
-SYN-CG-2024-700536,SV725737,CG04DK1578,Over-speeding,2024-12-27T20:17,"Telibandha Chowk, Raipur",2000,Sent to virtual court,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
+SYN-CG-2024-304022,SV725737,CG04DK1578,No parking / illegal parking,2024-07-03T08:32,"Pulgaon Chowk, Durg",500,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
+SYN-CG-2025-872630,SV725737,CG04DK1578,Triple riding,2025-07-21T21:37,"Fafadih Chowk, Raipur",1000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
+SYN-CG-2026-143222,SV725737,CG04DK1578,Triple riding,2026-08-09T16:41,"Nehru Chowk, Bilaspur",1000,Sent to virtual court,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
+SYN-CG-2026-867041,SV725737,CG04DK1578,Over-speeding,2026-09-01T07:27,"Pachpedi Naka, Raipur",2000,Pending,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2025-781502,SV297227,CG04DK1928,Over-speeding,2025-01-03T10:48,"Mowa Overbridge, Raipur",2000,Sent to virtual court,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2024-498816,SV132475,CG04DK7570,Using mobile phone while driving,2024-09-22T16:46,"Mowa Overbridge, Raipur",5000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2026-254673,SV132475,CG04DK7570,Triple riding,2026-09-28T10:33,"Mowa Overbridge, Raipur",1000,Pending,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
-SYN-CG-2025-828051,SV793292,CG04NL3024,No parking / illegal parking,2025-03-30T10:56,"Nehru Chowk, Bilaspur",500,Sent to virtual court,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
-SYN-CG-2026-333722,SV793292,CG04NL3024,Stop-line violation,2026-03-12T21:39,"Fafadih Chowk, Raipur",500,Pending,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
+SYN-CG-2025-562596,SV793292,CG04NL3024,Wrong-side driving,2025-09-29T15:43,"Telibandha Chowk, Raipur",1000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
+SYN-CG-2026-415366,SV793292,CG04NL3024,No parking / illegal parking,2026-08-05T14:29,"Pachpedi Naka, Raipur",500,Pending,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
+SYN-CG-2026-547753,SV793292,CG04NL3024,Driving without valid PUC,2026-09-21T13:39,"Nehru Chowk, Bilaspur",10000,Pending,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2024-777140,SV182418,CG04NL4029,Driving without valid PUC,2024-03-14T13:55,"Mowa Overbridge, Raipur",10000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2024-326189,SV182418,CG04NL4029,Wrong-side driving,2024-05-25T10:39,"Pulgaon Chowk, Durg",1000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2025-933038,SV182418,CG04NL4029,Stop-line violation,2025-08-15T21:27,"Mowa Overbridge, Raipur",500,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
@@ -103,7 +107,10 @@ SYN-CG-2024-766568,SV349583,CG13SP7341,Over-speeding,2024-10-18T11:27,"Shastri C
 SYN-CG-2025-771904,SV349583,CG13SP7341,Red light violation,2025-12-23T17:57,"Fafadih Chowk, Raipur",1000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2026-219978,SV349583,CG13SP7341,Riding without helmet,2026-08-22T20:34,"Pulgaon Chowk, Durg",1000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2024-244957,SV574834,CG14MW3519,Riding without helmet,2024-06-18T21:32,"Shastri Chowk, Raipur",1000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
-SYN-CG-2024-636723,SV984666,CG14MW3529,Stop-line violation,2024-02-13T07:42,"Fafadih Chowk, Raipur",500,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
+SYN-CG-2024-388109,SV984666,CG14MW3529,Using mobile phone while driving,2024-05-20T09:33,"Telibandha Chowk, Raipur",5000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
+SYN-CG-2024-748910,SV984666,CG14MW3529,Red light violation,2024-08-13T21:07,"Fafadih Chowk, Raipur",1000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
+SYN-CG-2025-151449,SV984666,CG14MW3529,Stop-line violation,2025-04-15T07:10,"Shastri Chowk, Raipur",500,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
+SYN-CG-2026-811323,SV984666,CG14MW3529,Stop-line violation,2026-09-09T12:12,"Shastri Chowk, Raipur",500,Pending,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2024-796888,SV264827,CG14SV6970,Wrong-side driving,2024-10-13T16:52,"Nehru Chowk, Bilaspur",1000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2025-870734,SV264827,CG14SV6970,No parking / illegal parking,2025-09-07T08:56,"Nehru Chowk, Bilaspur",500,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
 SYN-CG-2025-203253,SV264827,CG14SV6970,Over-speeding,2025-09-24T12:23,"Shastri Chowk, Raipur",2000,Paid,Chhattisgarh Traffic Police (synthetic),synthetic_history,true
@@ -157,8 +164,14 @@ SYN-DL-2026-684177,SV003353,DL25ZY9964,Over-speeding,2026-01-13T16:50,"Highway B
 SYN-DL-2026-187946,SV419227,DL27TW0261,Driving without valid PUC,2026-04-12T20:36,"Highway Bypass, New Delhi",10000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2024-711284,SV393735,DL29PB8961,Over-speeding,2024-10-27T18:49,"Ring Road Junction, New Delhi",2000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2026-706821,SV393735,DL29PB8961,Over-speeding,2026-05-07T20:01,"Collectorate Square, New Delhi",2000,Pending,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2025-535769,SV656881,DL3CCK2475,Using mobile phone while driving,2025-01-25T16:13,"Main Chowk, New Delhi",5000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2025-164248,SV656881,DL3CCK2475,Stop-line violation,2025-05-24T12:06,"Railway Station Road, New Delhi",500,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2026-184018,SV656881,DL3CCK2475,Red light violation,2026-03-31T15:28,"Ring Road Junction, New Delhi",1000,Pending,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2026-139775,SV656881,DL3CCK2475,Stop-line violation,2026-10-24T13:29,"Market Road, New Delhi",500,Pending,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2024-562161,SV500305,DL3CCY1022,Driving without seatbelt,2024-06-26T09:16,"Main Chowk, New Delhi",1000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
-SYN-DL-2025-300205,SV457965,DL3CCY1025,No parking / illegal parking,2025-09-26T10:48,"Market Road, New Delhi",500,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2024-429135,SV457965,DL3CCY1025,Stop-line violation,2024-04-04T08:43,"Ring Road Junction, New Delhi",500,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2025-953373,SV457965,DL3CCY1025,Driving without seatbelt,2025-10-25T19:51,"Collectorate Square, New Delhi",1000,Pending,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2026-181134,SV457965,DL3CCY1025,No parking / illegal parking,2026-10-20T13:41,"Highway Bypass, New Delhi",500,Pending,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2025-896510,SV407525,DL3CCY1080,Using mobile phone while driving,2025-03-10T20:19,"Collectorate Square, New Delhi",5000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2025-359270,SV407525,DL3CCY1080,Driving without valid PUC,2025-05-19T13:44,"Railway Station Road, New Delhi",10000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2025-615765,SV407525,DL3CCY1080,Red light violation,2025-07-10T12:00,"Highway Bypass, New Delhi",1000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
@@ -167,15 +180,19 @@ SYN-DL-2024-493980,SV882380,DL3EAH1004,Using mobile phone while driving,2024-01-
 SYN-DL-2024-321040,SV882380,DL3EAH1004,Wrong-side driving,2024-08-27T17:29,"Civil Lines Crossing, New Delhi",1000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2025-385474,SV878730,DL7MAZ8556,Using mobile phone while driving,2025-02-09T19:12,"Railway Station Road, New Delhi",5000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2026-664220,SV878730,DL7MAZ8556,No parking / illegal parking,2026-08-26T18:31,"Main Chowk, New Delhi",500,Pending,Delhi Traffic Police (synthetic),synthetic_history,true
-SYN-DL-2024-471916,SV986046,DL8CAH1004,Stop-line violation,2024-10-12T13:21,"University Road, New Delhi",500,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
-SYN-DL-2025-736069,SV986046,DL8CAH1004,Wrong-side driving,2025-02-04T07:44,"Expressway Toll Plaza, New Delhi",1000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
-SYN-DL-2025-615269,SV986046,DL8CAH1004,Red light violation,2025-08-26T14:29,"Main Chowk, New Delhi",1000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2025-136318,SV986046,DL8CAH1004,Driving without valid PUC,2025-01-06T15:23,"Expressway Toll Plaza, New Delhi",10000,Sent to virtual court,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2026-323118,SV986046,DL8CAH1004,Driving without seatbelt,2026-09-08T20:08,"Bus Stand Square, New Delhi",1000,Pending,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2026-166412,SV986046,DL8CAH1004,Driving without seatbelt,2026-10-20T20:31,"Civil Lines Crossing, New Delhi",1000,Pending,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2024-289502,SV315800,DL8CAH1064,Red light violation,2024-04-16T07:56,"Civil Lines Crossing, New Delhi",1000,Sent to virtual court,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2025-754860,SV581252,DL8CAH1084,Stop-line violation,2025-03-12T13:45,"Railway Station Road, New Delhi",500,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2025-988971,SV581252,DL8CAH1084,Over-speeding,2025-03-17T14:49,"Bus Stand Square, New Delhi",2000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2025-337929,SV509600,DL8CAH1092,Over-speeding,2025-02-17T11:08,"Main Chowk, New Delhi",2000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2025-305298,SV509600,DL8CAH1092,Using mobile phone while driving,2025-08-18T14:10,"Ring Road Junction, New Delhi",5000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2025-638931,SV509600,DL8CAH1092,No parking / illegal parking,2025-11-26T21:21,"Highway Bypass, New Delhi",500,Sent to virtual court,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2024-526381,SV843240,DL9CAZ8556,Over-speeding,2024-05-12T08:25,"Expressway Toll Plaza, New Delhi",2000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2025-111450,SV843240,DL9CAZ8556,Driving without valid PUC,2025-10-26T11:11,"Civil Lines Crossing, New Delhi",10000,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2026-657612,SV843240,DL9CAZ8556,No parking / illegal parking,2026-06-05T16:48,"Civil Lines Crossing, New Delhi",500,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
+SYN-DL-2026-291568,SV843240,DL9CAZ8556,Red light violation,2026-11-08T19:01,"Civil Lines Crossing, New Delhi",1000,Pending,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2024-519511,SV346087,DL9CAZ8580,Stop-line violation,2024-01-05T20:27,"Bus Stand Square, New Delhi",500,Paid,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2025-488530,SV346087,DL9CAZ8580,Wrong-side driving,2025-07-10T07:30,"Ring Road Junction, New Delhi",1000,Sent to virtual court,Delhi Traffic Police (synthetic),synthetic_history,true
 SYN-DL-2026-496318,SV346087,DL9CAZ8580,Driving without seatbelt,2026-06-03T11:10,"Railway Station Road, New Delhi",1000,Pending,Delhi Traffic Police (synthetic),synthetic_history,true
@@ -239,6 +256,10 @@ SYN-KA-2024-485570,SV106580,KA53MH0890,Red light violation,2024-11-01T07:23,"Col
 SYN-KA-2024-622524,SV106580,KA53MH0890,Driving without valid PUC,2024-11-10T10:53,"Main Chowk, Bengaluru",10000,Paid,Karnataka Traffic Police (synthetic),synthetic_history,true
 SYN-KA-2024-589224,SV117951,KA53MH3890,Wrong-side driving,2024-12-28T13:34,"Railway Station Road, Bengaluru",1000,Paid,Karnataka Traffic Police (synthetic),synthetic_history,true
 SYN-KA-2026-363103,SV117951,KA53MH3890,Wrong-side driving,2026-03-07T17:23,"Civil Lines Crossing, Bengaluru",1000,Paid,Karnataka Traffic Police (synthetic),synthetic_history,true
+SYN-KA-2023-106264,SV144143,KA53MH3895,No parking / illegal parking,2023-12-11T07:17,"Railway Station Road, Bengaluru",500,Paid,Karnataka Traffic Police (synthetic),synthetic_history,true
+SYN-KA-2024-879373,SV144143,KA53MH3895,Red light violation,2024-12-27T16:20,"Bus Stand Square, Bengaluru",1000,Sent to virtual court,Karnataka Traffic Police (synthetic),synthetic_history,true
+SYN-KA-2026-272785,SV144143,KA53MH3895,Using mobile phone while driving,2026-08-07T11:08,"Highway Bypass, Bengaluru",5000,Paid,Karnataka Traffic Police (synthetic),synthetic_history,true
+SYN-KA-2026-886304,SV144143,KA53MH3895,Stop-line violation,2026-08-21T16:43,"Collectorate Square, Bengaluru",500,Pending,Karnataka Traffic Police (synthetic),synthetic_history,true
 SYN-MH-2024-154061,SV706856,MH02RR2099,Over-speeding,2024-06-24T15:16,"University Road, Mumbai",2000,Paid,Maharashtra Traffic Police (synthetic),synthetic_history,true
 SYN-MH-2026-313494,SV706856,MH02RR2099,Riding without helmet,2026-10-30T13:20,"Market Road, Mumbai",1000,Paid,Maharashtra Traffic Police (synthetic),synthetic_history,true
 SYN-MH-2024-434687,SV521397,MH05D0535,Red light violation,2024-02-03T20:35,"Highway Bypass, Mumbai",1000,Paid,Maharashtra Traffic Police (synthetic),synthetic_history,true
@@ -341,7 +362,8 @@ SYN-TN-2026-833047,SV882554,TN30YC5296,Wrong-side driving,2026-03-14T08:46,"Rail
 SYN-TN-2026-484810,SV829747,TN34SW1360,Wrong-side driving,2026-09-01T20:07,"Collectorate Square, Chennai",1000,Sent to virtual court,Tamil Nadu Traffic Police (synthetic),synthetic_history,true
 SYN-UK-2024-918385,SV566632,UK05D5785,No parking / illegal parking,2024-12-24T09:10,"Ring Road Junction, Dehradun",500,Paid,Uttarakhand Traffic Police (synthetic),synthetic_history,true
 SYN-UK-2026-998667,SV566632,UK05D5785,Red light violation,2026-05-05T19:04,"Expressway Toll Plaza, Dehradun",1000,Pending,Uttarakhand Traffic Police (synthetic),synthetic_history,true
-SYN-UK-2025-879050,SV417920,UK05D5883,Red light violation,2025-08-15T16:08,"Main Chowk, Dehradun",1000,Paid,Uttarakhand Traffic Police (synthetic),synthetic_history,true
+SYN-UK-2026-550517,SV417920,UK05D5883,Over-speeding,2026-09-26T18:15,"Market Road, Dehradun",2000,Sent to virtual court,Uttarakhand Traffic Police (synthetic),synthetic_history,true
+SYN-UK-2026-820327,SV417920,UK05D5883,No parking / illegal parking,2026-11-13T14:40,"Main Chowk, Dehradun",500,Pending,Uttarakhand Traffic Police (synthetic),synthetic_history,true
 SYN-UK-2025-852331,SV026064,UK05D6883,Wrong-side driving,2025-01-29T17:14,"Civil Lines Crossing, Dehradun",1000,Paid,Uttarakhand Traffic Police (synthetic),synthetic_history,true
 SYN-UK-2025-545333,SV931285,UK09AW8959,Driving without seatbelt,2025-10-30T08:03,"Expressway Toll Plaza, Dehradun",1000,Paid,Uttarakhand Traffic Police (synthetic),synthetic_history,true
 SYN-UK-2025-586208,SV726648,UK14G2826,Over-speeding,2025-11-10T19:48,"Ring Road Junction, Dehradun",2000,Paid,Uttarakhand Traffic Police (synthetic),synthetic_history,true
@@ -362,13 +384,18 @@ SYN-UP-2025-810090,SV491229,UP14CP5085,Stop-line violation,2025-03-10T16:39,"Rai
 SYN-UP-2025-396812,SV491229,UP14CP5085,Red light violation,2025-09-27T20:28,"Market Road, Lucknow",1000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2024-656158,SV992057,UP14GP5081,Red light violation,2024-04-05T11:47,"Highway Bypass, Lucknow",1000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2024-560979,SV992057,UP14GP5081,Using mobile phone while driving,2024-08-08T12:37,"Collectorate Square, Lucknow",5000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
+SYN-UP-2025-759619,SV950896,UP14GP5085,Wrong-side driving,2025-08-11T17:53,"University Road, Lucknow",1000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
+SYN-UP-2026-171253,SV950896,UP14GP5085,Using mobile phone while driving,2026-08-24T08:45,"Bus Stand Square, Lucknow",5000,Pending,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
+SYN-UP-2026-488489,SV950896,UP14GP5085,No parking / illegal parking,2026-10-08T14:53,"Railway Station Road, Lucknow",500,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
+SYN-UP-2026-624919,SV950896,UP14GP5085,Stop-line violation,2026-11-17T14:55,"Highway Bypass, Lucknow",500,Pending,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2025-183308,SV735194,UP14GP5487,Driving without valid PUC,2025-02-26T11:42,"University Road, Lucknow",10000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2025-615876,SV735194,UP14GP5487,Wrong-side driving,2025-05-31T12:06,"Expressway Toll Plaza, Lucknow",1000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2025-144472,SV944909,UP15FS1538,Stop-line violation,2025-01-04T11:09,"Railway Station Road, Lucknow",500,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2026-110264,SV793845,UP15VN7310,Stop-line violation,2026-07-16T21:07,"Railway Station Road, Lucknow",500,Pending,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2026-392935,SV793845,UP15VN7310,Over-speeding,2026-09-02T07:12,"Civil Lines Crossing, Lucknow",2000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2026-131159,SV793845,UP15VN7310,Over-speeding,2026-09-26T21:41,"Railway Station Road, Lucknow",2000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
-SYN-UP-2024-722306,SV237860,UP16FT9444,Wrong-side driving,2024-02-15T19:31,"Collectorate Square, Lucknow",1000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
+SYN-UP-2025-749515,SV237860,UP16FT9444,Over-speeding,2025-08-08T07:50,"Collectorate Square, Lucknow",2000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
+SYN-UP-2026-313908,SV237860,UP16FT9444,Driving without seatbelt,2026-10-05T16:42,"Collectorate Square, Lucknow",1000,Pending,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2025-378559,SV391325,UP16FT9458,Over-speeding,2025-06-28T16:57,"Market Road, Lucknow",2000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2026-702645,SV391325,UP16FT9458,Using mobile phone while driving,2026-05-25T17:08,"Collectorate Square, Lucknow",5000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2024-719122,SV589688,UP16FT9944,Red light violation,2024-09-26T18:27,"Expressway Toll Plaza, Lucknow",1000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
@@ -393,6 +420,10 @@ SYN-UP-2026-336983,SV484116,UP35BR8448,Wrong-side driving,2026-06-01T10:49,"Main
 SYN-UP-2024-897242,SV294936,UP36KA8404,No parking / illegal parking,2024-05-22T13:23,"Bus Stand Square, Lucknow",500,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2025-159848,SV294936,UP36KA8404,Riding without helmet,2025-10-15T12:25,"University Road, Lucknow",1000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2025-184436,SV294936,UP36KA8404,Using mobile phone while driving,2025-10-21T11:42,"Ring Road Junction, Lucknow",5000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
+SYN-UP-2024-506420,SV037967,UP37AA8404,Triple riding,2024-03-06T16:11,"Bus Stand Square, Lucknow",1000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
+SYN-UP-2024-498025,SV037967,UP37AA8404,Wrong-side driving,2024-05-21T20:56,"University Road, Lucknow",1000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
+SYN-UP-2024-727404,SV037967,UP37AA8404,Over-speeding,2024-07-08T15:13,"Collectorate Square, Lucknow",2000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
+SYN-UP-2026-532134,SV037967,UP37AA8404,No parking / illegal parking,2026-09-17T09:58,"Expressway Toll Plaza, Lucknow",500,Pending,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2024-777523,SV122364,UP37AA8406,Overloading,2024-12-17T08:49,"Expressway Toll Plaza, Lucknow",20000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2024-380699,SV746304,UP76FT9444,Driving without valid PUC,2024-07-02T10:23,"Expressway Toll Plaza, Lucknow",10000,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
 SYN-UP-2024-968418,SV746304,UP76FT9444,No parking / illegal parking,2024-09-22T17:17,"Collectorate Square, Lucknow",500,Paid,Uttar Pradesh Traffic Police (synthetic),synthetic_history,true
