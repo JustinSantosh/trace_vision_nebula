@@ -27,7 +27,7 @@ From `python -m tracevision.evaluate` → `TRACEVISION_DATA/reports/p6_evaluatio
 | Vehicles detected and tracked (at the labelled frame) | 61/67 | 47/53 | 14/14 |
 | Type exact / compatible (car≈SUV) | 77% / 95% | | 86% / 93% |
 | Colour exact / near (white≈silver≈grey), CLIP zero-shot | 59% / 67% | | |
-| Processing time | **5–25 s per clip** on an RTX 3050 laptop GPU (two detectors; clips are 3–30 s long) | | |
+| Processing time | **5–24 s per clip** on an RTX 3050 laptop GPU (two detectors; clips 3–30 s long); 52 s for the 4K clip10 | | |
 
 *Detection uses two models (M15): UVH-26 (Indian classes, trained on elevated CCTV) plus COCO YOLOv8n, which sees close-up, ground-level vehicles UVH-26 misses or mistypes. Before that change: 52/67 found, 11/15 matched, type 90% compatible. Labels are linked to system vehicles one-to-one by box position (E14). The 1 registered miss: clip15 white SUV (plate unreadable from that spot).*
 
