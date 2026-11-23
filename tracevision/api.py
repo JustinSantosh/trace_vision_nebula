@@ -13,6 +13,7 @@ One background worker processes jobs in order on the local GPU. Models load once
 from __future__ import annotations
 
 import queue
+import re
 import threading
 import time
 import uuid
@@ -77,7 +78,7 @@ const s=document.getElementById('status');s.textContent='Uploading…';const fd=
 const r=await fetch('/jobs',{method:'POST',body:fd});if(!r.ok){s.textContent='Upload failed: '+(await r.text());return}
 const {job_id}=await r.json();poll(job_id)}
 async function poll(id){const s=document.getElementById('status');const r=await (await fetch('/jobs/'+id)).json();
-if(r.status==='done'){s.innerHTML='Done in '+r.timing.total_s+' s: '+r.summary.vehicles_after_relink+' vehicles. <a href="/jobs/'+id+'/report">Open report</a> · <a href="/jobs/'+id+'/report.pdf">PDF</a> · <a href="/jobs/'+id+'/result">JSON</a>';return}
+if(r.status==='done'){s.innerHTML='Done in '+r.timing.total_s+' s: '+r.summary.vehicles_after_relink+' vehicles. <a href="/viewer/jobs/'+id+'">▶ Open video viewer</a> · <a href="/jobs/'+id+'/report">Open report</a> · <a href="/jobs/'+id+'/report.pdf">PDF</a> · <a href="/jobs/'+id+'/result">JSON</a>';return}
 if(r.status==='error'){s.textContent='Error: '+r.error;return}
 s.textContent=(r.status==='queued'?'Queued (position '+r.position+')…':'Analysing… ')+(r.elapsed_s?Math.round(r.elapsed_s)+' s':'');setTimeout(()=>poll(id),1500)}
 </script></body></html>"""
@@ -86,7 +87,8 @@ s.textContent=(r.status==='queued'?'Queued (position '+r.position+')…':'Analys
 @app.get("/", response_class=HTMLResponse)
 def index():
     runs = sorted(p.parent.name for p in RUNS.glob("clip*/report.html"))
-    links = " · ".join(f'<a href="/runs/{c}/report">{c}</a> (<a href="/runs/{c}/report.pdf">pdf</a>)' for c in runs) or "none yet"
+    links = "<br>".join(f'<b>{c}</b>: <a href="/viewer/runs/{c}">▶ video viewer</a> · <a href="/runs/{c}/report">report</a> · '
+                        f'<a href="/runs/{c}/report.pdf">pdf</a>' for c in runs) or "none yet"
     st = "Models ready." if state["ready"] else (f"Model start-up failed: {state['error']}" if state["error"] else "Loading models… (about 20 s)")
     return PAGE.replace("RUNS", links).replace("MODEL_STATE", st)
 
@@ -107,6 +109,7 @@ async def create_job(video: UploadFile = File(...)):
             if size > MAX_BYTES:
                 raise HTTPException(413, "file too large (max 500 MB)")
             f.write(chunk)
+    (d / "name.txt").write_text(video.filename or "", encoding="utf-8")
     jobs[jid] = {"status": "queued", "video": str(dst), "dir": str(d), "name": video.filename, "created": time.time()}
     q.put(jid)
     return {"job_id": jid}
@@ -127,6 +130,64 @@ def job_status(jid: str):
     if j["status"] == "running":
         out["elapsed_s"] = time.time() - j["started"]
     return JSONResponse(out)
+
+
+# ---------------------------------------------------------------- annotated video viewer
+# /viewer/runs/clip03  or  /viewer/jobs/<job_id>: plays the clip with the tracked boxes drawn on it, and a side
+# panel with each vehicle's picked frames (plate crops), per-frame reads, fused plate and ranked candidates.
+VIEWER = Path(__file__).with_name("static") / "viewer.html"
+_IMG = re.compile(r"^t\d+_(plate|vehicle)_f\d+\.jpg$")
+
+
+def _run_dir(kind: str, rid: str) -> Path:
+    if kind == "runs" and re.fullmatch(r"clip\d+", rid):
+        d = RUNS / rid
+    elif kind == "jobs" and re.fullmatch(r"[0-9a-f]{12}", rid):
+        d = JOBS_DIR / rid
+    else:
+        raise HTTPException(404, "unknown run")
+    if not (d / "result.json").exists():
+        raise HTTPException(404, "no result yet for this run")
+    return d
+
+
+@app.get("/viewer/{kind}/{rid}", response_class=HTMLResponse)
+def viewer(kind: str, rid: str):
+    d = _run_dir(kind, rid)
+    nf = d / "name.txt"  # original upload filename (jobs only)
+    name = nf.read_text(encoding="utf-8").strip() if nf.exists() else rid
+    name = re.sub(r"[^\w .()-]", "_", name)[:80]  # it is inserted into a JS string: keep it plain
+    return VIEWER.read_text(encoding="utf-8").replace("__DATA__", f"/data/{kind}/{rid}").replace("__NAME__", name)
+
+
+@app.get("/data/{kind}/{rid}/result.json")
+def data_result(kind: str, rid: str):
+    return _file(_run_dir(kind, rid), "result.json", "application/json")
+
+
+@app.get("/data/{kind}/{rid}/video")
+def data_video(kind: str, rid: str):
+    d = _run_dir(kind, rid)
+    if kind == "jobs":
+        vids = [p for p in d.glob("upload.*") if p.suffix.lower() in ALLOWED]
+    else:
+        vids = [ROOT / "TRACEVISION_DATA/raw/test_videos" / f"{rid}.mp4"]
+    if not vids or not vids[0].exists():
+        raise HTTPException(404, "video not found")
+    return FileResponse(vids[0], media_type="video/mp4")  # FileResponse answers Range requests (seeking)
+
+
+@app.get("/data/{kind}/{rid}/files")
+def data_files(kind: str, rid: str):
+    vd = _run_dir(kind, rid) / "vehicles"
+    return JSONResponse(sorted(p.name for p in vd.glob("*.jpg") if _IMG.match(p.name)) if vd.exists() else [])
+
+
+@app.get("/data/{kind}/{rid}/vehicles/{name}")
+def data_img(kind: str, rid: str, name: str):
+    if not _IMG.match(name):
+        raise HTTPException(404)
+    return _file(_run_dir(kind, rid) / "vehicles", name, "image/jpeg")
 
 
 def _file(d: Path, name: str, media=None):

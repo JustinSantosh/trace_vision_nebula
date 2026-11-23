@@ -87,6 +87,8 @@ python -m pip install ultralytics lap fastapi uvicorn python-multipart jinja2 re
 **Use it:**
 ```powershell
 python -m tracevision.api                    # app: open http://127.0.0.1:8000, upload a clip, get the report
+#   -> after analysis click "▶ Open video viewer": the clip plays with tracked boxes, and a side panel shows each vehicle's
+#      picked plate frames, per-frame reads, fused plate and top-5 candidates. Stored clips: http://127.0.0.1:8000/viewer/runs/clip03
 python -m tracevision.pipeline --report      # batch: every clip in TRACEVISION_DATA/raw/test_videos -> runs/<clip>/
 python -m tracevision.evaluate               # metrics against evaluation/test_clip_labels.csv
 python -m tracevision.robustness             # same metrics on blurred / 360p / night / noisy variants

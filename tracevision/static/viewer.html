@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TRACEVISION Viewer</title>
+<style>
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#1f2933; --muted:#5f6b7a; --line:#d9dee5; --soft:#eef1f5;
+  --accent:#1d4ed8; --match:#16a34a; --plate:#d97706; --none:#64748b; --sel:#2563eb; --bad:#dc2626;
+  --mono:Consolas,"Cascadia Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1216; --panel:#171b21; --ink:#e6e9ee; --muted:#9aa4b2; --line:#2a313b; --soft:#1f252d;
+  --accent:#7aa2ff; --match:#22c55e; --plate:#f59e0b; --none:#8391a5; --sel:#60a5fa; --bad:#f87171;}}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#171b21; --ink:#e6e9ee; --muted:#9aa4b2; --line:#2a313b; --soft:#1f252d;
+  --accent:#7aa2ff; --match:#22c55e; --plate:#f59e0b; --none:#8391a5; --sel:#60a5fa; --bad:#f87171;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 "Segoe UI",system-ui,sans-serif}
+header{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--panel)}
+header h1{font-size:17px;margin:0}
+header .meta{color:var(--muted);font-size:12.5px}
+header a{color:var(--accent);text-decoration:none;margin-left:auto;font-size:13px}
+.wrap{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,1fr);gap:14px;padding:14px 16px;align-items:start}
+@media (max-width:900px){.wrap{grid-template-columns:minmax(0,1fr);padding:12px}}
+.wrap>*{min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.stage{position:relative;background:#000;border-radius:10px 10px 0 0;overflow:hidden;display:flex;justify-content:center}
+video{display:block;max-width:100%;max-height:72vh}
+canvas{position:absolute;cursor:pointer}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 10px;border-top:1px solid var(--line)}
+button,select{font:inherit;background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 10px;cursor:pointer}
+button.primary{background:var(--accent);color:#fff;border-color:var(--accent);min-width:74px}
+button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.fr{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-left:auto}
+label.tog{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:12.5px;cursor:pointer}
+.timeline{position:relative;height:30px;margin:0 10px 10px;background:var(--soft);border-radius:5px;cursor:pointer}
+.timeline .span{position:absolute;top:0;bottom:0;background:color-mix(in srgb,var(--sel) 22%,transparent);border-radius:5px}
+.timeline .mk{position:absolute;top:5px;bottom:5px;width:3px;border-radius:2px;background:var(--plate);opacity:.45}
+.timeline .mk.sel{background:var(--sel);opacity:1;top:2px;bottom:2px}
+.timeline .head{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;padding:0 12px 10px;color:var(--muted);font-size:12px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.side{display:flex;flex-direction:column;gap:14px}
+.list{max-height:260px;overflow:auto}
+.list h3,.det h3{margin:0;padding:10px 12px;font-size:13.5px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+.list h3 span{color:var(--muted);font-weight:400}
+.row{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--line);cursor:pointer}
+.row:hover{background:var(--soft)}
+.row.sel{background:color-mix(in srgb,var(--sel) 14%,transparent)}
+.row.live .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--sel) 35%,transparent)}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.row .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .p{font-family:var(--mono);font-size:12.5px}
+.badge{font-size:11px;font-weight:600;padding:1px 7px;border-radius:9px;color:#fff;white-space:nowrap;flex:none}
+.row .p{flex:none;max-width:40%;overflow:hidden;text-overflow:ellipsis}
+.det .body{padding:12px}
+.det .empty{color:var(--muted);padding:18px 12px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:13px;margin-bottom:10px}
+.kv b{color:var(--muted);font-weight:500}
+.plate{font-family:var(--mono);font-size:26px;letter-spacing:3px;font-weight:700;margin:2px 0 4px}
+.plate .q{color:var(--bad)}
+.sub{color:var(--muted);font-size:12px;margin-bottom:10px}
+h4{margin:14px 0 6px;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.frames{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.fcard{flex:none;width:132px;border:1px solid var(--line);border-radius:7px;padding:5px;cursor:pointer;background:var(--soft)}
+.fcard.now{border-color:var(--sel);box-shadow:0 0 0 2px var(--sel)}
+.fcard img{width:100%;height:40px;object-fit:contain;background:#000;border-radius:4px;image-rendering:pixelated}
+.fcard .ft{font-family:var(--mono);font-size:12px;margin-top:3px;white-space:nowrap;overflow:hidden}
+.fcard .fm{font-size:11px;color:var(--muted)}
+.chars{display:flex;gap:2px;margin-top:2px}
+.chars span{flex:1;height:4px;border-radius:1px}
+.veh{max-width:100%;max-height:120px;border-radius:6px;display:block;margin:2px 0 4px}
+.cand{border:1px solid var(--line);border-radius:7px;padding:7px 9px;margin-bottom:6px}
+.cand .top{display:flex;align-items:center;gap:8px}
+.cand .reg{font-family:var(--mono);font-weight:700}
+.bar{flex:1;height:6px;background:var(--soft);border-radius:3px;overflow:hidden}
+.bar div{height:100%;background:var(--accent)}
+.cand ul{margin:4px 0 0;padding-left:18px;color:var(--muted);font-size:12px}
+.note{font-size:11.5px;color:var(--muted);margin-top:8px}
+.err{padding:30px;color:var(--bad)}
+</style>
+</head>
+<body>
+<header>
+  <h1>TRACEVISION AI · Viewer</h1>
+  <div class="meta" id="meta">Loading…</div>
+  <a href="/">← Upload another clip</a>
+</header>
+<div class="wrap">
+  <div class="card">
+    <div class="stage" id="stage">
+      <video id="v" playsinline preload="auto" muted></video>
+      <canvas id="c"></canvas>
+    </div>
+    <div class="controls">
+      <button class="primary" id="play">▶ Play</button>
+      <button id="back" title="Previous frame (←)">◀ frame</button>
+      <button id="fwd" title="Next frame (→)">frame ▶</button>
+      <select id="speed" aria-label="Playback speed">
+        <option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option>
+      </select>
+      <label class="tog"><input type="checkbox" id="onlyPlates"> only vehicles with plate evidence</label>
+      <span class="fr" id="fr">frame –</span>
+    </div>
+    <div class="timeline" id="tl" title="Click to jump. Orange ticks: frames used for plate reading. Blue: selected vehicle."></div>
+    <div class="legend">
+      <span><i style="background:var(--match)"></i>registry match</span>
+      <span><i style="background:var(--plate)"></i>plate read · no confident match</span>
+      <span><i style="background:var(--none)"></i>no plate</span>
+      <span>Click a box or a row to inspect it · Space play/pause · ←/→ step</span>
+    </div>
+  </div>
+  <div class="side">
+    <div class="card list" id="list"><h3>Vehicles</h3></div>
+    <div class="card det" id="det"><h3>Details</h3><div class="empty">Select a vehicle: click its box on the video or a row above.</div></div>
+  </div>
+</div>
+<script>
+const BASE = "__DATA__";
+const $ = id => document.getElementById(id);
+const v = $("v"), cv = $("c"), ctx = cv.getContext("2d");
+let R, FPS = 30, VEH = [], FILES = new Set(), sel = null, curFrame = 0;
+
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const decColour = d => d.decision === "match" ? css("--match") : (d.plate && d.plate.per_frame_reads && d.plate.per_frame_reads.length ? css("--plate") : css("--none"));
+const decLabel = d => ({match:"MATCH", no_confident_match:"no confident match", ambiguous:"ambiguous"}[d.decision] || d.decision.replaceAll("_"," "));
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const probCol = p => p >= .95 ? css("--match") : p >= .8 ? css("--plate") : css("--bad");
+
+function boxAt(d, f) {               // interpolate the tracked box at frame f
+  const t = d.track; if (!t.length || f < t[0][0] - 1 || f > t[t.length-1][0] + 1) return null;
+  let lo = 0, hi = t.length - 1;
+  while (hi - lo > 1) { const m = (lo + hi) >> 1; (t[m][0] <= f ? lo = m : hi = m); }
+  const a = t[lo], b = t[hi];
+  if (f <= a[0]) return f >= a[0] - 1 ? a.slice(1) : null;
+  if (f >= b[0]) return f <= b[0] + 1 ? b.slice(1) : null;
+  if (b[0] - a[0] > 8) return null;  // track lost in between: don't invent a box
+  const k = (f - a[0]) / (b[0] - a[0]);
+  return [1,2,3,4].map(i => a[i] + (b[i] - a[i]) * k);
+}
+const reads = d => (d.plate && d.plate.per_frame_reads) || [];
+const ids = d => [d.track_id, ...(d.merged_track_ids || [])];
+function crop(d, kind, frame) {
+  for (const id of ids(d)) { const n = `t${id}_${kind}_f${frame}.jpg`; if (FILES.has(n)) return `${BASE}/vehicles/${n}`; }
+  return null;
+}
+function vehicleImg(d) {
+  for (const n of FILES) for (const id of ids(d)) if (n.startsWith(`t${id}_vehicle_f`)) return `${BASE}/vehicles/${n}`;
+  return null;
+}
+const plateText = d => d.plate && d.plate.fused ? d.plate.fused : "";
+
+async function init() {
+  try {
+    [R, FILES] = await Promise.all([
+      fetch(`${BASE}/result.json`).then(r => { if (!r.ok) throw new Error("result " + r.status); return r.json(); }),
+      fetch(`${BASE}/files`).then(r => r.json()).then(a => new Set(a))]);
+  } catch (e) { document.querySelector(".wrap").innerHTML = `<div class="err">Could not load this run: ${esc(e.message)}</div>`; return; }
+  FPS = R.video.fps || 30;
+  const rank = d => d.decision === "match" ? 0 : reads(d).length ? 1 : 2;
+  VEH = R.vehicles.slice().sort((a, b) => rank(a) - rank(b) || a.first_frame - b.first_frame);
+  const s = R.summary;
+  const clipName = "__NAME__" || R.clip_id;
+  $("meta").textContent = `${clipName} ·${R.video.width}×${R.video.height} @ ${FPS} fps · ${s.vehicles_after_relink} vehicles · ${s.plates_read} plates read · ` +
+    Object.entries(s.decisions).map(([k, n]) => `${n} ${k.replaceAll("_"," ")}`).join(", ");
+  document.title = `${clipName} · TRACEVISION Viewer`;
+  v.src = `${BASE}/video`;
+  v.addEventListener("loadedmetadata", () => { fit(); drawTimeline(); paint(); });
+  new ResizeObserver(fit).observe($("stage"));
+  renderList(); tick();
+}
+
+function fit() {
+  const r = v.getBoundingClientRect(), s = $("stage").getBoundingClientRect();
+  cv.style.left = (r.left - s.left) + "px"; cv.style.top = (r.top - s.top) + "px";
+  cv.style.width = r.width + "px"; cv.style.height = r.height + "px";
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+  paint();
+}
+
+function frameNow() { return Math.min(R.video.frames - 1, Math.floor(v.currentTime * FPS + 1e-3)); }
+function visible(d) { return !$("onlyPlates").checked || d.decision === "match" || reads(d).length; }
+
+function paint() {
+  if (!R) return;
+  const f = frameNow(); curFrame = f;
+  const W = cv.width, H = cv.height, sx = W / R.video.width, sy = H / R.video.height;
+  const dpr = window.devicePixelRatio || 1;
+  ctx.clearRect(0, 0, W, H);
+  ctx.font = `600 ${12 * dpr}px Segoe UI, sans-serif`; ctx.textBaseline = "bottom";
+  const live = new Set();
+  const order = VEH.filter(visible).sort((a, b) => (a === sel) - (b === sel));  // selected drawn last (on top)
+  for (const d of order) {
+    const b = boxAt(d, f); if (!b) continue; live.add(d.track_id);
+    const x = b[0] * sx, y = b[1] * sy, w = (b[2] - b[0]) * sx, h = (b[3] - b[1]) * sy;
+    const col = decColour(d), isSel = d === sel;
+    if (sel && !isSel) ctx.globalAlpha = .45;
+    ctx.lineWidth = (isSel ? 3.5 : 2) * dpr; ctx.strokeStyle = col; ctx.strokeRect(x, y, w, h);
+    if (isSel) { ctx.lineWidth = 1 * dpr; ctx.strokeStyle = "#fff"; ctx.strokeRect(x - 2.5 * dpr, y - 2.5 * dpr, w + 5 * dpr, h + 5 * dpr); }
+    const usedNow = reads(d).some(r => Math.abs(r.frame - f) <= 1);
+    // full label for the selected vehicle and vehicles with plate evidence; just the id otherwise (busy frames stay readable)
+    const rich = isSel || d.decision === "match" || reads(d).length;
+    const label = rich ? `#${d.track_id} ${d.type.label}${plateText(d) ? " · " + plateText(d) : ""}${usedNow ? "  ◉ reading plate" : ""}`
+                       : `#${d.track_id}`;
+    const tw = ctx.measureText(label).width + 10 * dpr, th = 17 * dpr, ly = y - th < 0 ? y + th : y;
+    const lx = Math.max(0, Math.min(x - ctx.lineWidth / 2, W - tw));  // keep the label inside the video
+    ctx.fillStyle = col; ctx.fillRect(lx, ly - th, tw, th);
+    ctx.fillStyle = "#fff"; ctx.fillText(label, lx + 5 * dpr, ly - 3 * dpr);
+    ctx.globalAlpha = 1;
+  }
+  $("fr").textContent = `frame ${f} / ${R.video.frames - 1} · ${v.currentTime.toFixed(2)} s`;
+  document.querySelectorAll(".row").forEach(el => el.classList.toggle("live", live.has(+el.dataset.id)));
+  document.querySelectorAll(".fcard").forEach(el => el.classList.toggle("now", Math.abs(+el.dataset.f - f) <= 1));
+  const hd = $("tl").querySelector(".head"); if (hd) hd.style.left = (100 * f / Math.max(1, R.video.frames - 1)) + "%";
+}
+function tick() {
+  paint();
+  if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(tick); else requestAnimationFrame(tick);
+}
+v.addEventListener("seeked", paint);
+v.addEventListener("pause", () => { $("play").textContent = "▶ Play"; paint(); });
+v.addEventListener("play", () => { $("play").textContent = "❚❚ Pause"; if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(tick); });
+
+function seekFrame(f) { v.pause(); v.currentTime = Math.max(0, (f + 0.5) / FPS); }
+$("play").onclick = () => v.paused ? v.play() : v.pause();
+$("back").onclick = () => seekFrame(frameNow() - 1);
+$("fwd").onclick = () => seekFrame(frameNow() + 1);
+$("speed").onchange = e => v.playbackRate = +e.target.value;
+$("onlyPlates").onchange = () => { renderList(); drawTimeline(); paint(); };
+document.addEventListener("keydown", e => {
+  if (["INPUT","SELECT","BUTTON"].includes(e.target.tagName) && e.key !== " ") return;
+  if (e.key === " ") { e.preventDefault(); $("play").click(); }
+  else if (e.key === "ArrowRight") { e.preventDefault(); $("fwd").click(); }
+  else if (e.key === "ArrowLeft") { e.preventDefault(); $("back").click(); }
+});
+
+cv.addEventListener("click", e => {
+  const r = cv.getBoundingClientRect(), px = (e.clientX - r.left) / r.width * R.video.width, py = (e.clientY - r.top) / r.height * R.video.height;
+  const hits = VEH.filter(visible).map(d => [d, boxAt(d, curFrame)]).filter(([, b]) => b && px >= b[0] && px <= b[2] && py >= b[1] && py <= b[3]);
+  if (!hits.length) { select(null); return; }
+  hits.sort((a, b) => (a[1][2] - a[1][0]) * (a[1][3] - a[1][1]) - (b[1][2] - b[1][0]) * (b[1][3] - b[1][1]));  // smallest box wins
+  select(hits[0][0]);
+});
+
+function drawTimeline() {
+  const tl = $("tl"), N = Math.max(1, R.video.frames - 1);
+  let h = "";
+  if (sel) h += `<div class="span" style="left:${100 * sel.first_frame / N}%;width:${Math.max(.4, 100 * (sel.last_frame - sel.first_frame) / N)}%"></div>`;
+  for (const d of VEH.filter(visible)) for (const r of reads(d))
+    h += `<div class="mk${d === sel ? " sel" : ""}" style="left:${100 * r.frame / N}%"></div>`;
+  tl.innerHTML = h + `<div class="head"></div>`;
+}
+$("tl").addEventListener("click", e => { const r = $("tl").getBoundingClientRect(); seekFrame(Math.round((e.clientX - r.left) / r.width * (R.video.frames - 1))); });
+
+function renderList() {
+  const vs = VEH.filter(visible);
+  $("list").innerHTML = `<h3>Vehicles <span>${vs.length} shown · ${VEH.length} tracked</span></h3>` + vs.map(d =>
+    `<div class="row${d === sel ? " sel" : ""}" data-id="${d.track_id}">
+      <span class="dot" style="background:${decColour(d)}"></span>
+      <span class="t">#${d.track_id} ${esc(d.type.label)} · ${esc(d.colour.label)}</span>
+      <span class="p">${esc(plateText(d) || (reads(d).length ? "…" : ""))}</span>
+      <span class="badge" style="background:${decColour(d)}">${esc(decLabel(d))}</span></div>`).join("");
+  $("list").querySelectorAll(".row").forEach(el => el.onclick = () => {
+    const d = VEH.find(x => x.track_id === +el.dataset.id); select(d);
+    // jump to the vehicle's best plate read (largest crop), else to where it is first seen
+    const best = reads(d).slice().sort((a, b) => b.height_px - a.height_px)[0];
+    seekFrame(best ? best.frame : d.first_frame);
+  });
+}
+
+function select(d) {
+  sel = d; renderList(); drawTimeline(); paint();
+  const det = $("det");
+  if (!d) { det.innerHTML = `<h3>Details</h3><div class="empty">Select a vehicle: click its box on the video or a row above.</div>`; return; }
+  const p = d.plate || {}, rs = reads(d).slice().sort((a, b) => a.frame - b.frame);
+  const plateHtml = p.fused ? p.fused.split("").map(c => c === "?" ? `<span class="q">?</span>` : esc(c)).join("") : `<span style="color:var(--muted);font-size:15px;letter-spacing:0">${esc(p.status || "no plate")}</span>`;
+  const vimg = vehicleImg(d);
+  let h = `<h3><span class="dot" style="background:${decColour(d)}"></span>Vehicle #${d.track_id}
+     <span class="badge" style="background:${decColour(d)};margin-left:auto">${esc(decLabel(d))}</span></h3><div class="body">
+    ${vimg ? `<img class="veh" src="${vimg}" alt="vehicle #${d.track_id}">` : ""}
+    <div class="plate">${plateHtml}</div>
+    <div class="sub">${p.fused ? `fused from ${rs.length} frame read${rs.length === 1 ? "" : "s"}` + (p.unknown_positions && p.unknown_positions.length ? ` · unreadable position(s) ${p.unknown_positions.join(", ")} kept as ?` : "") : ""}</div>
+    <div class="kv">
+      <b>Type</b><span>${esc(d.type.label)} <span style="color:var(--muted)">(vote ${Math.round(100 * (d.type.vote_share || 0))}%, detector ${(d.type.detector_conf_mean || 0).toFixed(2)})</span></span>
+      <b>Colour</b><span>${esc(d.colour.label)} <span style="color:var(--muted)">(confidence ${(d.colour.confidence || 0).toFixed(2)}${d.colour.note ? " · " + esc(d.colour.note) : ""})</span></span>
+      <b>Seen</b><span>frames ${d.first_frame}–${d.last_frame} (${(d.first_frame / FPS).toFixed(1)}–${(d.last_frame / FPS).toFixed(1)} s)</span>
+      <b>Decision</b><span>${esc(d.decision_reason || "")}</span>
+    </div>`;
+  if (rs.length) {
+    h += `<h4>Frames picked for plate reading (${rs.length})</h4><div class="frames">` + rs.map(r => {
+      const src = crop(d, "plate", r.frame);
+      return `<div class="fcard" data-f="${r.frame}" title="Jump to frame ${r.frame}">
+        ${src ? `<img src="${src}" alt="plate crop, frame ${r.frame}">` : `<div style="height:40px"></div>`}
+        <div class="ft">${esc(r.text || "∅")}</div>
+        <div class="chars">${(r.char_probs || []).map(q => `<span style="background:${probCol(q)}" title="${q}"></span>`).join("")}</div>
+        <div class="fm">f${r.frame} · ${r.height_px}px · q ${(+r.quality).toFixed(2)}</div></div>`;
+    }).join("") + `</div><div class="note">Bars under each read: per-character OCR confidence (green ≥ 0.95, amber ≥ 0.8, red lower).</div>`;
+  } else {
+    h += `<div class="note">No plate was read for this vehicle${p.plates_detected ? ` (${p.plates_detected} plate detection(s), all too small or unreadable)` : ""}.</div>`;
+  }
+  const cs = d.candidates || [];
+  if (cs.length) {
+    h += `<h4>Registry candidates (match score, not a probability)</h4>` + cs.slice(0, 5).map(c => `
+      <div class="cand"><div class="top"><span>#${c.rank}</span><span class="reg">${esc(c.registration_number)}</span>
+        <div class="bar"><div style="width:${Math.max(0, Math.min(100, c.match_score))}%"></div></div><b>${c.match_score.toFixed(1)}</b></div>
+        <ul>${(c.reasons || []).map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
+  }
+  h += `</div>`;
+  det.innerHTML = h;
+  det.querySelectorAll(".fcard").forEach(el => el.onclick = () => seekFrame(+el.dataset.f));
+  paint();
+}
+init();
+</script>
+</body>
+</html>
