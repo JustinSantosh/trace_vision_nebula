@@ -24,6 +24,9 @@ pipeline:
   verify_samples: 6          # ... on up to this many evenly spaced frames with COCO YOLOv8n ...
   verify_min_iou: 0.3        # ... a COCO car/truck/bus/motorcycle/bicycle box must overlap the track box this much ...
   verify_min_share: 0.34     # ... in at least this share of the sampled frames, else the track is dropped (logged)
+  ensemble_coco: true         # C13 / M15: second tracking pass with COCO YOLOv8n (close-up / ground-level vehicles) ...
+  ensemble_match_iou: 0.5     # ... a COCO track overlapping a UVH-26 track this much (mean IoU) is the same vehicle (type vote)
+  ensemble_new_conf: 0.5      # ... a COCO track overlapping none is added if its mean confidence is at least this
   plate_link_min_known: 6    # merge tracks whose fused plates agree on >= this many readable characters (and never disagree)
 
 colour:

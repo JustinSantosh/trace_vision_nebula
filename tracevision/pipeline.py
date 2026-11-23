@@ -49,7 +49,12 @@ def camera_type(clip_id):
 
 
 # ---------------------------------------------------------------- stage 1-3: detect, track, re-link
-def track_clip(video, model, pc):
+COCO_TRACK_TYPES = {1: "bicycle", 2: "car", 3: "motorcycle/scooter", 5: "bus", 7: "truck"}   # COCO ids -> our vocabulary
+
+
+def track_clip(video, model, pc, classes=None, type_of=None, src="uvh"):
+    """Detect + track every `detect_every`-th frame. type_of maps a class id to our vocabulary (default UVH-26 map)."""
+    type_of = type_of or vtype_of
     cap = cv2.VideoCapture(str(video))
     fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
     W, H = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -64,17 +69,76 @@ def track_clip(video, model, pc):
             continue
         # agnostic_nms: one vehicle must not survive as two boxes of different classes (P4: SUV + truck on one car)
         r = model.track(f, persist=True, tracker="bytetrack.yaml", imgsz=pc["imgsz"], conf=pc["vehicle_conf"],
-                        agnostic_nms=True, device=0, verbose=False)[0]
+                        agnostic_nms=True, device=0, verbose=False, classes=classes)[0]
         if r.boxes.id is None:
             continue
         for b, tid, c, s in zip(r.boxes.xyxy.cpu().numpy(), r.boxes.id.int().cpu().numpy(),
                                 r.boxes.cls.int().cpu().numpy(), r.boxes.conf.cpu().numpy()):
             x1, y1, x2, y2 = [float(v) for v in b]
             edge = x1 <= 2 or y1 <= 2 or x2 >= W - 2 or y2 >= H - 2
-            tracks[int(tid)].append({"frame": idx, "type": vtype_of(c), "conf": float(s), "box": [x1, y1, x2, y2],
-                                     "edge": edge, "area": (x2 - x1) * (y2 - y1)})
+            tracks[int(tid)].append({"frame": idx, "type": type_of(c), "conf": float(s), "box": [x1, y1, x2, y2],
+                                     "edge": edge, "area": (x2 - x1) * (y2 - y1), "src": src})
     cap.release()
     return tracks, {"fps": fps, "width": W, "height": H, "frames": idx + 1}
+
+
+def ensemble_coco(video, uvh_tracks, coco_model, pc, min_area):
+    """C13 / M15: UVH-26 (trained on elevated Indian CCTV) misses or mistypes close-up, ground-level vehicles that
+    COCO YOLOv8n sees confidently. Track the clip a second time with COCO (vehicle classes only), then per COCO track:
+      * overlaps a UVH-26 track (mean IoU over shared frames >= ensemble_match_iou): same vehicle -> its per-frame
+        COCO class/confidence is attached to the UVH-26 detections as a type vote (used by final_type)
+      * overlaps none and is confident (mean conf >= ensemble_new_conf): a vehicle UVH-26 missed -> added as a track
+    Returns (tracks incl. added ones, summary)."""
+    raw_c, _ = track_clip(video, coco_model, pc, classes=list(COCO_TRACK_TYPES),
+                          type_of=lambda c: COCO_TRACK_TYPES[int(c)], src="coco")
+    kept_c = {k: v for k, v in raw_c.items() if len(v) >= pc["min_track_dets"] and max(d["area"] for d in v) >= min_area}
+    out = {k: list(v) for k, v in uvh_tracks.items()}
+    by_frame = {k: {d["frame"]: d for d in v} for k, v in out.items()}
+    attached, added = 0, []
+    for ck, cd in kept_c.items():
+        best, best_iou = None, 0.0
+        for uk, frames in by_frame.items():
+            shared = [(d, frames[d["frame"]]) for d in cd if d["frame"] in frames]
+            if len(shared) < 3:
+                continue
+            m = float(np.mean([_iou(a["box"], b["box"]) for a, b in shared]))
+            if m > best_iou:
+                best, best_iou = uk, m
+        if best is not None and best_iou >= pc.get("ensemble_match_iou", 0.5):
+            for d in cd:
+                u = by_frame[best].get(d["frame"])
+                if u is not None:
+                    u["coco"] = (d["type"], d["conf"])
+            attached += 1
+        elif float(np.mean([d["conf"] for d in cd])) >= pc.get("ensemble_new_conf", 0.5):
+            nid = 100000 + int(ck)
+            out[nid] = cd
+            added.append({"track_id": nid, "type": cd[0]["type"], "mean_conf": round(float(np.mean([d["conf"] for d in cd])), 3),
+                          "frames": [cd[0]["frame"], cd[-1]["frame"]]})
+    return out, {"coco_tracks": len(kept_c), "attached_to_uvh": attached, "added_coco_only": added}
+
+
+def final_type(dets):
+    """Vehicle type for a track. UVH-26 votes by default (finer Indian classes). If the attached COCO votes name an
+    INCOMPATIBLE type (e.g. truck vs motorcycle) with a higher mean confidence, the more confident detector wins
+    (M15). COCO never overrides auto_rickshaw (COCO has no such class). COCO-only tracks use COCO votes.
+    Returns (label, vote_share, mean detector confidence, source)."""
+    uv = [d for d in dets if d.get("src", "uvh") == "uvh"]
+    if not uv:
+        t, share = track_type(dets)
+        return t, share, float(np.mean([d["conf"] for d in dets])), "COCO YOLOv8n"
+    t_u, share_u = track_type(uv)
+    m_u = float(np.mean([d["conf"] for d in uv if d["type"] == t_u]))
+    co = [d["coco"] for d in uv if d.get("coco")]
+    if co and t_u != "auto_rickshaw":
+        votes = Counter()
+        for t, c in co:
+            votes[t] += c
+        t_c, w = votes.most_common(1)[0]
+        m_c = float(np.mean([c for t, c in co if t == t_c]))
+        if not compatible(t_u, t_c) and m_c > m_u:
+            return t_c, round(w / sum(votes.values()), 3), m_c, "COCO YOLOv8n (more confident than UVH-26)"
+    return t_u, share_u, m_u, "UVH-26"
 
 
 COCO_VEHICLES = {"car", "truck", "bus", "motorcycle", "bicycle"}
@@ -150,7 +214,7 @@ def relink(tracks, pc):
             gap = dets[0]["frame"] - last["frame"]
             if not (0 < gap <= pc["relink_gap_frames"]):
                 continue
-            if not compatible(track_type(adets)[0], track_type(dets)[0]):
+            if not compatible(final_type(adets)[0], final_type(dets)[0]):
                 continue
             ax1, ay1, ax2, ay2 = last["box"]; bx1, by1, bx2, by2 = dets[0]["box"]
             diag = ((ax2 - ax1) ** 2 + (ay2 - ay1) ** 2) ** 0.5
@@ -218,12 +282,16 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
     pc, mcfg = cfg["pipeline"], cfg
     veh_model, plate_model = models[0], models[1]
     coco_model = models[2] if len(models) > 2 else None
+    coco_track_model = models[3] if len(models) > 3 else None
     clip_id = Path(video).stem
     t0 = time.perf_counter(); timing = {}
     raw, meta = track_clip(video, veh_model, pc)
-    timing["detect_track_s"] = round(time.perf_counter() - t0, 1)
     min_area = pc["min_vehicle_area_frac"] * meta["width"] * meta["height"]
     kept = {k: v for k, v in raw.items() if len(v) >= pc["min_track_dets"] and max(d["area"] for d in v) >= min_area}
+    ensemble = None
+    if coco_track_model is not None and pc.get("ensemble_coco"):
+        kept, ensemble = ensemble_coco(video, kept, coco_track_model, pc, min_area)   # C13 / M15
+    timing["detect_track_s"] = round(time.perf_counter() - t0, 1)
     tracks, parent = relink(kept, pc)
     tracks, unverified = verify_large_tracks(video, tracks, meta, coco_model, pc)   # C11: hallucinated big boxes
 
@@ -348,7 +416,7 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
     vdir = Path(out_dir) / "vehicles"; vdir.mkdir(parents=True, exist_ok=True)
     vehicles = []
     for tid, dets in sorted(tracks.items(), key=lambda kv: kv[1][0]["frame"]):
-        vtype, tconf = track_type(dets)
+        vtype, tconf, dconf, tsrc = final_type(dets)
         items = sorted(vcrops.get(tid, []), key=lambda x: -x[0]["area"])
         col = estimate_colour([c for _, c in items[:pc["colour_frames"]]], vtype,
                               method=cfg.get("colour", {}).get("method", "heuristic"))
@@ -383,7 +451,7 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
             "first_time_s": round(dets[0]["frame"] / meta["fps"], 2), "n_detections": len(dets),
             "first_box": [round(v) for v in dets[0]["box"]],
             "track": [[d["frame"]] + [round(x) for x in d["box"]] for d in dets],   # [frame, x1, y1, x2, y2] per detection
-            "type": {"label": vtype, "vote_share": tconf, "detector_conf_mean": round(float(np.mean([d["conf"] for d in dets])), 3)},
+            "type": {"label": vtype, "vote_share": tconf, "detector_conf_mean": round(dconf, 3), "source": tsrc},
             "colour": col,
             "plate": {"status": plate_status,
                       "fused": fused.text if fused else None,
@@ -399,7 +467,8 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
     result = {"clip_id": clip_id, "camera_type": camera_type(clip_id), "video": meta,
               "processed_at": time.strftime("%Y-%m-%dT%H:%M:%S"), "config": {k: cfg[k] for k in ("pipeline", "plate_detector", "fusion", "match", "colour") if k in cfg},
               "summary": {"raw_tracks": len(raw), "kept_tracks": len(kept),
-                          "dropped_unverified_large": unverified, "vehicles_after_relink": len(vehicles),
+                          "dropped_unverified_large": unverified, "coco_ensemble": ensemble,
+                          "vehicles_after_relink": len(vehicles),
                           "plates_read": sum(1 for v in vehicles if v["plate"]["status"] == "read"),
                           "decisions": dict(Counter(v["decision"] for v in vehicles))},
               "timing": timing, "vehicles": vehicles,
@@ -422,11 +491,13 @@ class Engine:
         self.plate = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/plate_yolov8n_quobotic.pt"))
         # independent cross-check for large vehicle tracks (C11); COCO-pretrained, ships with the repo
         self.coco = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/yolov8n.pt"))
+        # second instance for the COCO tracking pass (own tracker state; C13 / M15)
+        self.coco_track = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/yolov8n.pt"))
         self.registry = load_registry()
         return self
 
     def run(self, video, out_dir):
-        return run_clip(Path(video), Path(out_dir), (self.veh, self.plate, self.coco), self.ocr, self.registry, self.cfg)
+        return run_clip(Path(video), Path(out_dir), (self.veh, self.plate, self.coco, self.coco_track), self.ocr, self.registry, self.cfg)
 
     def __exit__(self, *exc):
         self.ocr.__exit__(*exc)
