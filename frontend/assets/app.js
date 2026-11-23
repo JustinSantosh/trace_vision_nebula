@@ -1106,7 +1106,53 @@
         ["Own top record", top ? el("span", null, plateEl(top.registration_number), " ", num(top.match_score).toFixed(1)) : "none"]]),
       v.decision_reason ? el("p", { class: "ev-note", text: cap(v.decision_reason) + "." }) : null,
       reads ? el("button", { class: "more", type: "button", text: "Jump to its best plate frame", onclick: () => seek(p.per_frame_reads[0].frame) }) : null,
+      shortlist(v),
     ];
+  }
+  /* This camera's own ranked registry shortlist (top-k as stored). Expand a row for score parts and the matcher's reasons. */
+  function shortlist(v) {
+    const cands = (v.candidates || []).slice().sort((a, b) => a.rank - b.rank);
+    const head = el("div", { class: "cd-sub" }, el("span", { class: "label", text: "Registry shortlist" }), el("small", { class: "muted", text: cands.length ? "top " + cands.length + ", ranked" : "" }));
+    if (!cands.length) return el("div", null, head, el("p", { class: "muted small", text: "No registry record came close enough to rank." }));
+    const top = v.decision === "match" ? cands[0].registration_number : null;
+    return el("div", null, head, el("ol", { class: "cands compact" }, ...cands.map((c, i) => {
+      const lead = X.leadOverNext(cands, i);
+      return el("li", { class: c.registration_number === top ? "chosen" : null }, el("details", null,
+        el("summary", null, el("span", { class: "rank", text: "#" + c.rank }), plateEl(c.registration_number || "—"), el("span", { class: "score", text: num(c.match_score).toFixed(1) })),
+        el("div", { class: "body" }, barRow("Plate", c.plate_score), barRow("Colour", c.colour_score), barRow("Type", c.type_score),
+          el("ul", { class: "reasons" }, ...(c.reasons || []).map((r) => el("li", { class: X.classifyReason(r), text: r }))),
+          lead !== null ? el("p", { class: "ev-note", text: "Leads the next by " + lead + " points." }) : null)));
+    })));
+  }
+  /* The linker's ranked candidates for one side: which tracks in the other camera could be this vehicle (as stored). */
+  function linkCandidates(pair, from, to, otherResult) {
+    const dir = (pair.directions || []).find((d) => d.source_clip === from.clip_id);
+    const rec = dir && (dir.links || []).find((x) => x.track_id === from.track_id);
+    const cands = (rec && rec.candidates) || [];
+    const title = from.clip_id + " T" + from.track_id + " → candidates in " + to.clip_id;
+    if (!cands.length) {
+      const covered = dir ? (dir.links || []).map((x) => "T" + x.track_id) : [];
+      return el("div", { class: "lc" }, el("p", { class: "lc-title", text: title }), el("p", { class: "muted small",
+        text: !dir ? "No one-way pass from " + from.clip_id + " is stored."
+          : !rec ? "T" + from.track_id + " isn't in the stored one-way pass from " + from.clip_id + (covered.length ? " (it covered " + covered.join(", ") + ")." : ".")
+            : "No candidates were ranked in this direction." }));
+    }
+    return el("div", { class: "lc" }, el("p", { class: "lc-title", text: title }),
+      el("ol", { class: "cands compact" }, ...cands.map((c, i) => {
+        const veh = ccVehicle(otherResult, c.track_id);
+        const fused = veh && veh.plate && veh.plate.fused;
+        const chosen = c.track_id === to.track_id;
+        const veto = /veto/i.test(c.evidence || "");
+        return el("li", { class: chosen ? "chosen" : null }, el("details", null,
+          el("summary", null, el("span", { class: "rank", text: "#" + (i + 1) }),
+            el("span", { class: "lc-who" }, fused ? plateEl(fused) : el("span", { class: "muted", text: "plate not read" }),
+              el("small", { text: "T" + c.track_id + " · " + (veto ? "vetoed" : c.evidence) + (chosen ? " · linked" : "") })),
+            el("span", { class: "score", text: num(c.link_score).toFixed(1) })),
+          el("div", { class: "body" },
+            c.parts ? el("div", null, ...Object.entries(c.parts).map(([k, val]) => barRow(cap(k), val))) : null,
+            el("ul", { class: "reasons" }, ...(c.reasons || []).map((r) => el("li", { class: X.classifyReason(r), text: r }))))));
+      })),
+      rec.decision_reason ? el("p", { class: "ev-note", text: "Decision this direction: " + cap(rec.decision) + ". " + cap(rec.decision_reason) + "." }) : null);
   }
   /* Side by side: what each camera concluded alone, and the combined result from pooling both. */
   function compareTable(va, vb, l, f) {
@@ -1137,6 +1183,10 @@
     $("cc-evidence").replaceChildren(...[
       evHead("Combined · both cameras", el("span", null, l.a.clip_id + " T" + l.a.track_id + "  ↔  " + l.b.clip_id + " T" + l.b.track_id), cap(l.reason || l.status) + ". Link score " + num(l.score).toFixed(1) + "."),
       section("Each camera, and combined", null, compareTable(va, vb, l, f)),
+      section("Ranked link candidates", "each direction, as the linker ranked them",
+        linkCandidates(S.review.crosscam_pairs[S.cc.pair], l.a, l.b, S.cc.rb),
+        linkCandidates(S.review.crosscam_pairs[S.cc.pair], l.b, l.a, S.cc.ra),
+        el("p", { class: "ev-note", text: "Plate-backed candidates rank above appearance-only ones, so a lower score can rank higher. The combined result stores only its top registry record; each camera's own top 5 is under its video." })),
       l.parts ? section("Agreement", null, ...Object.entries(l.parts).map(([k, v]) => barRow(cap(k), v))) : null,
       section("Why they're linked", null, el("ul", { class: "reasons" }, ...l.reasons.map((r) => el("li", { class: X.classifyReason(r), text: r })))),
       f ? section("Combined registry result", "both cameras' reads pooled", kv([["Decision", f.decision ? tag(f.decision) : null],
