@@ -3959,10 +3959,20 @@
         }
       ],
       "ground_truth": {
-        "plate_text": null,
-        "visible_characters": {},
+        "plate_text": "UP37P1176",
+        "visible_characters": {
+          "1": "U",
+          "2": "P",
+          "3": "3",
+          "4": "7",
+          "5": "P",
+          "6": "1",
+          "7": "1",
+          "8": "7",
+          "9": "6"
+        },
         "unknown_positions": [],
-        "plate_readability": "none",
+        "plate_readability": "full",
         "colour": "black",
         "vehicle_type": "motorcycle",
         "in_registry": "no"
@@ -4153,10 +4163,20 @@
         }
       ],
       "ground_truth": {
-        "plate_text": null,
-        "visible_characters": {},
+        "plate_text": "DL3SS5192",
+        "visible_characters": {
+          "1": "D",
+          "2": "L",
+          "3": "3",
+          "4": "S",
+          "5": "S",
+          "6": "5",
+          "7": "1",
+          "8": "9",
+          "9": "2"
+        },
         "unknown_positions": [],
-        "plate_readability": "none",
+        "plate_readability": "full",
         "colour": "black",
         "vehicle_type": "motorcycle",
         "in_registry": "no"

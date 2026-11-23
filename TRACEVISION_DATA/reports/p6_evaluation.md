@@ -68,6 +68,9 @@ The evaluation now links labels to system vehicles **one-to-one** (E14): before,
 | Colour exact | 60% | 59% |
 Colour: centre-cropped variants were tested (full 69% / shrink10 65% / shrink20 59% / shrink30 53% exact on 51 vehicles) and rejected.
 
+### Note 2026-11-23: clip08_v02 / clip08_v03 relabelled
+The owner checked the two plates the system read where the labels said "unreadable" (`UP37P1176`, `DL3SS5192`) and confirmed both are correct, so they are now `full` labels. Caveat: these two labels were confirmed *after* seeing the system's read, so they are not independent evidence; they add 18 correctly-read characters to the plate score.
+
 ## Error analysis
 - **Missed vehicles (7):** 4 have plates humans also marked `none`: far, tiny vehicles (about 30–60 px boxes, under the 0.4% minimum-area filter) or trucks cut off at the 4K frame edge. The other 3 are partly visible (an SUV behind others, a corner scooter, an edge truck).
 - **Type (14 wrong):** 9 are **car → SUV** and 3 are SUV → car. UVH-26 separates Hatchback / Sedan / SUV / MUV, and compact SUVs and MPVs seen from behind confuse it. Since car and SUV are *compatible* in matching, these cost half credit, not a match. 1 truck → auto, 1 car → truck, 1 SUV → truck (at night).

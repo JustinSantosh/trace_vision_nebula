@@ -4,7 +4,7 @@
 
 - in_registry = no: 46 (need >= 2)
 - cross-camera groups spanning >= 2 clips: ['X1', 'X2', 'X3', 'X5', 'X4', 'X6', 'X7'] (need >= 1)
-- readability: {'full': 17, 'partial': 12, 'none': 38}
+- readability: {'full': 19, 'partial': 12, 'none': 36}
 - types: {'SUV': 16, 'auto_rickshaw': 6, 'bicycle': 1, 'car': 27, 'motorcycle': 9, 'scooter': 5, 'truck': 3}
 
 | Severity | Vehicle / group | Issue |

@@ -15,9 +15,9 @@
     "X7"
   ],
   "readability": {
-    "full": 17,
+    "full": 19,
     "partial": 12,
-    "none": 38
+    "none": 36
   },
   "vehicle_types": {
     "SUV": 16,
