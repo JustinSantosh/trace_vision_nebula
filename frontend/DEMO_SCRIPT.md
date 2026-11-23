@@ -1,29 +1,29 @@
 # Three-minute judge demo click path
 
-Use the local app at `http://127.0.0.1:8000`. This script uses stored results only. The Demo mode progress is simulated and does not upload a clip, run the pipeline, or create new evidence.
+**Updated 2026-11-23.** The app now has four tabs, **Cases · Cross-camera · Performance · Enforcement**. The Overview page, Ctrl+K palette and "Rehearse demo mode" from the earlier UI are gone, so this script was rewritten. The full guide with narration and judge Q&A is [HACKATHON_DEMO_GUIDE.md](../HACKATHON_DEMO_GUIDE.md).
+
+Use the local app at `http://127.0.0.1:8000`. This script uses stored results only.
 
 ## 0:00–0:25 · Set the frame
 
-Start on Overview. Point out that the evaluation figures come from local report files and that unknown plate characters remain `?`. If the engine status is unavailable, say the machine is reviewing stored results; do not start an upload.
+Start on **Cases**: 19 stored clips with their registry outcomes. Say that unknown plate characters stay `?` and that a weak match is reported as "no confident match". If the engine status says stored results only, say the machine is reviewing stored results; don't start an upload.
 
-## 0:25–1:05 · Compare two cameras
+## 0:25–1:05 · One clip, one vehicle
 
-Press **Ctrl+K**, search for **Cross-camera review**, and open it. Select **clip12 ↔ clip13**. Press **Play both** briefly, then show the recorded T1-to-T1 link, its evidence and score components, and the separate X1 reference outcome. Clarify that reference labels (`clip12_v01`) are not pipeline track IDs.
+Open **clip03**, select **T1** (`DL3CCY1025`). Click the **Plate** finding (per-frame reads, per-character confidence), then **Registry** (the decision rule checked in order, the candidates). Then select **T13**: read in full, not in the registry, so "no confident match".
 
-Select **clip14 ↔ clip15**. Show the linked and no-link decisions, including the partial plate characters and candidate reasons. Point out that each direction is shown as recorded; a reverse-direction decision may differ. Link scores are heuristic ranking scores, not probabilities.
+## 1:05–1:45 · Compare two cameras
 
-## 1:05–1:35 · Show measured performance
+Open **Cross-camera**, choose **clip12 ↔ clip13**, click the link. Show the **Confirmed** tag, why they're linked, and the pooled registry result. Choose **clip16 ↔ clip17**: one camera alone read only part of the plate; pooled, it's a match. Link scores are ranking scores, not probabilities.
 
-Press **Ctrl+K**, search for **Evaluation insights**, and open it. Point to the current labelled-set metrics, the degraded-video variants, and the cross-camera reference outcomes. Read the denominators and source note; avoid presenting the small evaluation set as a general guarantee.
+## 1:45–2:10 · Measured performance
 
-## 1:35–1:55 · Open the report
+Open **Performance**: 14/15 matched, 0/46 false identifications, 0/252 wrong characters. Click a metric to show its definition and source file. Point out the small test set.
 
-Use the **Reports** navigation item. Select **clip03**, scroll the in-app preview briefly, and show the existing HTML and PDF download controls.
+## 2:10–2:45 · Enforcement (synthetic data)
 
-## 1:55–2:45 · Rehearse a stored result
-
-Press **Ctrl+K**, search for **Rehearse demo mode**, choose **clip03**, and start the walkthrough. The stage sequence is labelled simulated. When it finishes, click **Open stored result**. Show the demo banner, annotated playback, the readable fused plate, and the separated detector, OCR, and top-candidate scores.
+Back to **clip03 → T1 → Vehicle record → Look up**: owner, compliance, e-challan history, all labelled synthetic. Issue a challan and cancel it. Then open **Enforcement**: the wrong-side review queue (with `ws01.mp4` if it was uploaded on this machine), the simulated challans, and the audit log.
 
 ## 2:45–3:00 · Close with an honest miss
 
-Use the vehicle evidence index to select a vehicle with no confident match and show its recorded reason. Then dismiss the demo banner or return to Overview. Leave `?` characters and no-match decisions unchanged; they are part of the evidence.
+Open **clip02**: raised CCTV view, plates under 16 px, so every vehicle is "no confident match", with type and colour still reported. Leave `?` characters and no-match decisions unchanged; they are part of the evidence.

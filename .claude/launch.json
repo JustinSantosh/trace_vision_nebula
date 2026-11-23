@@ -26,6 +26,23 @@
         "TRACEVISION_UI_ONLY": "1"
       },
       "port": 8010
+    },
+    {
+      "name": "tracevision-ui-only-venv",
+      "runtimeExecutable": ".venv/Scripts/python.exe",
+      "runtimeArgs": [
+        "-m",
+        "uvicorn",
+        "tracevision.api:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8010"
+      ],
+      "env": {
+        "TRACEVISION_UI_ONLY": "1"
+      },
+      "port": 8010
     }
   ]
 }

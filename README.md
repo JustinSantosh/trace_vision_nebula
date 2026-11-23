@@ -8,8 +8,8 @@ Give it a traffic clip. For every vehicle it:
 3. **ranks the top 5 registry candidates**, each with a **match score** and **human-readable reasons**, or says **"no confident match"**
 4. writes an **investigator report (HTML + PDF)** showing the frames used, the characters read per frame with confidence, the fused plate, and the candidates
 
-> **Status (2026-11-23):** built, tested and evaluated on 19 clips / 67 verified vehicles: **14/15 registered vehicles matched, 0/46 false identifications, 0 wrong plate characters**; cross-camera bonus: 5/5 checkable groups linked, 0 wrong. Remaining owner actions (repo visibility, demo video, slides): [NEEDS.md](NEEDS.md).
-> Docs: [completions](completions.md) · [whatnext](whatnext.md) · [problems](PROBLEMS.md) · [decisions](DECISIONS.md) · [pipeline design](PIPELINE.md) · [team tasks](TEAM_TASKS.md)
+> **Status (2026-11-23):** built, tested and evaluated on 19 clips / 67 verified vehicles: **14/15 registered vehicles matched, 0/46 false identifications, 0 wrong plate characters**; cross-camera bonus: 5/5 checkable groups linked, 0 wrong. **Enforcement add-on:** synthetic owner records and e-challans for matched vehicles, simulated challans, and wrong-side driving detection with human review ([ENFORCEMENT.md](ENFORCEMENT.md)). Remaining owner actions (repo visibility, demo video, slides): [NEEDS.md](NEEDS.md).
+> Docs: [enforcement guide](ENFORCEMENT.md) · [completions](completions.md) · [whatnext](whatnext.md) · [problems](PROBLEMS.md) · [decisions](DECISIONS.md) · [pipeline design](PIPELINE.md) · [team tasks](TEAM_TASKS.md)
 
 ---
 
@@ -73,7 +73,7 @@ flowchart LR
   - plain-English reasons for every candidate
   - decision: **match**, **ambiguous** (top two too close) or **no confident match** (score under 67.5, or fewer than 5 readable characters)
   - thresholds calibrated on held-out synthetic cases
-- 26 unit tests: `python -m pytest tests`
+- 63 tests: `python -m pytest tests`
 
 Match score is a **heuristic ranking score, not a probability**. The **registry is synthetic**: fictional records, plus the team's own test vehicles as `evaluation_seed` rows, and **no owner data at all** (the enforcement demo's owner and challan records are separate synthetic files, see below).
 
@@ -90,6 +90,13 @@ python -m pip install ultralytics lap fastapi uvicorn python-multipart jinja2 re
 ```
 **UVH-26 weights:** download `weights/YOLOv11-S/UVH-26-MV-YOLOv11-S.pt` from [huggingface.co/iisc-aim/UVH-26](https://huggingface.co/iisc-aim/UVH-26) into `TRACEVISION_DATA/models/weights/`. The plate detector and Awiros weights come with the repo (Git LFS).
 
+**No GPU? Browse stored results only (UI-only mode):** after cloning, create a small venv. No models are loaded and nothing new is analysed.
+```powershell
+py -3.13 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install fastapi uvicorn python-multipart pyyaml
+```
+In Claude Code, start the `tracevision-ui-only-venv` entry in `.claude/launch.json`, or run `$env:TRACEVISION_UI_ONLY="1"; .\.venv\Scripts\python.exe -m uvicorn tracevision.api:app --port 8010`, then open http://127.0.0.1:8010.
+
 **Use it:**
 ```powershell
 python -m tracevision.api                    # app: open http://127.0.0.1:8000, upload a clip, get the report
@@ -101,7 +108,9 @@ python -m tracevision.pipeline --report      # batch: every clip in TRACEVISION_
 python -m tracevision.evaluate               # metrics against evaluation/test_clip_labels.csv
 python -m tracevision.robustness             # same metrics on blurred / 360p / night / noisy variants
 python -m tracevision.crosscam --pairs        # cross-camera links for the parking pairs (clip12-19)
-python -m pytest tests                       # unit tests
+python -m tracevision.violations --jobs     # wrong-side driving check over stored clips and uploads (ENFORCEMENT.md)
+python TRACEVISION_DATA/scripts/generate_vehicle_intel.py   # regenerate the synthetic owner records + e-challans
+python -m pytest tests                       # tests
 ```
 Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.pdf`.
 
@@ -126,7 +135,7 @@ Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.p
 **Score** (`python -m tracevision.crosscam --evaluate`, labels tied to tracks one-to-one by box position): **5 of 5 checkable groups correct, 0 wrong links.** Without the pair declaration (open world, `python -m tracevision.crosscam clipA clipB`) only plate evidence links, and appearance alone is unreliable across viewpoints (C12).
 
 ## Enforcement add-on (synthetic demo data)
-Open the **Enforcement** tab, or the **Vehicle record** and **Direction** findings in a case.
+**Team guide (how to run, demo, add clips, troubleshoot): [ENFORCEMENT.md](ENFORCEMENT.md).** Open the **Enforcement** tab, or the **Vehicle record** and **Direction** findings in a case (also in **Cross-camera** for links with a confident pooled match).
 - **Vehicle record:** press **Look up** on a vehicle with a **confident** registry match (or type a registration in the Enforcement tab) to see everything on record: make, model, class, fuel, RTO, registration / insurance / PUC validity, registered owner, and e-challan history with the pending amount. **Issue a challan** for that vehicle from the same panel (violation, fine, location, note) and cancel it if needed; issued challans are simulated and never sent anywhere. Every lookup, challan and review is logged (audit log in the Enforcement tab). Data: `python TRACEVISION_DATA/scripts/generate_vehicle_intel.py` (seeded; 334 owner records, 434 challans; every vehicle the demo can match has 2-4 challans, one pending). **Not** a VAHAN / e-Challan lookup (DECISIONS E17).
 - **Wrong-side driving, fixed cameras** (clip02, clip06): Hand-drawn zones with a permitted direction (`TRACEVISION_DATA/cameras/camera_rules.json`); camera pan is removed first. A flagged vehicle waits to be confirmed or rejected; a confirmed flag on a matched vehicle raises a **simulated** challan that is never sent anywhere. Result on our footage: **54 vehicles checked, 0 flagged** (no wrong-side event was filmed); the rule flags clip02's real tracks when they are replayed backwards (unit test). `python -m tracevision.violations` prints the per-clip check (DECISIONS E18).
 - **Wrong-side driving, moving cameras:** a car seen **front first while it closes in, then rear** has passed the camera head-on (CLIP scores each crop headlights-and-grille vs tail-lights-and-boot). On a road declared one-way in `camera_rules.json` that is wrong-side driving; on a two-way road it is normal oncoming traffic. Tested on one downloaded clip (`TRACEVISION_DATA/raw/wrongside/ws01.mp4`, Delhi flyover; upload it in the app to reproduce): the wrong-way SUV is flagged and nothing else is; 0 flags on our other moving clips (214 cars over 31 clips). One positive example, so this shows the method works, not a detection rate (DECISIONS E19). `python -m tracevision.violations --orient --jobs` computes the orientation for stored clips.

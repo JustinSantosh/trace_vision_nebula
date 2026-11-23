@@ -6,6 +6,7 @@
 - **Built, tested and evaluated end to end.** 19 clips, 67 owner-verified vehicles: **14/15 registered vehicles matched, 0/46 false identifications (+0/6 on registered vehicles with unknown plates), 0/252 wrong plate characters**, 61/67 vehicles found, type 95% compatible, colour 59% exact.
 - **Cross-camera:** the four declared, cross-angled parking pairs are linked jointly with evidence pooled from both angles: **5 of 5 checkable groups correct, 0 wrong** (M16).
 - **App:** upload → video viewer with live playback (box → plate reads → registry check → decision), per-vehicle details, cross-camera panel, HTML/PDF report per clip.
+- **Enforcement add-on:** synthetic vehicle records and e-challans for confident matches, simulated challans, and wrong-side driving (fixed and moving cameras) with a review queue and an audit log. Team guide: [ENFORCEMENT.md](ENFORCEMENT.md).
 - **What's left for submission is owner work: [NEEDS.md](NEEDS.md)** (repo visibility, demo video, slides).
 
 ## 0. Owner / team actions
@@ -38,6 +39,7 @@
 - [x] **P5** FastAPI app, video viewer with live playback, cross-camera panel, HTML/PDF reports for all 19 clips
 - [x] **P6** evaluation (one-to-one label association, E14) and robustness sweep (*robustness numbers predate the ensemble and CLIP colour*)
 - [x] **Bonus:** cross-camera re-identification: plate-led open-world linking + joint linking with pooled evidence for declared cross-angled pairs (M14, M16)
+- [x] **Add-on:** enforcement (vehicle records, challans, wrong-side driving with review), E17–E20
 
 ## 3. Submission
 - [x] README: results, architecture diagram, how to run, models and licences, cross-camera section, honest limitations
@@ -56,6 +58,10 @@
 | 5 | **Re-run the robustness sweep** with the current pipeline and include clip12–19 | — | Small |
 | 6 | A dedicated **vehicle re-ID model** for cross-camera matching without plates (open world) | C12 | Large |
 | 7 | A true **real-time mode** (analyse while playing); needs re-evaluation | — | Medium |
+| 8 | **More wrong-side clips** (fixed camera, and a moving camera on a known two-way road) to measure the check instead of showing one example | E18, E19 | Small (filming) |
+| 9 | Wrong-side check for **two-wheelers** (the front/rear prompts are for cars) | E19 | Medium |
+| 10 | **Other violations** on the same tracks: triple riding (count riders on a motorcycle box), illegal parking (stationary in a no-parking zone) | — | Medium |
+| 11 | **Authenticated roles** for owner data (removed from the demo at the owner's request) | E17 | Medium |
 
 ## Installs
 None required: everything is in the README install line (torch 2.14.1+cu126, ultralytics, paddlepaddle-gpu 3.3.1 cu126, fastapi, reportlab, open_clip_torch, …). UVH-26 weights are downloaded by hand (README). Optional: FFmpeg (C1).

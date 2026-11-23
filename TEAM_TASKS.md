@@ -17,7 +17,9 @@ cd trace_vision_nebula
 python -m pip install pillow opencv-python pyyaml pyarrow numpy safetensors paddlepaddle
 ```
 
-Already cloned without these? Run `git lfs pull` and `git submodule update --init`.
+Already cloned without these? Run `git lfs pull` and `git submodule update --init`. `git lfs pull` also fetches the test clips and the wrong-side clip `TRACEVISION_DATA/raw/wrongside/ws01.mp4`.
+
+**Pulled new code? Restart the app** (`Ctrl+C`, then `python -m tracevision.api`) and hard-refresh the browser (`Ctrl+F5`). An old server answers the new lookups with "Not Found".
 
 **What's in the repo:**
 
@@ -30,7 +32,9 @@ Already cloned without these? Run `git lfs pull` and `git submodule update --ini
 | `TRACEVISION_DATA/models/awiros/` | Awiros ANPR OCR weights (LFS) and `test.py` |
 | `third_party/PaddleOCR` | PaddleOCR (submodule), needed by Awiros |
 | `TRACEVISION_DATA/scripts/` | All 10 Phase 0 scripts (audit, plate data, OCR, clip frames, labels, degradation, registry) |
-| `TRACEVISION_DATA/evaluation/`, `registry/` | Label template and guide, registry test cases, synthetic registry |
+| `TRACEVISION_DATA/evaluation/`, `registry/` | Label template and guide, registry test cases, synthetic registry, **synthetic owner records and e-challans** (enforcement add-on) |
+| `TRACEVISION_DATA/cameras/camera_rules.json` | Wrong-side rules: fixed-camera zones and moving-camera / upload road layouts ([ENFORCEMENT.md](ENFORCEMENT.md) §4) |
+| `TRACEVISION_DATA/raw/wrongside/` | `ws01.mp4`, the wrong-side test clip (LFS), with its source note |
 
 Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Share clips via the team drive instead.
 
@@ -48,6 +52,7 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 - **All phases P1–P6 done (2026-11-23):** pipeline, app (`python -m tracevision.api`), reports for all clips, evaluation. **What's left: [NEEDS.md](NEEDS.md).**
 - **Since then:** video viewer with live playback and a cross-camera panel; phantom-box fix (C11); CLIP colour (C8, 59% exact on 19 clips); two-detector ensemble UVH-26 + COCO YOLOv8n (C13); declared cross-angled pairs linked jointly (M16). Install `open_clip_torch` too (README install line); the CLIP weights (~580 MB) download on first run.
 - **Current results (19 clips, 67 vehicles):** 14/15 registered matched, 0/46 false identifications, 0/252 wrong plate characters, 61/67 found; cross-camera 5/5 checkable groups, 0 wrong.
+- **Enforcement add-on (merged, PR #3):** synthetic vehicle records and e-challans for confident matches, simulated challans, wrong-side driving with a review queue, audit log. **Read [ENFORCEMENT.md](ENFORCEMENT.md)** before demoing or changing it.
 
 ---
 
@@ -98,6 +103,19 @@ Don't commit test clips, frames or `.pt` weights (`.gitignore` blocks them). Sha
 - [x] Batch: one report per test clip in `TRACEVISION_DATA/evaluation/reports/`
 
 **Done** (P5, `reports/p5_app_and_reports.md`).
+
+---
+
+## WS6 — Enforcement add-on · Owner: ________
+
+Guide: **[ENFORCEMENT.md](ENFORCEMENT.md)** (how to run, demo, add clips, troubleshoot).
+- [x] Synthetic owner records + e-challans (`generate_vehicle_intel.py`), lookup only for confident matches (E17)
+- [x] Issue / cancel simulated challans; audit log; review queue
+- [x] Wrong-side driving, fixed cameras (zones + camera-pan removal, E18) and moving cameras (front-then-rear head-on pass, E19)
+- [x] Cross-camera view shows the record for a confident pooled match
+- [ ] **Film 2–3 wrong-side clips** (ideally a fixed camera, plus a moving camera on a road you *know* is two-way) and add rules for them in `camera_rules.json` (ENFORCEMENT.md §4). This turns "one example" into a measured result.
+- [ ] Before a demo on a new machine: upload `ws01.mp4` once on the GPU machine **under that name** (uploaded results are not in git)
+- [ ] Optional: two-wheeler support for the moving-camera check; other violations on the same tracks (triple riding, illegal parking) — whatnext.md §4
 
 ---
 

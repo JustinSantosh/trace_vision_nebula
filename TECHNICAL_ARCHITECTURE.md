@@ -13,6 +13,9 @@ flowchart LR
   R --> EV[Evaluation<br/>evaluate.py → reports/p6_evaluation_baseline.json]
   X --> XE[crosscam_evaluation.json]
   R & REP & X & EV & XE --> API[FastAPI app<br/>tracevision/api.py]
+  R --> VI[Wrong-side check<br/>violations.py]
+  SYN[(Synthetic owner records<br/>+ e-challans CSV)] --> IN[Vehicle records, challans,<br/>audit log · intel.py]
+  VI & IN --> API
   API --> UI[Investigator frontend<br/>frontend/index.html + assets]
 ```
 
@@ -118,17 +121,27 @@ flowchart LR
 - **Safety:** binds to 127.0.0.1; upload extension and size are checked (500 MB); `/viewer`, `/data`, `/runs` path parameters are matched against `clip\d+` / 12-hex job IDs / a strict crop-name pattern (traversal probes return 404, `tests/test_api_ui.py`).
 - **Evaluation headline:** read from `p6_evaluation_baseline.json` (machine-written by `evaluate.py`); the Markdown report is only a fallback.
 
+## 6b. Enforcement add-on (`tracevision/intel.py`, `tracevision/violations.py`)
+Team guide: [ENFORCEMENT.md](ENFORCEMENT.md). Decisions E17–E20. **All owner and challan data is synthetic; no external system is queried.**
+- **Vehicle records (`intel.py`):** `lookup(reg)` joins the matching registry with `registry/synthetic_owner_records.csv` (by `synthetic_vehicle_id`) and `registry/synthetic_echallans.csv` (by registration), and adds compliance status against today. The API ties a lookup to a case vehicle (`context=runs/clip03:T1`) only when that vehicle's decision is `match` and its top candidate is that registration; otherwise HTTP 409. This keeps the 0-false-identification property: a record or challan is never attached to a guessed vehicle.
+- **Simulated challans:** `issue_challan` / `cancel_challan` write `runs/enforcement/issued_challans.json` (git-ignored). Issued challans appear first in the vehicle's history.
+- **Audit log:** every lookup (including refusals), issue, cancellation and review is appended to `runs/audit/lookups.jsonl` (git-ignored).
+- **Wrong-side driving (`violations.py`), two methods chosen per run:**
+  - *Fixed camera with a rule* (`camera_rules.json` → `cameras`): bottom-centre path inside a hand-drawn zone, after mapping each frame onto a reference frame (ORB on the background with vehicle boxes masked, RANSAC similarity; cached as `runs/<clip>/camera_motion.json`). Flag: ≥ 8 points, ≥ 6% of frame height, > 120° off the permitted direction, ≥ 70% of steps against the flow.
+  - *Moving camera or upload* (`moving` / `uploads` → road `layout`): CLIP zero-shot front ("headlights, grille") vs rear ("red tail lights, boot") on up to 24 crops per car, cached as `orientation.json` (computed in the engine thread after each upload, or `python -m tracevision.violations --orient --jobs`). Flag a head-on pass: front ≥ 0.8 on ≥ 3 crops while the box grows ≥ 2×, then rear ≤ 0.3 on ≥ 3 later crops. It is wrong-side when the layout is `one_way`, never when it is `two_way`, and for review when undeclared.
+  - Every flag is a suspicion. `POST /api/violations/review` confirms, rejects or resets it (`runs/enforcement/reviews.json`); a confirmed flag on a matched vehicle raises a simulated challan.
+- **Endpoints:** `GET /api/intel/meta`, `GET /api/intel/{reg}`, `POST /api/challans`, `POST /api/challans/cancel`, `GET /api/audit`, `GET /data/{kind}/{id}/violations`, `GET /api/violations`, `POST /api/violations/review` (full table in ENFORCEMENT.md §7).
+
 ## 7. Investigator frontend (`frontend/`)
-No build step, no npm, no CDN. Hash-routed single page:
+No build step, no npm, no CDN. Hash-routed single page with four tabs (redesigned 2026-11-23; there is no Overview page, sidebar, command palette or demo mode any more):
 
 | Route | View | Data |
 |---|---|---|
-| `#top` (default) | Overview: case-file totals, evaluation snapshot, upload, stored clips | `/api/overview` |
-| `#results/runs/clipNN`, `#results/jobs/<id>` | Annotated video (canvas boxes per recorded frame), evidence index, vehicle detail: attributes, the three separate scores, fused plate cells, per-frame OCR reads with timestamps, **decision rule panel**, top-5 candidates with component scores, lead over next, position-by-position plate comparison and recorded reasons | `/data/...` |
-| `#crosscam` | Two synchronised videos with boxes; evaluation reference labels; **same-scene joint links** (confirmed vs probable, pooled identity); directional per-direction evidence | `/api/review`, `/data/...` |
-| `#reports` | Stored HTML report preview plus downloads | `/runs/...` |
-| `#insights` | Evaluation metrics, robustness variants (with their date caveat), cross-camera outcomes | `/api/overview`, `/api/review` |
-| `#demo/...` | Rehearsal mode: **explicitly simulated** stage progress, then opens the stored result with a banner | stored data only |
+| `#` (default) | **Cases:** drop area to analyse a clip, totals, table of stored cases | `/api/overview` |
+| `#case/runs/clipNN`, `#case/jobs/<id>` (old `#results/...` links still work) | Video with boxes; vehicle list; **findings** for the selected vehicle (Plate, Registry, Type, Colour, Seen, Other camera, **Direction**, **Vehicle record**); evidence panel for the selected finding: per-character agreement, frame reads, crops, decision rule checked in order, candidates with score parts, the wrong-side measurement, and the synthetic record with the issue-challan form | `/data/...`, `/api/intel/...` |
+| `#crosscam` | Two synchronised videos; links tagged Confirmed / Probable; each camera's own result and the pooled result; the vehicle record for a confident pooled match | `/api/review`, `/data/...` |
+| `#performance` | Evaluation metrics (definition, scope and source per metric), robustness bars | `/api/overview`, `/api/review` |
+| `#enforcement` | Wrong-side review queue (pending first, "Reviewed (N)" group), clips checked, simulated challans raised, audit log, typed registration lookup | `/api/violations`, `/api/audit`, `/api/intel/...` |
 
 `frontend/assets/explain.js` holds the explainability logic as pure functions (no DOM), tested with `node --test frontend/tests/explain.test.js`.
 
@@ -144,3 +157,4 @@ Scores `runs/*/result.json` against owner-verified labels (`TRACEVISION_DATA/eva
 - The robustness sweep (`p6_robustness.json`) predates the ensemble, phantom-box and CLIP-colour changes and wasn't re-run.
 - The pipeline needs CUDA. Plate/vehicle crops (`runs/**/vehicles/`) and two Pexels videos (clip10, clip11) are not in git.
 - Colour is the weakest attribute (59% exact).
+- Enforcement add-on: synthetic data and no access control. Wrong-side driving was never filmed by the team; the moving-camera method rests on one downloaded clip, needs the road layout declared, and covers cars only.
