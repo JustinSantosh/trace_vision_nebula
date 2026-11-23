@@ -31,8 +31,21 @@
   const cap = (s) => String(s || "").replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase());
   const plural = (n, word) => n + " " + word + (n === 1 ? "" : "s");
   /* JSON call that returns the error text instead of throwing (lookups, challans, reviews). */
+  /* Never throws: a network failure or a server that stops answering comes back as { ok: false, error } so the
+   * caller can show it and re-enable its button (a thrown error used to leave "Issue challan" disabled for good). */
+  const API_TIMEOUT_MS = 20000;
   async function apiCall(url, opts = {}) {
-    const r = await fetch(url, Object.assign({ cache: "no-store" }, opts));
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), API_TIMEOUT_MS);
+    let r;
+    try {
+      r = await fetch(url, Object.assign({ cache: "no-store", signal: ctl.signal }, opts));
+    } catch (e) {
+      const why = e && e.name === "AbortError" ? "the server did not answer within " + API_TIMEOUT_MS / 1000 + " s" : "couldn't reach the server";
+      return { ok: false, status: 0, data: null, error: "Not saved: " + why + ". Check the app is still running, then try again." };
+    } finally {
+      clearTimeout(timer);
+    }
     let data = null;
     try { data = await r.json(); } catch (_) { /* empty body */ }
     return { ok: r.ok, status: r.status, data, error: data && data.detail ? data.detail : "HTTP " + r.status };
@@ -684,15 +697,27 @@
     const where = el("input", { class: "field", maxlength: 120, placeholder: "Location", "aria-label": "Location",
       value: context ? context.split(":")[0].split("/")[1] + " (camera)" : "" });
     const note = el("input", { class: "field", maxlength: 300, placeholder: "Note (optional)", "aria-label": "Note" });
-    const msg = el("p", { class: "ev-note", role: "status" });
+    const reg = rec.vehicle.registration_number;
+    // The record re-renders after a challan is issued, which rebuilds this form; carry the confirmation across.
+    const msg = el("p", { class: "ev-note", role: "status", text: S.issuedNote && S.issuedNote.reg === reg ? S.issuedNote.text : "" });
+    S.issuedNote = null;
     const go = el("button", { class: "btn", type: "button", text: "Issue challan", onclick: async () => {
       if (!vio.value) { msg.textContent = "Choose a violation."; vio.focus(); return; }
       go.disabled = true;
-      const r = await apiCall("/api/challans", { method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ registration_number: rec.vehicle.registration_number, violation: vio.value, fine_inr: fine.value, location: where.value, note: note.value, context }) });
-      go.disabled = false;
-      if (!r.ok) { msg.textContent = r.error; return; }
-      await after();
+      go.textContent = "Issuing…";
+      msg.textContent = "";
+      try {
+        const r = await apiCall("/api/challans", { method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ registration_number: reg, violation: vio.value, fine_inr: fine.value, location: where.value, note: note.value, context }) });
+        if (!r.ok) { msg.textContent = r.error; return; }
+        const done = "Simulated challan " + r.data.challan_id + " issued (" + r.data.violation + ", " + inr(r.data.fine_inr) + "). It is listed in the e-Challan history above.";
+        S.issuedNote = { reg, text: done };
+        msg.textContent = done;
+        try { await after(); } catch (_) { msg.textContent = done + " Refresh the page to see it in the history."; }
+      } finally {
+        go.disabled = false;
+        go.textContent = "Issue challan";
+      }
     } });
     return section("Issue a challan", "simulated · never sent anywhere",
       el("div", { class: "lookup", style: "margin-top:0" }, vio, el("div", { class: "two" }, fine, where), note, go, msg));
@@ -724,7 +749,7 @@
     t.append(body);
     out.push(section("e-Challan history", rec.challans.length ? "newest first" : null, rec.challans.length ? t : el("p", { class: "muted", text: "No challans on record." })));
     if (after) out.push(issueForm(rec, context, after));
-    return out;
+    return out.filter(Boolean);   // never let a null placeholder reach replaceChildren (it prints "null")
   }
 
   /* ---------------------------------------------------------------- enforcement */
@@ -1107,7 +1132,7 @@
       v.decision_reason ? el("p", { class: "ev-note", text: cap(v.decision_reason) + "." }) : null,
       reads ? el("button", { class: "more", type: "button", text: "Jump to its best plate frame", onclick: () => seek(p.per_frame_reads[0].frame) }) : null,
       shortlist(v),
-    ];
+    ].filter(Boolean);   // replaceChildren(...) would print a null placeholder as the text "null"
   }
   /* This camera's own ranked registry shortlist (top-k as stored). Expand a row for score parts and the matcher's reasons. */
   function shortlist(v) {
