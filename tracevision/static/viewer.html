@@ -290,7 +290,7 @@ async function init() {
   VEH = R.vehicles.slice().sort((a, b) => rank(a) - rank(b) || a.first_frame - b.first_frame);
   const s = R.summary;
   const clipName = "__NAME__" || R.clip_id;
-  $("meta").textContent = `${clipName} ·${R.video.width}×${R.video.height} @ ${FPS} fps · ${s.vehicles_after_relink} vehicles · ${s.plates_read} plates read · ` +
+  $("meta").textContent = `${clipName} · ${R.video.width}×${R.video.height} @ ${+FPS.toFixed(1)} fps · ${s.vehicles_after_relink} vehicles · ${s.plates_read} plates read · ` +
     Object.entries(s.decisions).map(([k, n]) => `${n} ${k.replaceAll("_"," ")}`).join(", ");
   document.title = `${clipName} · TRACEVISION Viewer`;
   v.src = `${BASE}/video`;
