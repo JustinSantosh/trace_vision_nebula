@@ -103,9 +103,11 @@ def test_inside_polygon():
     assert violations.inside((0.5, 0.5), sq) and not violations.inside((1.5, 0.5), sq)
 
 
-def test_moving_camera_clips_are_not_assessed():
+def test_moving_camera_clips_use_the_head_on_method():
     r = client.get("/data/runs/clip03/violations").json()
-    assert r["assessed"] is False and "moving" in r["not_assessed_reason"]
+    assert r["method"] == "head_on_pass" and r["layout"] == "undeclared"
+    if not (ROOT / "runs/clip03/orientation.json").exists():
+        assert r["assessed"] is False and "orientation" in r["not_assessed_reason"]
 
 
 @pytest.mark.skipif(not VIDEO.exists(), reason="clip02 video not on this machine")
@@ -142,3 +144,27 @@ def test_confirming_a_violation_on_a_matched_vehicle_raises_a_simulated_challan(
     assert rec["challans"][0]["source"] == "simulated_issued"
     client.post("/api/violations/review", json={**body, "decision": "rejected"})
     assert intel.issued_challans() == []
+
+
+# ---------------------------------------------------------------- moving cameras: head-on pass
+def test_head_on_pass_needs_front_while_closing_in_then_rear():
+    # front seen while the box grows 0.10 -> 0.70 of the width, then rear: a head-on pass
+    seq = [[f, 0.9, w] for f, w in ((10, 0.10), (40, 0.30), (70, 0.55), (90, 0.70))] + \
+          [[f, 0.1, 0.7] for f in (200, 230, 260)]
+    m = violations.head_on(seq)
+    assert m and m["growth"] >= 2 and m["first_frame"] == 10 and m["last_frame"] == 260
+    # an overtaking car: flank read as "front" at a steady size, then its rear -> not a head-on pass (clip05 T20)
+    flank = [[f, 0.85, 0.17] for f in (122, 126, 132)] + [[f, 0.1, 0.3] for f in (154, 160, 168)]
+    assert violations.head_on(flank) is None
+    # rear first, then front (a car we overtake and look back at) -> not flagged
+    assert violations.head_on([[f, 0.1, 0.2] for f in (1, 2, 3)] + [[f, 0.9, w] for f, w in ((5, 0.1), (6, 0.3), (7, 0.6))]) is None
+
+
+def test_stored_moving_clips_have_no_head_on_flags():
+    caches = sorted((ROOT / "runs").glob("clip*/orientation.json"))
+    if not caches:
+        pytest.skip("orientation caches not computed")
+    for c in caches:
+        res = json.loads((c.parent / "result.json").read_text(encoding="utf-8"))
+        d = violations.detect(res, f"runs/{c.parent.name}")
+        assert d["method"] == "head_on_pass" and d["assessed"] and d["violations"] == [], c.parent.name

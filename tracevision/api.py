@@ -77,6 +77,10 @@ def _worker():
         job.update(status="running", phase="analysis", started=time.time())
         try:
             res = eng.run(job["video"], job["dir"])
+            try:   # front/rear orientation for the moving-camera wrong-side check (same thread as the models)
+                violations.orient_run(Path(job["dir"]), Path(job["video"]))
+            except Exception as e:  # the analysis itself still counts; the check then reports "not assessed"
+                job["orientation_error"] = repr(e)
             job.update(phase="report")
             build(Path(job["dir"]), deliver=False)
             job.update(status="done", phase="complete", summary=res["summary"], timing=res["timing"], finished=time.time())
@@ -553,13 +557,19 @@ def data_violations(kind: str, rid: str):
 @app.get("/api/violations")
 def all_violations():
     items, assessed = [], []
-    for p in sorted(RUNS.glob("clip*/result.json"), key=lambda p: int(re.search(r"\d+", p.parent.name).group())):
+    paths = sorted(RUNS.glob("clip*/result.json"), key=lambda p: int(re.search(r"\d+", p.parent.name).group()))
+    paths += sorted(JOBS_DIR.glob("*/result.json"), key=lambda p: p.stat().st_mtime)
+    for p in paths:
+        run_id = ("jobs/" if p.parent.parent == JOBS_DIR else "runs/") + p.parent.name
         try:
-            d = violations.detect(json.loads(p.read_text(encoding="utf-8")), f"runs/{p.parent.name}")
+            res = json.loads(p.read_text(encoding="utf-8"))
+            d = violations.detect(res, run_id)
+            label = violations.run_label(run_id, res)
         except Exception as e:  # one bad clip must not hide the rest
-            d = {"assessed": False, "not_assessed_reason": repr(e), "violations": [], "checked_vehicles": 0, "camera_id": None}
+            d, label = {"assessed": False, "not_assessed_reason": repr(e), "violations": [], "checked_vehicles": 0, "camera_id": None}, run_id
         if d["assessed"]:
-            assessed.append({"clip_id": p.parent.name, "camera_id": d["camera_id"], "checked_vehicles": d["checked_vehicles"],
+            assessed.append({"run": run_id, "clip_id": label, "camera_id": d["camera_id"], "method": d.get("method"),
+                             "layout": d.get("layout"), "checked_vehicles": d["checked_vehicles"],
                              "flagged": len(d["violations"]), "stabilisation": d.get("stabilisation")})
         items += d["violations"]
     return JSONResponse({"violations": items, "assessed_clips": assessed, "issued_challans": intel.issued_challans()})
@@ -583,7 +593,8 @@ def review_violation(payload: dict = Body(...)):
     challan = None
     if decision == "confirmed" and found["registration_number"]:
         challan = intel.issue_challan(found["registration_number"], found["label"], None,
-                                      f"{found['clip_id']} ({res.get('camera_type')})", note, violation_id=vid)
+                                      f"{found['clip_id']} ({res.get('camera_type')})", note, context=m.group(1) + ":T" + m.group(2),
+                                      violation_id=vid)
     else:
         intel.cancel_for_violation(vid)
     intel.audit({"action": "review", "violation_id": vid, "outcome": decision, "note": note or None,

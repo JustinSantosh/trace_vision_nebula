@@ -17,5 +17,13 @@
          "polygon": [[0.47, 0.47], [0.61, 0.47], [0.86, 0.655], [0.965, 1.0], [0.125, 1.0], [0.23, 0.765], [0.40, 0.555]]}
       ]
     }
+  },
+  "_note_moving": "Moving cameras (method: head-on pass, DECISIONS E19). layout: one_way = every lane in view runs the camera's way, so a vehicle passing head-on is wrong-side; two_way = head-on passes are normal oncoming traffic; undeclared (default) = flagged for review with that caveat. 'moving' is keyed by camera_id (clips.csv), 'uploads' by the uploaded file name.",
+  "moving": {},
+  "uploads": {
+    "ws01.mp4": {
+      "layout": "one_way",
+      "description": "Downloaded clip (Delhi flyover, phone in a moving car). The lanes beyond the concrete barrier carry traffic the camera's way (rear ends at 27-30 s); the uploader reports the SUV coming the other way as wrong-side. Not in the repo (unknown licence)."
+    }
   }
 }

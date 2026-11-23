@@ -359,8 +359,8 @@
     const link = S.cross.find((l) => l.track_id === v.track_id);
     if (link) out.push({ id: "cross", label: "Other camera", value: link.other_clip + " · T" + link.other_track, meta: link.link });
     const dir = directionOf(v);
-    if (dir) out.push({ id: "direction", label: "Direction", value: dir.vio ? "Wrong-side suspected" : "With the traffic flow",
-      meta: dir.vio ? cap(dir.vio.review.status) + " review" : "checked in " + dir.m.zone });
+    if (dir) out.push({ id: "direction", label: "Direction", value: dir.vio ? "Wrong-side suspected" : dir.m.method === "head_on_pass" ? (dir.m.head_on ? "Oncoming (allowed here)" : "Nothing to flag") : "With the traffic flow",
+      meta: dir.vio ? cap(dir.vio.review.status) + " review" : dir.m.method === "head_on_pass" ? (dir.m.head_on ? "head-on pass" : "orientation checked") : "checked in " + dir.m.zone });
     if (v.decision === "match" && top) out.push({ id: "record", label: "Vehicle record", value: "Look up " + top.registration_number, meta: "synthetic · logged" });
     return out;
   }
@@ -510,12 +510,40 @@
       el("div", null, arrow(m.observed_direction, bad ? "bad" : "good"), el("small", { text: "observed" })));
   }
   const reviewTag = (st) => el("span", { class: "tag " + (st === "confirmed" ? "match" : st === "pending" ? "unsure" : ""), text: cap(st) });
+  /* Head-on pass (moving camera): what the orientation check measured. */
+  function headOnNodes(m, fps) {
+    if (!m.head_on) return [kv([["Crops checked", m.samples], ["Result", "no head-on pass (front then rear not both seen)"]])];
+    return [el("div", { class: "dirs" },
+        el("div", null, el("span", { class: "dir-arrow bad", "aria-hidden": "true", text: "↓" }), el("small", { text: "front first" })),
+        el("div", null, el("span", { class: "dir-arrow", "aria-hidden": "true", text: "↑" }), el("small", { text: "then rear" }))),
+      kv([["Front seen", clock(m.front_frames[0] / fps) + " – " + clock(m.front_frames[m.front_frames.length - 1] / fps) + " (" + m.front_frames.length + " crops)"],
+        ["Rear seen", clock(m.rear_frames[0] / fps) + " – " + clock(m.rear_frames[m.rear_frames.length - 1] / fps) + " (" + m.rear_frames.length + " crops)"],
+        ["Grew while facing camera", m.growth + "×"], ["Front score (median)", pct(m.p_front_median)], ["Rear score (median)", pct(m.p_rear_median)]])];
+  }
   function evDirection(v) {
     const { m, vio } = directionOf(v);
     const fps = num(S.result.video && S.result.video.fps) || 30;
+    if (m.method === "head_on_pass") {
+      const out = [evHead("Evidence · direction", vio ? "Wrong-side driving suspected" : m.head_on ? "Passed the camera head-on" : "No head-on pass",
+        vio ? "It came towards the camera facing it, then went past (its rear seen after). On this road that is against the flow. It stays a suspicion until reviewed."
+          : m.head_on ? "Front seen first, then rear: normal oncoming traffic on a two-way road." : "Front and rear were not both seen in that order, so nothing to flag.")];
+      out.push(section("Measured", "moving camera · vehicle orientation", ...headOnNodes(m, fps)));
+      out.push(section("Rule", null, el("ul", { class: "reasons" },
+        el("li", { class: "partial", text: "CLIP scores each crop: front (headlights, grille) vs rear (red tail lights, boot)" }),
+        el("li", { class: "partial", text: "flagged when the front is seen clearly while it grows at least 2×, then the rear" }),
+        el("li", { class: S.viol.layout === "one_way" ? "conflicting" : "partial", text: S.viol.layout_note || "" }))));
+      if (vio) {
+        out.push(section("Review", null, kv([["Status", reviewTag(vio.review.status)], ["Registration", vio.registration_number || "no confident match"]])),
+          el("a", { class: "more", href: "#enforcement", text: "Open the review queue" }),
+          el("button", { class: "more", type: "button", text: "Jump to where it faces the camera", onclick: () => seekFrame(m.front_frames[Math.floor(m.front_frames.length / 2)]) }),
+          el("button", { class: "more", type: "button", text: "Jump to where it has passed", onclick: () => seekFrame(m.rear_frames[Math.floor(m.rear_frames.length / 2)]) }));
+      }
+      if (S.viol.camera_description) out.push(el("p", { class: "ev-note", text: S.viol.camera_description }));
+      return out;
+    }
     const st = S.viol.stabilisation;
     const out = [evHead("Evidence · direction", vio ? "Wrong-side driving suspected" : "Moving with the traffic flow",
-      vio ? "Inside the " + m.zone + ", this vehicle moves against the permitted direction. It stays a suspicion until an officer reviews it."
+      vio ? "Inside the " + m.zone + ", this vehicle moves against the permitted direction. It stays a suspicion until reviewed."
         : "Inside the " + m.zone + ", this vehicle moves the permitted way.")];
     out.push(section("Measured", "in the camera's reference view", dirs(m, vio),
       kv([["Angle off the permitted direction", deg(m.cos_to_allowed) + "°"], ["Steps moving against the flow", pct(m.against_flow_share)],
@@ -527,7 +555,7 @@
       st ? el("li", { class: "partial", text: "camera pan removed first (up to " + st.max_pan_px + " px; " + st.frames_usable + " of " + st.frames_sampled + " sampled frames usable)" }) : null)));
     if (vio) {
       out.push(section("Review", null, kv([["Status", reviewTag(vio.review.status)],
-        ["Registration", vio.registration_number || "no confident match"], ["Reviewed by", vio.review.by]])),
+        ["Registration", vio.registration_number || "no confident match"]])),
         el("a", { class: "more", href: "#enforcement", text: "Open the review queue" }),
         el("button", { class: "more", type: "button", text: "Jump to the evidence frame", onclick: () => seekFrame(vio.evidence_frames[1]) }));
     }
@@ -661,7 +689,7 @@
       $("ws-list").replaceChildren(el("li", { class: "muted", style: "padding:12px", text: "Couldn't load violations. " + e.message })); return;
     }
     const as = data.assessed_clips || [];
-    $("ws-scope").textContent = "· " + as.length + " fixed cameras · " + as.reduce((t, c) => t + c.checked_vehicles, 0) + " vehicles checked";
+    $("ws-scope").textContent = "· " + plural(as.length, "clip") + " · " + as.reduce((t, c) => t + c.checked_vehicles, 0) + " vehicles checked";
     const vs = data.violations || [];
     await Promise.all([...new Set(vs.map((x) => x.run))].filter((r) => !S.enfFiles[r]).map(async (r) => {
       S.enfFiles[r] = await getJSON("/data/" + r + "/files").catch(() => []);
@@ -670,13 +698,19 @@
       el("b", { class: x.registration_number ? "mono-sm" : "none", text: x.registration_number || "No plate match" }),
       el("span", null, x.label + " · " + x.clip_id + " T" + x.track_id, el("small", { text: [cap(x.colour), x.vehicle_type, clock(x.time_s[0]) + "–" + clock(x.time_s[1])].filter(Boolean).join(" · ") })),
       reviewTag(x.review.status))));
-    const checked = as.map((c) => el("li", null, el("a", { class: "metric", href: "#case/runs/" + c.clip_id },
+    const fixedCams = as.filter((c) => c.method === "zone_direction");
+    const moving = as.filter((c) => c.method === "head_on_pass");
+    const checked = fixedCams.map((c) => el("li", null, el("a", { class: "metric", href: "#case/" + c.run },
       el("b", { text: String(c.flagged) }),
-      el("span", null, c.clip_id + " · " + plural(c.flagged, "suspected violation"), el("small", { text: c.checked_vehicles + " vehicles checked" + (c.stabilisation ? " · camera pan up to " + c.stabilisation.max_pan_px + " px removed" : "") })),
+      el("span", null, c.clip_id + " · fixed camera", el("small", { text: c.checked_vehicles + " vehicles checked in the zone" + (c.stabilisation ? " · camera pan up to " + c.stabilisation.max_pan_px + " px removed" : "") })),
       el("span", { class: "f-go", text: "›" }))));
+    if (moving.length) checked.push(el("li", null, el("div", { class: "metric" },
+      el("b", { text: String(moving.reduce((t, c) => t + c.flagged, 0)) }),
+      el("span", null, plural(moving.length, "moving-camera clip"), el("small", { text: moving.reduce((t, c) => t + c.checked_vehicles, 0) + " cars checked for a head-on pass (front then rear)" })),
+      el("span"))));
     $("ws-list").replaceChildren(...rows, ...checked, el("li", { class: "muted small", style: "padding:12px",
       text: vs.length ? "Confirm or reject each suspected violation. A confirmed one on a vehicle with a confident plate match raises a simulated challan."
-        : "No wrong-side driving in the current clips. Only fixed cameras with a traffic rule are checked; moving-camera clips aren't, because their image motion isn't road direction." }));
+        : "No wrong-side driving found. Fixed cameras: direction in a hand-drawn zone. Moving cameras: a car seen front first, then rear." }));
     const issued = (data.issued_challans || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
     $("issued").replaceChildren(issued.length ? el("table", { class: "cases" },
       el("thead", null, el("tr", null, ...["Challan", "Registration", "Violation", "Fine", "Issued", ""].map((h) => el("th", { text: h })))),
@@ -745,7 +779,8 @@
       crops.length ? el("div", { class: "crops" }, ...crops.slice(0, 3).map((f) => el("img", { src: "/data/" + x.run + "/vehicles/" + f, alt: "Vehicle crop", style: "height:64px" }))) : null,
       section("Vehicle", null, kv([["Plate read", x.plate ? plateEl(x.plate) : "not read"], ["Registry", x.registration_number ? plateEl(x.registration_number) : "no confident match"],
         ["Type / colour", [x.vehicle_type, x.colour].filter(Boolean).join(" · ")]])),
-      section("Measured", null, dirs(m, true), kv([["Angle off permitted", deg(m.cos_to_allowed) + "°"], ["Steps against the flow", pct(m.against_flow_share)], ["Zone", m.zone]])),
+      m.method === "head_on_pass" ? section("Measured", "moving camera · head-on pass", ...headOnNodes(m, (x.time_s[1] && x.evidence_frames[2] / x.time_s[1]) || 30), el("p", { class: "ev-note", text: "Road layout: " + cap(m.layout) }))
+        : section("Measured", null, dirs(m, true), kv([["Angle off permitted", deg(m.cos_to_allowed) + "°"], ["Steps against the flow", pct(m.against_flow_share)], ["Zone", m.zone]])),
       section("Review", null, kv([["Status", reviewTag(x.review.status)], ["Note", x.review.note]]),
         el("div", { class: "lookup" }, note, el("div", { class: "btn-row" },
           el("button", { class: "btn", type: "button", text: "Confirm", onclick: act("confirmed") }),
