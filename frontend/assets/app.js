@@ -83,6 +83,51 @@
     return [list, more];
   }
 
+  /* ---------------------------------------------------------------- motion (all of it skipped for reduced motion) */
+  const calm = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* Restart a CSS entrance animation on `node`. */
+  function replay(node, cls) {
+    if (!node || calm()) return;
+    node.classList.remove(cls);
+    void node.offsetWidth;
+    node.classList.add(cls);
+  }
+  /* Count every number in a short text ("219", "14/15", "₹10,500") up from zero. The final text is exactly the original. */
+  function countUp(node) {
+    if (node.dataset.counting) return;   // our own text updates also fire the observer
+    const text = node.textContent;
+    if (calm() || !/\d/.test(text) || text.length > 24 || node.dataset.counted === text) return;
+    node.dataset.counted = text;
+    node.dataset.counting = "1";
+    const t0 = performance.now(), dur = 700;
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      if (p >= 1) delete node.dataset.counting;
+      node.textContent = p >= 1 ? text : text.replace(/\d[\d,]*(\.\d+)?/g, (m) => {
+        const n = Number(m.replace(/,/g, "")), d = (m.split(".")[1] || "").length;
+        const v = (n * e).toFixed(d);
+        return m.includes(",") ? Number(v).toLocaleString("en-IN") : v;
+      });
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  /* Panels re-animate whenever their content is swapped; number tiles count up when they appear. */
+  function initMotion() {
+    const panels = new MutationObserver((list) => list.forEach((m) => replay(m.target, "ev-enter")));
+    document.querySelectorAll(".evidence").forEach((p) => panels.observe(p, { childList: true }));
+    const numbers = new MutationObserver((list) => list.forEach((m) =>
+      m.target.querySelectorAll(".totals b, .metric > b, .rec-stats b").forEach(countUp)));
+    ["totals", "metric-list", "evidence", "cc-evidence", "enf-evidence"].forEach((id) => { if ($(id)) numbers.observe($(id), { childList: true, subtree: true }); });
+  }
+  /* Short "lock-on" when a vehicle is selected: the box closes in on it. `redraw` repaints the right canvas. */
+  function lockOn(redraw) {
+    if (calm()) return;
+    S.lockAt = performance.now();
+    const frame = (now) => { redraw(); if (now - S.lockAt < 420) requestAnimationFrame(frame); };
+    requestAnimationFrame(frame);
+  }
+
   /* ---------------------------------------------------------------- routing */
   function route() {
     const h = location.hash.replace(/^#\/?/, "");
@@ -95,6 +140,7 @@
     else if (parts[0] === "performance" || parts[0] === "insights") view = "performance";
     else if (parts[0] === "enforcement") view = "enforcement";
     views.forEach((v) => { $("view-" + v).hidden = v !== view; });
+    replay($("view-" + view), "view-enter");
     document.querySelectorAll(".tabs a").forEach((a) => {
       const on = a.dataset.tab === (view === "case" ? "cases" : view);
       if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
@@ -313,6 +359,7 @@
 
   function selectVehicle(id, seek) {
     S.vid = id;
+    lockOn(draw);
     const v = vehicleById(id);
     document.querySelectorAll("#vehicle-list button").forEach((b) => b.setAttribute("aria-current", String(Number(b.dataset.id) === id)));
     const fused = v.plate && v.plate.fused;
@@ -865,11 +912,26 @@
     const k = video.clientWidth / (srcW || video.videoWidth || 1);
     const css = getComputedStyle(document.documentElement);
     const mark = css.getPropertyValue("--mark").trim() || "#f2c230";
+    const lock = S.lockAt ? Math.min(1, (performance.now() - S.lockAt) / 420) : 1;
+    const ease = 1 - Math.pow(1 - lock, 3);
     boxes.forEach(({ b, label, on }) => {
-      const [x, y, w, h] = [b[1] * k, b[2] * k, (b[3] - b[1]) * k, (b[4] - b[2]) * k];
-      ctx.lineWidth = on ? 3 : 1.25;
+      let [x, y, w, h] = [b[1] * k, b[2] * k, (b[3] - b[1]) * k, (b[4] - b[2]) * k];
+      if (on && lock < 1) { const g = (1 - ease) * 22; x -= g; y -= g; w += 2 * g; h += 2 * g; }
+      ctx.globalAlpha = on ? 0.35 + 0.65 * ease : 1;
+      ctx.lineWidth = on ? 2 : 1.25;
       ctx.strokeStyle = on ? mark : "rgba(255,255,255,.75)";
       ctx.strokeRect(x, y, w, h);
+      if (on) {
+        // Corner brackets: the "locked on" look.
+        const c = Math.min(16, w / 3, h / 3), o = 3;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        [[x - o, y - o, 1, 1], [x + w + o, y - o, -1, 1], [x - o, y + h + o, 1, -1], [x + w + o, y + h + o, -1, -1]].forEach(([cx, cy, sx, sy]) => {
+          ctx.moveTo(cx + sx * c, cy); ctx.lineTo(cx, cy); ctx.lineTo(cx, cy + sy * c);
+        });
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
       if (!label) return;
       ctx.font = (on ? "600 " : "500 ") + "12px " + css.getPropertyValue("--mono");
       const tw = ctx.measureText(label).width + 10;
@@ -1065,6 +1127,7 @@
   }
   function selectLink(n) {
     S.cc.link = n;
+    lockOn(ccDraw);
     document.querySelectorAll(".link-row").forEach((b) => b.setAttribute("aria-current", String(Number(b.dataset.n) === n)));
     const l = S.cc.links[n];
     const f = l.final;
@@ -1181,6 +1244,7 @@
 
   /* ---------------------------------------------------------------- start */
   initMeta();
+  initMotion();
   initIntake();
   initPlayer();
   initCrosscam();
