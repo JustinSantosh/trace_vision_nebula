@@ -145,9 +145,10 @@
   function route() {
     const h = location.hash.replace(/^#\/?/, "");
     const parts = h.split("/");
-    const views = ["cases", "case", "crosscam", "performance", "enforcement"];
-    let view = "cases";
-    if ((parts[0] === "case" || parts[0] === "results") && parts.length === 3 &&
+    const views = ["home", "cases", "case", "crosscam", "performance", "enforcement"];
+    let view = "home";
+    if (parts[0] === "cases") view = "cases";
+    else if ((parts[0] === "case" || parts[0] === "results") && parts.length === 3 &&
         ((parts[1] === "runs" && /^clip\d+$/.test(parts[2])) || (parts[1] === "jobs" && /^[0-9a-f]{12}$/i.test(parts[2])))) view = "case";
     else if (parts[0] === "crosscam") view = "crosscam";
     else if (parts[0] === "performance" || parts[0] === "insights") view = "performance";
@@ -160,7 +161,7 @@
     });
     if (view !== "case") $("video").pause();
     if (view !== "crosscam") { $("va").pause(); $("vb").pause(); }
-    document.title = { cases: "Cases", case: parts[2] || "Case", crosscam: "Cross-camera", performance: "Performance", enforcement: "Enforcement" }[view] + " · TraceVision";
+    document.title = view === "home" ? "TraceVision" : { cases: "Cases", case: parts[2] || "Case", crosscam: "Cross-camera", performance: "Performance", enforcement: "Enforcement" }[view] + " · TraceVision";
     if (view === "case") openCase(parts[1], parts[2]);
     if (view === "crosscam") openCrosscam();
     if (view === "performance") openPerformance();
@@ -189,6 +190,9 @@
     const off = status !== "ready";
     $("drop").classList.toggle("is-off", off);
     $("drop").setAttribute("aria-disabled", off ? "true" : "false");
+    $("home-upload").disabled = off;
+    $("home-note").textContent = status === "ready" ? "" : status === "starting" ? "The analysis engine is starting. Uploads open in a moment."
+      : status === "disabled" ? "Live analysis is off on this machine. Stored cases are available." : "The analysis engine could not start. Stored cases are available.";
     if (!S.file) {
       $("drop-hint").textContent = status === "ready" ? "Drop a video here, or click to choose one." + limitText()
         : status === "disabled" ? (engine.message || "Live analysis is off on this machine. Stored cases are below.")
@@ -239,8 +243,16 @@
     ["dragenter", "dragover"].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); if (ready()) drop.classList.add("is-over"); }));
     ["dragleave", "drop"].forEach((t) => drop.addEventListener(t, () => drop.classList.remove("is-over")));
     drop.addEventListener("drop", (e) => { e.preventDefault(); if (ready() && e.dataTransfer.files[0]) pick(e.dataTransfer.files[0]); });
-    input.addEventListener("change", () => { if (input.files[0]) pick(input.files[0]); });
+    input.addEventListener("change", () => {
+      if (!input.files[0]) return;
+      pick(input.files[0]);
+      // From the home page: go straight to the analysis and show its progress on the Cases page.
+      if (S.autoStart) { S.autoStart = false; location.hash = "cases"; if (S.file) submit(); }   // an error shows there too
+      S.autoStart = false;
+      input.value = "";
+    });
     $("start").addEventListener("click", submit);
+    $("home-upload").addEventListener("click", () => { if (ready()) { S.autoStart = true; input.click(); } });
   }
   function pick(file) {
     const l = (S.overview && S.overview.limits) || {};
