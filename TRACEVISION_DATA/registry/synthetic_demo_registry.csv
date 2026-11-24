@@ -1,0 +1,76 @@
+synthetic_vehicle_id,registration_number,state_code,vehicle_type,vehicle_colour,manufacturer,model,model_year,source,synthetic
+SD00001,DL5CX2452,DL,SUV,white,Hyundai,Creta,2016,demo_seed,true
+SD00002,DL5CX2352,DL,SUV,white,Hyundai,Creta,2023,demo_decoy,true
+SD00003,DL5CX2772,DL,SUV,red,Hyundai,Creta,2011,demo_decoy,true
+SD00004,DL5ND2453,DL,bus,white,Ashok Leyland,Viking,2022,demo_decoy,true
+SD00005,DL5CX8452,DL,SUV,brown,Hyundai,Creta,2021,demo_decoy,true
+SD00006,UP37P1176,UP,motorcycle,black,Hero,Splendor Plus,2024,demo_seed,true
+SD00007,UP37D1176,UP,motorcycle,black,Hero,Splendor Plus,2019,demo_decoy,true
+SD00008,UP34P1276,UP,motorcycle,red,Hero,Splendor Plus,2012,demo_decoy,true
+SD00009,UP34P3174,UP,auto_rickshaw,black,Bajaj,RE,2018,demo_decoy,true
+SD00010,UP37P1146,UP,motorcycle,grey,Hero,Splendor Plus,2012,demo_decoy,true
+SD00011,DL3SS5192,DL,motorcycle,black,Hero,Splendor Plus,2020,demo_seed,true
+SD00012,DL3SS9192,DL,motorcycle,black,Hero,Splendor Plus,2021,demo_decoy,true
+SD00013,DL3SS3092,DL,motorcycle,blue,Hero,Splendor Plus,2017,demo_decoy,true
+SD00014,DL3SV5793,DL,auto_rickshaw,black,Bajaj,RE,2011,demo_decoy,true
+SD00015,DL3SL5192,DL,motorcycle,red,Hero,Splendor Plus,2013,demo_decoy,true
+SD00016,MH43BL0234,MH,SUV,blue,Hyundai,Creta,2014,demo_seed,true
+SD00017,MH43BL0634,MH,SUV,blue,Hyundai,Creta,2016,demo_decoy,true
+SD00018,MH43JL2234,MH,SUV,silver,Hyundai,Creta,2016,demo_decoy,true
+SD00019,MH93BH9234,MH,truck,blue,Tata,Ultra 1918,2022,demo_decoy,true
+SD00020,MH43BL0233,MH,SUV,silver,Hyundai,Creta,2021,demo_decoy,true
+SD00021,CG04PB6426,CG,motorcycle,black,Hero,Splendor Plus,2017,demo_seed,true
+SD00022,CG04PB6425,CG,motorcycle,black,Hero,Splendor Plus,2011,demo_decoy,true
+SD00023,CG24AB6426,CG,motorcycle,red,Hero,Splendor Plus,2012,demo_decoy,true
+SD00024,CG02PB6136,CG,SUV,black,Hyundai,Creta,2025,demo_decoy,true
+SD00025,CG04PB6726,CG,motorcycle,red,Hero,Splendor Plus,2015,demo_decoy,true
+SD00026,HR86T1284,HR,SUV,silver,Hyundai,Creta,2015,demo_possible,true
+SD00027,HR87T7284,HR,SUV,silver,Hyundai,Creta,2019,demo_possible,true
+SD00028,HR87T1784,HR,truck,silver,Tata,Ultra 1918,2010,demo_possible,true
+SD00029,HR87T1294,HR,SUV,red,Hyundai,Creta,2013,demo_possible,true
+SD00030,HR87T1281,HR,truck,white,Tata,Ultra 1918,2016,demo_possible,true
+SD00031,YP14T1568,YP,car,white,Maruti Suzuki,Swift,2023,demo_possible,true
+SD00032,SP14T5660,SP,car,white,Maruti Suzuki,Swift,2016,demo_possible,true
+SD00033,JP14T3766,JP,motorcycle,white,Hero,Splendor Plus,2025,demo_possible,true
+SD00034,VP14T8263,VP,car,grey,Maruti Suzuki,Swift,2011,demo_possible,true
+SD00035,SP14T8069,SP,auto_rickshaw,black,Bajaj,RE,2025,demo_possible,true
+SD00036,HR55AW1605,HR,SUV,silver,Hyundai,Creta,2018,demo_possible,true
+SD00037,HR55AA1605,HR,SUV,silver,Hyundai,Creta,2011,demo_possible,true
+SD00038,HR55AY1605,HR,scooter,silver,Honda,Activa 6G,2016,demo_possible,true
+SD00039,HR55AO1605,HR,SUV,blue,Hyundai,Creta,2018,demo_possible,true
+SD00040,HR55AU1605,HR,scooter,grey,Honda,Activa 6G,2019,demo_possible,true
+SD00041,UK48TA9897,UK,car,white,Maruti Suzuki,Swift,2017,demo_possible,true
+SD00042,UK08TA9597,UK,car,white,Maruti Suzuki,Swift,2014,demo_possible,true
+SD00043,UK01TA9897,UK,SUV,white,Hyundai,Creta,2025,demo_possible,true
+SD00044,UK08TA9887,UK,car,black,Maruti Suzuki,Swift,2011,demo_possible,true
+SD00045,UK08TA9894,UK,SUV,black,Hyundai,Creta,2018,demo_possible,true
+SD00046,LI0A9897,LI,truck,white,Tata,Ultra 1918,2017,demo_possible,true
+SD00047,NC9A9897,NC,truck,white,Tata,Ultra 1918,2010,demo_possible,true
+SD00048,AJ2A9897,AJ,auto_rickshaw,white,Bajaj,RE,2016,demo_possible,true
+SD00049,OQ2A9897,OQ,truck,grey,Tata,Ultra 1918,2020,demo_possible,true
+SD00050,DQ6A9897,DQ,truck,red,Tata,Ultra 1918,2016,demo_possible,true
+SD00051,MH04JK1325,MH,SUV,white,Hyundai,Creta,2020,demo_possible,true
+SD00052,MH04JS1223,MH,SUV,white,Hyundai,Creta,2019,demo_possible,true
+SD00053,MH04JA1125,MH,auto_rickshaw,white,Bajaj,RE,2014,demo_possible,true
+SD00054,MH04JO1129,MH,SUV,grey,Hyundai,Creta,2017,demo_possible,true
+SD00055,MH04JQ1628,MH,truck,black,Tata,Ultra 1918,2014,demo_possible,true
+SD00056,MH47K0516,MH,truck,white,Tata,Ultra 1918,2015,demo_possible,true
+SD00057,MH42K0516,MH,truck,white,Tata,Ultra 1918,2017,demo_possible,true
+SD00058,MH45K0516,MH,scooter,white,Honda,Activa 6G,2025,demo_possible,true
+SD00059,MH44K0516,MH,truck,silver,Tata,Ultra 1918,2024,demo_possible,true
+SD00060,MH46K0516,MH,scooter,blue,Honda,Activa 6G,2012,demo_possible,true
+SD00061,TN18BE8696,TN,truck,white,Tata,Ultra 1918,2014,demo_possible,true
+SD00062,TN18BE8698,TN,truck,white,Tata,Ultra 1918,2017,demo_possible,true
+SD00063,TN18BE8694,TN,SUV,white,Hyundai,Creta,2022,demo_possible,true
+SD00064,TN18BE8693,TN,truck,brown,Tata,Ultra 1918,2012,demo_possible,true
+SD00065,TN18BE8695,TN,SUV,silver,Hyundai,Creta,2020,demo_possible,true
+SD00066,OL0S9584,OL,SUV,black,Hyundai,Creta,2018,demo_possible,true
+SD00067,NI0S9584,NI,SUV,black,Hyundai,Creta,2024,demo_possible,true
+SD00068,BD0S9584,BD,car,black,Maruti Suzuki,Swift,2019,demo_possible,true
+SD00069,RB0S9584,RB,SUV,grey,Hyundai,Creta,2025,demo_possible,true
+SD00070,KK0S9584,KK,truck,grey,Tata,Ultra 1918,2014,demo_possible,true
+SD00071,CG04QE9584,CG,SUV,black,Hyundai,Creta,2022,demo_possible,true
+SD00072,CG04QS9784,CG,SUV,black,Hyundai,Creta,2022,demo_possible,true
+SD00073,CG04QS8584,CG,bus,black,Ashok Leyland,Viking,2015,demo_possible,true
+SD00074,CG04QS9581,CG,SUV,grey,Hyundai,Creta,2015,demo_possible,true
+SD00075,CG14QS9584,CG,bus,brown,Ashok Leyland,Viking,2010,demo_possible,true

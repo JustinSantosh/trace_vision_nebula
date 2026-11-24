@@ -63,3 +63,4 @@ runs_degraded/**/report.*
 # Enforcement demo runtime state (lookup audit log, officer reviews, simulated challans): per machine, never shared
 runs/audit/
 runs/enforcement/
+runs/demo_registry/

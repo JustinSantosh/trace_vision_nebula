@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 555
   },
-  "processed_at": "2026-11-24T07:20:51",
+  "processed_at": "2026-11-24T08:09:15",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -22,13 +22,14 @@
       "ocr_top_k": 5,
       "colour_frames": 3,
       "verify_large_frac": 0.1,
-      "verify_samples": 6,
+      "verify_samples": 24,
       "verify_min_iou": 0.3,
       "verify_min_share": 0.34,
+      "verify_trim_run": 3,
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
-      "fold_duplicates": false,
+      "fold_duplicates": true,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -65,7 +66,7 @@
     "dropped_unverified_large": [
       {
         "track_id": 84,
-        "confirmed": "0/6",
+        "confirmed": "0/24",
         "median_area_frac": 0.319,
         "frames": [
           508,
@@ -126,20 +127,22 @@
       ]
     },
     "boxes_completed_from_coco": 0,
-    "duplicate_tracks_folded": {},
-    "vehicles_after_relink": 11,
+    "duplicate_tracks_folded": {
+      "10": 3
+    },
+    "vehicles_after_relink": 10,
     "plates_read": 3,
     "decisions": {
-      "no_confident_match": 10,
-      "match": 1
+      "no_confident_match": 7,
+      "match": 3
     }
   },
   "timing": {
-    "detect_track_s": 7.6,
-    "plates_s": 1.3,
-    "ocr_s": 0.3,
-    "assemble_s": 0.5,
-    "total_s": 10.5
+    "detect_track_s": 7.8,
+    "plates_s": 1.5,
+    "ocr_s": 0.4,
+    "assemble_s": 0.6,
+    "total_s": 12.4
   },
   "vehicles": [
     {
@@ -1284,7 +1287,8 @@
     {
       "track_id": 3,
       "merged_track_ids": [
-        3
+        3,
+        10
       ],
       "first_frame": 0,
       "last_frame": 142,
@@ -1796,7 +1800,7 @@
       },
       "colour": {
         "label": "black",
-        "confidence": 0.374,
+        "confidence": 0.417,
         "per_frame": [
           "black",
           "black",
@@ -3122,102 +3126,6 @@
           "black"
         ],
         "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
-        "method": "clip_masked"
-      },
-      "plate": {
-        "status": "no plate detected",
-        "fused": null,
-        "unknown_positions": null,
-        "positions": [],
-        "warnings": [],
-        "per_frame_reads": [],
-        "plates_detected": 0
-      },
-      "decision": "no_confident_match",
-      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
-      "candidates": []
-    },
-    {
-      "track_id": 10,
-      "merged_track_ids": [
-        10
-      ],
-      "first_frame": 64,
-      "last_frame": 86,
-      "first_time_s": 2.13,
-      "n_detections": 7,
-      "first_box": [
-        248,
-        453,
-        314,
-        483
-      ],
-      "track": [
-        [
-          64,
-          248,
-          453,
-          314,
-          483
-        ],
-        [
-          66,
-          247,
-          452,
-          314,
-          483
-        ],
-        [
-          68,
-          248,
-          453,
-          313,
-          483
-        ],
-        [
-          76,
-          246,
-          457,
-          311,
-          486
-        ],
-        [
-          78,
-          245,
-          458,
-          310,
-          487
-        ],
-        [
-          84,
-          243,
-          461,
-          310,
-          490
-        ],
-        [
-          86,
-          245,
-          462,
-          310,
-          491
-        ]
-      ],
-      "type": {
-        "label": "car",
-        "vote_share": 1.0,
-        "detector_conf_mean": 0.362,
-        "source": "UVH-26"
-      },
-      "colour": {
-        "label": "black",
-        "confidence": 0.6,
-        "per_frame": [
-          "black",
-          "black",
-          "black"
-        ],
-        "note": "CLIP zero-shot on vehicle pixels (1/3 crops masked)",
         "method": "clip_masked"
       },
       "plate": {
@@ -5059,9 +4967,93 @@
         ],
         "plates_detected": 14
       },
-      "decision": "no_confident_match",
-      "decision_reason": "no registry vehicle is close to the observed plate",
-      "candidates": []
+      "decision": "match",
+      "decision_reason": "best match score 100.0, clear of the next candidate",
+      "candidates": [
+        {
+          "rank": 1,
+          "synthetic_vehicle_id": "SD00011",
+          "registration_number": "DL3SS5192",
+          "match_score": 100.0,
+          "plate_score": 1.0,
+          "colour_score": null,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 9 of 9 readable characters match exactly",
+            "colour not compared (unknown)",
+            "type motorcycle matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SD00012",
+          "registration_number": "DL3SS9192",
+          "match_score": 82.7,
+          "plate_score": 0.79,
+          "colour_score": null,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly",
+            "plate differs from DL3SS9192 (edit cost 1.0)",
+            "colour not compared (unknown)",
+            "type motorcycle matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SD00015",
+          "registration_number": "DL3SL5192",
+          "match_score": 82.7,
+          "plate_score": 0.79,
+          "colour_score": null,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly",
+            "plate differs from DL3SL5192 (edit cost 1.0)",
+            "colour not compared (unknown)",
+            "type motorcycle matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SD00013",
+          "registration_number": "DL3SS3092",
+          "match_score": 67.5,
+          "plate_score": 0.605,
+          "colour_score": null,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 7 of 9 readable characters match exactly",
+            "plate differs from DL3SS3092 (edit cost 2.0)",
+            "colour not compared (unknown)",
+            "type motorcycle matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SD00014",
+          "registration_number": "DL3SV5793",
+          "match_score": 36.6,
+          "plate_score": 0.444,
+          "colour_score": null,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 6 of 9 readable characters match exactly",
+            "plate differs from DL3SV5793 (edit cost 3.0)",
+            "colour not compared (unknown)",
+            "type conflict: observed motorcycle/scooter, registry auto_rickshaw",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        }
+      ],
+      "main_registry": {
+        "decision": "no_confident_match",
+        "candidates": []
+      }
     },
     {
       "track_id": 34,
@@ -8070,9 +8062,93 @@
         ],
         "plates_detected": 18
       },
-      "decision": "no_confident_match",
-      "decision_reason": "no registry vehicle is close to the observed plate",
-      "candidates": []
+      "decision": "match",
+      "decision_reason": "best match score 100.0, clear of the next candidate",
+      "candidates": [
+        {
+          "rank": 1,
+          "synthetic_vehicle_id": "SD00006",
+          "registration_number": "UP37P1176",
+          "match_score": 100.0,
+          "plate_score": 1.0,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 9 of 9 readable characters match exactly",
+            "colour black matches",
+            "type motorcycle matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SD00007",
+          "registration_number": "UP37D1176",
+          "match_score": 85.3,
+          "plate_score": 0.79,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly",
+            "plate differs from UP37D1176 (edit cost 1.0)",
+            "colour black matches",
+            "type motorcycle matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SD00010",
+          "registration_number": "UP37P1146",
+          "match_score": 70.3,
+          "plate_score": 0.79,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly",
+            "plate differs from UP37P1146 (edit cost 1.0)",
+            "colour conflict: observed black, registry grey",
+            "type motorcycle matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SD00008",
+          "registration_number": "UP34P1276",
+          "match_score": 57.3,
+          "plate_score": 0.605,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 7 of 9 readable characters match exactly",
+            "plate differs from UP34P1276 (edit cost 2.0)",
+            "colour conflict: observed black, registry red",
+            "type motorcycle matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SD00009",
+          "registration_number": "UP34P3174",
+          "match_score": 46.1,
+          "plate_score": 0.444,
+          "colour_score": 1.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 6 of 9 readable characters match exactly",
+            "plate differs from UP34P3174 (edit cost 3.0)",
+            "colour black matches",
+            "type conflict: observed motorcycle/scooter, registry auto_rickshaw",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        }
+      ],
+      "main_registry": {
+        "decision": "no_confident_match",
+        "candidates": []
+      }
     },
     {
       "track_id": 65,
@@ -9618,7 +9694,17 @@
             "type compatible: observed SUV, registry car"
           ]
         }
-      ]
+      ],
+      "main_registry": {
+        "decision": "match",
+        "candidates": [
+          "SV950896",
+          "SV491229",
+          "SV992057",
+          "SV519066",
+          "SV735194"
+        ]
+      }
     }
   ],
   "note": "match_score is a heuristic ranking score, not a probability. '?' marks characters that could not be read."

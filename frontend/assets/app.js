@@ -337,7 +337,7 @@
     const when = r.processed_at ? new Date(r.processed_at).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }) : null;
     $("case-title").textContent = r.clip_id || S.route.id;
     $("case-meta").textContent = [cap(r.camera_type || "camera unknown"), plural(vehicles.length, "vehicle"),
-      Number.isFinite(dur) ? clock(dur) + " at " + v.fps + " fps" : null, r.timing ? "analysed in " + r.timing.total_s + " s" : null, when,
+      Number.isFinite(dur) ? clock(dur) + " at " + Math.round(num(v.fps) || 0) + " fps" : null, r.timing ? "analysed in " + r.timing.total_s + " s" : null, when,
       S.viol && S.viol.assessed ? "wrong-side check: " + plural(S.viol.violations.length, "suspected violation") + " in " + S.viol.checked_vehicles + " vehicles" : null].filter(Boolean).join(" · ");
     const rep = S.route.kind === "runs" ? "/runs/" + S.route.id + "/report" : "/jobs/" + S.route.id + "/report";
     $("case-links").replaceChildren(el("a", { href: rep, target: "_blank", rel: "noopener", text: "Report" }), el("a", { href: rep + ".pdf", target: "_blank", rel: "noopener", text: "PDF" }));

@@ -207,3 +207,4 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | 46f598e / e0a45b3 | Reviewed violations leave the queue; PR #3 merged |
 | (this push) | Team docs for the enforcement add-on (ENFORCEMENT.md, demo guide, architecture, status docs) |
 | (this push) | Model refinement round: partial boxes from COCO (C15), colour on vehicle pixels (M17), cross-camera partial-plate rule + duplicate folding (M18), wrong-way regression fixed (C17), OCR start-up errors surfaced (C18), robustness re-run; redesigned clip reports and printable challan PDFs (M19); all 19 clips re-run |
+| (this push) | Duplicate boxes folded after the plate re-link, phantom stretches cut out of large tracks (M20, C19); synthetic demo registry with possible-match shortlists for every partly read plate, uploads included, kept out of the evaluation (M21); fps shown rounded |

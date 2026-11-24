@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 385
   },
-  "processed_at": "2026-11-24T07:20:04",
+  "processed_at": "2026-11-24T08:08:22",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -22,13 +22,14 @@
       "ocr_top_k": 5,
       "colour_frames": 3,
       "verify_large_frac": 0.1,
-      "verify_samples": 6,
+      "verify_samples": 24,
       "verify_min_iou": 0.3,
       "verify_min_share": 0.34,
+      "verify_trim_run": 3,
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
-      "fold_duplicates": false,
+      "fold_duplicates": true,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -97,20 +98,23 @@
       ]
     },
     "boxes_completed_from_coco": 8,
-    "duplicate_tracks_folded": {},
-    "vehicles_after_relink": 11,
+    "duplicate_tracks_folded": {
+      "24": 15
+    },
+    "vehicles_after_relink": 10,
     "plates_read": 3,
     "decisions": {
       "match": 2,
-      "no_confident_match": 9
+      "ambiguous": 1,
+      "no_confident_match": 7
     }
   },
   "timing": {
-    "detect_track_s": 5.3,
+    "detect_track_s": 5.4,
     "plates_s": 1.0,
     "ocr_s": 0.2,
-    "assemble_s": 0.6,
-    "total_s": 7.1
+    "assemble_s": 0.7,
+    "total_s": 7.4
   },
   "vehicles": [
     {
@@ -1039,7 +1043,17 @@
             "type compatible: observed SUV, registry car"
           ]
         }
-      ]
+      ],
+      "main_registry": {
+        "decision": "match",
+        "candidates": [
+          "SV417920",
+          "SV021818",
+          "SV026064",
+          "SV064747",
+          "SV566632"
+        ]
+      }
     },
     {
       "track_id": 2,
@@ -2739,7 +2753,17 @@
             "type compatible: observed SUV, registry car"
           ]
         }
-      ]
+      ],
+      "main_registry": {
+        "decision": "match",
+        "candidates": [
+          "SV237860",
+          "SV652690",
+          "SV746304",
+          "SV589688",
+          "SV391325"
+        ]
+      }
     },
     {
       "track_id": 3,
@@ -4370,9 +4394,89 @@
         ],
         "plates_detected": 8
       },
-      "decision": "no_confident_match",
-      "decision_reason": "no registry vehicle is close to the observed plate",
-      "candidates": []
+      "decision": "ambiguous",
+      "decision_reason": "top two candidates are too close (96.4 against 96.4, margin under 4.0)",
+      "candidates": [
+        {
+          "rank": 1,
+          "synthetic_vehicle_id": "SD00036",
+          "registration_number": "HR55AW1605",
+          "match_score": 96.4,
+          "plate_score": 0.949,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 9 of 9 readable characters match exactly; 1 unreadable",
+            "colour silver matches",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SD00037",
+          "registration_number": "HR55AA1605",
+          "match_score": 96.4,
+          "plate_score": 0.949,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 9 of 9 readable characters match exactly; 1 unreadable",
+            "colour silver matches",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SD00038",
+          "registration_number": "HR55AY1605",
+          "match_score": 81.4,
+          "plate_score": 0.949,
+          "colour_score": 1.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 9 of 9 readable characters match exactly; 1 unreadable",
+            "colour silver matches",
+            "type conflict: observed SUV, registry scooter",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SD00039",
+          "registration_number": "HR55AO1605",
+          "match_score": 81.4,
+          "plate_score": 0.949,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 9 of 9 readable characters match exactly; 1 unreadable",
+            "colour conflict: observed silver, registry blue",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SD00040",
+          "registration_number": "HR55AU1605",
+          "match_score": 73.9,
+          "plate_score": 0.949,
+          "colour_score": 0.5,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 9 of 9 readable characters match exactly; 1 unreadable",
+            "colour close: observed silver, registry grey",
+            "type conflict: observed SUV, registry scooter",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        }
+      ],
+      "main_registry": {
+        "decision": "no_confident_match",
+        "candidates": []
+      }
     },
     {
       "track_id": 4,
@@ -4674,7 +4778,8 @@
     {
       "track_id": 15,
       "merged_track_ids": [
-        15
+        15,
+        24
       ],
       "first_frame": 76,
       "last_frame": 384,
@@ -5781,13 +5886,13 @@
       },
       "colour": {
         "label": "grey",
-        "confidence": 0.398,
+        "confidence": 0.428,
         "per_frame": [
           "grey",
           "grey",
           "grey"
         ],
-        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "note": "CLIP zero-shot on vehicle pixels (1/3 crops masked)",
         "method": "clip_masked"
       },
       "plate": {
@@ -7483,221 +7588,6 @@
           "brown"
         ],
         "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
-        "method": "clip_masked"
-      },
-      "plate": {
-        "status": "no plate detected",
-        "fused": null,
-        "unknown_positions": null,
-        "positions": [],
-        "warnings": [],
-        "per_frame_reads": [],
-        "plates_detected": 0
-      },
-      "decision": "no_confident_match",
-      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
-      "candidates": []
-    },
-    {
-      "track_id": 24,
-      "merged_track_ids": [
-        24
-      ],
-      "first_frame": 332,
-      "last_frame": 384,
-      "first_time_s": 11.07,
-      "n_detections": 24,
-      "first_box": [
-        168,
-        488,
-        219,
-        532
-      ],
-      "track": [
-        [
-          332,
-          168,
-          488,
-          219,
-          532
-        ],
-        [
-          334,
-          166,
-          486,
-          219,
-          532
-        ],
-        [
-          336,
-          166,
-          488,
-          218,
-          533
-        ],
-        [
-          338,
-          165,
-          488,
-          218,
-          535
-        ],
-        [
-          340,
-          165,
-          488,
-          219,
-          535
-        ],
-        [
-          342,
-          165,
-          488,
-          219,
-          536
-        ],
-        [
-          344,
-          166,
-          488,
-          219,
-          535
-        ],
-        [
-          346,
-          165,
-          488,
-          219,
-          535
-        ],
-        [
-          348,
-          165,
-          487,
-          220,
-          535
-        ],
-        [
-          350,
-          165,
-          487,
-          220,
-          535
-        ],
-        [
-          352,
-          165,
-          486,
-          221,
-          535
-        ],
-        [
-          354,
-          164,
-          485,
-          219,
-          534
-        ],
-        [
-          356,
-          163,
-          485,
-          219,
-          534
-        ],
-        [
-          358,
-          162,
-          483,
-          218,
-          533
-        ],
-        [
-          360,
-          164,
-          481,
-          222,
-          532
-        ],
-        [
-          362,
-          162,
-          481,
-          220,
-          532
-        ],
-        [
-          364,
-          161,
-          481,
-          217,
-          532
-        ],
-        [
-          366,
-          164,
-          478,
-          225,
-          531
-        ],
-        [
-          372,
-          158,
-          477,
-          217,
-          529
-        ],
-        [
-          374,
-          156,
-          477,
-          214,
-          527
-        ],
-        [
-          378,
-          155,
-          475,
-          212,
-          525
-        ],
-        [
-          380,
-          154,
-          473,
-          212,
-          524
-        ],
-        [
-          382,
-          154,
-          472,
-          213,
-          524
-        ],
-        [
-          384,
-          154,
-          471,
-          213,
-          524
-        ]
-      ],
-      "type": {
-        "label": "car",
-        "vote_share": 1.0,
-        "detector_conf_mean": 0.32,
-        "source": "UVH-26"
-      },
-      "colour": {
-        "label": "grey",
-        "confidence": 0.428,
-        "per_frame": [
-          "grey",
-          "grey",
-          "grey"
-        ],
-        "note": "CLIP zero-shot on vehicle pixels (1/3 crops masked)",
         "method": "clip_masked"
       },
       "plate": {

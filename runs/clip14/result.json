@@ -7,7 +7,7 @@
     "height": 478,
     "frames": 228
   },
-  "processed_at": "2026-11-24T07:22:59",
+  "processed_at": "2026-11-24T08:12:08",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -22,13 +22,14 @@
       "ocr_top_k": 5,
       "colour_frames": 3,
       "verify_large_frac": 0.1,
-      "verify_samples": 6,
+      "verify_samples": 24,
       "verify_min_iou": 0.3,
       "verify_min_share": 0.34,
+      "verify_trim_run": 3,
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
-      "fold_duplicates": false,
+      "fold_duplicates": true,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -74,15 +75,15 @@
     "plates_read": 3,
     "decisions": {
       "match": 1,
-      "no_confident_match": 2
+      "ambiguous": 2
     }
   },
   "timing": {
-    "detect_track_s": 3.1,
-    "plates_s": 0.5,
-    "ocr_s": 0.3,
-    "assemble_s": 0.3,
-    "total_s": 4.9
+    "detect_track_s": 3.4,
+    "plates_s": 0.6,
+    "ocr_s": 0.6,
+    "assemble_s": 0.6,
+    "total_s": 7.6
   },
   "vehicles": [
     {
@@ -2178,7 +2179,17 @@
             "type SUV matches"
           ]
         }
-      ]
+      ],
+      "main_registry": {
+        "decision": "match",
+        "candidates": [
+          "SV984666",
+          "SV044242",
+          "SV632373",
+          "SV574834",
+          "SV148711"
+        ]
+      }
     },
     {
       "track_id": 2,
@@ -2935,9 +2946,89 @@
         ],
         "plates_detected": 8
       },
-      "decision": "no_confident_match",
-      "decision_reason": "no registry vehicle is close to the observed plate",
-      "candidates": []
+      "decision": "ambiguous",
+      "decision_reason": "top two candidates are too close (90.6 against 90.6, margin under 4.0)",
+      "candidates": [
+        {
+          "rank": 1,
+          "synthetic_vehicle_id": "SD00066",
+          "registration_number": "OL0S9584",
+          "match_score": 90.6,
+          "plate_score": 0.866,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 6 of 6 readable characters match exactly; 2 unreadable",
+            "colour black matches",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SD00067",
+          "registration_number": "NI0S9584",
+          "match_score": 90.6,
+          "plate_score": 0.866,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 6 of 6 readable characters match exactly; 2 unreadable",
+            "colour black matches",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SD00068",
+          "registration_number": "BD0S9584",
+          "match_score": 83.1,
+          "plate_score": 0.866,
+          "colour_score": 1.0,
+          "type_score": 0.5,
+          "reasons": [
+            "plate: 6 of 6 readable characters match exactly; 2 unreadable",
+            "colour black matches",
+            "type compatible: observed SUV, registry car",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SD00069",
+          "registration_number": "RB0S9584",
+          "match_score": 75.6,
+          "plate_score": 0.866,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 6 of 6 readable characters match exactly; 2 unreadable",
+            "colour conflict: observed black, registry grey",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SD00070",
+          "registration_number": "KK0S9584",
+          "match_score": 60.6,
+          "plate_score": 0.866,
+          "colour_score": 0.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 6 of 6 readable characters match exactly; 2 unreadable",
+            "colour conflict: observed black, registry grey",
+            "type conflict: observed SUV, registry truck",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        }
+      ],
+      "main_registry": {
+        "decision": "no_confident_match",
+        "candidates": []
+      }
     },
     {
       "track_id": 3,
@@ -4021,85 +4112,100 @@
         ],
         "plates_detected": 8
       },
-      "decision": "no_confident_match",
-      "decision_reason": "best match score 40.0 is below the threshold 67.5",
+      "decision": "ambiguous",
+      "decision_reason": "top two candidates are too close (86.7 against 86.7, margin under 4.0)",
       "candidates": [
         {
           "rank": 1,
-          "synthetic_vehicle_id": "SV064186",
-          "registration_number": "CG07UZ3583",
-          "match_score": 40.0,
-          "plate_score": 0.25,
+          "synthetic_vehicle_id": "SD00071",
+          "registration_number": "CG04QE9584",
+          "match_score": 86.7,
+          "plate_score": 0.81,
           "colour_score": 1.0,
-          "type_score": 0.5,
+          "type_score": 1.0,
           "reasons": [
-            "plate: 5 of 10 readable characters match exactly",
-            "plate differs from CG07UZ3583 (edit cost 5.0)",
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from CG04QE9584 (edit cost 1.0)",
             "colour black matches",
-            "type compatible: observed SUV, registry car"
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
           ]
         },
         {
           "rank": 2,
-          "synthetic_vehicle_id": "SV148711",
-          "registration_number": "CG14MW7524",
-          "match_score": 32.5,
-          "plate_score": 0.25,
-          "colour_score": 0.0,
+          "synthetic_vehicle_id": "SD00072",
+          "registration_number": "CG04QS9784",
+          "match_score": 86.7,
+          "plate_score": 0.81,
+          "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
-            "plate: 5 of 10 readable characters match exactly",
-            "plate differs from CG14MW7524 (edit cost 5.0)",
-            "colour conflict: observed black, registry red",
-            "type SUV matches"
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from CG04QS9784 (edit cost 1.0)",
+            "colour black matches",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
           ]
         },
         {
           "rank": 3,
-          "synthetic_vehicle_id": "SV793292",
-          "registration_number": "CG04NL3024",
-          "match_score": 25.0,
-          "plate_score": 0.25,
-          "colour_score": 0.0,
-          "type_score": 0.5,
+          "synthetic_vehicle_id": "SD00073",
+          "registration_number": "CG04QS8584",
+          "match_score": 71.7,
+          "plate_score": 0.81,
+          "colour_score": 1.0,
+          "type_score": 0.0,
           "reasons": [
-            "plate: 5 of 10 readable characters match exactly",
-            "plate differs from CG04NL3024 (edit cost 5.0)",
-            "colour conflict: observed black, registry white",
-            "type compatible: observed SUV, registry car"
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from CG04QS8584 (edit cost 1.0)",
+            "colour black matches",
+            "type conflict: observed SUV, registry bus",
+            "demo registry record (synthetic, not used in the evaluation)"
           ]
         },
         {
           "rank": 4,
-          "synthetic_vehicle_id": "SV132475",
-          "registration_number": "CG04DK7570",
-          "match_score": 22.0,
-          "plate_score": 0.314,
+          "synthetic_vehicle_id": "SD00074",
+          "registration_number": "CG04QS9581",
+          "match_score": 71.7,
+          "plate_score": 0.81,
           "colour_score": 0.0,
-          "type_score": 0.0,
+          "type_score": 1.0,
           "reasons": [
-            "plate: 5 of 10 readable characters match exactly, 1 look-alike",
-            "plate differs from CG04DK7570 (edit cost 4.4)",
-            "colour conflict: observed black, registry blue",
-            "type conflict: observed SUV, registry motorcycle"
+            "plate: 9 of 10 readable characters match exactly",
+            "plate differs from CG04QS9581 (edit cost 1.0)",
+            "colour conflict: observed black, registry grey",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
           ]
         },
         {
           "rank": 5,
-          "synthetic_vehicle_id": "SV297227",
-          "registration_number": "CG04DK1928",
-          "match_score": 22.0,
-          "plate_score": 0.314,
-          "colour_score": 0.0,
-          "type_score": 0.0,
+          "synthetic_vehicle_id": "SD00066",
+          "registration_number": "OL0S9584",
+          "match_score": 56.9,
+          "plate_score": 0.384,
+          "colour_score": 1.0,
+          "type_score": 1.0,
           "reasons": [
-            "plate: 6 of 10 readable characters match exactly, 1 look-alike",
-            "plate differs from CG04DK1928 (edit cost 4.4)",
-            "colour conflict: observed black, registry yellow",
-            "type conflict: observed SUV, registry motorcycle"
+            "plate: 5 of 10 readable characters match exactly, 2 look-alike",
+            "plate differs from OL0S9584 (edit cost 3.8)",
+            "colour black matches",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
           ]
         }
-      ]
+      ],
+      "main_registry": {
+        "decision": "no_confident_match",
+        "candidates": [
+          "SV064186",
+          "SV148711",
+          "SV793292",
+          "SV132475",
+          "SV297227"
+        ]
+      }
     }
   ],
   "note": "match_score is a heuristic ranking score, not a probability. '?' marks characters that could not be read."

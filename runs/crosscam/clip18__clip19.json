@@ -51,34 +51,6 @@
   "links": [
     {
       "clip_id": "clip18",
-      "track_id": 7,
-      "type": "motorcycle/scooter",
-      "colour": "grey",
-      "plate": "",
-      "decision": "no_link",
-      "decision_reason": "appearance only and not distinctive enough (CLIP cosine 0.952 < 0.965, the 99th percentile of different-vehicle pairs)",
-      "linked_to": null,
-      "candidates": [
-        {
-          "clip_id": "clip19",
-          "track_id": 1,
-          "link_score": 80.9,
-          "evidence": "appearance only (weaker evidence)",
-          "parts": {
-            "appearance": 0.941,
-            "type": 1.0,
-            "colour": 0.0
-          },
-          "reasons": [
-            "appearance similarity 0.94 (CLIP cosine 0.952)",
-            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
-            "colour grey vs black (0.0)"
-          ]
-        }
-      ]
-    },
-    {
-      "clip_id": "clip18",
       "track_id": 100004,
       "type": "bicycle",
       "colour": "green",
@@ -104,6 +76,34 @@
           ]
         }
       ]
+    },
+    {
+      "clip_id": "clip18",
+      "track_id": 7,
+      "type": "motorcycle/scooter",
+      "colour": "grey",
+      "plate": "",
+      "decision": "no_link",
+      "decision_reason": "appearance only and not distinctive enough (CLIP cosine 0.944 < 0.965, the 99th percentile of different-vehicle pairs)",
+      "linked_to": null,
+      "candidates": [
+        {
+          "clip_id": "clip19",
+          "track_id": 1,
+          "link_score": 74.7,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.853,
+            "type": 1.0,
+            "colour": 0.0
+          },
+          "reasons": [
+            "appearance similarity 0.85 (CLIP cosine 0.944)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+            "colour grey vs black (0.0)"
+          ]
+        }
+      ]
     }
   ],
   "note": "link_score is a heuristic ranking score, not a probability. Plate vetoes are never overridden by looks.",
@@ -124,9 +124,9 @@
           "plate": null
         },
         "link": "probable (same-scene pair: appearance / type / colour, by elimination)",
-        "link_score": 80.9,
+        "link_score": 74.7,
         "evidence": [
-          "appearance similarity 0.94 (CLIP cosine 0.952)",
+          "appearance similarity 0.85 (CLIP cosine 0.944)",
           "type motorcycle/scooter vs motorcycle/scooter (1.0)",
           "colour grey vs black (0.0)"
         ],
