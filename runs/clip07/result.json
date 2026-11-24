@@ -7,7 +7,7 @@
     "height": 1280,
     "frames": 497
   },
-  "processed_at": "2026-11-24T07:20:40",
+  "processed_at": "2026-11-24T08:09:03",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -22,13 +22,14 @@
       "ocr_top_k": 5,
       "colour_frames": 3,
       "verify_large_frac": 0.1,
-      "verify_samples": 6,
+      "verify_samples": 24,
       "verify_min_iou": 0.3,
       "verify_min_share": 0.34,
+      "verify_trim_run": 3,
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
-      "fold_duplicates": false,
+      "fold_duplicates": true,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -78,11 +79,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 7.5,
+    "detect_track_s": 7.9,
     "plates_s": 1.4,
     "ocr_s": 0.1,
     "assemble_s": 0.4,
-    "total_s": 9.3
+    "total_s": 9.8
   },
   "vehicles": [
     {
@@ -3014,7 +3015,17 @@
             "type car matches"
           ]
         }
-      ]
+      ],
+      "main_registry": {
+        "decision": "match",
+        "candidates": [
+          "SV986046",
+          "SV581252",
+          "SV315800",
+          "SV882380",
+          "SV509600"
+        ]
+      }
     },
     {
       "track_id": 3,

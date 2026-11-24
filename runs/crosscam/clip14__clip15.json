@@ -56,25 +56,9 @@
       "colour": "white",
       "plate": "CG14MW3529",
       "decision": "no_link",
-      "decision_reason": "best link score 36.7 is below 70.0",
+      "decision_reason": "best link score 32.9 is below 70.0",
       "linked_to": null,
       "candidates": [
-        {
-          "clip_id": "clip15",
-          "track_id": 3,
-          "link_score": 36.7,
-          "evidence": "appearance only (weaker evidence)",
-          "parts": {
-            "appearance": 0.202,
-            "type": 1.0,
-            "colour": 0.5
-          },
-          "reasons": [
-            "appearance similarity 0.20 (CLIP cosine 0.891)",
-            "type SUV vs SUV (1.0)",
-            "colour white vs grey (0.5)"
-          ]
-        },
         {
           "clip_id": "clip15",
           "track_id": 1,
@@ -165,22 +149,6 @@
             "type SUV vs SUV (1.0)",
             "colour black vs grey (0.0)"
           ]
-        },
-        {
-          "clip_id": "clip15",
-          "track_id": 3,
-          "link_score": 57.6,
-          "evidence": "appearance only (weaker evidence)",
-          "parts": {
-            "appearance": 0.609,
-            "type": 1.0,
-            "colour": 0.0
-          },
-          "reasons": [
-            "appearance similarity 0.61 (CLIP cosine 0.924)",
-            "type SUV vs SUV (1.0)",
-            "colour black vs grey (0.0)"
-          ]
         }
       ]
     },
@@ -227,22 +195,6 @@
             "type SUV vs SUV (1.0)",
             "colour black vs grey (0.0)"
           ]
-        },
-        {
-          "clip_id": "clip15",
-          "track_id": 3,
-          "link_score": 15.9,
-          "evidence": "appearance only (weaker evidence)",
-          "parts": {
-            "appearance": 0.013,
-            "type": 1.0,
-            "colour": 0.0
-          },
-          "reasons": [
-            "appearance similarity 0.01 (CLIP cosine 0.875)",
-            "type SUV vs SUV (1.0)",
-            "colour black vs grey (0.0)"
-          ]
         }
       ]
     }
@@ -278,9 +230,9 @@
           "colour": "green",
           "reads_pooled": 18,
           "decision": "no_confident_match",
-          "registry_top1": "CG14MW7524",
-          "match_score": 32.5,
-          "reason": "best match score 32.5 is below the threshold 67.5"
+          "registry_top1": "IO0S9584",
+          "match_score": 41.9,
+          "reason": "best match score 41.9 is below the threshold 67.5"
         }
       },
       {
@@ -305,7 +257,7 @@
           "plate": "CG14MW3529",
           "type": "SUV",
           "colour": "white",
-          "reads_pooled": 18,
+          "reads_pooled": 13,
           "decision": "candidate_via_probable_link",
           "registry_top1": "CG14MW3529",
           "match_score": 100.0,
@@ -317,9 +269,7 @@
       "a": {
         "2": 3
       },
-      "b": {
-        "3": 1
-      }
+      "b": {}
     },
     "unlinked_a": [],
     "unlinked_b": [],

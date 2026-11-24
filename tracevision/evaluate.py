@@ -89,7 +89,7 @@ def align_chars(truth, pred):
 
 def evaluate(runs: Path, labels_path=LABELS, clip_filter=None, scale_of=None):
     labels = [r for r in csv.DictReader(open(labels_path, encoding="utf-8")) if r.get("target_vehicle_id")]
-    reg = load_registry()
+    reg = load_registry(demo=False)
     reg_by_plate = {r["registration_number"]: r["synthetic_vehicle_id"] for r in reg}
     rows, assigned = [], {}
     for lab in labels:
@@ -114,9 +114,11 @@ def evaluate(runs: Path, labels_path=LABELS, clip_filter=None, scale_of=None):
             row["top5_hit"] = False
         if v:
             pred = v["plate"]["fused"] or ""
-            row.update(pred_type=v["type"]["label"], pred_colour=v["colour"]["label"], pred_plate=pred, decision=v["decision"],
-                       top1=v["candidates"][0]["synthetic_vehicle_id"] if v["candidates"] else None,
-                       top5=[c["synthetic_vehicle_id"] for c in v["candidates"]], plate_status=v["plate"]["status"])
+            mr = v.get("main_registry")   # M21: score the answer against the main registry, never the demo layer
+            ids = mr["candidates"] if mr else [c["synthetic_vehicle_id"] for c in v["candidates"]]
+            row.update(pred_type=v["type"]["label"], pred_colour=v["colour"]["label"], pred_plate=pred,
+                       decision=mr["decision"] if mr else v["decision"],
+                       top1=ids[0] if ids else None, top5=ids, plate_status=v["plate"]["status"])
             ts = type_score(row["pred_type"], row["label_type"]) if row["label_type"] not in ("", "unknown") else None
             row["type_exact"] = None if ts is None else ts == 1.0
             row["type_compatible"] = None if ts is None else ts >= 0.5

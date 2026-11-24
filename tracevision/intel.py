@@ -48,12 +48,15 @@ def clean(raw, n: int) -> str:
 
 
 def _tables():
-    paths = [REG_DIR / n for n in ("synthetic_vehicle_registry.csv", "synthetic_owner_records.csv", "synthetic_echallans.csv")]
+    local = ROOT / "runs" / "demo_registry"   # records made from uploads (M21): local only, never committed
+    paths = [REG_DIR / n for n in ("synthetic_vehicle_registry.csv", "synthetic_owner_records.csv", "synthetic_echallans.csv",
+                                   "synthetic_demo_registry.csv")] + [local / n for n in ("registry.csv", "owners.csv", "challans.csv")]
     stamp = tuple(p.stat().st_mtime if p.exists() else 0 for p in paths)
     if _cache.get("stamp") != stamp:
         def rows(p):
             return list(csv.DictReader(open(p, encoding="utf-8"))) if p.exists() else []
-        reg, own, ch = (rows(p) for p in paths)
+        reg, own, ch, demo, l_reg, l_own, l_ch = (rows(p) for p in paths)
+        reg, own, ch = reg + demo + l_reg, own + l_own, ch + l_ch   # demo layers (M21) have owner records too
         challans: dict[str, list] = {}
         for c in ch:
             challans.setdefault(c["registration_number"], []).append(c)

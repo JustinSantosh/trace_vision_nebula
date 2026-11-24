@@ -98,7 +98,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-config", action="store_true")
     a = ap.parse_args()
-    base = load_config(); registry = load_registry(); cases, split = load_cases()
+    base = load_config(); registry = load_registry(demo=False); cases, split = load_cases()
     calib = {k for k, v in split.items() if v == "calib"}; hold = {k for k, v in split.items() if v == "holdout"}
     grid = []
     for t_abs in [x / 2 for x in range(100, 181, 5)]:          # 50 .. 90 step 2.5

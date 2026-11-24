@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 489
   },
-  "processed_at": "2026-11-24T07:19:37",
+  "processed_at": "2026-11-24T08:07:54",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -22,13 +22,14 @@
       "ocr_top_k": 5,
       "colour_frames": 3,
       "verify_large_frac": 0.1,
-      "verify_samples": 6,
+      "verify_samples": 24,
       "verify_min_iou": 0.3,
       "verify_min_share": 0.34,
+      "verify_trim_run": 3,
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
-      "fold_duplicates": false,
+      "fold_duplicates": true,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -112,16 +113,17 @@
     "vehicles_after_relink": 11,
     "plates_read": 3,
     "decisions": {
-      "no_confident_match": 9,
-      "match": 2
+      "no_confident_match": 8,
+      "match": 2,
+      "ambiguous": 1
     }
   },
   "timing": {
-    "detect_track_s": 10.9,
+    "detect_track_s": 9.6,
     "plates_s": 1.4,
-    "ocr_s": 0.7,
-    "assemble_s": 9.2,
-    "total_s": 23.1
+    "ocr_s": 0.9,
+    "assemble_s": 5.0,
+    "total_s": 17.9
   },
   "vehicles": [
     {
@@ -3989,7 +3991,17 @@
             "type car matches"
           ]
         }
-      ]
+      ],
+      "main_registry": {
+        "decision": "match",
+        "candidates": [
+          "SV656881",
+          "SV191347",
+          "SV611012",
+          "SV564211",
+          "SV106396"
+        ]
+      }
     },
     {
       "track_id": 27,
@@ -6454,9 +6466,94 @@
         ],
         "plates_detected": 11
       },
-      "decision": "no_confident_match",
-      "decision_reason": "no registry vehicle is close to the observed plate",
-      "candidates": []
+      "decision": "ambiguous",
+      "decision_reason": "top two candidates are too close (85.3 against 85.3, margin under 4.0)",
+      "candidates": [
+        {
+          "rank": 1,
+          "synthetic_vehicle_id": "SD00026",
+          "registration_number": "HR86T1284",
+          "match_score": 85.3,
+          "plate_score": 0.79,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly",
+            "plate differs from HR86T1284 (edit cost 1.0)",
+            "colour silver matches",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SD00027",
+          "registration_number": "HR87T7284",
+          "match_score": 85.3,
+          "plate_score": 0.79,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly",
+            "plate differs from HR87T7284 (edit cost 1.0)",
+            "colour silver matches",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 3,
+          "synthetic_vehicle_id": "SD00028",
+          "registration_number": "HR87T1784",
+          "match_score": 70.3,
+          "plate_score": 0.79,
+          "colour_score": 1.0,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly",
+            "plate differs from HR87T1784 (edit cost 1.0)",
+            "colour silver matches",
+            "type conflict: observed SUV, registry truck",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SD00029",
+          "registration_number": "HR87T1294",
+          "match_score": 70.3,
+          "plate_score": 0.79,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly",
+            "plate differs from HR87T1294 (edit cost 1.0)",
+            "colour conflict: observed silver, registry red",
+            "type SUV matches",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SD00030",
+          "registration_number": "HR87T1281",
+          "match_score": 62.8,
+          "plate_score": 0.79,
+          "colour_score": 0.5,
+          "type_score": 0.0,
+          "reasons": [
+            "plate: 8 of 9 readable characters match exactly",
+            "plate differs from HR87T1281 (edit cost 1.0)",
+            "colour close: observed silver, registry white",
+            "type conflict: observed SUV, registry truck",
+            "demo registry record (synthetic, not used in the evaluation)"
+          ]
+        }
+      ],
+      "main_registry": {
+        "decision": "no_confident_match",
+        "candidates": []
+      }
     },
     {
       "track_id": 71,
@@ -8182,7 +8279,17 @@
             "type conflict: observed motorcycle/scooter, registry truck"
           ]
         }
-      ]
+      ],
+      "main_registry": {
+        "decision": "match",
+        "candidates": [
+          "SV037967",
+          "SV191897",
+          "SV294936",
+          "SV735559",
+          "SV122364"
+        ]
+      }
     },
     {
       "track_id": 91,

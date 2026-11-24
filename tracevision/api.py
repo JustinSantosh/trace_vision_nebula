@@ -82,6 +82,11 @@ def _worker():
                 violations.orient_run(Path(job["dir"]), Path(job["video"]))
             except Exception as e:  # the analysis itself still counts; the check then reports "not assessed"
                 job["orientation_error"] = repr(e)
+            try:   # M21: possible matches (synthetic demo records) for every plate read with >= 5 characters
+                from . import demo_registry
+                job["demo_registry"] = demo_registry.extend_for_result(Path(job["dir"]), key=jid)
+            except Exception as e:  # the analysis itself still counts
+                job["demo_registry_error"] = repr(e)
             job.update(phase="report")
             build(Path(job["dir"]), deliver=False)
             job.update(status="done", phase="complete", summary=res["summary"], timing=res["timing"], finished=time.time())

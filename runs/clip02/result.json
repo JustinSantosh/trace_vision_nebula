@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 123
   },
-  "processed_at": "2026-11-24T07:19:44",
+  "processed_at": "2026-11-24T08:08:00",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -22,13 +22,14 @@
       "ocr_top_k": 5,
       "colour_frames": 3,
       "verify_large_frac": 0.1,
-      "verify_samples": 6,
+      "verify_samples": 24,
       "verify_min_iou": 0.3,
       "verify_min_share": 0.34,
+      "verify_trim_run": 3,
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
-      "fold_duplicates": false,
+      "fold_duplicates": true,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -97,9 +98,9 @@
   },
   "timing": {
     "detect_track_s": 2.3,
-    "plates_s": 2.4,
+    "plates_s": 2.3,
     "ocr_s": 0.0,
-    "assemble_s": 1.7,
+    "assemble_s": 1.8,
     "total_s": 6.4
   },
   "vehicles": [

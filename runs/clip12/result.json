@@ -7,7 +7,7 @@
     "height": 478,
     "frames": 492
   },
-  "processed_at": "2026-11-24T07:22:48",
+  "processed_at": "2026-11-24T08:11:52",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -22,13 +22,14 @@
       "ocr_top_k": 5,
       "colour_frames": 3,
       "verify_large_frac": 0.1,
-      "verify_samples": 6,
+      "verify_samples": 24,
       "verify_min_iou": 0.3,
       "verify_min_share": 0.34,
+      "verify_trim_run": 3,
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
-      "fold_duplicates": false,
+      "fold_duplicates": true,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -88,11 +89,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 6.0,
-    "plates_s": 0.7,
-    "ocr_s": 0.2,
+    "detect_track_s": 6.6,
+    "plates_s": 0.9,
+    "ocr_s": 0.3,
     "assemble_s": 0.2,
-    "total_s": 8.2
+    "total_s": 11.7
   },
   "vehicles": [
     {
@@ -2951,7 +2952,17 @@
             "type compatible: observed SUV, registry car"
           ]
         }
-      ]
+      ],
+      "main_registry": {
+        "decision": "match",
+        "candidates": [
+          "SV793292",
+          "SV814907",
+          "SV287071",
+          "SV862017",
+          "SV182418"
+        ]
+      }
     },
     {
       "track_id": 100005,

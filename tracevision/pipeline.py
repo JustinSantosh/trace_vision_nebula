@@ -21,7 +21,7 @@ import numpy as np
 from . import ROOT, load_config
 from .colour import estimate_colour
 from .fuse import fuse
-from .match import decide, load_registry, rank
+from .match import decide, is_demo, load_registry, rank
 
 CMAP = json.loads((ROOT / "TRACEVISION_DATA/models/class_mapping.json").read_text(encoding="utf-8"))
 VIDEOS = ROOT / "TRACEVISION_DATA/raw/test_videos"
@@ -159,18 +159,30 @@ def complete_partial_boxes(tracks, pc):
     return n
 
 
-def fold_duplicate_tracks(tracks, pc):
+def _plates_conflict(a, b, min_joint=3):
+    """True when two fused plates are both read and contradict each other where both are known."""
+    if not a or not b or len(a) != len(b):
+        return bool(a and b and len(a.strip("?")) >= min_joint and len(b.strip("?")) >= min_joint and len(a) != len(b))
+    both = [(x, y) for x, y in zip(a, b) if x != "?" and y != "?"]
+    return any(x != y for x, y in both)
+
+
+def fold_duplicate_tracks(tracks, pc, plates=None):
     """C12: one vehicle sometimes gets a second, nested track. Two tracks are duplicates when they share >= dup_frac of
     the shorter track's frames and, averaged over those frames, the smaller box lies >= dup_inside inside the larger
     one with comparable size (mean area ratio >= dup_area_ratio, so a small vehicle in front of a big one is NOT
     swallowed), and the types are compatible. The shorter-lived track is folded into the other (its frames
-    that the kept track lacks are added). Returns (tracks, {dropped_id: kept_id})."""
+    that the kept track lacks are added). `plates` ({track: fused text}) vetoes a fold when the two plates contradict.
+    Returns (tracks, {dropped_id: kept_id})."""
+    plates = plates or {}
     ids = list(tracks)
     fmap = {t: {d["frame"]: d for d in tracks[t]} for t in ids}
     dup = {}
     for x, p in enumerate(ids):
         for q in ids[x + 1:]:
             if p in dup or q in dup or not compatible(final_type(tracks[p])[0], final_type(tracks[q])[0]):
+                continue
+            if _plates_conflict(plates.get(p), plates.get(q)):
                 continue
             shared = [f for f in fmap[p] if f in fmap[q]]
             if len(shared) < 3 or len(shared) < pc.get("dup_frac", 0.7) * min(len(fmap[p]), len(fmap[q])):
@@ -229,7 +241,8 @@ def _iou(a, b):
 def verify_large_tracks(video, tracks, meta, coco, pc):
     """Cross-check LARGE tracks with an independent detector (COCO YOLOv8n). UVH-26 can hallucinate a frame-wide
     'Truck' over empty road or sky (sunset / wide-road footage, C11): such a track is kept only if COCO sees a
-    vehicle at its box in >= verify_min_share of up to verify_samples sampled frames. Small tracks are not checked.
+    vehicle at its box in >= verify_min_share of up to verify_samples sampled frames, and long unconfirmed stretches
+    of a kept track are cut out (C19). Small tracks are not checked.
     Returns (kept tracks, list of dropped track ids with their evidence)."""
     if coco is None or not pc.get("verify_large_frac"):
         return tracks, []
@@ -242,7 +255,7 @@ def verify_large_tracks(video, tracks, meta, coco, pc):
         n = min(pc.get("verify_samples", 6), len(ds))
         for i in np.linspace(0, len(ds) - 1, n).round().astype(int):
             want[ds[i]["frame"]].append((t, ds[i]["box"]))
-    hits = defaultdict(int); tried = defaultdict(int)
+    hits = defaultdict(int); tried = defaultdict(int); seen = defaultdict(list)
     cap = cv2.VideoCapture(str(video))
     for fi in sorted(want):
         cap.set(cv2.CAP_PROP_POS_FRAMES, fi)
@@ -254,8 +267,9 @@ def verify_large_tracks(video, tracks, meta, coco, pc):
                  if coco.names[int(c)] in COCO_VEHICLES]
         for t, box in want[fi]:
             tried[t] += 1
-            if any(_iou(box, b) >= pc.get("verify_min_iou", 0.3) for b in boxes):
-                hits[t] += 1
+            ok_here = any(_iou(box, b) >= pc.get("verify_min_iou", 0.3) for b in boxes)
+            hits[t] += ok_here
+            seen[t].append((fi, ok_here))
     cap.release()
     dropped = []
     for t in large:
@@ -267,7 +281,39 @@ def verify_large_tracks(video, tracks, meta, coco, pc):
                             "frames": [large[t][0]["frame"], large[t][-1]["frame"]],
                             "sample": {"frame": mid["frame"], "box": [round(v) for v in mid["box"]], "type": mid["type"]}})
     gone = {d["track_id"] for d in dropped}
-    return {t: ds for t, ds in tracks.items() if t not in gone}, dropped
+    # C19: a track can be a phantom for part of its life and a real vehicle for the rest (the tracker hands a phantom
+    # box over to a car that drives into the same spot). Cut out every run of >= verify_trim_run consecutive
+    # unconfirmed samples (from the first to the last unconfirmed frame of the run, plus up to the next sample).
+    run_min = pc.get("verify_trim_run", 3)
+    kept = {t: ds for t, ds in tracks.items() if t not in gone}
+    for t in large:
+        if t in gone or not run_min:
+            continue
+        sm = sorted(seen[t])
+        cut, i = [], 0
+        while i < len(sm):
+            if sm[i][1]:
+                i += 1
+                continue
+            j = i
+            while j < len(sm) and not sm[j][1]:
+                j += 1
+            if j - i >= run_min:
+                lo = sm[i - 1][0] + 1 if i > 0 else kept[t][0]["frame"]
+                hi = sm[j][0] - 1 if j < len(sm) else kept[t][-1]["frame"]
+                cut.append((lo, hi))
+            i = j
+        if not cut:
+            continue
+        rest = [d for d in kept[t] if not any(lo <= d["frame"] <= hi for lo, hi in cut)]
+        entry = {"track_id": t, "trimmed_frames": cut, "confirmed": f"{hits[t]}/{tried[t]}"}
+        if len(rest) < pc.get("min_track_dets", 5):
+            kept.pop(t)
+            entry["dropped"] = True
+        else:
+            kept[t] = rest
+        dropped.append(entry)
+    return kept, dropped
 
 
 def track_type(dets):
@@ -371,11 +417,6 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
     boxes_completed = complete_partial_boxes(kept, pc) if pc.get("complete_partial_boxes", True) else 0   # C15
     tracks, parent = relink(kept, pc)
     tracks, unverified = verify_large_tracks(video, tracks, meta, coco_model, pc)   # C11: hallucinated big boxes
-    folded = {}
-    # OFF by default (M18): folding before the plate-based re-link split a wrong-way SUV's track (ws01: the close
-    # pass went to another track), so the wrong-side check lost it. Duplicates are folded in crosscam only.
-    if pc.get("fold_duplicates", False):
-        tracks, folded = fold_duplicate_tracks(tracks, pc)                            # C12: nested duplicate tracks
 
     # second pass: read only the frames we need
     t1 = time.perf_counter()
@@ -493,6 +534,30 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
         # keep the best K reads of the merged group
         by_track[r] = sorted(by_track[r], key=lambda x: -x["quality"])[:max(pc["ocr_top_k"], 8)]
 
+    # C12 / M20: nested duplicate tracks (a second, smaller box on the same vehicle) are folded AFTER the plate
+    # re-link, so a vehicle's pieces are joined first. Folding before it (M18) split ws01's wrong-way SUV. Two tracks
+    # whose plates contradict are never folded.
+    folded = {}
+    if pc.get("fold_duplicates", True):
+        fused_now = {t: fuse(rd, cfg).text for t, rd in by_track.items() if rd and t in tracks}
+        tracks, folded = fold_duplicate_tracks(tracks, pc, fused_now)
+        for small, big in folded.items():
+            while big in folded:
+                big = folded[big]
+            vcrops[big] = vcrops.get(big, []) + vcrops.pop(small, [])
+            plates[big] = plates.get(big, []) + plates.pop(small, [])
+            # the kept track keeps its own plate reads; a nested duplicate's reads are often of something else on the
+            # vehicle (clip10: a painted "HORN OK" read as a plate), so they are only used when the kept track has none
+            if by_track.get(small) and not by_track.get(big):
+                by_track[big] = by_track.pop(small)
+                plates[big] = plates.get(big, [])
+            by_track.pop(small, None)
+            plate_owner_dropped.pop(small, None)
+            parent[small] = big
+            for k, v in list(parent.items()):
+                if v == small:
+                    parent[k] = big
+
     # assemble vehicles
     t3 = time.perf_counter()
     vdir = Path(out_dir) / "vehicles"; vdir.mkdir(parents=True, exist_ok=True)
@@ -519,8 +584,16 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
             m = decide(q, col["label"], vtype, known, cands, cfg)
             decision, reason = m.decision, m.decision_reason
             cand_out = [c.__dict__ for c in m.candidates]
+            main_reg = [r for r in registry if not is_demo(r)]
+            if len(main_reg) < len(registry):   # M21: the evaluation scores the main-registry answer only
+                q2, known2, cands2 = rank(fused.text, col["label"], vtype, main_reg, cfg)
+                m2 = decide(q2, col["label"], vtype, known2, cands2, cfg)
+                main_answer = {"decision": m2.decision, "candidates": [c.synthetic_vehicle_id for c in m2.candidates]}
+            else:
+                main_answer = None
         else:
             decision, reason, cand_out = "no_confident_match", f"{plate_status[:1].upper() + plate_status[1:]}: cannot identify the vehicle from its plate", []
+            main_answer = None
         # evidence images for the report
         if items:
             cv2.imwrite(str(vdir / f"t{tid}_vehicle_f{items[0][0]['frame']}.jpg"), items[0][1])
@@ -543,7 +616,8 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
                       "per_frame_reads": [{"frame": r["frame"], "text": r["text"], "height_px": r["height_px"],
                                            "quality": r["quality"], "char_probs": [c["prob"] for c in r["chars"]]} for r in rd],
                       "plates_detected": len(found)},
-            "decision": decision, "decision_reason": reason, "candidates": cand_out})
+            "decision": decision, "decision_reason": reason, "candidates": cand_out,
+            **({"main_registry": main_answer} if main_answer else {})})
     timing["assemble_s"] = round(time.perf_counter() - t3, 1)
     timing["total_s"] = round(time.perf_counter() - t0, 1)
     result = {"clip_id": clip_id, "camera_type": camera_type(clip_id), "video": meta,

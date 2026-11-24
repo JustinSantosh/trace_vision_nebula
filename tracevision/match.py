@@ -52,10 +52,28 @@ class MatchResult:
         return asdict(self)
 
 
-def load_registry(path=None):
+DEMO_REGISTRY = ROOT / "TRACEVISION_DATA/registry/synthetic_demo_registry.csv"
+DEMO_LOCAL = ROOT / "runs/demo_registry/registry.csv"   # records made from uploads: local only, never committed
+
+
+def load_registry(path=None, demo=None):
+    """The main synthetic registry, plus the demo layer (DECISIONS M21) when `demo` is true or, by default, when
+    config `registry.demo` is true. The evaluation always uses the main registry only (demo=False)."""
     path = path or ROOT / "TRACEVISION_DATA/registry/synthetic_vehicle_registry.csv"
     with open(path, encoding="utf-8") as f:
-        return list(csv.DictReader(f))
+        rows = list(csv.DictReader(f))
+    if demo is None:
+        demo = bool(load_config().get("registry", {}).get("demo", False))
+    if demo:
+        for extra in (DEMO_REGISTRY, DEMO_LOCAL):
+            if extra.exists():
+                with open(extra, encoding="utf-8") as f:
+                    rows += list(csv.DictReader(f))
+    return rows
+
+
+def is_demo(row) -> bool:
+    return str(row.get("source", "")).startswith("demo_")
 
 
 def plate_alignment(query: str, cand: str, lookalike_cost: float):
@@ -138,6 +156,8 @@ def _reasons(info, cs, ts, obs_colour, obs_type, row):
     else:
         r.append({1.0: f"type {row['vehicle_type']} matches", 0.5: f"type compatible: observed {obs_type}, registry {row['vehicle_type']}",
                   0.0: f"type conflict: observed {obs_type}, registry {row['vehicle_type']}"}[ts])
+    if is_demo(row):
+        r.append("demo registry record (synthetic, not used in the evaluation)")
     return r
 
 

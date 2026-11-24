@@ -28,18 +28,18 @@
       "detected_and_tracked": "47/53 (89%)",
       "type_exact": "35/47 (74%)",
       "type_compatible": "45/47 (96%)",
-      "colour_exact": "31/47 (66%)",
-      "colour_near": "35/47 (74%)",
+      "colour_exact": "32/47 (68%)",
+      "colour_near": "36/47 (77%)",
       "colour_unknown_answers": "1/47 (2%)",
       "plates_with_readable_truth_and_a_read": 28,
-      "plate_chars_correct": "214/252 (85%)",
-      "plate_chars_question_mark": "38/252 (15%)",
+      "plate_chars_correct": "218/252 (87%)",
+      "plate_chars_question_mark": "34/252 (13%)",
       "plate_chars_WRONG": "0/252 (0%)",
       "plate_exact_on_fully_readable": "14/19 (74%)",
       "readable_truth_plates_not_read": "3/29 (10%)",
-      "human_unreadable_but_system_read_chars": "1/18 (6%)",
+      "human_unreadable_but_system_read_chars": "2/18 (11%)",
       "registered_vehicles_matched_correctly": "14/15 (93%)",
-      "registered_top5_hit": "14/15 (93%)",
+      "registered_top5_hit": "15/15 (100%)",
       "unregistered_with_false_confident_match": "0/32 (0%)",
       "registered_but_full_plate_unknown_(not_in_registry)": 6,
       "false_confident_match_on_those": "0/6 (0%)",
@@ -50,18 +50,18 @@
       "detected_and_tracked": "61/67 (91%)",
       "type_exact": "47/61 (77%)",
       "type_compatible": "58/61 (95%)",
-      "colour_exact": "39/61 (64%)",
-      "colour_near": "45/61 (74%)",
+      "colour_exact": "40/61 (66%)",
+      "colour_near": "46/61 (75%)",
       "colour_unknown_answers": "1/61 (2%)",
       "plates_with_readable_truth_and_a_read": 28,
-      "plate_chars_correct": "214/252 (85%)",
-      "plate_chars_question_mark": "38/252 (15%)",
+      "plate_chars_correct": "218/252 (87%)",
+      "plate_chars_question_mark": "34/252 (13%)",
       "plate_chars_WRONG": "0/252 (0%)",
       "plate_exact_on_fully_readable": "14/19 (74%)",
       "readable_truth_plates_not_read": "3/29 (10%)",
-      "human_unreadable_but_system_read_chars": "1/32 (3%)",
+      "human_unreadable_but_system_read_chars": "2/32 (6%)",
       "registered_vehicles_matched_correctly": "14/15 (93%)",
-      "registered_top5_hit": "14/15 (93%)",
+      "registered_top5_hit": "15/15 (100%)",
       "unregistered_with_false_confident_match": "0/46 (0%)",
       "registered_but_full_plate_unknown_(not_in_registry)": 6,
       "false_confident_match_on_those": "0/6 (0%)",
@@ -71,7 +71,7 @@
   "timing": {
     "clip01": {
       "video_s": 16.3,
-      "processing_s": 23.1
+      "processing_s": 17.9
     },
     "clip02": {
       "video_s": 4.1,
@@ -79,71 +79,71 @@
     },
     "clip03": {
       "video_s": 18.4,
-      "processing_s": 12.5
+      "processing_s": 13.9
     },
     "clip04": {
       "video_s": 12.8,
-      "processing_s": 7.1
+      "processing_s": 7.4
     },
     "clip05": {
       "video_s": 16.4,
-      "processing_s": 9.7
+      "processing_s": 11.5
     },
     "clip06": {
       "video_s": 17.1,
-      "processing_s": 15.9
+      "processing_s": 18.6
     },
     "clip07": {
       "video_s": 16.6,
-      "processing_s": 9.3
+      "processing_s": 9.8
     },
     "clip08": {
       "video_s": 18.5,
-      "processing_s": 10.5
+      "processing_s": 12.4
     },
     "clip09": {
       "video_s": 30.3,
-      "processing_s": 28.4
+      "processing_s": 20.9
     },
     "clip10": {
       "video_s": 18.8,
-      "processing_s": 53.5
+      "processing_s": 77.9
     },
     "clip11": {
       "video_s": 9.4,
-      "processing_s": 25.2
+      "processing_s": 44.1
     },
     "clip12": {
       "video_s": 8.2,
-      "processing_s": 8.2
+      "processing_s": 11.7
     },
     "clip13": {
       "video_s": 4.8,
-      "processing_s": 5.4
+      "processing_s": 8.6
     },
     "clip14": {
       "video_s": 4.6,
-      "processing_s": 4.9
+      "processing_s": 7.6
     },
     "clip15": {
       "video_s": 4.9,
-      "processing_s": 5.2
+      "processing_s": 7.9
     },
     "clip16": {
       "video_s": 3.3,
-      "processing_s": 3.3
+      "processing_s": 10.5
     },
     "clip17": {
       "video_s": 4.2,
-      "processing_s": 4.6
+      "processing_s": 13.9
     },
     "clip18": {
       "video_s": 2.6,
-      "processing_s": 2.6
+      "processing_s": 8.9
     },
     "clip19": {
       "video_s": 3.2,
-      "processing_s": 2.7
+      "processing_s": 8.4
     }
   },
   "per_vehicle": [
@@ -1061,22 +1061,22 @@
       "truth_plate": "MH43BL0234",
       "in_registry": "no",
       "pred_type": "SUV",
-      "pred_colour": "red",
+      "pred_colour": "blue",
       "pred_plate": "?????0???",
       "decision": "no_confident_match",
       "top1": "SV098781",
       "top5": [
         "SV098781",
         "SV209609",
-        "SV047551",
-        "SV106580",
-        "SV144143"
+        "SV294156",
+        "SV676854",
+        "SV726648"
       ],
       "plate_status": "read",
       "type_exact": true,
       "type_compatible": true,
-      "colour_exact": false,
-      "colour_near": false,
+      "colour_exact": true,
+      "colour_near": true,
       "colour_unknown": false,
       "chars_truth_known": 10,
       "chars_correct": 1,
@@ -1098,15 +1098,11 @@
       "in_registry": "no",
       "pred_type": "truck",
       "pred_colour": "white",
-      "pred_plate": "MH????5?6",
+      "pred_plate": "MH4?K0516",
       "decision": "no_confident_match",
       "top1": "SV521397",
       "top5": [
-        "SV521397",
-        "SV527320",
-        "SV617942",
-        "SV699643",
-        "SV734130"
+        "SV521397"
       ],
       "plate_status": "read",
       "type_exact": true,
@@ -1115,8 +1111,8 @@
       "colour_near": true,
       "colour_unknown": false,
       "chars_truth_known": 9,
-      "chars_correct": 4,
-      "chars_q": 5,
+      "chars_correct": 8,
+      "chars_q": 1,
       "chars_wrong": 0,
       "plate_exact": null,
       "false_confident_match": false
@@ -1797,7 +1793,7 @@
       "target": "clip15_v02",
       "camera": "moving_camera",
       "found": true,
-      "iou": 0.841,
+      "iou": 0.386,
       "label_type": "SUV",
       "label_colour": "white",
       "readability": "none",
@@ -1805,14 +1801,20 @@
       "in_registry": "yes",
       "registry_id": "SV984666",
       "match_correct": false,
-      "top5_hit": false,
+      "top5_hit": true,
       "pred_type": "SUV",
       "pred_colour": "grey",
-      "pred_plate": "????????",
+      "pred_plate": "C?14???5??",
       "decision": "no_confident_match",
-      "top1": null,
-      "top5": [],
-      "plate_status": "unreadable (low OCR confidence)",
+      "top1": "SV632373",
+      "top5": [
+        "SV632373",
+        "SV984666",
+        "SV148711",
+        "SV574834",
+        "SV044242"
+      ],
+      "plate_status": "read",
       "type_exact": true,
       "type_compatible": true,
       "colour_exact": false,

@@ -119,8 +119,13 @@ def days(rng, lo, hi):
     return REFERENCE_DAY + timedelta(days=rng.randint(lo, hi))
 
 
-def build(seed: int):
-    registry = list(csv.DictReader(open(REGISTRY, encoding="utf-8")))
+def build(seed: int, registry=None):
+    """`registry` = rows to build for (default: the main registry plus the committed demo layer, DECISIONS M21)."""
+    if registry is None:
+        registry = list(csv.DictReader(open(REGISTRY, encoding="utf-8")))
+        demo = DATA / "registry" / "synthetic_demo_registry.csv"
+        if demo.exists():
+            registry += list(csv.DictReader(open(demo, encoding="utf-8")))
     owners, challans = [], []
     for row in registry:
         rid, reg, vtype = row["synthetic_vehicle_id"], row["registration_number"], row["vehicle_type"]
@@ -146,7 +151,7 @@ def build(seed: int):
         })
         n = rng.choices([0, 1, 2, 3, 4], weights=[38, 26, 18, 11, 7])[0]
         # Vehicles the system can actually match in the demo clips always get a history with something pending.
-        seed_row = row.get("source") == "evaluation_seed"
+        seed_row = row.get("source") in ("evaluation_seed", "demo_seed")
         if seed_row:
             n = max(n, rng.choice([2, 3, 4]))
         allowed = [v for v, (_, types) in VIOLATIONS.items() if types is None or vtype in types]

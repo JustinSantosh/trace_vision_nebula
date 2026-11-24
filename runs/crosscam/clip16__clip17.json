@@ -112,18 +112,18 @@
         },
         {
           "clip_id": "clip17",
-          "track_id": 1,
-          "link_score": 27.2,
+          "track_id": 19,
+          "link_score": 17.9,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
-            "appearance": 0.174,
+            "appearance": 0.042,
             "type": 1.0,
             "colour": 0.0
           },
           "reasons": [
-            "appearance similarity 0.17 (CLIP cosine 0.889)",
+            "appearance similarity 0.04 (CLIP cosine 0.878)",
             "type motorcycle/scooter vs motorcycle/scooter (1.0)",
-            "colour black vs blue (0.0)"
+            "colour black vs brown (0.0)"
           ]
         }
       ]
@@ -172,18 +172,14 @@
         },
         {
           "clip_id": "clip17",
-          "track_id": 1,
-          "link_score": 29.4,
-          "evidence": "appearance only (weaker evidence)",
+          "track_id": 16,
+          "link_score": 0.0,
+          "evidence": "veto",
           "parts": {
-            "appearance": 0.206,
-            "type": 1.0,
-            "colour": 0.0
+            "appearance": 0.122
           },
           "reasons": [
-            "appearance similarity 0.21 (CLIP cosine 0.891)",
-            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
-            "colour grey vs blue (0.0)"
+            "plates differ: CG04PB6426 vs ??0??K1578 (similarity 0.17) - veto"
           ]
         }
       ]
@@ -232,18 +228,18 @@
         },
         {
           "clip_id": "clip17",
-          "track_id": 1,
-          "link_score": 75.6,
+          "track_id": 14,
+          "link_score": 70.0,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
-            "appearance": 0.866,
+            "appearance": 0.785,
             "type": 1.0,
             "colour": 0.0
           },
           "reasons": [
-            "appearance similarity 0.87 (CLIP cosine 0.946)",
+            "appearance similarity 0.79 (CLIP cosine 0.939)",
             "type motorcycle/scooter vs motorcycle/scooter (1.0)",
-            "colour brown vs blue (0.0)"
+            "colour brown vs grey (0.0)"
           ]
         }
       ]
@@ -276,22 +272,6 @@
         },
         {
           "clip_id": "clip17",
-          "track_id": 1,
-          "link_score": 37.8,
-          "evidence": "appearance only (weaker evidence)",
-          "parts": {
-            "appearance": 0.326,
-            "type": 1.0,
-            "colour": 0.0
-          },
-          "reasons": [
-            "appearance similarity 0.33 (CLIP cosine 0.901)",
-            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
-            "colour red vs blue (0.0)"
-          ]
-        },
-        {
-          "clip_id": "clip17",
           "track_id": 14,
           "link_score": 31.3,
           "evidence": "appearance only (weaker evidence)",
@@ -304,6 +284,22 @@
             "appearance similarity 0.23 (CLIP cosine 0.893)",
             "type motorcycle/scooter vs motorcycle/scooter (1.0)",
             "colour red vs grey (0.0)"
+          ]
+        },
+        {
+          "clip_id": "clip17",
+          "track_id": 19,
+          "link_score": 27.5,
+          "evidence": "appearance only (weaker evidence)",
+          "parts": {
+            "appearance": 0.179,
+            "type": 1.0,
+            "colour": 0.0
+          },
+          "reasons": [
+            "appearance similarity 0.18 (CLIP cosine 0.889)",
+            "type motorcycle/scooter vs motorcycle/scooter (1.0)",
+            "colour red vs brown (0.0)"
           ]
         }
       ]
@@ -338,7 +334,7 @@
           "plate": "CG04DK1578",
           "type": "motorcycle/scooter",
           "colour": "blue",
-          "reads_pooled": 14,
+          "reads_pooled": 13,
           "decision": "match",
           "registry_top1": "CG04DK1578",
           "match_score": 100.0,
@@ -377,9 +373,7 @@
     ],
     "duplicates_folded": {
       "a": {},
-      "b": {
-        "1": 16
-      }
+      "b": {}
     },
     "unlinked_a": [
       100002,

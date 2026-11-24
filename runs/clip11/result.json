@@ -7,7 +7,7 @@
     "height": 3840,
     "frames": 282
   },
-  "processed_at": "2026-11-24T07:22:40",
+  "processed_at": "2026-11-24T08:11:40",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -22,13 +22,14 @@
       "ocr_top_k": 5,
       "colour_frames": 3,
       "verify_large_frac": 0.1,
-      "verify_samples": 6,
+      "verify_samples": 24,
       "verify_min_iou": 0.3,
       "verify_min_share": 0.34,
+      "verify_trim_run": 3,
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
-      "fold_duplicates": false,
+      "fold_duplicates": true,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -65,7 +66,7 @@
     "dropped_unverified_large": [
       {
         "track_id": 2,
-        "confirmed": "0/6",
+        "confirmed": "0/24",
         "median_area_frac": 0.224,
         "frames": [
           0,
@@ -97,11 +98,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 14.6,
-    "plates_s": 3.5,
+    "detect_track_s": 13.8,
+    "plates_s": 3.7,
     "ocr_s": 0.2,
-    "assemble_s": 0.3,
-    "total_s": 25.2
+    "assemble_s": 0.4,
+    "total_s": 44.1
   },
   "vehicles": [
     {
@@ -2280,7 +2281,17 @@
             "type conflict: observed truck, registry SUV"
           ]
         }
-      ]
+      ],
+      "main_registry": {
+        "decision": "match",
+        "candidates": [
+          "SV144143",
+          "SV117951",
+          "SV258008",
+          "SV106580",
+          "SV161201"
+        ]
+      }
     }
   ],
   "note": "match_score is a heuristic ranking score, not a probability. '?' marks characters that could not be read."

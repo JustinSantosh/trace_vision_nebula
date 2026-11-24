@@ -21,13 +21,14 @@ pipeline:
   ocr_top_k: 5               # best plate crops per track sent to OCR
   colour_frames: 3
   verify_large_frac: 0.10    # C11: tracks whose median box covers >= this fraction of the frame are cross-checked ...
-  verify_samples: 6          # ... on up to this many evenly spaced frames with COCO YOLOv8n ...
+  verify_samples: 24         # ... on up to this many evenly spaced frames with COCO YOLOv8n ...
   verify_min_iou: 0.3        # ... a COCO car/truck/bus/motorcycle/bicycle box must overlap the track box this much ...
   verify_min_share: 0.34     # ... in at least this share of the sampled frames, else the track is dropped (logged)
+  verify_trim_run: 3         # C19: >= this many consecutive unconfirmed samples are cut out of a kept large track
   ensemble_coco: true         # C13 / M15: second tracking pass with COCO YOLOv8n (close-up / ground-level vehicles) ...
   ensemble_match_iou: 0.5     # ... a COCO track overlapping a UVH-26 track this much (mean IoU) is the same vehicle (type vote)
   ensemble_new_conf: 0.5      # ... a COCO track overlapping none is added if its mean confidence is at least this
-  fold_duplicates: false       # M18: nested-duplicate folding in the pipeline stays OFF (it split a wrong-way track); crosscam folds
+  fold_duplicates: true        # M20: fold nested duplicate tracks AFTER the plate re-link (before it, M18, it split ws01's wrong-way SUV)
   plate_link_min_known: 6    # merge tracks whose fused plates agree on >= this many readable characters (and never disagree)
 
 colour:
@@ -36,6 +37,9 @@ colour:
 plate_detector:
   conf: 0.5               # DECISIONS M8
   min_plate_height_px: 16 # below this the plate is reported unreadable, never OCR'd (M8)
+
+registry:
+  demo: true              # M21: the app also matches the synthetic demo layer (registry/synthetic_demo_registry.csv); evaluation never does
 
 match:
   weights: {plate: 0.70, colour: 0.15, type: 0.15}
