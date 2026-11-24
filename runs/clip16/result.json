@@ -7,7 +7,7 @@
     "height": 478,
     "frames": 163
   },
-  "processed_at": "2026-11-23T11:54:49",
+  "processed_at": "2026-11-24T07:23:08",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -28,6 +28,7 @@
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
+      "fold_duplicates": false,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -55,7 +56,7 @@
       "min_plate_sim_candidate": 0.5
     },
     "colour": {
-      "method": "clip"
+      "method": "clip_masked"
     }
   },
   "summary": {
@@ -95,6 +96,8 @@
         }
       ]
     },
+    "boxes_completed_from_coco": 0,
+    "duplicate_tracks_folded": {},
     "vehicles_after_relink": 4,
     "plates_read": 3,
     "decisions": {
@@ -103,11 +106,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 4.8,
-    "plates_s": 0.8,
-    "ocr_s": 0.6,
-    "assemble_s": 0.4,
-    "total_s": 7.0
+    "detect_track_s": 2.2,
+    "plates_s": 0.4,
+    "ocr_s": 0.2,
+    "assemble_s": 0.3,
+    "total_s": 3.3
   },
   "vehicles": [
     {
@@ -506,15 +509,15 @@
         "source": "UVH-26"
       },
       "colour": {
-        "label": "brown",
-        "confidence": 0.176,
+        "label": "black",
+        "confidence": 0.24,
         "per_frame": [
           "black",
           "brown",
-          "green"
+          "black"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (1/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -864,7 +867,7 @@
           "type_score": 1.0,
           "reasons": [
             "plate: 10 of 10 readable characters match exactly",
-            "colour conflict: observed brown, registry blue",
+            "colour conflict: observed black, registry blue",
             "type motorcycle matches"
           ]
         },
@@ -879,7 +882,7 @@
           "reasons": [
             "plate: 9 of 10 readable characters match exactly",
             "plate differs from CG04DK1278 (edit cost 1.0)",
-            "colour conflict: observed brown, registry blue",
+            "colour conflict: observed black, registry blue",
             "type scooter matches"
           ]
         },
@@ -894,27 +897,12 @@
           "reasons": [
             "plate: 9 of 10 readable characters match exactly",
             "plate differs from CG04DH1578 (edit cost 1.0)",
-            "colour conflict: observed brown, registry blue",
+            "colour conflict: observed black, registry blue",
             "type motorcycle matches"
           ]
         },
         {
           "rank": 4,
-          "synthetic_vehicle_id": "SV297227",
-          "registration_number": "CG04DK1928",
-          "match_score": 67.3,
-          "plate_score": 0.64,
-          "colour_score": 0.5,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 8 of 10 readable characters match exactly",
-            "plate differs from CG04DK1928 (edit cost 2.0)",
-            "colour close: observed brown, registry yellow",
-            "type motorcycle matches"
-          ]
-        },
-        {
-          "rank": 5,
           "synthetic_vehicle_id": "SV132475",
           "registration_number": "CG04DK7570",
           "match_score": 59.8,
@@ -924,7 +912,22 @@
           "reasons": [
             "plate: 8 of 10 readable characters match exactly",
             "plate differs from CG04DK7570 (edit cost 2.0)",
-            "colour conflict: observed brown, registry blue",
+            "colour conflict: observed black, registry blue",
+            "type motorcycle matches"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SV297227",
+          "registration_number": "CG04DK1928",
+          "match_score": 59.8,
+          "plate_score": 0.64,
+          "colour_score": 0.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 8 of 10 readable characters match exactly",
+            "plate differs from CG04DK1928 (edit cost 2.0)",
+            "colour conflict: observed black, registry yellow",
             "type motorcycle matches"
           ]
         }
@@ -1003,15 +1006,15 @@
         "source": "COCO YOLOv8n"
       },
       "colour": {
-        "label": "red",
-        "confidence": 0.178,
+        "label": "grey",
+        "confidence": 0.264,
         "per_frame": [
-          "brown",
-          "brown",
-          "silver"
+          "red",
+          "grey",
+          "red"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -1181,10 +1184,40 @@
         "plates_detected": 2
       },
       "decision": "no_confident_match",
-      "decision_reason": "best match score 32.5 is below the threshold 67.5",
+      "decision_reason": "best match score 40.0 is below the threshold 67.5",
       "candidates": [
         {
           "rank": 1,
+          "synthetic_vehicle_id": "SV796073",
+          "registration_number": "CG04UE0723",
+          "match_score": 40.0,
+          "plate_score": 0.25,
+          "colour_score": 0.5,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 5 of 10 readable characters match exactly",
+            "plate differs from CG04UE0723 (edit cost 5.0)",
+            "colour close: observed grey, registry silver",
+            "type scooter matches"
+          ]
+        },
+        {
+          "rank": 2,
+          "synthetic_vehicle_id": "SV855011",
+          "registration_number": "CG30UP6409",
+          "match_score": 40.0,
+          "plate_score": 0.25,
+          "colour_score": 0.5,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 6 of 10 readable characters match exactly",
+            "plate differs from CG30UP6409 (edit cost 5.0)",
+            "colour close: observed grey, registry white",
+            "type motorcycle matches"
+          ]
+        },
+        {
+          "rank": 3,
           "synthetic_vehicle_id": "SV297227",
           "registration_number": "CG04DK1928",
           "match_score": 32.5,
@@ -1194,37 +1227,7 @@
           "reasons": [
             "plate: 5 of 10 readable characters match exactly",
             "plate differs from CG04DK1928 (edit cost 5.0)",
-            "colour conflict: observed red, registry yellow",
-            "type motorcycle matches"
-          ]
-        },
-        {
-          "rank": 2,
-          "synthetic_vehicle_id": "SV796073",
-          "registration_number": "CG04UE0723",
-          "match_score": 32.5,
-          "plate_score": 0.25,
-          "colour_score": 0.0,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 5 of 10 readable characters match exactly",
-            "plate differs from CG04UE0723 (edit cost 5.0)",
-            "colour conflict: observed red, registry silver",
-            "type scooter matches"
-          ]
-        },
-        {
-          "rank": 3,
-          "synthetic_vehicle_id": "SV855011",
-          "registration_number": "CG30UP6409",
-          "match_score": 32.5,
-          "plate_score": 0.25,
-          "colour_score": 0.0,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 6 of 10 readable characters match exactly",
-            "plate differs from CG30UP6409 (edit cost 5.0)",
-            "colour conflict: observed red, registry white",
+            "colour conflict: observed grey, registry yellow",
             "type motorcycle matches"
           ]
         },
@@ -1239,7 +1242,7 @@
           "reasons": [
             "plate: 6 of 10 readable characters match exactly",
             "plate differs from CG05KB6686 (edit cost 4.0)",
-            "colour conflict: observed red, registry yellow",
+            "colour conflict: observed grey, registry yellow",
             "type conflict: observed motorcycle/scooter, registry car"
           ]
         },
@@ -1247,14 +1250,14 @@
           "rank": 5,
           "synthetic_vehicle_id": "SV182418",
           "registration_number": "CG04NL4029",
-          "match_score": 17.5,
+          "match_score": 25.0,
           "plate_score": 0.25,
-          "colour_score": 0.0,
+          "colour_score": 0.5,
           "type_score": 0.0,
           "reasons": [
             "plate: 6 of 10 readable characters match exactly",
             "plate differs from CG04NL4029 (edit cost 5.0)",
-            "colour conflict: observed red, registry silver",
+            "colour close: observed grey, registry silver",
             "type conflict: observed motorcycle/scooter, registry car"
           ]
         }
@@ -1859,14 +1862,14 @@
       },
       "colour": {
         "label": "brown",
-        "confidence": 0.298,
+        "confidence": 0.282,
         "per_frame": [
           "brown",
-          "black",
+          "brown",
           "black"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "unreadable (low OCR confidence)",
@@ -2038,7 +2041,7 @@
         "plates_detected": 4
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate unreadable (low OCR confidence): cannot identify from the plate",
+      "decision_reason": "Unreadable (low OCR confidence): cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -2220,14 +2223,14 @@
       },
       "colour": {
         "label": "red",
-        "confidence": 0.326,
+        "confidence": 0.245,
         "per_frame": [
           "red",
           "red",
           "red"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",

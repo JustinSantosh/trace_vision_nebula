@@ -7,7 +7,7 @@
     "height": 3840,
     "frames": 282
   },
-  "processed_at": "2026-11-23T03:30:34",
+  "processed_at": "2026-11-24T01:10:56",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -21,6 +21,13 @@
       "min_frame_gap": 4,
       "ocr_top_k": 5,
       "colour_frames": 3,
+      "verify_large_frac": 0.1,
+      "verify_samples": 6,
+      "verify_min_iou": 0.3,
+      "verify_min_share": 0.34,
+      "ensemble_coco": true,
+      "ensemble_match_iou": 0.5,
+      "ensemble_new_conf": 0.5,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -46,11 +53,42 @@
       "t_margin": 4.0,
       "top_k": 5,
       "min_plate_sim_candidate": 0.5
+    },
+    "colour": {
+      "method": "clip_masked"
     }
   },
   "summary": {
     "raw_tracks": 5,
     "kept_tracks": 3,
+    "dropped_unverified_large": [
+      {
+        "track_id": 11,
+        "confirmed": "0/6",
+        "median_area_frac": 0.309,
+        "frames": [
+          42,
+          70
+        ],
+        "sample": {
+          "frame": 52,
+          "box": [
+            55,
+            2446,
+            1891,
+            3840
+          ],
+          "type": "truck"
+        }
+      }
+    ],
+    "coco_ensemble": {
+      "coco_tracks": 1,
+      "attached_to_uvh": 1,
+      "added_coco_only": []
+    },
+    "boxes_completed_from_coco": 0,
+    "duplicate_tracks_folded": {},
     "vehicles_after_relink": 1,
     "plates_read": 1,
     "decisions": {
@@ -58,24 +96,23 @@
     }
   },
   "timing": {
-    "detect_track_s": 6.1,
+    "detect_track_s": 12.0,
     "plates_s": 3.4,
-    "ocr_s": 0.2,
-    "assemble_s": 0.1,
-    "total_s": 9.8
+    "ocr_s": 0.1,
+    "assemble_s": 0.4,
+    "total_s": 17.3
   },
   "vehicles": [
     {
       "track_id": 1,
       "merged_track_ids": [
         1,
-        3,
-        11
+        3
       ],
       "first_frame": 0,
       "last_frame": 280,
       "first_time_s": 0.0,
-      "n_detections": 193,
+      "n_detections": 191,
       "first_box": [
         630,
         1870,
@@ -252,25 +289,11 @@
           3407
         ],
         [
-          42,
-          55,
-          2446,
-          1891,
-          3840
-        ],
-        [
           44,
           622,
           1870,
           2160,
           3407
-        ],
-        [
-          44,
-          55,
-          2446,
-          1891,
-          3840
         ],
         [
           46,
@@ -280,13 +303,6 @@
           3407
         ],
         [
-          46,
-          55,
-          2446,
-          1891,
-          3840
-        ],
-        [
           48,
           624,
           1870,
@@ -294,25 +310,11 @@
           3407
         ],
         [
-          48,
-          55,
-          2446,
-          1891,
-          3840
-        ],
-        [
           50,
           624,
           1870,
           2160,
           3407
-        ],
-        [
-          50,
-          55,
-          2446,
-          1891,
-          3840
         ],
         [
           52,
@@ -320,13 +322,6 @@
           1870,
           2160,
           3407
-        ],
-        [
-          52,
-          55,
-          2446,
-          1891,
-          3840
         ],
         [
           54,
@@ -350,25 +345,11 @@
           3407
         ],
         [
-          56,
-          55,
-          2446,
-          1891,
-          3840
-        ],
-        [
           58,
           626,
           1870,
           2160,
           3407
-        ],
-        [
-          58,
-          55,
-          2446,
-          1891,
-          3840
         ],
         [
           60,
@@ -399,13 +380,6 @@
           3407
         ],
         [
-          64,
-          55,
-          2446,
-          1891,
-          3840
-        ],
-        [
           66,
           555,
           1870,
@@ -420,25 +394,11 @@
           3407
         ],
         [
-          68,
-          55,
-          2446,
-          1891,
-          3840
-        ],
-        [
           70,
           580,
           1870,
           2146,
           3407
-        ],
-        [
-          70,
-          55,
-          2446,
-          1891,
-          3840
         ],
         [
           72,
@@ -1100,10 +1060,24 @@
         ],
         [
           198,
+          126,
+          1982,
+          1771,
+          3405
+        ],
+        [
+          198,
           538,
           2253,
           2160,
           3790
+        ],
+        [
+          200,
+          129,
+          1982,
+          1764,
+          3401
         ],
         [
           200,
@@ -1114,10 +1088,24 @@
         ],
         [
           202,
+          130,
+          1982,
+          1751,
+          3392
+        ],
+        [
+          202,
           552,
           2245,
           2160,
           3788
+        ],
+        [
+          204,
+          134,
+          1981,
+          1743,
+          3384
         ],
         [
           204,
@@ -1128,10 +1116,24 @@
         ],
         [
           206,
+          115,
+          1978,
+          1773,
+          3432
+        ],
+        [
+          206,
           567,
           2246,
           2160,
           3789
+        ],
+        [
+          208,
+          109,
+          1977,
+          1782,
+          3453
         ],
         [
           208,
@@ -1184,6 +1186,13 @@
         ],
         [
           216,
+          128,
+          1984,
+          1770,
+          3447
+        ],
+        [
+          216,
           508,
           2123,
           2152,
@@ -1191,10 +1200,24 @@
         ],
         [
           218,
+          157,
+          1986,
+          1766,
+          3418
+        ],
+        [
+          218,
           482,
           2075,
           2134,
           3615
+        ],
+        [
+          220,
+          178,
+          1989,
+          1761,
+          3395
         ],
         [
           220,
@@ -1438,17 +1461,19 @@
       "type": {
         "label": "truck",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.676
+        "detector_conf_mean": 0.697,
+        "source": "UVH-26"
       },
       "colour": {
-        "label": "brown",
-        "confidence": 0.58,
+        "label": "red",
+        "confidence": 0.591,
         "per_frame": [
-          "brown",
-          "brown",
-          "brown"
+          "red",
+          "red",
+          "red"
         ],
-        "note": ""
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -1466,11 +1491,11 @@
               222,
               180,
               208,
-              58,
               192,
               218,
               196,
-              210
+              210,
+              214
             ]
           },
           {
@@ -1484,11 +1509,11 @@
               222,
               180,
               208,
-              58,
               192,
               218,
               196,
-              210
+              210,
+              214
             ]
           },
           {
@@ -1502,11 +1527,11 @@
               222,
               180,
               208,
-              58,
               192,
               218,
               196,
-              210
+              210,
+              214
             ]
           },
           {
@@ -1520,11 +1545,11 @@
               222,
               180,
               208,
-              58,
               192,
               218,
               196,
-              210
+              210,
+              214
             ]
           },
           {
@@ -1538,29 +1563,29 @@
               222,
               180,
               208,
-              58,
               192,
               218,
               196,
-              210
+              210,
+              214
             ]
           },
           {
             "pos": 6,
             "char": "H",
             "confidence": 0.9996,
-            "share": 0.9997,
+            "share": 0.9996,
             "support": 8,
             "best_candidate": "H",
             "frames": [
               222,
               180,
               208,
-              58,
               192,
               218,
               196,
-              210
+              210,
+              214
             ]
           },
           {
@@ -1574,11 +1599,11 @@
               222,
               180,
               208,
-              58,
               192,
               218,
               196,
-              210
+              210,
+              214
             ]
           },
           {
@@ -1592,11 +1617,11 @@
               222,
               180,
               208,
-              58,
               192,
               218,
               196,
-              210
+              210,
+              214
             ]
           },
           {
@@ -1610,11 +1635,11 @@
               222,
               180,
               208,
-              58,
               192,
               218,
               196,
-              210
+              210,
+              214
             ]
           },
           {
@@ -1628,11 +1653,11 @@
               222,
               180,
               208,
-              58,
               192,
               218,
               196,
-              210
+              210,
+              214
             ]
           }
         ],
@@ -1690,24 +1715,6 @@
               1.0,
               1.0,
               0.9999
-            ]
-          },
-          {
-            "frame": 58,
-            "text": "KA53MH3895",
-            "height_px": 171,
-            "quality": 0.976,
-            "char_probs": [
-              1.0,
-              1.0,
-              0.9994,
-              0.9998,
-              0.9995,
-              0.9998,
-              1.0,
-              1.0,
-              1.0,
-              0.9998
             ]
           },
           {
@@ -1781,24 +1788,42 @@
               1.0,
               0.9999
             ]
+          },
+          {
+            "frame": 214,
+            "text": "KA53MH3895",
+            "height_px": 169,
+            "quality": 0.973,
+            "char_probs": [
+              1.0,
+              0.9998,
+              0.9996,
+              0.9998,
+              0.9994,
+              0.9995,
+              1.0,
+              1.0,
+              1.0,
+              0.9999
+            ]
           }
         ],
-        "plates_detected": 17
+        "plates_detected": 11
       },
       "decision": "match",
-      "decision_reason": "best match score 70.0, clear of the next candidate",
+      "decision_reason": "best match score 85.0, clear of the next candidate",
       "candidates": [
         {
           "rank": 1,
           "synthetic_vehicle_id": "SV144143",
           "registration_number": "KA53MH3895",
-          "match_score": 70.0,
+          "match_score": 85.0,
           "plate_score": 1.0,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
             "plate: 10 of 10 readable characters match exactly",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type conflict: observed truck, registry SUV"
           ]
         },
@@ -1806,14 +1831,14 @@
           "rank": 2,
           "synthetic_vehicle_id": "SV117951",
           "registration_number": "KA53MH3890",
-          "match_score": 64.2,
+          "match_score": 79.2,
           "plate_score": 0.81,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.5,
           "reasons": [
             "plate: 9 of 10 readable characters match exactly",
             "plate differs from KA53MH3890 (edit cost 1.0)",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type compatible: observed truck, registry van"
           ]
         },
@@ -1821,14 +1846,14 @@
           "rank": 3,
           "synthetic_vehicle_id": "SV258008",
           "registration_number": "KA53MH3896",
-          "match_score": 56.7,
+          "match_score": 71.7,
           "plate_score": 0.81,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
             "plate: 9 of 10 readable characters match exactly",
             "plate differs from KA53MH3896 (edit cost 1.0)",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type conflict: observed truck, registry SUV"
           ]
         },
@@ -1836,14 +1861,14 @@
           "rank": 4,
           "synthetic_vehicle_id": "SV106580",
           "registration_number": "KA53MH0890",
-          "match_score": 44.8,
+          "match_score": 59.8,
           "plate_score": 0.64,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
             "plate: 8 of 10 readable characters match exactly",
             "plate differs from KA53MH0890 (edit cost 2.0)",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type conflict: observed truck, registry SUV"
           ]
         },
@@ -1858,7 +1883,7 @@
           "reasons": [
             "plate: 8 of 10 readable characters match exactly",
             "plate differs from KA53MH8855 (edit cost 2.0)",
-            "colour conflict: observed brown, registry white",
+            "colour conflict: observed red, registry white",
             "type conflict: observed truck, registry SUV"
           ]
         }

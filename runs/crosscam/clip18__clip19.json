@@ -53,7 +53,7 @@
       "clip_id": "clip18",
       "track_id": 7,
       "type": "motorcycle/scooter",
-      "colour": "green",
+      "colour": "grey",
       "plate": "",
       "decision": "no_link",
       "decision_reason": "appearance only and not distinctive enough (CLIP cosine 0.952 < 0.965, the 99th percentile of different-vehicle pairs)",
@@ -72,7 +72,7 @@
           "reasons": [
             "appearance similarity 0.94 (CLIP cosine 0.952)",
             "type motorcycle/scooter vs motorcycle/scooter (1.0)",
-            "colour green vs grey (0.0)"
+            "colour grey vs black (0.0)"
           ]
         }
       ]
@@ -100,7 +100,7 @@
           "reasons": [
             "appearance similarity 0.00 (CLIP cosine 0.823)",
             "type bicycle vs motorcycle/scooter (0.0)",
-            "colour green vs grey (0.0)"
+            "colour green vs black (0.0)"
           ]
         }
       ]
@@ -128,12 +128,12 @@
         "evidence": [
           "appearance similarity 0.94 (CLIP cosine 0.952)",
           "type motorcycle/scooter vs motorcycle/scooter (1.0)",
-          "colour green vs grey (0.0)"
+          "colour grey vs black (0.0)"
         ],
         "final": {
           "plate": null,
           "type": "motorcycle/scooter",
-          "colour": "grey",
+          "colour": "black",
           "reads_pooled": 0,
           "decision": "no_confident_match",
           "registry_top1": null,

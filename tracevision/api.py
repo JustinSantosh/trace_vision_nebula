@@ -15,6 +15,7 @@ Endpoints
   POST /api/violations/review confirm / reject a suspected violation
   GET  /api/intel/meta        lookup reasons, violation types and fines    GET /api/intel/{registration}   full record
   POST /api/challans          issue a simulated challan     POST /api/challans/cancel   cancel one
+  GET  /api/challans/{id}/pdf printable challan notice (simulated, watermarked; ?download=1 to save)
   GET  /api/audit             lookup / issue / review audit log
 Vehicle records and challans are SYNTHETIC demo data (intel.py); nothing is sent to any external system.
 One background worker processes jobs in order on the local GPU. Models load once at start-up.
@@ -31,7 +32,7 @@ import uuid
 from pathlib import Path
 
 from fastapi import Body, FastAPI, File, HTTPException, UploadFile
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from . import ROOT, intel, violations
@@ -533,6 +534,20 @@ def issue_challan(payload: dict = Body(...)):
     except intel.Refused as e:
         raise _refused(e)
     return JSONResponse(c)
+
+
+@app.get("/api/challans/{challan_id}/pdf")
+def challan_pdf(challan_id: str, download: int = 0):
+    """Printable notice for a simulated (or synthetic-history) challan, built on request (tracevision/challan.py)."""
+    from . import challan as challan_doc
+    c = intel.find_challan(challan_id)
+    if not c:
+        raise HTTPException(404, "no such challan")
+    pdf = challan_doc.build_pdf(c)
+    intel.audit({"action": "challan pdf", "registration": c["registration_number"], "outcome": c["challan_id"]})
+    name = re.sub(r"[^\w.-]", "_", c["challan_id"]) + ".pdf"
+    return Response(pdf, media_type="application/pdf",
+                    headers={"Content-Disposition": f'{"attachment" if download else "inline"}; filename="{name}"'})
 
 
 @app.post("/api/challans/cancel")

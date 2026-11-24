@@ -10,79 +10,79 @@
     "gaussian_blur": {
       "registered_vehicles_matched_correctly": "1/8 (12%)",
       "unregistered_with_false_confident_match": "0/13 (0%)",
-      "plate_chars_correct": "23/39 (59%)",
-      "plate_chars_question_mark": "11/39 (28%)",
-      "plate_chars_WRONG": "5/39 (13%)",
-      "readable_truth_plates_not_read": "7/10 (70%)",
-      "detected_and_tracked": "15/21 (71%)",
-      "type_compatible": "13/15 (87%)",
-      "colour_near": "8/15 (53%)"
+      "plate_chars_correct": "14/30 (47%)",
+      "plate_chars_question_mark": "11/30 (37%)",
+      "plate_chars_WRONG": "5/30 (17%)",
+      "readable_truth_plates_not_read": "12/14 (86%)",
+      "detected_and_tracked": "19/21 (90%)",
+      "type_compatible": "17/19 (89%)",
+      "colour_near": "16/19 (84%)"
     },
     "motion_blur": {
       "registered_vehicles_matched_correctly": "1/8 (12%)",
       "unregistered_with_false_confident_match": "0/13 (0%)",
       "plate_chars_correct": "10/19 (53%)",
-      "plate_chars_question_mark": "8/19 (42%)",
-      "plate_chars_WRONG": "1/19 (5%)",
-      "readable_truth_plates_not_read": "8/10 (80%)",
-      "detected_and_tracked": "15/21 (71%)",
-      "type_compatible": "14/15 (93%)",
-      "colour_near": "9/15 (60%)"
+      "plate_chars_question_mark": "7/19 (37%)",
+      "plate_chars_WRONG": "2/19 (11%)",
+      "readable_truth_plates_not_read": "13/15 (87%)",
+      "detected_and_tracked": "20/21 (95%)",
+      "type_compatible": "19/20 (95%)",
+      "colour_near": "20/20 (100%)"
     },
     "down_480p": {
+      "registered_vehicles_matched_correctly": "1/8 (12%)",
+      "unregistered_with_false_confident_match": "0/13 (0%)",
+      "plate_chars_correct": "24/38 (63%)",
+      "plate_chars_question_mark": "13/38 (34%)",
+      "plate_chars_WRONG": "1/38 (3%)",
+      "readable_truth_plates_not_read": "11/14 (79%)",
+      "detected_and_tracked": "19/21 (90%)",
+      "type_compatible": "18/19 (95%)",
+      "colour_near": "13/19 (68%)"
+    },
+    "down_360p": {
       "registered_vehicles_matched_correctly": "1/8 (12%)",
       "unregistered_with_false_confident_match": "0/13 (0%)",
       "plate_chars_correct": "19/29 (66%)",
       "plate_chars_question_mark": "10/29 (34%)",
       "plate_chars_WRONG": "0/29 (0%)",
-      "readable_truth_plates_not_read": "9/11 (82%)",
-      "detected_and_tracked": "17/21 (81%)",
-      "type_compatible": "16/17 (94%)",
-      "colour_near": "6/17 (35%)"
-    },
-    "down_360p": {
-      "registered_vehicles_matched_correctly": "1/8 (12%)",
-      "unregistered_with_false_confident_match": "0/13 (0%)",
-      "plate_chars_correct": "14/30 (47%)",
-      "plate_chars_question_mark": "11/30 (37%)",
-      "plate_chars_WRONG": "5/30 (17%)",
-      "readable_truth_plates_not_read": "9/11 (82%)",
-      "detected_and_tracked": "17/21 (81%)",
-      "type_compatible": "15/17 (88%)",
-      "colour_near": "10/17 (59%)"
+      "readable_truth_plates_not_read": "11/13 (85%)",
+      "detected_and_tracked": "18/21 (86%)",
+      "type_compatible": "17/18 (94%)",
+      "colour_near": "15/18 (83%)"
     },
     "jpeg_q10": {
-      "registered_vehicles_matched_correctly": "1/8 (12%)",
+      "registered_vehicles_matched_correctly": "2/8 (25%)",
       "unregistered_with_false_confident_match": "0/13 (0%)",
-      "plate_chars_correct": "23/84 (27%)",
-      "plate_chars_question_mark": "55/84 (65%)",
-      "plate_chars_WRONG": "6/84 (7%)",
-      "readable_truth_plates_not_read": "6/10 (60%)",
-      "detected_and_tracked": "14/21 (67%)",
-      "type_compatible": "13/14 (93%)",
-      "colour_near": "5/14 (36%)"
+      "plate_chars_correct": "29/94 (31%)",
+      "plate_chars_question_mark": "64/94 (68%)",
+      "plate_chars_WRONG": "1/94 (1%)",
+      "readable_truth_plates_not_read": "10/14 (71%)",
+      "detected_and_tracked": "19/21 (90%)",
+      "type_compatible": "18/19 (95%)",
+      "colour_near": "8/19 (42%)"
     },
     "night": {
       "registered_vehicles_matched_correctly": "1/8 (12%)",
       "unregistered_with_false_confident_match": "0/13 (0%)",
-      "plate_chars_correct": "27/39 (69%)",
-      "plate_chars_question_mark": "7/39 (18%)",
-      "plate_chars_WRONG": "5/39 (13%)",
-      "readable_truth_plates_not_read": "6/10 (60%)",
-      "detected_and_tracked": "10/21 (48%)",
-      "type_compatible": "9/10 (90%)",
-      "colour_near": "0/10 (0%)"
+      "plate_chars_correct": "23/29 (79%)",
+      "plate_chars_question_mark": "6/29 (21%)",
+      "plate_chars_WRONG": "0/29 (0%)",
+      "readable_truth_plates_not_read": "8/11 (73%)",
+      "detected_and_tracked": "14/21 (67%)",
+      "type_compatible": "13/14 (93%)",
+      "colour_near": "0/14 (0%)"
     },
     "noise": {
       "registered_vehicles_matched_correctly": "5/8 (62%)",
       "unregistered_with_false_confident_match": "0/13 (0%)",
-      "plate_chars_correct": "68/94 (72%)",
-      "plate_chars_question_mark": "26/94 (28%)",
-      "plate_chars_WRONG": "0/94 (0%)",
-      "readable_truth_plates_not_read": "3/11 (27%)",
-      "detected_and_tracked": "16/21 (76%)",
-      "type_compatible": "14/16 (88%)",
-      "colour_near": "9/16 (56%)"
+      "plate_chars_correct": "77/113 (68%)",
+      "plate_chars_question_mark": "36/113 (32%)",
+      "plate_chars_WRONG": "0/113 (0%)",
+      "readable_truth_plates_not_read": "5/14 (36%)",
+      "detected_and_tracked": "19/21 (90%)",
+      "type_compatible": "18/19 (95%)",
+      "colour_near": "16/19 (84%)"
     }
   }
 }

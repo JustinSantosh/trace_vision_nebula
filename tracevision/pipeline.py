@@ -96,7 +96,7 @@ def ensemble_coco(video, uvh_tracks, coco_model, pc, min_area):
     by_frame = {k: {d["frame"]: d for d in v} for k, v in out.items()}
     attached, added = 0, []
     for ck, cd in kept_c.items():
-        best, best_iou = None, 0.0
+        best, best_iou, best_in = None, 0.0, None
         for uk, frames in by_frame.items():
             shared = [(d, frames[d["frame"]]) for d in cd if d["frame"] in frames]
             if len(shared) < 3:
@@ -104,12 +104,21 @@ def ensemble_coco(video, uvh_tracks, coco_model, pc, min_area):
             m = float(np.mean([_iou(a["box"], b["box"]) for a, b in shared]))
             if m > best_iou:
                 best, best_iou = uk, m
+            # C15: a PARTIAL UVH-26 box (e.g. top half of a scooter) overlaps the full COCO box too little for the IoU
+            # rule; it is the same vehicle if it lies inside the COCO box on most shared frames AND the types agree
+            # (compatible), so a scooter parked in front of a truck is never attached to the truck
+            inside = float(np.mean([_inside(b["box"], a["box"]) for a, b in shared]))
+            if inside >= pc.get("box_inside", 0.9) and compatible(final_type(out[uk])[0], cd[0]["type"])                     and (best_in is None or inside > best_in[1]):
+                best_in = (uk, inside)
+        if (best is None or best_iou < pc.get("ensemble_match_iou", 0.5)) and best_in is not None:
+            best, best_iou = best_in[0], pc.get("ensemble_match_iou", 0.5)
         if best is not None and best_iou >= pc.get("ensemble_match_iou", 0.5):
             extra = []
             for d in cd:
                 u = by_frame[best].get(d["frame"])
                 if u is not None:
                     u["coco"] = (d["type"], d["conf"])
+                    u["coco_box"] = d["box"]
                 else:                      # COCO saw the same vehicle on frames UVH-26 missed: extend the track
                     extra.append(d)
             if extra:
@@ -122,6 +131,66 @@ def ensemble_coco(video, uvh_tracks, coco_model, pc, min_area):
             added.append({"track_id": nid, "type": cd[0]["type"], "mean_conf": round(float(np.mean([d["conf"] for d in cd])), 3),
                           "frames": [cd[0]["frame"], cd[-1]["frame"]]})
     return out, {"coco_tracks": len(kept_c), "attached_to_uvh": attached, "added_coco_only": added}
+
+
+def _area(b):
+    return max(0.0, b[2] - b[0]) * max(0.0, b[3] - b[1])
+
+
+def _inside(a, b):
+    """Share of box a that lies inside box b."""
+    ix = max(0.0, min(a[2], b[2]) - max(a[0], b[0])); iy = max(0.0, min(a[3], b[3]) - max(a[1], b[1]))
+    return ix * iy / _area(a) if _area(a) else 0.0
+
+
+def complete_partial_boxes(tracks, pc):
+    """C15: UVH-26 sometimes boxes only PART of a close-up vehicle (e.g. the top half of a parked scooter). If, on a
+    frame, the attached COCO box confidently covers the UVH-26 box (>= box_inside of it) and is much larger
+    (UVH area < partial_ratio of COCO area), the COCO box is used for that frame: crops for plate, colour and type
+    then show the whole vehicle. Returns the number of boxes replaced."""
+    n = 0
+    for dets in tracks.values():
+        for d in dets:
+            cb, cc = d.get("coco_box"), (d.get("coco") or (None, 0.0))[1]
+            if cb and cc >= pc.get("partial_min_conf", 0.5) and _inside(d["box"], cb) >= pc.get("box_inside", 0.9) \
+                    and _area(d["box"]) < pc.get("partial_ratio", 0.6) * _area(cb):
+                d["uvh_box"], d["box"], d["area"] = d["box"], list(cb), _area(cb)
+                n += 1
+    return n
+
+
+def fold_duplicate_tracks(tracks, pc):
+    """C12: one vehicle sometimes gets a second, nested track. Two tracks are duplicates when they share >= dup_frac of
+    the shorter track's frames and, averaged over those frames, the smaller box lies >= dup_inside inside the larger
+    one with comparable size (mean area ratio >= dup_area_ratio, so a small vehicle in front of a big one is NOT
+    swallowed), and the types are compatible. The shorter-lived track is folded into the other (its frames
+    that the kept track lacks are added). Returns (tracks, {dropped_id: kept_id})."""
+    ids = list(tracks)
+    fmap = {t: {d["frame"]: d for d in tracks[t]} for t in ids}
+    dup = {}
+    for x, p in enumerate(ids):
+        for q in ids[x + 1:]:
+            if p in dup or q in dup or not compatible(final_type(tracks[p])[0], final_type(tracks[q])[0]):
+                continue
+            shared = [f for f in fmap[p] if f in fmap[q]]
+            if len(shared) < 3 or len(shared) < pc.get("dup_frac", 0.7) * min(len(fmap[p]), len(fmap[q])):
+                continue
+            cs, rs = [], []
+            for f in shared:
+                a, b = sorted((fmap[p][f]["box"], fmap[q][f]["box"]), key=_area)
+                cs.append(_inside(a, b)); rs.append(_area(a) / _area(b) if _area(b) else 0.0)
+            # MEAN containment over the shared frames (a per-frame >= 0.85 count was too brittle: a few slightly-off
+            # frames hid real duplicates; revised after clip14, checked on every track pair of all 19 clips, M18)
+            if float(np.mean(cs)) >= pc.get("dup_inside", 0.85) and float(np.mean(rs)) >= pc.get("dup_area_ratio", 0.3):
+                small, big = (p, q) if len(fmap[p]) < len(fmap[q]) else (q, p)
+                dup[small] = big
+    for small, big in dup.items():
+        while big in dup:
+            big = dup[big]
+        extra = [d for f, d in fmap[small].items() if f not in fmap[big]]
+        tracks[big] = sorted(tracks[big] + extra, key=lambda d: d["frame"])
+        fmap[big].update({d["frame"]: d for d in extra})
+    return {t: v for t, v in tracks.items() if t not in dup}, dup
 
 
 def final_type(dets, override_below=0.5):
@@ -299,8 +368,14 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
     if coco_track_model is not None and pc.get("ensemble_coco"):
         kept, ensemble = ensemble_coco(video, kept, coco_track_model, pc, min_area)   # C13 / M15
     timing["detect_track_s"] = round(time.perf_counter() - t0, 1)
+    boxes_completed = complete_partial_boxes(kept, pc) if pc.get("complete_partial_boxes", True) else 0   # C15
     tracks, parent = relink(kept, pc)
     tracks, unverified = verify_large_tracks(video, tracks, meta, coco_model, pc)   # C11: hallucinated big boxes
+    folded = {}
+    # OFF by default (M18): folding before the plate-based re-link split a wrong-way SUV's track (ws01: the close
+    # pass went to another track), so the wrong-side check lost it. Duplicates are folded in crosscam only.
+    if pc.get("fold_duplicates", False):
+        tracks, folded = fold_duplicate_tracks(tracks, pc)                            # C12: nested duplicate tracks
 
     # second pass: read only the frames we need
     t1 = time.perf_counter()
@@ -445,7 +520,7 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
             decision, reason = m.decision, m.decision_reason
             cand_out = [c.__dict__ for c in m.candidates]
         else:
-            decision, reason, cand_out = "no_confident_match", f"plate {plate_status}: cannot identify from the plate", []
+            decision, reason, cand_out = "no_confident_match", f"{plate_status[:1].upper() + plate_status[1:]}: cannot identify the vehicle from its plate", []
         # evidence images for the report
         if items:
             cv2.imwrite(str(vdir / f"t{tid}_vehicle_f{items[0][0]['frame']}.jpg"), items[0][1])
@@ -475,6 +550,7 @@ def run_clip(video, out_dir, models, ocr, registry, cfg):
               "processed_at": time.strftime("%Y-%m-%dT%H:%M:%S"), "config": {k: cfg[k] for k in ("pipeline", "plate_detector", "fusion", "match", "colour") if k in cfg},
               "summary": {"raw_tracks": len(raw), "kept_tracks": len(kept),
                           "dropped_unverified_large": unverified, "coco_ensemble": ensemble,
+                          "boxes_completed_from_coco": boxes_completed, "duplicate_tracks_folded": {str(k): v for k, v in folded.items()},
                           "vehicles_after_relink": len(vehicles),
                           "plates_read": sum(1 for v in vehicles if v["plate"]["status"] == "read"),
                           "decisions": dict(Counter(v["decision"] for v in vehicles))},

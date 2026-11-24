@@ -7,7 +7,7 @@
     "height": 3840,
     "frames": 282
   },
-  "processed_at": "2026-11-23T03:30:05",
+  "processed_at": "2026-11-24T01:10:03",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -21,6 +21,13 @@
       "min_frame_gap": 4,
       "ocr_top_k": 5,
       "colour_frames": 3,
+      "verify_large_frac": 0.1,
+      "verify_samples": 6,
+      "verify_min_iou": 0.3,
+      "verify_min_share": 0.34,
+      "ensemble_coco": true,
+      "ensemble_match_iou": 0.5,
+      "ensemble_new_conf": 0.5,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -46,11 +53,42 @@
       "t_margin": 4.0,
       "top_k": 5,
       "min_plate_sim_candidate": 0.5
+    },
+    "colour": {
+      "method": "clip_masked"
     }
   },
   "summary": {
     "raw_tracks": 4,
     "kept_tracks": 3,
+    "dropped_unverified_large": [
+      {
+        "track_id": 6,
+        "confirmed": "0/6",
+        "median_area_frac": 0.297,
+        "frames": [
+          16,
+          70
+        ],
+        "sample": {
+          "frame": 46,
+          "box": [
+            93,
+            2446,
+            1859,
+            3840
+          ],
+          "type": "truck"
+        }
+      }
+    ],
+    "coco_ensemble": {
+      "coco_tracks": 1,
+      "attached_to_uvh": 1,
+      "added_coco_only": []
+    },
+    "boxes_completed_from_coco": 0,
+    "duplicate_tracks_folded": {},
     "vehicles_after_relink": 1,
     "plates_read": 1,
     "decisions": {
@@ -58,24 +96,23 @@
     }
   },
   "timing": {
-    "detect_track_s": 8.1,
-    "plates_s": 3.6,
-    "ocr_s": 0.2,
-    "assemble_s": 0.1,
-    "total_s": 12.0
+    "detect_track_s": 13.4,
+    "plates_s": 3.3,
+    "ocr_s": 0.1,
+    "assemble_s": 0.4,
+    "total_s": 18.5
   },
   "vehicles": [
     {
       "track_id": 1,
       "merged_track_ids": [
         1,
-        5,
-        6
+        5
       ],
       "first_frame": 0,
       "last_frame": 280,
       "first_time_s": 0.0,
-      "n_detections": 208,
+      "n_detections": 202,
       "first_box": [
         630,
         1870,
@@ -168,13 +205,6 @@
           3840
         ],
         [
-          16,
-          0,
-          2445,
-          1699,
-          3840
-        ],
-        [
           18,
           614,
           1870,
@@ -236,13 +266,6 @@
           1870,
           2160,
           3407
-        ],
-        [
-          26,
-          117,
-          2446,
-          1823,
-          3840
         ],
         [
           28,
@@ -308,25 +331,11 @@
           3407
         ],
         [
-          36,
-          120,
-          2446,
-          1839,
-          3840
-        ],
-        [
           38,
           625,
           1870,
           2160,
           3407
-        ],
-        [
-          38,
-          113,
-          2446,
-          1843,
-          3840
         ],
         [
           40,
@@ -336,25 +345,11 @@
           3407
         ],
         [
-          40,
-          107,
-          2446,
-          1847,
-          3840
-        ],
-        [
           42,
           626,
           1870,
           2160,
           3407
-        ],
-        [
-          42,
-          102,
-          2446,
-          1852,
-          3840
         ],
         [
           44,
@@ -364,25 +359,11 @@
           3407
         ],
         [
-          44,
-          97,
-          2446,
-          1855,
-          3840
-        ],
-        [
           46,
           627,
           1870,
           2160,
           3407
-        ],
-        [
-          46,
-          93,
-          2446,
-          1859,
-          3840
         ],
         [
           48,
@@ -392,25 +373,11 @@
           3407
         ],
         [
-          48,
-          89,
-          2446,
-          1862,
-          3840
-        ],
-        [
           50,
           627,
           1870,
           2160,
           3407
-        ],
-        [
-          50,
-          86,
-          2446,
-          1864,
-          3840
         ],
         [
           52,
@@ -418,13 +385,6 @@
           1870,
           2160,
           3407
-        ],
-        [
-          52,
-          83,
-          2446,
-          1867,
-          3840
         ],
         [
           54,
@@ -460,13 +420,6 @@
           1870,
           2160,
           3407
-        ],
-        [
-          58,
-          80,
-          2446,
-          1869,
-          3840
         ],
         [
           60,
@@ -497,13 +450,6 @@
           3407
         ],
         [
-          64,
-          76,
-          2446,
-          1872,
-          3840
-        ],
-        [
           66,
           556,
           1870,
@@ -525,13 +471,6 @@
           3840
         ],
         [
-          68,
-          73,
-          2446,
-          1874,
-          3840
-        ],
-        [
           70,
           581,
           1870,
@@ -543,13 +482,6 @@
           396,
           2830,
           2160,
-          3840
-        ],
-        [
-          70,
-          71,
-          2446,
-          1876,
           3840
         ],
         [
@@ -1205,6 +1137,13 @@
         ],
         [
           194,
+          123,
+          1973,
+          1789,
+          3408
+        ],
+        [
+          194,
           554,
           2319,
           2160,
@@ -1226,6 +1165,13 @@
         ],
         [
           200,
+          126,
+          1974,
+          1784,
+          3418
+        ],
+        [
+          200,
           542,
           2259,
           2160,
@@ -1233,10 +1179,24 @@
         ],
         [
           202,
+          139,
+          1975,
+          1764,
+          3393
+        ],
+        [
+          202,
           549,
           2252,
           2160,
           3788
+        ],
+        [
+          204,
+          150,
+          1976,
+          1745,
+          3366
         ],
         [
           204,
@@ -1275,10 +1235,24 @@
         ],
         [
           212,
+          134,
+          1979,
+          1761,
+          3410
+        ],
+        [
+          212,
           574,
           2250,
           2160,
           3787
+        ],
+        [
+          214,
+          133,
+          1982,
+          1777,
+          3430
         ],
         [
           214,
@@ -1289,6 +1263,13 @@
         ],
         [
           216,
+          141,
+          1983,
+          1773,
+          3423
+        ],
+        [
+          216,
           439,
           2124,
           2110,
@@ -1296,10 +1277,24 @@
         ],
         [
           218,
+          164,
+          1985,
+          1762,
+          3391
+        ],
+        [
+          218,
           449,
           2077,
           2125,
           3614
+        ],
+        [
+          220,
+          178,
+          1988,
+          1764,
+          3379
         ],
         [
           220,
@@ -1543,17 +1538,19 @@
       "type": {
         "label": "truck",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.647
+        "detector_conf_mean": 0.671,
+        "source": "UVH-26"
       },
       "colour": {
-        "label": "brown",
-        "confidence": 0.54,
+        "label": "red",
+        "confidence": 0.65,
         "per_frame": [
-          "brown",
-          "brown",
-          "brown"
+          "red",
+          "red",
+          "red"
         ],
-        "note": ""
+        "note": "CLIP zero-shot on vehicle pixels (2/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -1563,9 +1560,9 @@
           {
             "pos": 1,
             "char": "K",
-            "confidence": 0.9985,
+            "confidence": 0.9983,
             "share": 1.0,
-            "support": 8,
+            "support": 7,
             "best_candidate": "K",
             "frames": [
               180,
@@ -1574,16 +1571,15 @@
               214,
               192,
               198,
-              218,
-              36
+              218
             ]
           },
           {
             "pos": 2,
             "char": "A",
-            "confidence": 0.9977,
-            "share": 0.9977,
-            "support": 8,
+            "confidence": 0.9994,
+            "share": 0.9994,
+            "support": 7,
             "best_candidate": "A",
             "frames": [
               180,
@@ -1592,16 +1588,15 @@
               214,
               192,
               198,
-              218,
-              36
+              218
             ]
           },
           {
             "pos": 3,
             "char": "5",
-            "confidence": 0.9554,
+            "confidence": 0.9491,
             "share": 0.9999,
-            "support": 8,
+            "support": 7,
             "best_candidate": "5",
             "frames": [
               180,
@@ -1610,8 +1605,7 @@
               214,
               192,
               198,
-              218,
-              36
+              218
             ]
           },
           {
@@ -1619,7 +1613,7 @@
             "char": "3",
             "confidence": 0.9999,
             "share": 0.9999,
-            "support": 8,
+            "support": 7,
             "best_candidate": "3",
             "frames": [
               180,
@@ -1628,16 +1622,15 @@
               214,
               192,
               198,
-              218,
-              36
+              218
             ]
           },
           {
             "pos": 5,
             "char": "M",
-            "confidence": 0.974,
+            "confidence": 0.9703,
             "share": 1.0,
-            "support": 8,
+            "support": 7,
             "best_candidate": "M",
             "frames": [
               180,
@@ -1646,8 +1639,7 @@
               214,
               192,
               198,
-              218,
-              36
+              218
             ]
           },
           {
@@ -1655,7 +1647,7 @@
             "char": "H",
             "confidence": 0.9998,
             "share": 0.9998,
-            "support": 8,
+            "support": 7,
             "best_candidate": "H",
             "frames": [
               180,
@@ -1664,8 +1656,7 @@
               214,
               192,
               198,
-              218,
-              36
+              218
             ]
           },
           {
@@ -1673,7 +1664,7 @@
             "char": "3",
             "confidence": 1.0,
             "share": 1.0,
-            "support": 8,
+            "support": 7,
             "best_candidate": "3",
             "frames": [
               180,
@@ -1682,8 +1673,7 @@
               214,
               192,
               198,
-              218,
-              36
+              218
             ]
           },
           {
@@ -1691,7 +1681,7 @@
             "char": "8",
             "confidence": 1.0,
             "share": 1.0,
-            "support": 8,
+            "support": 7,
             "best_candidate": "8",
             "frames": [
               180,
@@ -1700,8 +1690,7 @@
               214,
               192,
               198,
-              218,
-              36
+              218
             ]
           },
           {
@@ -1709,7 +1698,7 @@
             "char": "9",
             "confidence": 1.0,
             "share": 1.0,
-            "support": 8,
+            "support": 7,
             "best_candidate": "9",
             "frames": [
               180,
@@ -1718,8 +1707,7 @@
               214,
               192,
               198,
-              218,
-              36
+              218
             ]
           },
           {
@@ -1727,7 +1715,7 @@
             "char": "5",
             "confidence": 0.9999,
             "share": 0.9999,
-            "support": 8,
+            "support": 7,
             "best_candidate": "5",
             "frames": [
               180,
@@ -1736,8 +1724,7 @@
               214,
               192,
               198,
-              218,
-              36
+              218
             ]
           }
         ],
@@ -1868,42 +1855,24 @@
               1.0,
               1.0
             ]
-          },
-          {
-            "frame": 36,
-            "text": "KA53MH3895",
-            "height_px": 171,
-            "quality": 0.972,
-            "char_probs": [
-              1.0,
-              0.9855,
-              0.9998,
-              0.9999,
-              0.9999,
-              0.9999,
-              1.0,
-              1.0,
-              1.0,
-              0.9999
-            ]
           }
         ],
-        "plates_detected": 18
+        "plates_detected": 10
       },
       "decision": "match",
-      "decision_reason": "best match score 70.0, clear of the next candidate",
+      "decision_reason": "best match score 85.0, clear of the next candidate",
       "candidates": [
         {
           "rank": 1,
           "synthetic_vehicle_id": "SV144143",
           "registration_number": "KA53MH3895",
-          "match_score": 70.0,
+          "match_score": 85.0,
           "plate_score": 1.0,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
             "plate: 10 of 10 readable characters match exactly",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type conflict: observed truck, registry SUV"
           ]
         },
@@ -1911,14 +1880,14 @@
           "rank": 2,
           "synthetic_vehicle_id": "SV117951",
           "registration_number": "KA53MH3890",
-          "match_score": 64.2,
+          "match_score": 79.2,
           "plate_score": 0.81,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.5,
           "reasons": [
             "plate: 9 of 10 readable characters match exactly",
             "plate differs from KA53MH3890 (edit cost 1.0)",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type compatible: observed truck, registry van"
           ]
         },
@@ -1926,14 +1895,14 @@
           "rank": 3,
           "synthetic_vehicle_id": "SV258008",
           "registration_number": "KA53MH3896",
-          "match_score": 56.7,
+          "match_score": 71.7,
           "plate_score": 0.81,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
             "plate: 9 of 10 readable characters match exactly",
             "plate differs from KA53MH3896 (edit cost 1.0)",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type conflict: observed truck, registry SUV"
           ]
         },
@@ -1941,14 +1910,14 @@
           "rank": 4,
           "synthetic_vehicle_id": "SV106580",
           "registration_number": "KA53MH0890",
-          "match_score": 44.8,
+          "match_score": 59.8,
           "plate_score": 0.64,
-          "colour_score": 0.0,
+          "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
             "plate: 8 of 10 readable characters match exactly",
             "plate differs from KA53MH0890 (edit cost 2.0)",
-            "colour conflict: observed brown, registry red",
+            "colour red matches",
             "type conflict: observed truck, registry SUV"
           ]
         },
@@ -1963,7 +1932,7 @@
           "reasons": [
             "plate: 8 of 10 readable characters match exactly",
             "plate differs from KA53MH8855 (edit cost 2.0)",
-            "colour conflict: observed brown, registry white",
+            "colour conflict: observed red, registry white",
             "type conflict: observed truck, registry SUV"
           ]
         }

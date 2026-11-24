@@ -7,7 +7,7 @@
     "height": 3840,
     "frames": 282
   },
-  "processed_at": "2026-11-23T11:54:11",
+  "processed_at": "2026-11-24T07:22:40",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -28,6 +28,7 @@
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
+      "fold_duplicates": false,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -55,7 +56,7 @@
       "min_plate_sim_candidate": 0.5
     },
     "colour": {
-      "method": "clip"
+      "method": "clip_masked"
     }
   },
   "summary": {
@@ -87,6 +88,8 @@
       "attached_to_uvh": 1,
       "added_coco_only": []
     },
+    "boxes_completed_from_coco": 0,
+    "duplicate_tracks_folded": {},
     "vehicles_after_relink": 1,
     "plates_read": 1,
     "decisions": {
@@ -94,11 +97,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 13.1,
+    "detect_track_s": 14.6,
     "plates_s": 3.5,
     "ocr_s": 0.2,
-    "assemble_s": 0.2,
-    "total_s": 23.4
+    "assemble_s": 0.3,
+    "total_s": 25.2
   },
   "vehicles": [
     {
@@ -1856,14 +1859,14 @@
       },
       "colour": {
         "label": "red",
-        "confidence": 0.779,
+        "confidence": 0.737,
         "per_frame": [
           "red",
           "red",
           "red"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (2/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",

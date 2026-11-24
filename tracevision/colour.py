@@ -129,18 +129,66 @@ def clip_colour(crops, vtype):
     return CLIP_COLOURS[i], float(p[i]), [CLIP_COLOURS[int(j)] for j in per.argmax(dim=-1)]
 
 
+# ---------------------------------------------------------------- vehicle-only pixels (C8 / C16, DECISIONS M17)
+# CLIP looked at the whole box, so fences, foliage and paving pulled the colour ("green" black scooters). A COCO
+# YOLOv8n-seg mask now cuts out the vehicle and the background is set to black before CLIP sees it. Without a usable
+# mask the original crop is used. Compared on our labels: whole box 67% exact, mask + median fill 68%, mask + black
+# 74% (reports/p6_evaluation.md); the variant was chosen on those labels, which is disclosed.
+_seg = {}
+SEG_CLASSES = [1, 2, 3, 5, 7]          # COCO bicycle, car, motorcycle, bus, truck
+
+
+def _seg_model():
+    if "m" not in _seg:
+        from ultralytics import YOLO
+        from . import ROOT
+        _seg["m"] = YOLO(str(ROOT / "TRACEVISION_DATA/models/weights/yolov8n-seg.pt"))   # downloads on first use
+    return _seg["m"]
+
+
+def vehicle_only(crop):
+    """Return (crop with non-vehicle pixels set to black, True) or (crop, False) if no usable vehicle mask."""
+    try:
+        r = _seg_model().predict(crop, conf=0.25, classes=SEG_CLASSES, verbose=False, retina_masks=True)[0]
+    except Exception:
+        return crop, False
+    if r.masks is None or not len(r.masks):
+        return crop, False
+    h, w = crop.shape[:2]
+    best, best_s = None, 0.0
+    for m in r.masks.data.cpu().numpy():
+        m = cv2.resize(m.astype(np.uint8), (w, h), interpolation=cv2.INTER_NEAREST).astype(bool)
+        s = m.mean() * (0.5 + m[h // 4:3 * h // 4, w // 4:3 * w // 4].mean())   # big, and covering the box centre
+        if s > best_s:
+            best, best_s = m, s
+    if best is None or best.mean() <= 0.08:
+        return crop, False
+    out = crop.copy()
+    out[~best] = 0
+    return out, True
+
+
 def estimate_colour(crops, vtype, night_v=55.0, method="heuristic"):
     """crops: BGR vehicle crops (best frames first). Returns {"label", "confidence", "per_frame", "note"}.
     method: "clip" (CLIP zero-shot, M13) or "heuristic" (k-means + hue rules). The night rule applies to both."""
     res = [r for r in (frame_colour(c, vtype) for c in crops) if r]
-    if method == "clip" and res and np.mean([r[2] for r in res]) >= night_v:
+    # darkness is judged on the WHOLE crop (vehicle + its surroundings): a black car on sunny paving is not a dark
+    # scene, a night clip is (C16; judging only the body made daylight black cars "too dark")
+    scene_v = float(np.mean([cv2.cvtColor(c, cv2.COLOR_BGR2HSV)[:, :, 2].mean() for c in crops if c is not None and c.size])) if crops else 0.0
+    if method in ("clip", "clip_masked") and res and scene_v >= night_v:
+        n_masked = 0
+        if method == "clip_masked":
+            mk = [vehicle_only(c) for c in crops]
+            n_masked = sum(ok for _, ok in mk)
+            crops = [c for c, _ in mk]
         cr = clip_colour(crops, vtype)
         if cr:
             label, conf, per = cr
-            return {"label": label, "confidence": round(conf, 3), "per_frame": per, "note": "CLIP zero-shot", "method": "clip"}
+            note = "CLIP zero-shot" + (f" on vehicle pixels ({n_masked}/{len(crops)} crops masked)" if method == "clip_masked" else "")
+            return {"label": label, "confidence": round(conf, 3), "per_frame": per, "note": note, "method": method}
     if not res:
         return {"label": "unknown", "confidence": 0.0, "per_frame": [], "note": "no usable body pixels"}
-    if np.mean([r[2] for r in res]) < night_v:
+    if scene_v < night_v:
         return {"label": "unknown", "confidence": 0.0, "per_frame": [r[0] for r in res], "note": "too dark to judge colour"}
     votes = Counter()
     for name, dom, _ in res:

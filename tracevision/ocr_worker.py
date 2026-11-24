@@ -18,8 +18,8 @@ SCRIPTS = ROOT / "TRACEVISION_DATA/scripts"
 
 def _serve(q_in, q_out, device):
     sys.path.insert(0, str(SCRIPTS))
-    import awiros_feasibility_check as a
-    try:
+    try:   # the import is inside the try too: a missing package must be REPORTED, not kill the process silently
+        import awiros_feasibility_check as a
         paddle, model, chars, _ = a.load_model(ROOT / "TRACEVISION_DATA/models/awiros", ROOT / "third_party/PaddleOCR", device)
     except Exception as e:  # report start-up failure instead of hanging the caller
         q_out.put(("error", repr(e)))
@@ -51,16 +51,32 @@ class OCRWorker:
     def __enter__(self):
         self.proc = self._ctx.Process(target=_serve, args=(self.q_in, self.q_out, self.device), daemon=True)
         self.proc.start()
-        status, info = self.q_out.get(timeout=self.timeout)
+        status, info = self._get("start-up")
         if status != "ready":
             raise RuntimeError(f"OCR worker failed to start: {info}")
         return self
+
+    def _get(self, what):
+        """Wait for the worker's reply, but notice at once if the worker process died (instead of a silent
+        `queue.Empty` after the full timeout, which hid the real cause; audit bug 1)."""
+        import queue
+        deadline = time.time() + self.timeout
+        while True:
+            try:
+                return self.q_out.get(timeout=1.0)
+            except queue.Empty:
+                if not self.proc.is_alive():
+                    raise RuntimeError(f"OCR worker process exited during {what} (exit code {self.proc.exitcode}). "
+                                       "Check PaddlePaddle / third_party/PaddleOCR (git submodule update --init) "
+                                       "and the Awiros weights (git lfs pull).")
+                if time.time() > deadline:
+                    raise RuntimeError(f"OCR worker did not answer within {self.timeout} s during {what}.")
 
     def read(self, crops):
         if not crops:
             return []
         self.q_in.put(list(crops))
-        status, out = self.q_out.get(timeout=self.timeout)
+        status, out = self._get("reading")
         if status != "ok":
             raise RuntimeError(f"OCR worker error: {out}")
         return out

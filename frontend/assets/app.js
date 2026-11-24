@@ -699,7 +699,10 @@
     const note = el("input", { class: "field", maxlength: 300, placeholder: "Note (optional)", "aria-label": "Note" });
     const reg = rec.vehicle.registration_number;
     // The record re-renders after a challan is issued, which rebuilds this form; carry the confirmation across.
-    const msg = el("p", { class: "ev-note", role: "status", text: S.issuedNote && S.issuedNote.reg === reg ? S.issuedNote.text : "" });
+    const carried = S.issuedNote && S.issuedNote.reg === reg ? S.issuedNote : null;
+    const msg = el("p", { class: "ev-note", role: "status" });
+    const showDone = (n) => msg.replaceChildren(n.text + " ", challanPdf(n.id, "Open challan PDF"));
+    if (carried) showDone(carried);
     S.issuedNote = null;
     const go = el("button", { class: "btn", type: "button", text: "Issue challan", onclick: async () => {
       if (!vio.value) { msg.textContent = "Choose a violation."; vio.focus(); return; }
@@ -711,8 +714,8 @@
           body: JSON.stringify({ registration_number: reg, violation: vio.value, fine_inr: fine.value, location: where.value, note: note.value, context }) });
         if (!r.ok) { msg.textContent = r.error; return; }
         const done = "Simulated challan " + r.data.challan_id + " issued (" + r.data.violation + ", " + inr(r.data.fine_inr) + "). It is listed in the e-Challan history above.";
-        S.issuedNote = { reg, text: done };
-        msg.textContent = done;
+        S.issuedNote = { reg, text: done, id: r.data.challan_id };
+        showDone(S.issuedNote);
         try { await after(); } catch (_) { msg.textContent = done + " Refresh the page to see it in the history."; }
       } finally {
         go.disabled = false;
@@ -743,8 +746,9 @@
         el("td", null, c.violation, sim ? el("span", { class: "tag plain sim", text: "issued here" }) : null,
           el("small", { class: "sub", text: c.date.replace("T", " ").slice(0, 16) + " · " + c.location + " · " + c.challan_id })),
         el("td", { class: "num", text: inr(c.fine_inr) }),
-        el("td", null, statusTag(c.status), sim && after ? el("button", { class: "more", type: "button", text: "Cancel", title: "Cancel this simulated challan",
-          onclick: () => cancelChallan(c.challan_id, after) }) : null)));
+        el("td", null, statusTag(c.status), el("span", { class: "row-actions" }, challanPdf(c.challan_id),
+          sim && after ? el("button", { class: "more", type: "button", text: "Cancel", title: "Cancel this simulated challan",
+            onclick: () => cancelChallan(c.challan_id, after) }) : null))));
     });
     t.append(body);
     out.push(section("e-Challan history", rec.challans.length ? "newest first" : null, rec.challans.length ? t : el("p", { class: "muted", text: "No challans on record." })));
@@ -754,6 +758,9 @@
 
   /* ---------------------------------------------------------------- enforcement */
   const pad = (text) => el("p", { class: "muted", style: "padding:14px 16px", text });
+  /* Link to the printable challan notice (built on request by the server, watermarked SIMULATED). */
+  const challanPdf = (id, text) => el("a", { class: "more pdf-link", href: "/api/challans/" + encodeURIComponent(id) + "/pdf",
+    target: "_blank", rel: "noopener", title: "Open the printable challan notice (PDF)", text: text || "PDF" });
   async function openEnforcement() {
     $("ws-list").replaceChildren(el("li", { class: "muted", style: "padding:12px", text: "Loading…" }));
     let data;
@@ -798,11 +805,13 @@
         : "No wrong-side driving found. Fixed cameras: direction in a hand-drawn zone. Moving cameras: a car seen front first, then rear." }));
     const issued = (data.issued_challans || []).slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
     $("issued").replaceChildren(issued.length ? el("table", { class: "cases" },
-      el("thead", null, el("tr", null, ...["Challan", "Registration", "Violation", "Fine", "Issued", ""].map((h) => el("th", { text: h })))),
-      el("tbody", null, ...issued.map((c) => el("tr", null, el("td", { class: "clip", text: c.challan_id }), el("td", null, plateEl(c.registration_number)),
+      el("thead", null, el("tr", null, ...["Challan", "Registration", "Violation", "Fine", ""].map((h) => el("th", { text: h })))),
+      el("tbody", null, ...issued.map((c) => el("tr", null,
+        el("td", { class: "clip" }, c.challan_id, el("small", { class: "sub", text: (c.date || "").replace("T", " ") + (c.context ? " · " + c.context.replace(/:T/, " T") : "") })),
+        el("td", null, plateEl(c.registration_number)),
         el("td", { text: c.violation }), el("td", { class: "num", text: inr(c.fine_inr) }),
-        el("td", { class: "muted", text: (c.date || "").replace("T", " ") + (c.context ? " · " + c.context : "") }),
-        el("td", null, el("button", { class: "more", type: "button", text: "Cancel", onclick: () => cancelChallan(c.challan_id, async () => { S.rec.clear(); await openEnforcement(); }) }))))))
+        el("td", null, el("span", { class: "row-actions" }, challanPdf(c.challan_id),
+          el("button", { class: "more", type: "button", text: "Cancel", onclick: () => cancelChallan(c.challan_id, async () => { S.rec.clear(); await openEnforcement(); }) })))))))
       : pad("None yet. Look up a vehicle and use “Issue a challan”, or confirm a suspected violation on a matched vehicle."));
     renderAudit();
     const keep = vs.find((x) => x.violation_id === S.enfSel);
@@ -811,8 +820,10 @@
   /* One-off note about the review just made, shown at the top of whatever the panel shows next. */
   function flashNode() {
     if (!S.enfFlash) return null;
-    const n = el("p", { class: "flash", role: "status", text: S.enfFlash });
+    const n = el("p", { class: "flash", role: "status", text: S.enfFlash + (S.enfFlashChallan ? " " : "") },
+      S.enfFlashChallan ? challanPdf(S.enfFlashChallan, "Open challan PDF") : null);
     S.enfFlash = null;
+    S.enfFlashChallan = null;
     return n;
   }
   async function renderAudit() {
@@ -862,6 +873,7 @@
         body: JSON.stringify({ violation_id: x.violation_id, decision, note: note.value }) });
       if (!r.ok) { msg.textContent = r.error; return; }
       S.rec.clear();
+      S.enfFlashChallan = r.data.challan ? r.data.challan.challan_id : null;
       const who = x.clip_id + " T" + x.track_id;
       S.enfFlash = decision === "pending" ? who + " is back in the queue."
         : (decision === "confirmed" ? "Confirmed " : "Rejected ") + who + ". " +

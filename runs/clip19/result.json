@@ -7,7 +7,7 @@
     "height": 478,
     "frames": 159
   },
-  "processed_at": "2026-11-23T11:55:15",
+  "processed_at": "2026-11-24T07:23:19",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -28,6 +28,7 @@
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
+      "fold_duplicates": false,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -55,7 +56,7 @@
       "min_plate_sim_candidate": 0.5
     },
     "colour": {
-      "method": "clip"
+      "method": "clip_masked"
     }
   },
   "summary": {
@@ -67,6 +68,8 @@
       "attached_to_uvh": 1,
       "added_coco_only": []
     },
+    "boxes_completed_from_coco": 0,
+    "duplicate_tracks_folded": {},
     "vehicles_after_relink": 1,
     "plates_read": 0,
     "decisions": {
@@ -74,11 +77,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 5.7,
-    "plates_s": 0.3,
+    "detect_track_s": 2.2,
+    "plates_s": 0.2,
     "ocr_s": 0.0,
     "assemble_s": 0.1,
-    "total_s": 6.7
+    "total_s": 2.7
   },
   "vehicles": [
     {
@@ -665,15 +668,15 @@
         "source": "COCO YOLOv8n (more confident than UVH-26)"
       },
       "colour": {
-        "label": "grey",
-        "confidence": 0.374,
+        "label": "black",
+        "confidence": 0.38,
         "per_frame": [
-          "grey",
-          "grey",
+          "black",
+          "black",
           "grey"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -685,7 +688,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     }
   ],

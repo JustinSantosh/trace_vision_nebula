@@ -7,7 +7,7 @@
     "height": 478,
     "frames": 289
   },
-  "processed_at": "2026-11-23T11:54:25",
+  "processed_at": "2026-11-24T07:22:54",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -28,6 +28,7 @@
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
+      "fold_duplicates": false,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -55,7 +56,7 @@
       "min_plate_sim_candidate": 0.5
     },
     "colour": {
-      "method": "clip"
+      "method": "clip_masked"
     }
   },
   "summary": {
@@ -86,6 +87,8 @@
         }
       ]
     },
+    "boxes_completed_from_coco": 2,
+    "duplicate_tracks_folded": {},
     "vehicles_after_relink": 3,
     "plates_read": 1,
     "decisions": {
@@ -94,10 +97,10 @@
     }
   },
   "timing": {
-    "detect_track_s": 3.8,
+    "detect_track_s": 3.7,
     "plates_s": 0.6,
     "ocr_s": 0.2,
-    "assemble_s": 0.1,
+    "assemble_s": 0.2,
     "total_s": 5.4
   },
   "vehicles": [
@@ -352,17 +355,17 @@
         ],
         [
           48,
-          155,
-          59,
-          561,
-          399
+          52,
+          73,
+          683,
+          471
         ],
         [
           50,
-          155,
-          58,
-          561,
-          398
+          53,
+          73,
+          686,
+          471
         ],
         [
           52,
@@ -2067,14 +2070,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.546,
+        "confidence": 0.646,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -2634,14 +2637,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.472,
+        "confidence": 0.598,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (1/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -2653,7 +2656,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -3233,15 +3236,15 @@
         "source": "COCO YOLOv8n"
       },
       "colour": {
-        "label": "white",
-        "confidence": 0.347,
+        "label": "green",
+        "confidence": 0.411,
         "per_frame": [
-          "white",
-          "white",
-          "white"
+          "green",
+          "grey",
+          "green"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -3253,7 +3256,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     }
   ],

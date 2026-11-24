@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 123
   },
-  "processed_at": "2026-11-23T11:51:38",
+  "processed_at": "2026-11-24T07:19:44",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -28,6 +28,7 @@
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
+      "fold_duplicates": false,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -55,7 +56,7 @@
       "min_plate_sim_candidate": 0.5
     },
     "colour": {
-      "method": "clip"
+      "method": "clip_masked"
     }
   },
   "summary": {
@@ -86,6 +87,8 @@
         }
       ]
     },
+    "boxes_completed_from_coco": 3,
+    "duplicate_tracks_folded": {},
     "vehicles_after_relink": 33,
     "plates_read": 0,
     "decisions": {
@@ -93,11 +96,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 1.9,
-    "plates_s": 2.2,
+    "detect_track_s": 2.3,
+    "plates_s": 2.4,
     "ocr_s": 0.0,
-    "assemble_s": 0.6,
-    "total_s": 4.7
+    "assemble_s": 1.7,
+    "total_s": 6.4
   },
   "vehicles": [
     {
@@ -565,8 +568,8 @@
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "unreadable (plate too small: max 11 px < 16 px)",
@@ -578,7 +581,7 @@
         "plates_detected": 6
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate unreadable (plate too small: max 11 px < 16 px): cannot identify from the plate",
+      "decision_reason": "Unreadable (plate too small: max 11 px < 16 px): cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -1046,8 +1049,8 @@
           "green",
           "green"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -1059,7 +1062,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -1527,8 +1530,8 @@
           "yellow",
           "yellow"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -1540,7 +1543,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -2002,14 +2005,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.484,
+        "confidence": 0.496,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (2/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "unreadable (plate too small: max 8 px < 16 px)",
@@ -2021,7 +2024,7 @@
         "plates_detected": 4
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate unreadable (plate too small: max 8 px < 16 px): cannot identify from the plate",
+      "decision_reason": "Unreadable (plate too small: max 8 px < 16 px): cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -2489,8 +2492,8 @@
           "brown",
           "blue"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -2502,7 +2505,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -2963,8 +2966,8 @@
           "blue",
           "blue"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -2976,7 +2979,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -3444,8 +3447,8 @@
           "yellow",
           "yellow"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -3457,7 +3460,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -3918,14 +3921,15 @@
         "source": "UVH-26"
       },
       "colour": {
-        "label": "unknown",
-        "confidence": 0.0,
+        "label": "black",
+        "confidence": 0.334,
         "per_frame": [
           "black",
           "black",
           "black"
         ],
-        "note": "too dark to judge colour"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -3937,7 +3941,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -4405,8 +4409,8 @@
           "brown",
           "brown"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -4418,7 +4422,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -4886,8 +4890,8 @@
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "unreadable (plate too small: max 11 px < 16 px)",
@@ -4899,7 +4903,7 @@
         "plates_detected": 3
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate unreadable (plate too small: max 11 px < 16 px): cannot identify from the plate",
+      "decision_reason": "Unreadable (plate too small: max 11 px < 16 px): cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -5360,14 +5364,15 @@
         "source": "UVH-26"
       },
       "colour": {
-        "label": "unknown",
-        "confidence": 0.0,
+        "label": "brown",
+        "confidence": 0.217,
         "per_frame": [
-          "black",
-          "black",
-          "black"
+          "brown",
+          "brown",
+          "brown"
         ],
-        "note": "too dark to judge colour"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -5379,7 +5384,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -5847,8 +5852,8 @@
           "brown",
           "yellow"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -5860,7 +5865,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -6322,14 +6327,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.37,
+        "confidence": 0.345,
         "per_frame": [
           "white",
-          "white",
+          "green",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (2/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -6341,7 +6346,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -6788,8 +6793,8 @@
           "red",
           "red"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -6801,7 +6806,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -7262,14 +7267,15 @@
         "source": "UVH-26"
       },
       "colour": {
-        "label": "unknown",
-        "confidence": 0.0,
+        "label": "brown",
+        "confidence": 0.349,
         "per_frame": [
-          "grey",
-          "grey",
-          "grey"
+          "brown",
+          "green",
+          "brown"
         ],
-        "note": "too dark to judge colour"
+        "note": "CLIP zero-shot on vehicle pixels (1/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -7281,7 +7287,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -7747,8 +7753,8 @@
         "per_frame": [
           "yellow"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/1 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -7760,7 +7766,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -8081,8 +8087,8 @@
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -8094,7 +8100,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -8555,14 +8561,15 @@
         "source": "UVH-26"
       },
       "colour": {
-        "label": "unknown",
-        "confidence": 0.0,
+        "label": "black",
+        "confidence": 0.498,
         "per_frame": [
           "black",
           "black",
-          "black"
+          "green"
         ],
-        "note": "too dark to judge colour"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -8574,7 +8581,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -9042,8 +9049,8 @@
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -9055,7 +9062,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -9278,8 +9285,8 @@
           "silver",
           "silver"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -9291,7 +9298,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -9717,8 +9724,8 @@
           "blue",
           "blue"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -9730,7 +9737,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -10108,8 +10115,8 @@
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "unreadable (plate too small: max 12 px < 16 px)",
@@ -10121,7 +10128,7 @@
         "plates_detected": 8
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate unreadable (plate too small: max 12 px < 16 px): cannot identify from the plate",
+      "decision_reason": "Unreadable (plate too small: max 12 px < 16 px): cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -10400,8 +10407,8 @@
           "red",
           "red"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -10413,7 +10420,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -10769,8 +10776,8 @@
           "blue",
           "blue"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -10782,7 +10789,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -10879,8 +10886,8 @@
           "black",
           "silver"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -10892,7 +10899,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -10941,16 +10948,16 @@
         ],
         [
           54,
-          222,
-          773,
-          357,
+          166,
+          772,
+          410,
           850
         ],
         [
           56,
-          215,
-          764,
-          365,
+          158,
+          763,
+          419,
           850
         ],
         [
@@ -10962,10 +10969,10 @@
         ],
         [
           60,
-          203,
+          143,
           747,
-          375,
-          848
+          437,
+          849
         ],
         [
           64,
@@ -11192,8 +11199,8 @@
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -11205,7 +11212,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -11491,14 +11498,15 @@
         "source": "UVH-26"
       },
       "colour": {
-        "label": "unknown",
-        "confidence": 0.0,
+        "label": "blue",
+        "confidence": 0.264,
         "per_frame": [
-          "black",
-          "black",
-          "black"
+          "blue",
+          "blue",
+          "blue"
         ],
-        "note": "too dark to judge colour"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -11510,7 +11518,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -11775,14 +11783,15 @@
         "source": "UVH-26"
       },
       "colour": {
-        "label": "unknown",
-        "confidence": 0.0,
+        "label": "silver",
+        "confidence": 0.245,
         "per_frame": [
-          "black",
-          "black",
+          "grey",
+          "silver",
           "black"
         ],
-        "note": "too dark to judge colour"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -11794,7 +11803,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -12015,7 +12024,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -12203,8 +12212,8 @@
           "brown",
           "black"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -12216,7 +12225,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -12369,8 +12378,8 @@
           "red",
           "red"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -12382,7 +12391,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -12465,8 +12474,8 @@
           "grey",
           "black"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -12478,7 +12487,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -12541,14 +12550,14 @@
       },
       "colour": {
         "label": "black",
-        "confidence": 0.385,
+        "confidence": 0.391,
         "per_frame": [
           "silver",
           "black",
           "black"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (1/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -12560,7 +12569,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     }
   ],

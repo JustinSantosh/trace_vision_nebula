@@ -7,7 +7,7 @@
     "height": 850,
     "frames": 385
   },
-  "processed_at": "2026-11-23T03:31:27",
+  "processed_at": "2026-11-24T01:12:33",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -21,6 +21,13 @@
       "min_frame_gap": 4,
       "ocr_top_k": 5,
       "colour_frames": 3,
+      "verify_large_frac": 0.1,
+      "verify_samples": 6,
+      "verify_min_iou": 0.3,
+      "verify_min_share": 0.34,
+      "ensemble_coco": true,
+      "ensemble_match_iou": 0.5,
+      "ensemble_new_conf": 0.5,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -46,11 +53,52 @@
       "t_margin": 4.0,
       "top_k": 5,
       "min_plate_sim_candidate": 0.5
+    },
+    "colour": {
+      "method": "clip_masked"
     }
   },
   "summary": {
     "raw_tracks": 11,
-    "kept_tracks": 8,
+    "kept_tracks": 9,
+    "dropped_unverified_large": [
+      {
+        "track_id": 19,
+        "confirmed": "0/6",
+        "median_area_frac": 0.292,
+        "frames": [
+          130,
+          148
+        ],
+        "sample": {
+          "frame": 140,
+          "box": [
+            0,
+            541,
+            386,
+            850
+          ],
+          "type": "truck"
+        }
+      }
+    ],
+    "coco_ensemble": {
+      "coco_tracks": 12,
+      "attached_to_uvh": 6,
+      "added_coco_only": [
+        {
+          "track_id": 100019,
+          "type": "car",
+          "mean_conf": 0.616,
+          "frames": [
+            58,
+            384
+          ]
+        }
+      ]
+    },
+    "boxes_completed_from_coco": 3,
+    "duplicate_tracks_folded": {},
     "vehicles_after_relink": 8,
     "plates_read": 1,
     "decisions": {
@@ -58,11 +106,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 3.0,
-    "plates_s": 0.7,
+    "detect_track_s": 5.4,
+    "plates_s": 0.9,
     "ocr_s": 0.2,
-    "assemble_s": 0.1,
-    "total_s": 4.0
+    "assemble_s": 0.4,
+    "total_s": 7.0
   },
   "vehicles": [
     {
@@ -71,9 +119,9 @@
         1
       ],
       "first_frame": 0,
-      "last_frame": 362,
+      "last_frame": 384,
       "first_time_s": 0.0,
-      "n_detections": 159,
+      "n_detections": 191,
       "first_box": [
         169,
         400,
@@ -1034,6 +1082,20 @@
           648
         ],
         [
+          272,
+          302,
+          463,
+          478,
+          646
+        ],
+        [
+          274,
+          304,
+          464,
+          478,
+          648
+        ],
+        [
           276,
           306,
           460,
@@ -1132,6 +1194,69 @@
           654
         ],
         [
+          304,
+          332,
+          456,
+          478,
+          654
+        ],
+        [
+          306,
+          335,
+          456,
+          478,
+          652
+        ],
+        [
+          308,
+          338,
+          455,
+          478,
+          651
+        ],
+        [
+          310,
+          341,
+          455,
+          478,
+          649
+        ],
+        [
+          312,
+          343,
+          456,
+          478,
+          648
+        ],
+        [
+          314,
+          344,
+          454,
+          478,
+          649
+        ],
+        [
+          316,
+          345,
+          456,
+          478,
+          649
+        ],
+        [
+          318,
+          345,
+          456,
+          478,
+          656
+        ],
+        [
+          320,
+          347,
+          458,
+          478,
+          658
+        ],
+        [
           322,
           359,
           513,
@@ -1153,6 +1278,48 @@
           665
         ],
         [
+          328,
+          356,
+          460,
+          478,
+          658
+        ],
+        [
+          330,
+          357,
+          461,
+          478,
+          664
+        ],
+        [
+          332,
+          359,
+          462,
+          478,
+          668
+        ],
+        [
+          334,
+          360,
+          461,
+          478,
+          670
+        ],
+        [
+          336,
+          360,
+          460,
+          478,
+          670
+        ],
+        [
+          338,
+          362,
+          460,
+          478,
+          674
+        ],
+        [
           340,
           365,
           516,
@@ -1165,6 +1332,48 @@
           517,
           478,
           680
+        ],
+        [
+          344,
+          372,
+          464,
+          478,
+          669
+        ],
+        [
+          346,
+          373,
+          465,
+          478,
+          669
+        ],
+        [
+          348,
+          376,
+          465,
+          478,
+          664
+        ],
+        [
+          350,
+          377,
+          467,
+          478,
+          673
+        ],
+        [
+          352,
+          378,
+          466,
+          478,
+          672
+        ],
+        [
+          354,
+          381,
+          465,
+          478,
+          667
         ],
         [
           356,
@@ -1193,22 +1402,87 @@
           527,
           478,
           688
+        ],
+        [
+          364,
+          386,
+          461,
+          478,
+          674
+        ],
+        [
+          366,
+          387,
+          461,
+          478,
+          677
+        ],
+        [
+          368,
+          389,
+          459,
+          478,
+          671
+        ],
+        [
+          370,
+          390,
+          454,
+          478,
+          666
+        ],
+        [
+          372,
+          393,
+          452,
+          478,
+          667
+        ],
+        [
+          376,
+          398,
+          448,
+          478,
+          659
+        ],
+        [
+          380,
+          402,
+          448,
+          478,
+          653
+        ],
+        [
+          382,
+          403,
+          448,
+          478,
+          656
+        ],
+        [
+          384,
+          405,
+          448,
+          478,
+          657
         ]
       ],
       "type": {
         "label": "SUV",
         "vote_share": 0.646,
-        "detector_conf_mean": 0.594
+        "detector_conf_mean": 0.658,
+        "source": "UVH-26"
       },
       "colour": {
-        "label": "grey",
-        "confidence": 0.558,
+        "label": "green",
+        "confidence": 0.844,
         "per_frame": [
-          "grey",
-          "grey",
-          "grey"
+          "green",
+          "green",
+          "green"
         ],
-        "note": ""
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -1321,77 +1595,77 @@
       "candidates": [
         {
           "rank": 1,
-          "synthetic_vehicle_id": "SV161457",
-          "registration_number": "CG10N1679",
+          "synthetic_vehicle_id": "SV597545",
+          "registration_number": "GA14UK9949",
           "match_score": 30.0,
           "plate_score": 0.0,
           "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
-            "plate: 1 of 1 readable characters match exactly; 4 unreadable",
-            "plate differs from CG10N1679 (edit cost 4.0)",
-            "colour grey matches",
+            "plate: 0 of 1 readable characters match exactly; 4 unreadable",
+            "plate differs from GA14UK9949 (edit cost 6.0)",
+            "colour green matches",
             "type SUV matches"
           ]
         },
         {
           "rank": 2,
-          "synthetic_vehicle_id": "SV223931",
-          "registration_number": "CG20ZZ7167",
+          "synthetic_vehicle_id": "SV728731",
+          "registration_number": "DL04GJ8224",
           "match_score": 30.0,
           "plate_score": 0.0,
           "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
             "plate: 0 of 1 readable characters match exactly; 4 unreadable",
-            "plate differs from CG20ZZ7167 (edit cost 6.0)",
-            "colour grey matches",
+            "plate differs from DL04GJ8224 (edit cost 6.0)",
+            "colour green matches",
             "type SUV matches"
           ]
         },
         {
           "rank": 3,
-          "synthetic_vehicle_id": "SV407525",
-          "registration_number": "DL3CCY1080",
-          "match_score": 30.0,
+          "synthetic_vehicle_id": "SV125459",
+          "registration_number": "AP06FC3912",
+          "match_score": 22.5,
           "plate_score": 0.0,
           "colour_score": 1.0,
-          "type_score": 1.0,
+          "type_score": 0.5,
           "reasons": [
             "plate: 0 of 1 readable characters match exactly; 4 unreadable",
-            "plate differs from DL3CCY1080 (edit cost 6.0)",
-            "colour grey matches",
-            "type SUV matches"
+            "plate differs from AP06FC3912 (edit cost 6.0)",
+            "colour green matches",
+            "type compatible: observed SUV, registry car"
           ]
         },
         {
           "rank": 4,
-          "synthetic_vehicle_id": "SV493960",
-          "registration_number": "CG06GU7227",
-          "match_score": 30.0,
+          "synthetic_vehicle_id": "SV193194",
+          "registration_number": "AP34CG9878",
+          "match_score": 22.5,
           "plate_score": 0.0,
           "colour_score": 1.0,
-          "type_score": 1.0,
+          "type_score": 0.5,
           "reasons": [
             "plate: 0 of 1 readable characters match exactly; 4 unreadable",
-            "plate differs from CG06GU7227 (edit cost 6.0)",
-            "colour grey matches",
-            "type SUV matches"
+            "plate differs from AP34CG9878 (edit cost 6.0)",
+            "colour green matches",
+            "type compatible: observed SUV, registry car"
           ]
         },
         {
           "rank": 5,
-          "synthetic_vehicle_id": "SV826698",
-          "registration_number": "WB29FE8252",
-          "match_score": 30.0,
+          "synthetic_vehicle_id": "SV196909",
+          "registration_number": "GA14KV5327",
+          "match_score": 22.5,
           "plate_score": 0.0,
           "colour_score": 1.0,
-          "type_score": 1.0,
+          "type_score": 0.5,
           "reasons": [
             "plate: 0 of 1 readable characters match exactly; 4 unreadable",
-            "plate differs from WB29FE8252 (edit cost 6.0)",
-            "colour grey matches",
-            "type SUV matches"
+            "plate differs from GA14KV5327 (edit cost 6.0)",
+            "colour green matches",
+            "type compatible: observed SUV, registry car"
           ]
         }
       ]
@@ -1402,9 +1676,9 @@
         2
       ],
       "first_frame": 0,
-      "last_frame": 136,
+      "last_frame": 168,
       "first_time_s": 0.0,
-      "n_detections": 51,
+      "n_detections": 84,
       "first_box": [
         239,
         383,
@@ -1686,6 +1960,20 @@
           598
         ],
         [
+          78,
+          300,
+          389,
+          478,
+          595
+        ],
+        [
+          80,
+          302,
+          389,
+          478,
+          595
+        ],
+        [
           82,
           292,
           385,
@@ -1728,6 +2016,48 @@
           607
         ],
         [
+          94,
+          306,
+          394,
+          478,
+          609
+        ],
+        [
+          96,
+          307,
+          395,
+          478,
+          609
+        ],
+        [
+          98,
+          308,
+          395,
+          478,
+          611
+        ],
+        [
+          100,
+          309,
+          395,
+          478,
+          613
+        ],
+        [
+          102,
+          310,
+          395,
+          478,
+          614
+        ],
+        [
+          104,
+          310,
+          395,
+          478,
+          617
+        ],
+        [
           106,
           301,
           394,
@@ -1742,6 +2072,27 @@
           623
         ],
         [
+          110,
+          312,
+          397,
+          478,
+          624
+        ],
+        [
+          112,
+          313,
+          398,
+          478,
+          626
+        ],
+        [
+          114,
+          315,
+          398,
+          478,
+          629
+        ],
+        [
           116,
           307,
           398,
@@ -1749,45 +2100,201 @@
           633
         ],
         [
+          118,
+          319,
+          402,
+          478,
+          634
+        ],
+        [
+          120,
+          320,
+          404,
+          478,
+          638
+        ],
+        [
           122,
-          336,
-          403,
-          468,
-          562
+          322,
+          404,
+          478,
+          638
+        ],
+        [
+          124,
+          323,
+          402,
+          478,
+          638
+        ],
+        [
+          126,
+          326,
+          400,
+          478,
+          634
+        ],
+        [
+          128,
+          326,
+          398,
+          478,
+          636
+        ],
+        [
+          130,
+          328,
+          397,
+          478,
+          638
+        ],
+        [
+          132,
+          330,
+          396,
+          478,
+          640
         ],
         [
           134,
-          354,
+          332,
           396,
-          465,
-          522
+          478,
+          643
         ],
         [
           136,
-          359,
-          396,
-          469,
-          519
+          333,
+          397,
+          478,
+          647
+        ],
+        [
+          138,
+          334,
+          397,
+          478,
+          652
+        ],
+        [
+          140,
+          335,
+          399,
+          478,
+          654
+        ],
+        [
+          142,
+          338,
+          403,
+          478,
+          657
+        ],
+        [
+          144,
+          341,
+          407,
+          478,
+          667
+        ],
+        [
+          146,
+          344,
+          410,
+          478,
+          676
+        ],
+        [
+          148,
+          347,
+          413,
+          478,
+          680
+        ],
+        [
+          150,
+          353,
+          417,
+          478,
+          677
+        ],
+        [
+          152,
+          354,
+          420,
+          478,
+          693
+        ],
+        [
+          154,
+          358,
+          424,
+          478,
+          699
+        ],
+        [
+          156,
+          366,
+          423,
+          478,
+          693
+        ],
+        [
+          158,
+          374,
+          425,
+          478,
+          676
+        ],
+        [
+          160,
+          378,
+          427,
+          478,
+          667
+        ],
+        [
+          162,
+          383,
+          426,
+          478,
+          665
+        ],
+        [
+          164,
+          385,
+          429,
+          478,
+          663
+        ],
+        [
+          168,
+          397,
+          436,
+          478,
+          660
         ]
       ],
       "type": {
         "label": "SUV",
         "vote_share": 0.917,
-        "detector_conf_mean": 0.47
+        "detector_conf_mean": 0.498,
+        "source": "UVH-26"
       },
       "colour": {
-        "label": "grey",
-        "confidence": 0.634,
+        "label": "green",
+        "confidence": 0.712,
         "per_frame": [
-          "grey",
-          "grey",
-          "grey"
+          "green",
+          "green",
+          "green"
         ],
-        "note": ""
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "unreadable (low OCR confidence)",
-        "fused": "?????????",
+        "fused": "????????",
         "unknown_positions": [
           1,
           2,
@@ -1796,15 +2303,14 @@
           5,
           6,
           7,
-          8,
-          9
+          8
         ],
         "positions": [
           {
             "pos": 1,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.7649,
+            "share": 0.743,
             "support": 5,
             "best_candidate": "U",
             "frames": []
@@ -1813,7 +2319,7 @@
             "pos": 2,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.922,
+            "share": 0.9181,
             "support": 5,
             "best_candidate": "N",
             "frames": []
@@ -1822,8 +2328,8 @@
             "pos": 3,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.0682,
-            "support": 3,
+            "share": 0.231,
+            "support": 4,
             "best_candidate": "0",
             "frames": []
           },
@@ -1831,59 +2337,50 @@
             "pos": 4,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.7036,
-            "support": 4,
-            "best_candidate": "E",
+            "share": 0.6621,
+            "support": 5,
+            "best_candidate": "A",
             "frames": []
           },
           {
             "pos": 5,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.8183,
+            "share": 0.4541,
             "support": 5,
-            "best_candidate": "A",
+            "best_candidate": "0",
             "frames": []
           },
           {
             "pos": 6,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.548,
-            "support": 5,
-            "best_candidate": "0",
+            "share": 0.5326,
+            "support": 4,
+            "best_candidate": "8",
             "frames": []
           },
           {
             "pos": 7,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.7054,
-            "support": 4,
-            "best_candidate": "8",
+            "share": 0.1115,
+            "support": 5,
+            "best_candidate": "0",
             "frames": []
           },
           {
             "pos": 8,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.0705,
-            "support": 5,
-            "best_candidate": "6",
-            "frames": []
-          },
-          {
-            "pos": 9,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.1429,
+            "share": 0.163,
             "support": 4,
             "best_candidate": "3",
             "frames": []
           }
         ],
         "warnings": [
-          "reads disagree on length [6, 8, 9]; aligned to 9 characters"
+          "reads disagree on length [6, 7, 8, 9]; aligned to 8 characters"
         ],
         "per_frame_reads": [
           {
@@ -1919,23 +2416,6 @@
             ]
           },
           {
-            "frame": 10,
-            "text": "UNREADBLE",
-            "height_px": 17,
-            "quality": 0.43,
-            "char_probs": [
-              0.9365,
-              0.9125,
-              0.5119,
-              0.5051,
-              0.8418,
-              0.4046,
-              0.5193,
-              0.9561,
-              0.9729
-            ]
-          },
-          {
             "frame": 28,
             "text": "UNREADBLE",
             "height_px": 16,
@@ -1965,12 +2445,27 @@
               0.2757,
               0.3822
             ]
+          },
+          {
+            "frame": 4,
+            "text": "UNRLEL1",
+            "height_px": 16,
+            "quality": 0.416,
+            "char_probs": [
+              0.8124,
+              0.9621,
+              0.5446,
+              0.6287,
+              0.4781,
+              0.1336,
+              0.2547
+            ]
           }
         ],
-        "plates_detected": 8
+        "plates_detected": 6
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate unreadable (low OCR confidence): cannot identify from the plate",
+      "decision_reason": "Unreadable (low OCR confidence): cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -1981,7 +2476,7 @@
       "first_frame": 0,
       "last_frame": 384,
       "first_time_s": 0.0,
-      "n_detections": 179,
+      "n_detections": 193,
       "first_box": [
         0,
         400,
@@ -2025,11 +2520,25 @@
           520
         ],
         [
+          10,
+          2,
+          403,
+          101,
+          519
+        ],
+        [
           12,
           6,
           402,
           104,
           518
+        ],
+        [
+          14,
+          4,
+          401,
+          104,
+          517
         ],
         [
           16,
@@ -2044,6 +2553,13 @@
           418,
           102,
           518
+        ],
+        [
+          20,
+          6,
+          402,
+          106,
+          515
         ],
         [
           22,
@@ -2102,6 +2618,20 @@
           520
         ],
         [
+          38,
+          8,
+          404,
+          119,
+          517
+        ],
+        [
+          40,
+          5,
+          406,
+          121,
+          523
+        ],
+        [
           42,
           0,
           400,
@@ -2121,6 +2651,13 @@
           401,
           124,
           537
+        ],
+        [
+          48,
+          0,
+          406,
+          120,
+          536
         ],
         [
           50,
@@ -2221,6 +2758,27 @@
           554
         ],
         [
+          78,
+          2,
+          414,
+          134,
+          552
+        ],
+        [
+          80,
+          2,
+          414,
+          135,
+          552
+        ],
+        [
+          82,
+          1,
+          413,
+          136,
+          552
+        ],
+        [
           84,
           0,
           412,
@@ -2305,6 +2863,13 @@
           567
         ],
         [
+          108,
+          0,
+          424,
+          138,
+          570
+        ],
+        [
           110,
           0,
           418,
@@ -2317,6 +2882,27 @@
           417,
           140,
           568
+        ],
+        [
+          114,
+          0,
+          421,
+          138,
+          568
+        ],
+        [
+          116,
+          0,
+          420,
+          138,
+          568
+        ],
+        [
+          118,
+          0,
+          421,
+          139,
+          571
         ],
         [
           120,
@@ -2464,6 +3050,13 @@
           432,
           142,
           612
+        ],
+        [
+          162,
+          0,
+          434,
+          136,
+          607
         ],
         [
           164,
@@ -3246,17 +3839,19 @@
       "type": {
         "label": "SUV",
         "vote_share": 0.565,
-        "detector_conf_mean": 0.469
+        "detector_conf_mean": 0.482,
+        "source": "UVH-26"
       },
       "colour": {
-        "label": "grey",
-        "confidence": 0.586,
+        "label": "green",
+        "confidence": 0.577,
         "per_frame": [
-          "grey",
-          "grey",
-          "grey"
+          "green",
+          "green",
+          "green"
         ],
-        "note": ""
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "unreadable (low OCR confidence)",
@@ -3444,169 +4039,1120 @@
         "plates_detected": 5
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate unreadable (low OCR confidence): cannot identify from the plate",
+      "decision_reason": "Unreadable (low OCR confidence): cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
-      "track_id": 18,
+      "track_id": 100019,
       "merged_track_ids": [
-        18
+        100019
       ],
-      "first_frame": 130,
-      "last_frame": 168,
-      "first_time_s": 4.33,
-      "n_detections": 6,
+      "first_frame": 58,
+      "last_frame": 384,
+      "first_time_s": 1.93,
+      "n_detections": 154,
       "first_box": [
-        353,
-        466,
-        461,
-        645
+        189,
+        419,
+        212,
+        449
       ],
       "track": [
         [
+          58,
+          189,
+          419,
+          212,
+          449
+        ],
+        [
+          60,
+          191,
+          418,
+          213,
+          448
+        ],
+        [
+          62,
+          192,
+          421,
+          212,
+          448
+        ],
+        [
+          64,
+          192,
+          421,
+          213,
+          450
+        ],
+        [
+          80,
+          192,
+          428,
+          216,
+          461
+        ],
+        [
+          82,
+          190,
+          429,
+          216,
+          463
+        ],
+        [
+          84,
+          191,
+          429,
+          218,
+          464
+        ],
+        [
+          86,
+          191,
+          429,
+          219,
+          464
+        ],
+        [
+          88,
+          191,
+          429,
+          220,
+          465
+        ],
+        [
+          90,
+          188,
+          431,
+          219,
+          467
+        ],
+        [
+          98,
+          185,
+          435,
+          213,
+          469
+        ],
+        [
+          100,
+          184,
+          436,
+          212,
+          470
+        ],
+        [
+          102,
+          183,
+          435,
+          211,
+          469
+        ],
+        [
+          104,
+          180,
+          436,
+          210,
+          470
+        ],
+        [
+          106,
+          179,
+          436,
+          210,
+          472
+        ],
+        [
+          108,
+          177,
+          437,
+          210,
+          473
+        ],
+        [
+          110,
+          177,
+          437,
+          209,
+          473
+        ],
+        [
+          112,
+          176,
+          437,
+          209,
+          474
+        ],
+        [
+          114,
+          175,
+          438,
+          209,
+          476
+        ],
+        [
+          116,
+          175,
+          439,
+          208,
+          476
+        ],
+        [
+          118,
+          176,
+          440,
+          210,
+          477
+        ],
+        [
+          120,
+          175,
+          441,
+          209,
+          478
+        ],
+        [
+          122,
+          173,
+          441,
+          208,
+          479
+        ],
+        [
+          124,
+          173,
+          442,
+          206,
+          478
+        ],
+        [
+          126,
+          172,
+          445,
+          202,
+          478
+        ],
+        [
+          128,
+          171,
+          442,
+          203,
+          477
+        ],
+        [
           130,
-          353,
-          466,
-          461,
-          645
+          170,
+          442,
+          202,
+          478
         ],
         [
           132,
-          360,
-          485,
-          457,
-          647
+          167,
+          443,
+          200,
+          478
         ],
         [
           134,
-          357,
-          479,
-          461,
-          650
+          166,
+          443,
+          200,
+          479
         ],
         [
           136,
-          357,
-          475,
-          465,
-          651
+          166,
+          443,
+          199,
+          479
         ],
         [
           138,
-          356,
-          470,
-          470,
-          656
-        ],
-        [
-          168,
-          384,
-          478,
-          478,
-          668
-        ]
-      ],
-      "type": {
-        "label": "truck",
-        "vote_share": 1.0,
-        "detector_conf_mean": 0.391
-      },
-      "colour": {
-        "label": "white",
-        "confidence": 0.338,
-        "per_frame": [
-          "silver",
-          "white",
-          "white"
-        ],
-        "note": ""
-      },
-      "plate": {
-        "status": "no plate detected",
-        "fused": null,
-        "unknown_positions": null,
-        "positions": [],
-        "warnings": [],
-        "per_frame_reads": [],
-        "plates_detected": 0
-      },
-      "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
-      "candidates": []
-    },
-    {
-      "track_id": 19,
-      "merged_track_ids": [
-        19
-      ],
-      "first_frame": 130,
-      "last_frame": 148,
-      "first_time_s": 4.33,
-      "n_detections": 6,
-      "first_box": [
-        0,
-        541,
-        396,
-        850
-      ],
-      "track": [
-        [
-          130,
-          0,
-          541,
-          396,
-          850
-        ],
-        [
-          136,
-          0,
-          541,
-          370,
-          850
-        ],
-        [
-          138,
-          0,
-          541,
-          382,
-          850
+          164,
+          442,
+          198,
+          480
         ],
         [
           140,
-          0,
-          541,
-          386,
-          850
+          163,
+          441,
+          198,
+          479
         ],
         [
           142,
-          0,
-          541,
-          386,
-          850
+          161,
+          441,
+          196,
+          480
+        ],
+        [
+          144,
+          158,
+          441,
+          195,
+          480
+        ],
+        [
+          146,
+          156,
+          443,
+          193,
+          483
         ],
         [
           148,
-          0,
-          541,
+          154,
+          444,
+          192,
+          484
+        ],
+        [
+          150,
+          152,
+          445,
+          191,
+          487
+        ],
+        [
+          152,
+          151,
+          446,
+          191,
+          489
+        ],
+        [
+          154,
+          151,
+          449,
+          191,
+          492
+        ],
+        [
+          156,
+          150,
+          450,
+          190,
+          493
+        ],
+        [
+          158,
+          150,
+          451,
+          191,
+          494
+        ],
+        [
+          160,
+          151,
+          451,
+          191,
+          495
+        ],
+        [
+          162,
+          151,
+          451,
+          191,
+          495
+        ],
+        [
+          164,
+          151,
+          452,
+          191,
+          495
+        ],
+        [
+          166,
+          152,
+          453,
+          192,
+          497
+        ],
+        [
+          168,
+          152,
+          453,
+          192,
+          496
+        ],
+        [
+          170,
+          152,
+          453,
+          191,
+          496
+        ],
+        [
+          172,
+          153,
+          452,
+          192,
+          495
+        ],
+        [
+          174,
+          153,
+          452,
+          193,
+          496
+        ],
+        [
+          176,
+          155,
+          453,
+          195,
+          497
+        ],
+        [
+          178,
+          157,
+          456,
+          196,
+          499
+        ],
+        [
+          180,
+          159,
+          459,
+          197,
+          501
+        ],
+        [
+          182,
+          160,
+          460,
+          199,
+          503
+        ],
+        [
+          184,
+          161,
+          460,
+          200,
+          503
+        ],
+        [
+          186,
+          162,
+          460,
+          201,
+          503
+        ],
+        [
+          188,
+          164,
+          460,
+          202,
+          502
+        ],
+        [
+          190,
+          164,
+          460,
+          204,
+          504
+        ],
+        [
+          192,
+          166,
+          461,
+          204,
+          505
+        ],
+        [
+          194,
+          166,
+          462,
+          205,
+          505
+        ],
+        [
+          196,
+          167,
+          462,
+          205,
+          505
+        ],
+        [
+          198,
+          169,
+          463,
+          207,
+          507
+        ],
+        [
+          200,
+          170,
+          463,
+          208,
+          506
+        ],
+        [
+          202,
+          171,
+          463,
+          208,
+          506
+        ],
+        [
+          204,
+          172,
+          463,
+          210,
+          506
+        ],
+        [
+          206,
+          173,
+          463,
+          211,
+          507
+        ],
+        [
+          208,
+          174,
+          464,
+          213,
+          509
+        ],
+        [
+          210,
+          176,
+          464,
+          215,
+          509
+        ],
+        [
+          212,
+          177,
+          465,
+          215,
+          510
+        ],
+        [
+          214,
+          178,
+          465,
+          217,
+          510
+        ],
+        [
+          216,
+          179,
+          466,
+          218,
+          510
+        ],
+        [
+          218,
+          180,
+          466,
+          221,
+          510
+        ],
+        [
+          220,
+          179,
+          466,
+          218,
+          510
+        ],
+        [
+          222,
+          178,
+          466,
+          218,
+          509
+        ],
+        [
+          224,
+          178,
+          465,
+          218,
+          509
+        ],
+        [
+          226,
+          179,
+          465,
+          219,
+          509
+        ],
+        [
+          228,
+          178,
+          466,
+          218,
+          509
+        ],
+        [
+          230,
+          178,
+          467,
+          218,
+          510
+        ],
+        [
+          232,
+          175,
+          466,
+          216,
+          511
+        ],
+        [
+          234,
+          174,
+          467,
+          215,
+          511
+        ],
+        [
+          236,
+          173,
+          466,
+          215,
+          511
+        ],
+        [
+          238,
+          176,
+          465,
+          219,
+          511
+        ],
+        [
+          240,
+          171,
+          465,
+          215,
+          512
+        ],
+        [
+          242,
+          168,
+          465,
+          213,
+          513
+        ],
+        [
+          244,
+          168,
+          469,
+          210,
+          514
+        ],
+        [
+          246,
+          169,
+          470,
+          211,
+          514
+        ],
+        [
+          248,
+          171,
+          471,
+          214,
+          515
+        ],
+        [
+          250,
+          168,
+          472,
+          211,
+          517
+        ],
+        [
+          252,
+          165,
+          472,
+          208,
+          517
+        ],
+        [
+          254,
+          166,
+          473,
+          208,
+          518
+        ],
+        [
+          256,
+          166,
+          474,
+          209,
+          520
+        ],
+        [
+          258,
+          166,
+          474,
+          208,
+          521
+        ],
+        [
+          260,
+          166,
+          475,
+          208,
+          520
+        ],
+        [
+          262,
+          166,
+          476,
+          209,
+          524
+        ],
+        [
+          264,
+          166,
+          477,
+          209,
+          525
+        ],
+        [
+          266,
+          166,
+          478,
+          208,
+          525
+        ],
+        [
+          268,
+          166,
+          478,
+          208,
+          526
+        ],
+        [
+          270,
+          167,
+          478,
+          207,
+          523
+        ],
+        [
+          272,
+          167,
+          479,
+          207,
+          524
+        ],
+        [
+          274,
+          167,
+          480,
+          208,
+          525
+        ],
+        [
+          276,
+          168,
+          481,
+          208,
+          526
+        ],
+        [
+          278,
+          169,
+          481,
+          208,
+          526
+        ],
+        [
+          280,
+          168,
+          482,
+          208,
+          527
+        ],
+        [
+          282,
+          168,
+          483,
+          208,
+          528
+        ],
+        [
+          284,
+          169,
+          483,
+          208,
+          528
+        ],
+        [
+          286,
+          169,
+          483,
+          208,
+          527
+        ],
+        [
+          288,
+          170,
+          483,
+          209,
+          528
+        ],
+        [
+          290,
+          175,
+          484,
+          215,
+          528
+        ],
+        [
+          292,
+          174,
+          485,
+          214,
+          527
+        ],
+        [
+          294,
+          173,
+          487,
+          211,
+          528
+        ],
+        [
+          296,
+          171,
+          486,
+          210,
+          527
+        ],
+        [
+          298,
+          171,
+          486,
+          208,
+          526
+        ],
+        [
+          300,
+          172,
+          488,
+          209,
+          527
+        ],
+        [
+          302,
+          172,
+          488,
+          210,
+          527
+        ],
+        [
+          304,
+          172,
+          486,
+          210,
+          526
+        ],
+        [
+          306,
+          172,
+          487,
+          210,
+          526
+        ],
+        [
+          308,
+          172,
+          487,
+          211,
+          527
+        ],
+        [
+          310,
+          172,
+          488,
+          210,
+          527
+        ],
+        [
+          312,
+          172,
+          488,
+          211,
+          528
+        ],
+        [
+          314,
+          172,
+          488,
+          211,
+          528
+        ],
+        [
+          316,
+          173,
+          490,
+          211,
+          528
+        ],
+        [
+          318,
+          173,
+          491,
+          211,
+          529
+        ],
+        [
+          320,
+          173,
+          491,
+          212,
+          530
+        ],
+        [
+          322,
+          173,
+          490,
+          211,
+          528
+        ],
+        [
+          324,
+          173,
+          490,
+          212,
+          528
+        ],
+        [
+          326,
+          172,
+          491,
+          213,
+          532
+        ],
+        [
+          328,
+          172,
+          491,
+          214,
+          533
+        ],
+        [
+          330,
+          171,
+          491,
+          213,
+          533
+        ],
+        [
+          332,
+          171,
+          491,
+          214,
+          534
+        ],
+        [
+          334,
+          170,
+          490,
+          214,
+          534
+        ],
+        [
+          336,
+          171,
+          491,
+          215,
+          535
+        ],
+        [
+          338,
+          171,
+          491,
+          214,
+          534
+        ],
+        [
+          340,
+          171,
+          491,
+          214,
+          535
+        ],
+        [
+          342,
+          171,
+          492,
+          214,
+          535
+        ],
+        [
+          344,
+          171,
+          492,
+          214,
+          535
+        ],
+        [
+          346,
+          171,
+          491,
+          214,
+          535
+        ],
+        [
+          348,
+          171,
+          491,
+          213,
+          534
+        ],
+        [
+          350,
+          170,
+          491,
+          213,
+          536
+        ],
+        [
+          352,
+          169,
+          491,
+          212,
+          535
+        ],
+        [
+          354,
+          170,
+          490,
+          211,
+          532
+        ],
+        [
+          356,
+          169,
+          489,
+          211,
+          532
+        ],
+        [
+          358,
+          167,
+          488,
+          210,
+          531
+        ],
+        [
+          360,
+          166,
+          488,
+          209,
+          531
+        ],
+        [
+          362,
+          165,
+          487,
+          209,
+          531
+        ],
+        [
+          364,
+          164,
+          485,
+          209,
+          531
+        ],
+        [
           366,
-          850
+          164,
+          485,
+          208,
+          530
+        ],
+        [
+          368,
+          164,
+          484,
+          209,
+          529
+        ],
+        [
+          370,
+          163,
+          483,
+          208,
+          529
+        ],
+        [
+          372,
+          163,
+          482,
+          208,
+          528
+        ],
+        [
+          374,
+          163,
+          481,
+          208,
+          528
+        ],
+        [
+          376,
+          162,
+          480,
+          208,
+          527
+        ],
+        [
+          378,
+          161,
+          479,
+          206,
+          526
+        ],
+        [
+          380,
+          160,
+          479,
+          205,
+          525
+        ],
+        [
+          382,
+          160,
+          479,
+          205,
+          526
+        ],
+        [
+          384,
+          160,
+          478,
+          205,
+          525
         ]
       ],
       "type": {
-        "label": "truck",
+        "label": "car",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.53
+        "detector_conf_mean": 0.616,
+        "source": "COCO YOLOv8n"
       },
       "colour": {
         "label": "grey",
-        "confidence": 0.759,
+        "confidence": 0.354,
         "per_frame": [
           "grey",
-          "grey",
+          "green",
           "grey"
         ],
-        "note": ""
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -3618,7 +5164,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -3626,17 +5172,185 @@
       "merged_track_ids": [
         24
       ],
-      "first_frame": 148,
+      "first_frame": 100,
       "last_frame": 384,
-      "first_time_s": 4.93,
-      "n_detections": 118,
+      "first_time_s": 3.33,
+      "n_detections": 143,
       "first_box": [
-        177,
-        436,
-        246,
-        512
+        198,
+        432,
+        230,
+        493
       ],
       "track": [
+        [
+          100,
+          198,
+          432,
+          230,
+          493
+        ],
+        [
+          102,
+          198,
+          431,
+          230,
+          494
+        ],
+        [
+          104,
+          199,
+          431,
+          231,
+          494
+        ],
+        [
+          106,
+          198,
+          432,
+          231,
+          495
+        ],
+        [
+          108,
+          197,
+          431,
+          231,
+          496
+        ],
+        [
+          110,
+          197,
+          431,
+          231,
+          496
+        ],
+        [
+          112,
+          196,
+          433,
+          230,
+          498
+        ],
+        [
+          114,
+          197,
+          436,
+          230,
+          497
+        ],
+        [
+          116,
+          197,
+          436,
+          231,
+          498
+        ],
+        [
+          118,
+          198,
+          438,
+          232,
+          499
+        ],
+        [
+          120,
+          199,
+          440,
+          234,
+          500
+        ],
+        [
+          122,
+          199,
+          440,
+          235,
+          501
+        ],
+        [
+          124,
+          198,
+          439,
+          235,
+          501
+        ],
+        [
+          126,
+          195,
+          438,
+          233,
+          501
+        ],
+        [
+          128,
+          194,
+          438,
+          232,
+          501
+        ],
+        [
+          130,
+          193,
+          437,
+          233,
+          502
+        ],
+        [
+          132,
+          192,
+          439,
+          232,
+          503
+        ],
+        [
+          134,
+          192,
+          439,
+          232,
+          502
+        ],
+        [
+          136,
+          191,
+          439,
+          233,
+          503
+        ],
+        [
+          138,
+          190,
+          439,
+          233,
+          503
+        ],
+        [
+          140,
+          189,
+          440,
+          233,
+          504
+        ],
+        [
+          142,
+          187,
+          441,
+          231,
+          505
+        ],
+        [
+          144,
+          186,
+          441,
+          231,
+          506
+        ],
+        [
+          146,
+          185,
+          441,
+          233,
+          508
+        ],
         [
           148,
           177,
@@ -4401,6 +6115,13 @@
           563
         ],
         [
+          366,
+          196,
+          487,
+          287,
+          563
+        ],
+        [
           368,
           194,
           480,
@@ -4467,17 +6188,19 @@
       "type": {
         "label": "car",
         "vote_share": 0.987,
-        "detector_conf_mean": 0.591
+        "detector_conf_mean": 0.593,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "green",
-        "confidence": 0.317,
+        "confidence": 0.839,
         "per_frame": [
           "green",
-          "grey",
+          "green",
           "green"
         ],
-        "note": ""
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -4489,7 +6212,96 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
+      "candidates": []
+    },
+    {
+      "track_id": 18,
+      "merged_track_ids": [
+        18
+      ],
+      "first_frame": 130,
+      "last_frame": 168,
+      "first_time_s": 4.33,
+      "n_detections": 6,
+      "first_box": [
+        353,
+        466,
+        461,
+        645
+      ],
+      "track": [
+        [
+          130,
+          353,
+          466,
+          461,
+          645
+        ],
+        [
+          132,
+          360,
+          485,
+          457,
+          647
+        ],
+        [
+          134,
+          357,
+          479,
+          461,
+          650
+        ],
+        [
+          136,
+          357,
+          475,
+          465,
+          651
+        ],
+        [
+          138,
+          356,
+          470,
+          470,
+          656
+        ],
+        [
+          168,
+          384,
+          478,
+          478,
+          668
+        ]
+      ],
+      "type": {
+        "label": "truck",
+        "vote_share": 1.0,
+        "detector_conf_mean": 0.391,
+        "source": "UVH-26"
+      },
+      "colour": {
+        "label": "green",
+        "confidence": 0.349,
+        "per_frame": [
+          "green",
+          "white",
+          "green"
+        ],
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
+      },
+      "plate": {
+        "status": "no plate detected",
+        "fused": null,
+        "unknown_positions": null,
+        "positions": [],
+        "warnings": [],
+        "per_frame_reads": [],
+        "plates_detected": 0
+      },
+      "decision": "no_confident_match",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -4497,23 +6309,93 @@
       "merged_track_ids": [
         34
       ],
-      "first_frame": 286,
-      "last_frame": 334,
-      "first_time_s": 9.53,
-      "n_detections": 24,
+      "first_frame": 268,
+      "last_frame": 344,
+      "first_time_s": 8.93,
+      "n_detections": 39,
       "first_box": [
-        0,
+        1,
         485,
-        44,
-        570
+        38,
+        563
       ],
       "track": [
+        [
+          268,
+          1,
+          485,
+          38,
+          563
+        ],
+        [
+          270,
+          1,
+          485,
+          36,
+          561
+        ],
+        [
+          272,
+          1,
+          485,
+          37,
+          561
+        ],
+        [
+          274,
+          1,
+          486,
+          38,
+          563
+        ],
+        [
+          276,
+          1,
+          486,
+          38,
+          563
+        ],
+        [
+          278,
+          0,
+          487,
+          37,
+          564
+        ],
+        [
+          280,
+          0,
+          487,
+          38,
+          568
+        ],
+        [
+          282,
+          0,
+          489,
+          38,
+          568
+        ],
+        [
+          284,
+          1,
+          490,
+          38,
+          569
+        ],
         [
           286,
           0,
           485,
           44,
           570
+        ],
+        [
+          288,
+          1,
+          491,
+          37,
+          567
         ],
         [
           290,
@@ -4675,22 +6557,59 @@
           490,
           32,
           574
+        ],
+        [
+          336,
+          0,
+          497,
+          28,
+          577
+        ],
+        [
+          338,
+          0,
+          499,
+          26,
+          577
+        ],
+        [
+          340,
+          0,
+          501,
+          26,
+          578
+        ],
+        [
+          342,
+          0,
+          501,
+          25,
+          579
+        ],
+        [
+          344,
+          0,
+          501,
+          25,
+          579
         ]
       ],
       "type": {
         "label": "auto_rickshaw",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.528
+        "detector_conf_mean": 0.528,
+        "source": "UVH-26"
       },
       "colour": {
         "label": "green",
-        "confidence": 0.487,
+        "confidence": 0.293,
         "per_frame": [
-          "black",
+          "grey",
           "green",
           "green"
         ],
-        "note": ""
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -4702,7 +6621,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -4710,17 +6629,94 @@
       "merged_track_ids": [
         52
       ],
-      "first_frame": 368,
+      "first_frame": 344,
       "last_frame": 384,
-      "first_time_s": 12.27,
-      "n_detections": 7,
+      "first_time_s": 11.47,
+      "n_detections": 20,
       "first_box": [
-        360,
-        422,
-        477,
-        528
+        379,
+        426,
+        478,
+        541
       ],
       "track": [
+        [
+          344,
+          379,
+          426,
+          478,
+          541
+        ],
+        [
+          346,
+          381,
+          428,
+          476,
+          538
+        ],
+        [
+          348,
+          379,
+          427,
+          476,
+          540
+        ],
+        [
+          350,
+          380,
+          428,
+          473,
+          536
+        ],
+        [
+          354,
+          382,
+          427,
+          471,
+          529
+        ],
+        [
+          356,
+          380,
+          427,
+          473,
+          533
+        ],
+        [
+          358,
+          381,
+          426,
+          470,
+          527
+        ],
+        [
+          360,
+          379,
+          427,
+          466,
+          522
+        ],
+        [
+          362,
+          376,
+          427,
+          466,
+          524
+        ],
+        [
+          364,
+          374,
+          426,
+          467,
+          525
+        ],
+        [
+          366,
+          373,
+          425,
+          468,
+          523
+        ],
         [
           368,
           360,
@@ -4736,11 +6732,25 @@
           527
         ],
         [
+          372,
+          367,
+          421,
+          470,
+          523
+        ],
+        [
           374,
           358,
           418,
           476,
           524
+        ],
+        [
+          376,
+          367,
+          418,
+          468,
+          516
         ],
         [
           378,
@@ -4774,17 +6784,19 @@
       "type": {
         "label": "bus",
         "vote_share": 1.0,
-        "detector_conf_mean": 0.57
+        "detector_conf_mean": 0.57,
+        "source": "UVH-26"
       },
       "colour": {
-        "label": "black",
-        "confidence": 0.506,
+        "label": "green",
+        "confidence": 0.248,
         "per_frame": [
+          "green",
           "black",
-          "black",
-          "black"
+          "grey"
         ],
-        "note": ""
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -4796,7 +6808,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     }
   ],
