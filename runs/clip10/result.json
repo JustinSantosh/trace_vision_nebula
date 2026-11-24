@@ -7,7 +7,7 @@
     "height": 2160,
     "frames": 564
   },
-  "processed_at": "2026-11-23T11:53:46",
+  "processed_at": "2026-11-24T07:22:13",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -28,6 +28,7 @@
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
+      "fold_duplicates": false,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -55,7 +56,7 @@
       "min_plate_sim_candidate": 0.5
     },
     "colour": {
-      "method": "clip"
+      "method": "clip_masked"
     }
   },
   "summary": {
@@ -115,6 +116,8 @@
         }
       ]
     },
+    "boxes_completed_from_coco": 21,
+    "duplicate_tracks_folded": {},
     "vehicles_after_relink": 12,
     "plates_read": 7,
     "decisions": {
@@ -122,11 +125,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 26.0,
-    "plates_s": 8.3,
+    "detect_track_s": 25.1,
+    "plates_s": 9.7,
     "ocr_s": 0.4,
-    "assemble_s": 1.2,
-    "total_s": 51.9
+    "assemble_s": 2.6,
+    "total_s": 53.5
   },
   "vehicles": [
     {
@@ -420,14 +423,14 @@
       },
       "colour": {
         "label": "red",
-        "confidence": 0.233,
+        "confidence": 0.239,
         "per_frame": [
           "blue",
           "red",
           "red"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (2/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -1101,17 +1104,17 @@
         ],
         [
           120,
-          1451,
-          454,
-          3383,
-          1991
+          576,
+          93,
+          3527,
+          2160
         ],
         [
           122,
-          1299,
-          454,
-          3218,
-          1992
+          471,
+          52,
+          3467,
+          2156
         ],
         [
           124,
@@ -1164,10 +1167,10 @@
         ],
         [
           138,
-          1052,
-          454,
-          2919,
-          1992
+          41,
+          0,
+          3176,
+          2145
         ],
         [
           140,
@@ -1220,10 +1223,10 @@
         ],
         [
           154,
-          729,
-          436,
-          2579,
-          1974
+          0,
+          0,
+          3060,
+          2143
         ],
         [
           156,
@@ -1234,17 +1237,17 @@
         ],
         [
           158,
-          557,
-          325,
-          2404,
-          1863
+          0,
+          0,
+          2963,
+          2142
         ],
         [
           160,
-          634,
-          279,
-          2480,
-          1817
+          0,
+          0,
+          2931,
+          2147
         ],
         [
           162,
@@ -1262,10 +1265,10 @@
         ],
         [
           166,
-          552,
-          309,
-          2396,
-          1847
+          0,
+          24,
+          2699,
+          2140
         ],
         [
           168,
@@ -1276,10 +1279,10 @@
         ],
         [
           170,
-          449,
-          388,
-          2291,
-          1926
+          0,
+          6,
+          2491,
+          2146
         ],
         [
           172,
@@ -1360,53 +1363,56 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.658,
+        "confidence": 0.631,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (1/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
-        "fused": "?????0???",
+        "fused": "MH????5?6",
         "unknown_positions": [
-          1,
-          2,
           3,
           4,
           5,
-          7,
-          8,
-          9
+          6,
+          8
         ],
         "positions": [
           {
             "pos": 1,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5084,
-            "support": 4,
+            "char": "M",
+            "confidence": 1.0,
+            "share": 0.6788,
+            "support": 3,
             "best_candidate": "M",
-            "frames": []
+            "frames": [
+              110,
+              114
+            ]
           },
           {
             "pos": 2,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5076,
-            "support": 4,
+            "char": "H",
+            "confidence": 1.0,
+            "share": 0.6884,
+            "support": 3,
             "best_candidate": "H",
-            "frames": []
+            "frames": [
+              110,
+              114
+            ]
           },
           {
             "pos": 3,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.4556,
-            "support": 5,
+            "share": 0.5459,
+            "support": 4,
             "best_candidate": "4",
             "frames": []
           },
@@ -1414,8 +1420,8 @@
             "pos": 4,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.4233,
-            "support": 5,
+            "share": 0.4679,
+            "support": 4,
             "best_candidate": "3",
             "frames": []
           },
@@ -1423,50 +1429,52 @@
             "pos": 5,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.484,
-            "support": 5,
+            "share": 0.5115,
+            "support": 4,
             "best_candidate": "K",
             "frames": []
           },
           {
             "pos": 6,
-            "char": "0",
-            "confidence": 0.9571,
-            "share": 0.6731,
-            "support": 5,
+            "char": "?",
+            "confidence": 0.0,
+            "share": 0.5387,
+            "support": 4,
             "best_candidate": "0",
-            "frames": [
-              110,
-              114,
-              128
-            ]
+            "frames": []
           },
           {
             "pos": 7,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5773,
+            "char": "5",
+            "confidence": 0.997,
+            "share": 0.6191,
             "support": 4,
             "best_candidate": "5",
-            "frames": []
+            "frames": [
+              110,
+              114
+            ]
           },
           {
             "pos": 8,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.719,
+            "share": 0.9351,
             "support": 4,
             "best_candidate": "1",
             "frames": []
           },
           {
             "pos": 9,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.54,
-            "support": 5,
+            "char": "6",
+            "confidence": 0.9998,
+            "share": 0.6057,
+            "support": 4,
             "best_candidate": "6",
-            "frames": []
+            "frames": [
+              110,
+              114
+            ]
           }
         ],
         "warnings": [
@@ -1492,21 +1500,6 @@
             ]
           },
           {
-            "frame": 124,
-            "text": "AN9BA15",
-            "height_px": 845,
-            "quality": 0.951,
-            "char_probs": [
-              0.9995,
-              0.4952,
-              0.4017,
-              0.3149,
-              0.6232,
-              0.2087,
-              0.2675
-            ]
-          },
-          {
             "frame": 114,
             "text": "MH43K0516",
             "height_px": 173,
@@ -1524,87 +1517,60 @@
             ]
           },
           {
-            "frame": 132,
-            "text": "DL08CA960",
-            "height_px": 648,
-            "quality": 0.929,
+            "frame": 154,
+            "text": "KPVT410",
+            "height_px": 754,
+            "quality": 0.939,
             "char_probs": [
-              0.9848,
-              0.9832,
-              0.5892,
-              0.4888,
-              0.9993,
-              0.9972,
-              0.704,
-              0.5065,
-              0.2262
+              0.5354,
+              0.5195,
+              0.8636,
+              0.8783,
+              0.2777,
+              0.5652,
+              0.812
             ]
           },
           {
-            "frame": 128,
-            "text": "TNBA804",
-            "height_px": 1027,
-            "quality": 0.921,
+            "frame": 138,
+            "text": "DL02CH010",
+            "height_px": 1118,
+            "quality": 0.923,
             "char_probs": [
-              0.9816,
-              0.9996,
-              0.3831,
-              0.4951,
-              0.8384,
-              0.8861,
-              0.3244
+              0.6008,
+              0.6166,
+              0.9541,
+              0.61,
+              0.9003,
+              0.638,
+              0.4199,
+              0.4307,
+              0.3295
             ]
           }
         ],
-        "plates_detected": 7
+        "plates_detected": 4
       },
       "decision": "no_confident_match",
-      "decision_reason": "only 1 plate character(s) readable; at least 5 are needed for a confident match",
+      "decision_reason": "only 4 plate character(s) readable; at least 5 are needed for a confident match",
       "candidates": [
         {
           "rank": 1,
           "synthetic_vehicle_id": "SV521397",
           "registration_number": "MH05D0535",
-          "match_score": 38.3,
-          "plate_score": 0.333,
+          "match_score": 41.2,
+          "plate_score": 0.375,
           "colour_score": 1.0,
           "type_score": 0.0,
           "reasons": [
-            "plate: 1 of 1 readable characters match exactly; 8 unreadable",
+            "plate: 3 of 4 readable characters match exactly; 5 unreadable",
+            "plate differs from MH05D0535 (edit cost 1.0)",
             "colour white matches",
             "type conflict: observed truck, registry motorcycle"
           ]
         },
         {
           "rank": 2,
-          "synthetic_vehicle_id": "SV098781",
-          "registration_number": "HR21B0182",
-          "match_score": 30.8,
-          "plate_score": 0.333,
-          "colour_score": 0.5,
-          "type_score": 0.0,
-          "reasons": [
-            "plate: 1 of 1 readable characters match exactly; 8 unreadable",
-            "colour close: observed white, registry silver",
-            "type conflict: observed truck, registry car"
-          ]
-        },
-        {
-          "rank": 3,
-          "synthetic_vehicle_id": "SV209609",
-          "registration_number": "DL07Y0978",
-          "match_score": 30.8,
-          "plate_score": 0.333,
-          "colour_score": 0.5,
-          "type_score": 0.0,
-          "reasons": [
-            "plate: 1 of 1 readable characters match exactly; 8 unreadable",
-            "colour close: observed white, registry silver",
-            "type conflict: observed truck, registry car"
-          ]
-        },
-        {
-          "rank": 4,
           "synthetic_vehicle_id": "SV527320",
           "registration_number": "DL15FU7620",
           "match_score": 30.0,
@@ -1612,14 +1578,14 @@
           "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
-            "plate: 0 of 1 readable characters match exactly; 8 unreadable",
-            "plate differs from DL15FU7620 (edit cost 2.0)",
+            "plate: 1 of 4 readable characters match exactly; 5 unreadable",
+            "plate differs from DL15FU7620 (edit cost 5.0)",
             "colour white matches",
             "type truck matches"
           ]
         },
         {
-          "rank": 5,
+          "rank": 3,
           "synthetic_vehicle_id": "SV617942",
           "registration_number": "TG01SZ7317",
           "match_score": 30.0,
@@ -1627,8 +1593,38 @@
           "colour_score": 1.0,
           "type_score": 1.0,
           "reasons": [
-            "plate: 0 of 1 readable characters match exactly; 8 unreadable",
-            "plate differs from TG01SZ7317 (edit cost 2.0)",
+            "plate: 0 of 4 readable characters match exactly; 5 unreadable",
+            "plate differs from TG01SZ7317 (edit cost 5.0)",
+            "colour white matches",
+            "type truck matches"
+          ]
+        },
+        {
+          "rank": 4,
+          "synthetic_vehicle_id": "SV699643",
+          "registration_number": "AP03F9400",
+          "match_score": 30.0,
+          "plate_score": 0.0,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 0 of 4 readable characters match exactly; 5 unreadable",
+            "plate differs from AP03F9400 (edit cost 4.0)",
+            "colour white matches",
+            "type truck matches"
+          ]
+        },
+        {
+          "rank": 5,
+          "synthetic_vehicle_id": "SV734130",
+          "registration_number": "UK34R3018",
+          "match_score": 30.0,
+          "plate_score": 0.0,
+          "colour_score": 1.0,
+          "type_score": 1.0,
+          "reasons": [
+            "plate: 0 of 4 readable characters match exactly; 5 unreadable",
+            "plate differs from UK34R3018 (edit cost 4.0)",
             "colour white matches",
             "type truck matches"
           ]
@@ -1954,14 +1950,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.509,
+        "confidence": 0.507,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -3206,38 +3202,38 @@
         ],
         [
           314,
-          1413,
-          454,
-          3374,
-          1991
+          817,
+          212,
+          3464,
+          2159
         ],
         [
           316,
-          1281,
-          454,
-          3226,
-          1991
+          644,
+          105,
+          3438,
+          2160
         ],
         [
           318,
-          1109,
-          454,
-          3041,
-          1991
+          444,
+          37,
+          3360,
+          2157
         ],
         [
           320,
-          1175,
-          454,
-          3095,
-          1991
+          264,
+          3,
+          3276,
+          2159
         ],
         [
           322,
-          1078,
-          454,
-          2989,
-          1991
+          166,
+          0,
+          3243,
+          2160
         ],
         [
           328,
@@ -3297,17 +3293,17 @@
         ],
         [
           360,
-          676,
-          453,
-          2543,
-          1992
+          0,
+          28,
+          3073,
+          2152
         ],
         [
           362,
-          677,
-          453,
-          2540,
-          1992
+          0,
+          21,
+          3058,
+          2147
         ],
         [
           364,
@@ -3318,10 +3314,10 @@
         ],
         [
           366,
-          507,
-          453,
-          2363,
-          1992
+          0,
+          4,
+          3022,
+          2144
         ],
         [
           368,
@@ -3332,38 +3328,38 @@
         ],
         [
           370,
-          488,
-          453,
-          2340,
-          1991
+          0,
+          32,
+          2950,
+          2141
         ],
         [
           372,
-          488,
-          453,
-          2338,
-          1991
+          0,
+          12,
+          2938,
+          2141
         ],
         [
           374,
-          490,
-          453,
-          2338,
-          1991
+          0,
+          5,
+          2920,
+          2145
         ],
         [
           376,
-          365,
-          327,
-          2212,
-          1864
+          0,
+          1,
+          2889,
+          2144
         ],
         [
           378,
-          37,
-          406,
-          1857,
-          1944
+          0,
+          1,
+          2851,
+          2143
         ],
         [
           380,
@@ -3451,266 +3447,183 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.567,
+        "confidence": 0.558,
         "per_frame": [
           "white",
           "white",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (1/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
-        "fused": "????E????",
+        "fused": "TN18BE869?",
         "unknown_positions": [
-          1,
-          2,
-          3,
-          4,
-          6,
-          7,
-          8,
-          9
+          10
         ],
         "positions": [
           {
             "pos": 1,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5625,
-            "support": 4,
-            "best_candidate": "M",
-            "frames": []
+            "char": "T",
+            "confidence": 0.9999,
+            "share": 1.0,
+            "support": 2,
+            "best_candidate": "T",
+            "frames": [
+              322,
+              318
+            ]
           },
           {
             "pos": 2,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5399,
-            "support": 3,
-            "best_candidate": "H",
-            "frames": []
+            "char": "N",
+            "confidence": 0.9998,
+            "share": 0.9998,
+            "support": 2,
+            "best_candidate": "N",
+            "frames": [
+              322,
+              318
+            ]
           },
           {
             "pos": 3,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5576,
-            "support": 4,
+            "char": "1",
+            "confidence": 0.9958,
+            "share": 0.9975,
+            "support": 2,
             "best_candidate": "1",
-            "frames": []
+            "frames": [
+              322,
+              318
+            ]
           },
           {
             "pos": 4,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.514,
-            "support": 4,
+            "char": "8",
+            "confidence": 0.9774,
+            "share": 0.9954,
+            "support": 2,
             "best_candidate": "8",
-            "frames": []
+            "frames": [
+              322,
+              318
+            ]
           },
           {
             "pos": 5,
-            "char": "E",
-            "confidence": 0.8796,
-            "share": 0.6922,
-            "support": 3,
-            "best_candidate": "E",
+            "char": "B",
+            "confidence": 0.9983,
+            "share": 0.999,
+            "support": 1,
+            "best_candidate": "B",
             "frames": [
-              300,
-              304
+              322
             ]
           },
           {
             "pos": 6,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5654,
-            "support": 3,
-            "best_candidate": "8",
-            "frames": []
+            "char": "E",
+            "confidence": 0.9645,
+            "share": 0.9717,
+            "support": 2,
+            "best_candidate": "E",
+            "frames": [
+              322,
+              318
+            ]
           },
           {
             "pos": 7,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.7136,
-            "support": 3,
-            "best_candidate": "0",
-            "frames": []
+            "char": "8",
+            "confidence": 0.96,
+            "share": 0.9625,
+            "support": 2,
+            "best_candidate": "8",
+            "frames": [
+              322,
+              318
+            ]
           },
           {
             "pos": 8,
-            "char": "?",
-            "confidence": 0.0,
-            "share": 0.5536,
-            "support": 4,
-            "best_candidate": "0",
-            "frames": []
+            "char": "6",
+            "confidence": 0.9994,
+            "share": 0.6582,
+            "support": 2,
+            "best_candidate": "6",
+            "frames": [
+              322
+            ]
           },
           {
             "pos": 9,
+            "char": "9",
+            "confidence": 0.9812,
+            "share": 0.9856,
+            "support": 2,
+            "best_candidate": "9",
+            "frames": [
+              322,
+              318
+            ]
+          },
+          {
+            "pos": 10,
             "char": "?",
             "confidence": 0.0,
-            "share": 0.5911,
-            "support": 4,
+            "share": 0.5355,
+            "support": 2,
             "best_candidate": "9",
             "frames": []
           }
         ],
         "warnings": [
-          "reads disagree on length [6, 9, 10]; aligned to 9 characters"
+          "reads disagree on length [9, 10]; aligned to 10 characters"
         ],
         "per_frame_reads": [
           {
-            "frame": 300,
-            "text": "MH10BE0090",
-            "height_px": 211,
-            "quality": 0.967,
+            "frame": 322,
+            "text": "TN18BE8699",
+            "height_px": 397,
+            "quality": 0.973,
             "char_probs": [
-              0.9639,
-              0.9308,
-              0.9261,
-              0.2744,
-              0.7332,
-              0.8447,
-              0.7892,
-              0.7521,
-              0.981,
-              0.7061
+              0.9999,
+              0.9997,
+              0.9956,
+              0.9923,
+              0.9983,
+              0.9994,
+              0.999,
+              0.9994,
+              0.9962,
+              0.5341
             ]
           },
           {
-            "frame": 308,
-            "text": "MA8851",
-            "height_px": 263,
-            "quality": 0.964,
+            "frame": 318,
+            "text": "TN18E8899",
+            "height_px": 243,
+            "quality": 0.901,
             "char_probs": [
-              0.4853,
-              0.7558,
-              0.2014,
-              0.2953,
-              0.2891,
-              0.3303
-            ]
-          },
-          {
-            "frame": 304,
-            "text": "MH18E8009",
-            "height_px": 219,
-            "quality": 0.955,
-            "char_probs": [
-              0.5259,
-              0.5954,
-              0.9836,
-              0.8293,
-              0.9149,
-              0.8293,
-              0.5826,
-              0.7941,
-              0.8899
-            ]
-          },
-          {
-            "frame": 316,
-            "text": "DL0CATD886",
-            "height_px": 237,
-            "quality": 0.906,
-            "char_probs": [
-              0.9683,
-              0.9987,
-              0.5838,
-              0.4235,
-              0.4017,
-              0.5782,
-              0.4067,
-              0.3214,
-              0.2066,
-              0.2895
+              0.9998,
+              0.9999,
+              0.996,
+              0.9613,
+              0.9269,
+              0.9178,
+              0.4992,
+              0.9651,
+              0.5052
             ]
           }
         ],
-        "plates_detected": 4
+        "plates_detected": 2
       },
       "decision": "no_confident_match",
-      "decision_reason": "only 1 plate character(s) readable; at least 5 are needed for a confident match",
-      "candidates": [
-        {
-          "rank": 1,
-          "synthetic_vehicle_id": "SV035023",
-          "registration_number": "TG03E9829",
-          "match_score": 45.8,
-          "plate_score": 0.333,
-          "colour_score": 1.0,
-          "type_score": 0.5,
-          "reasons": [
-            "plate: 1 of 1 readable characters match exactly; 8 unreadable",
-            "colour white matches",
-            "type compatible: observed truck, registry van"
-          ]
-        },
-        {
-          "rank": 2,
-          "synthetic_vehicle_id": "SV527320",
-          "registration_number": "DL15FU7620",
-          "match_score": 30.0,
-          "plate_score": 0.0,
-          "colour_score": 1.0,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 0 of 1 readable characters match exactly; 8 unreadable",
-            "plate differs from DL15FU7620 (edit cost 2.0)",
-            "colour white matches",
-            "type truck matches"
-          ]
-        },
-        {
-          "rank": 3,
-          "synthetic_vehicle_id": "SV617942",
-          "registration_number": "TG01SZ7317",
-          "match_score": 30.0,
-          "plate_score": 0.0,
-          "colour_score": 1.0,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 0 of 1 readable characters match exactly; 8 unreadable",
-            "plate differs from TG01SZ7317 (edit cost 2.0)",
-            "colour white matches",
-            "type truck matches"
-          ]
-        },
-        {
-          "rank": 4,
-          "synthetic_vehicle_id": "SV699643",
-          "registration_number": "AP03F9400",
-          "match_score": 30.0,
-          "plate_score": 0.0,
-          "colour_score": 1.0,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 0 of 1 readable characters match exactly; 8 unreadable",
-            "plate differs from AP03F9400 (edit cost 1.0)",
-            "colour white matches",
-            "type truck matches"
-          ]
-        },
-        {
-          "rank": 5,
-          "synthetic_vehicle_id": "SV734130",
-          "registration_number": "UK34R3018",
-          "match_score": 30.0,
-          "plate_score": 0.0,
-          "colour_score": 1.0,
-          "type_score": 1.0,
-          "reasons": [
-            "plate: 0 of 1 readable characters match exactly; 8 unreadable",
-            "plate differs from UK34R3018 (edit cost 1.0)",
-            "colour white matches",
-            "type truck matches"
-          ]
-        }
-      ]
+      "decision_reason": "no registry vehicle is close to the observed plate",
+      "candidates": []
     },
     {
       "track_id": 3,
@@ -3779,14 +3692,14 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.319,
+        "confidence": 0.305,
         "per_frame": [
           "white",
           "red",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (1/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -3798,7 +3711,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -3938,14 +3851,14 @@
       },
       "colour": {
         "label": "blue",
-        "confidence": 0.247,
+        "confidence": 0.36,
         "per_frame": [
           "blue",
           "silver",
           "blue"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -4260,15 +4173,15 @@
         "source": "UVH-26"
       },
       "colour": {
-        "label": "red",
-        "confidence": 0.23,
+        "label": "white",
+        "confidence": 0.205,
         "per_frame": [
           "white",
-          "red",
-          "red"
+          "blue",
+          "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -4280,7 +4193,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -4420,12 +4333,12 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.329,
+        "confidence": 0.531,
         "per_frame": [
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (1/1 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -4679,14 +4592,14 @@
         "source": "COCO YOLOv8n"
       },
       "colour": {
-        "label": "yellow",
-        "confidence": 0.309,
+        "label": "white",
+        "confidence": 0.407,
         "per_frame": [
-          "yellow",
-          "yellow"
+          "white",
+          "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (2/2 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -4698,7 +4611,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -4859,13 +4772,13 @@
       },
       "colour": {
         "label": "white",
-        "confidence": 0.46,
+        "confidence": 0.417,
         "per_frame": [
-          "white",
+          "silver",
           "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (2/2 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -6004,8 +5917,8 @@
           "red",
           "red"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (0/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -6017,7 +5930,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -6429,15 +6342,15 @@
         "source": "COCO YOLOv8n"
       },
       "colour": {
-        "label": "blue",
-        "confidence": 0.171,
+        "label": "black",
+        "confidence": 0.201,
         "per_frame": [
-          "red",
+          "brown",
           "blue",
-          "yellow"
+          "black"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (2/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "no plate detected",
@@ -6449,7 +6362,7 @@
         "plates_detected": 0
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate no plate detected: cannot identify from the plate",
+      "decision_reason": "No plate detected: cannot identify the vehicle from its plate",
       "candidates": []
     }
   ],

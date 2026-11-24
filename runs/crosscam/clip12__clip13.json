@@ -113,17 +113,17 @@
         {
           "clip_id": "clip13",
           "track_id": 100004,
-          "link_score": 22.5,
+          "link_score": 7.5,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
             "appearance": 0.0,
             "type": 0.5,
-            "colour": 1.0
+            "colour": 0.0
           },
           "reasons": [
             "appearance similarity 0.00 (CLIP cosine 0.872)",
             "type SUV vs car (0.5)",
-            "colour white vs white (1.0)"
+            "colour white vs green (0.0)"
           ]
         }
       ]
@@ -173,17 +173,17 @@
         {
           "clip_id": "clip13",
           "track_id": 100004,
-          "link_score": 7.5,
+          "link_score": 0.0,
           "evidence": "appearance only (weaker evidence)",
           "parts": {
             "appearance": 0.0,
             "type": 0.0,
-            "colour": 0.5
+            "colour": 0.0
           },
           "reasons": [
             "appearance similarity 0.00 (CLIP cosine 0.798)",
             "type bicycle vs car (0.0)",
-            "colour grey vs white (0.5)"
+            "colour grey vs green (0.0)"
           ]
         }
       ]

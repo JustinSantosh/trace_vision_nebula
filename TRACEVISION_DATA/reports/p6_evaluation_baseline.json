@@ -8,7 +8,7 @@
       "type_compatible": "13/14 (93%)",
       "colour_exact": "8/14 (57%)",
       "colour_near": "10/14 (71%)",
-      "colour_unknown_answers": "2/14 (14%)",
+      "colour_unknown_answers": "0/14 (0%)",
       "plates_with_readable_truth_and_a_read": 0,
       "plate_chars_correct": "n/a",
       "plate_chars_question_mark": "n/a",
@@ -28,12 +28,12 @@
       "detected_and_tracked": "47/53 (89%)",
       "type_exact": "35/47 (74%)",
       "type_compatible": "45/47 (96%)",
-      "colour_exact": "28/47 (60%)",
-      "colour_near": "31/47 (66%)",
-      "colour_unknown_answers": "2/47 (4%)",
+      "colour_exact": "31/47 (66%)",
+      "colour_near": "35/47 (74%)",
+      "colour_unknown_answers": "1/47 (2%)",
       "plates_with_readable_truth_and_a_read": 28,
-      "plate_chars_correct": "211/252 (84%)",
-      "plate_chars_question_mark": "41/252 (16%)",
+      "plate_chars_correct": "214/252 (85%)",
+      "plate_chars_question_mark": "38/252 (15%)",
       "plate_chars_WRONG": "0/252 (0%)",
       "plate_exact_on_fully_readable": "14/19 (74%)",
       "readable_truth_plates_not_read": "3/29 (10%)",
@@ -50,12 +50,12 @@
       "detected_and_tracked": "61/67 (91%)",
       "type_exact": "47/61 (77%)",
       "type_compatible": "58/61 (95%)",
-      "colour_exact": "36/61 (59%)",
-      "colour_near": "41/61 (67%)",
-      "colour_unknown_answers": "4/61 (7%)",
+      "colour_exact": "39/61 (64%)",
+      "colour_near": "45/61 (74%)",
+      "colour_unknown_answers": "1/61 (2%)",
       "plates_with_readable_truth_and_a_read": 28,
-      "plate_chars_correct": "211/252 (84%)",
-      "plate_chars_question_mark": "41/252 (16%)",
+      "plate_chars_correct": "214/252 (85%)",
+      "plate_chars_question_mark": "38/252 (15%)",
       "plate_chars_WRONG": "0/252 (0%)",
       "plate_exact_on_fully_readable": "14/19 (74%)",
       "readable_truth_plates_not_read": "3/29 (10%)",
@@ -71,47 +71,47 @@
   "timing": {
     "clip01": {
       "video_s": 16.3,
-      "processing_s": 15.6
+      "processing_s": 23.1
     },
     "clip02": {
       "video_s": 4.1,
-      "processing_s": 4.7
+      "processing_s": 6.4
     },
     "clip03": {
       "video_s": 18.4,
-      "processing_s": 11.7
+      "processing_s": 12.5
     },
     "clip04": {
       "video_s": 12.8,
-      "processing_s": 6.4
+      "processing_s": 7.1
     },
     "clip05": {
       "video_s": 16.4,
-      "processing_s": 8.9
+      "processing_s": 9.7
     },
     "clip06": {
       "video_s": 17.1,
-      "processing_s": 13.9
+      "processing_s": 15.9
     },
     "clip07": {
       "video_s": 16.6,
-      "processing_s": 8.8
+      "processing_s": 9.3
     },
     "clip08": {
       "video_s": 18.5,
-      "processing_s": 9.6
+      "processing_s": 10.5
     },
     "clip09": {
       "video_s": 30.3,
-      "processing_s": 15.7
+      "processing_s": 28.4
     },
     "clip10": {
       "video_s": 18.8,
-      "processing_s": 51.9
+      "processing_s": 53.5
     },
     "clip11": {
       "video_s": 9.4,
-      "processing_s": 23.4
+      "processing_s": 25.2
     },
     "clip12": {
       "video_s": 8.2,
@@ -123,27 +123,27 @@
     },
     "clip14": {
       "video_s": 4.6,
-      "processing_s": 4.7
+      "processing_s": 4.9
     },
     "clip15": {
       "video_s": 4.9,
-      "processing_s": 11.8
+      "processing_s": 5.2
     },
     "clip16": {
       "video_s": 3.3,
-      "processing_s": 7.0
+      "processing_s": 3.3
     },
     "clip17": {
       "video_s": 4.2,
-      "processing_s": 12.0
+      "processing_s": 4.6
     },
     "clip18": {
       "video_s": 2.6,
-      "processing_s": 5.8
+      "processing_s": 2.6
     },
     "clip19": {
       "video_s": 3.2,
-      "processing_s": 6.7
+      "processing_s": 2.7
     }
   },
   "per_vehicle": [
@@ -391,7 +391,7 @@
       "match_correct": true,
       "top5_hit": true,
       "pred_type": "SUV",
-      "pred_colour": "black",
+      "pred_colour": "brown",
       "pred_plate": "DL3CCY1025",
       "decision": "match",
       "top1": "SV457965",
@@ -399,14 +399,14 @@
         "SV457965",
         "SV483074",
         "SV005257",
-        "SV500305",
-        "SV407525"
+        "SV407525",
+        "SV500305"
       ],
       "plate_status": "read",
       "type_exact": true,
       "type_compatible": true,
-      "colour_exact": true,
-      "colour_near": true,
+      "colour_exact": false,
+      "colour_near": false,
       "colour_unknown": false,
       "chars_truth_known": 10,
       "chars_correct": 10,
@@ -684,7 +684,7 @@
       "target": "clip06_v02",
       "camera": "fixed_cctv_style",
       "found": true,
-      "iou": 0.78,
+      "iou": 0.513,
       "label_type": "car",
       "label_colour": "silver",
       "readability": "none",
@@ -709,7 +709,7 @@
       "target": "clip06_v03",
       "camera": "fixed_cctv_style",
       "found": true,
-      "iou": 0.745,
+      "iou": 0.721,
       "label_type": "SUV",
       "label_colour": "white",
       "readability": "none",
@@ -805,7 +805,7 @@
       "truth_plate": "",
       "in_registry": "no",
       "pred_type": "SUV",
-      "pred_colour": "yellow",
+      "pred_colour": "white",
       "pred_plate": "",
       "decision": "no_confident_match",
       "top1": null,
@@ -813,8 +813,8 @@
       "plate_status": "no plate detected",
       "type_exact": true,
       "type_compatible": true,
-      "colour_exact": false,
-      "colour_near": false,
+      "colour_exact": true,
+      "colour_near": true,
       "colour_unknown": false,
       "false_confident_match": false
     },
@@ -894,7 +894,7 @@
       "truth_plate": "UP37P1176",
       "in_registry": "no",
       "pred_type": "motorcycle/scooter",
-      "pred_colour": "unknown",
+      "pred_colour": "black",
       "pred_plate": "UP37P1176",
       "decision": "no_confident_match",
       "top1": null,
@@ -902,9 +902,9 @@
       "plate_status": "read",
       "type_exact": true,
       "type_compatible": true,
-      "colour_exact": false,
-      "colour_near": false,
-      "colour_unknown": true,
+      "colour_exact": true,
+      "colour_near": true,
+      "colour_unknown": false,
       "chars_truth_known": 9,
       "chars_correct": 9,
       "chars_q": 0,
@@ -1098,15 +1098,15 @@
       "in_registry": "no",
       "pred_type": "truck",
       "pred_colour": "white",
-      "pred_plate": "?????0???",
+      "pred_plate": "MH????5?6",
       "decision": "no_confident_match",
       "top1": "SV521397",
       "top5": [
         "SV521397",
-        "SV098781",
-        "SV209609",
         "SV527320",
-        "SV617942"
+        "SV617942",
+        "SV699643",
+        "SV734130"
       ],
       "plate_status": "read",
       "type_exact": true,
@@ -1115,8 +1115,8 @@
       "colour_near": true,
       "colour_unknown": false,
       "chars_truth_known": 9,
-      "chars_correct": 1,
-      "chars_q": 8,
+      "chars_correct": 4,
+      "chars_q": 5,
       "chars_wrong": 0,
       "plate_exact": null,
       "false_confident_match": false
@@ -1134,16 +1134,10 @@
       "in_registry": "no",
       "pred_type": "truck",
       "pred_colour": "white",
-      "pred_plate": "????E????",
+      "pred_plate": "TN18BE869?",
       "decision": "no_confident_match",
-      "top1": "SV035023",
-      "top5": [
-        "SV035023",
-        "SV527320",
-        "SV617942",
-        "SV699643",
-        "SV734130"
-      ],
+      "top1": null,
+      "top5": [],
       "plate_status": "read",
       "type_exact": true,
       "type_compatible": true,
@@ -1240,7 +1234,7 @@
       "truth_plate": "",
       "in_registry": "no",
       "pred_type": "motorcycle/scooter",
-      "pred_colour": "unknown",
+      "pred_colour": "blue",
       "pred_plate": "",
       "decision": "no_confident_match",
       "top1": null,
@@ -1250,7 +1244,7 @@
       "type_compatible": true,
       "colour_exact": false,
       "colour_near": false,
-      "colour_unknown": true,
+      "colour_unknown": false,
       "false_confident_match": false
     },
     {
@@ -1265,7 +1259,7 @@
       "truth_plate": "",
       "in_registry": "no",
       "pred_type": "auto_rickshaw",
-      "pred_colour": "unknown",
+      "pred_colour": "silver",
       "pred_plate": "",
       "decision": "no_confident_match",
       "top1": null,
@@ -1275,7 +1269,7 @@
       "type_compatible": false,
       "colour_exact": false,
       "colour_near": false,
-      "colour_unknown": true,
+      "colour_unknown": false,
       "false_confident_match": false
     },
     {
@@ -1315,7 +1309,7 @@
       "truth_plate": "",
       "in_registry": "no",
       "pred_type": "car",
-      "pred_colour": "white",
+      "pred_colour": "brown",
       "pred_plate": "",
       "decision": "no_confident_match",
       "top1": null,
@@ -1323,8 +1317,8 @@
       "plate_status": "no plate detected",
       "type_exact": true,
       "type_compatible": true,
-      "colour_exact": true,
-      "colour_near": true,
+      "colour_exact": false,
+      "colour_near": false,
       "colour_unknown": false,
       "false_confident_match": false
     },
@@ -1390,7 +1384,7 @@
       "truth_plate": "",
       "in_registry": "no",
       "pred_type": "car",
-      "pred_colour": "grey",
+      "pred_colour": "brown",
       "pred_plate": "",
       "decision": "no_confident_match",
       "top1": null,
@@ -1398,8 +1392,8 @@
       "plate_status": "no plate detected",
       "type_exact": true,
       "type_compatible": true,
-      "colour_exact": true,
-      "colour_near": true,
+      "colour_exact": false,
+      "colour_near": false,
       "colour_unknown": false,
       "false_confident_match": false
     },
@@ -1565,7 +1559,7 @@
       "truth_plate": "",
       "in_registry": "no",
       "pred_type": "SUV",
-      "pred_colour": "green",
+      "pred_colour": "black",
       "pred_plate": "",
       "decision": "no_confident_match",
       "top1": null,
@@ -1573,8 +1567,8 @@
       "plate_status": "unreadable (plate too small: max 13 px < 16 px)",
       "type_exact": false,
       "type_compatible": true,
-      "colour_exact": false,
-      "colour_near": false,
+      "colour_exact": true,
+      "colour_near": true,
       "colour_unknown": false,
       "false_confident_match": false
     },
@@ -1696,22 +1690,22 @@
       "match_correct": false,
       "top5_hit": false,
       "pred_type": "SUV",
-      "pred_colour": "brown",
-      "pred_plate": "CG04?S9584",
+      "pred_colour": "black",
+      "pred_plate": "CG04QS9584",
       "decision": "no_confident_match",
-      "top1": "SV148711",
+      "top1": "SV064186",
       "top5": [
-        "SV148711",
         "SV064186",
-        "SV297227",
+        "SV148711",
         "SV793292",
-        "SV132475"
+        "SV132475",
+        "SV297227"
       ],
       "plate_status": "read",
       "type_exact": true,
       "type_compatible": true,
-      "colour_exact": false,
-      "colour_near": false,
+      "colour_exact": true,
+      "colour_near": true,
       "colour_unknown": false,
       "chars_truth_known": 9,
       "chars_correct": 9,
@@ -1735,22 +1729,22 @@
       "match_correct": true,
       "top5_hit": true,
       "pred_type": "SUV",
-      "pred_colour": "green",
+      "pred_colour": "white",
       "pred_plate": "CG14MW3529",
       "decision": "match",
       "top1": "SV984666",
       "top5": [
         "SV984666",
         "SV044242",
-        "SV148711",
         "SV632373",
-        "SV574834"
+        "SV574834",
+        "SV148711"
       ],
       "plate_status": "read",
       "type_exact": true,
       "type_compatible": true,
-      "colour_exact": false,
-      "colour_near": false,
+      "colour_exact": true,
+      "colour_near": true,
       "colour_unknown": false,
       "chars_truth_known": 10,
       "chars_correct": 10,
@@ -1813,7 +1807,7 @@
       "match_correct": false,
       "top5_hit": false,
       "pred_type": "SUV",
-      "pred_colour": "green",
+      "pred_colour": "grey",
       "pred_plate": "????????",
       "decision": "no_confident_match",
       "top1": null,
@@ -1822,7 +1816,7 @@
       "type_exact": true,
       "type_compatible": true,
       "colour_exact": false,
-      "colour_near": false,
+      "colour_near": true,
       "colour_unknown": false,
       "false_confident_match": false
     },
@@ -1874,7 +1868,7 @@
       "match_correct": true,
       "top5_hit": true,
       "pred_type": "motorcycle/scooter",
-      "pred_colour": "brown",
+      "pred_colour": "black",
       "pred_plate": "CG04DK1578",
       "decision": "match",
       "top1": "SV725737",
@@ -1882,8 +1876,8 @@
         "SV725737",
         "SV207526",
         "SV873861",
-        "SV297227",
-        "SV132475"
+        "SV132475",
+        "SV297227"
       ],
       "plate_status": "read",
       "type_exact": true,
@@ -1910,14 +1904,14 @@
       "truth_plate": "CG04PB6426",
       "in_registry": "no",
       "pred_type": "motorcycle/scooter",
-      "pred_colour": "red",
+      "pred_colour": "grey",
       "pred_plate": "CG04PB6426",
       "decision": "no_confident_match",
-      "top1": "SV297227",
+      "top1": "SV796073",
       "top5": [
-        "SV297227",
         "SV796073",
         "SV855011",
+        "SV297227",
         "SV461017",
         "SV182418"
       ],
@@ -2060,7 +2054,7 @@
       "match_correct": false,
       "top5_hit": false,
       "pred_type": "motorcycle/scooter",
-      "pred_colour": "grey",
+      "pred_colour": "black",
       "pred_plate": "",
       "decision": "no_confident_match",
       "top1": null,
@@ -2068,8 +2062,8 @@
       "plate_status": "no plate detected",
       "type_exact": true,
       "type_compatible": true,
-      "colour_exact": false,
-      "colour_near": false,
+      "colour_exact": true,
+      "colour_near": true,
       "colour_unknown": false,
       "false_confident_match": false
     }

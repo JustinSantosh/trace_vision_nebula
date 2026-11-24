@@ -7,7 +7,7 @@
     "height": 478,
     "frames": 245
   },
-  "processed_at": "2026-11-23T11:54:42",
+  "processed_at": "2026-11-24T07:23:04",
   "config": {
     "pipeline": {
       "detect_every": 2,
@@ -28,6 +28,7 @@
       "ensemble_coco": true,
       "ensemble_match_iou": 0.5,
       "ensemble_new_conf": 0.5,
+      "fold_duplicates": false,
       "plate_link_min_known": 6
     },
     "plate_detector": {
@@ -55,7 +56,7 @@
       "min_plate_sim_candidate": 0.5
     },
     "colour": {
-      "method": "clip"
+      "method": "clip_masked"
     }
   },
   "summary": {
@@ -67,6 +68,8 @@
       "attached_to_uvh": 2,
       "added_coco_only": []
     },
+    "boxes_completed_from_coco": 0,
+    "duplicate_tracks_folded": {},
     "vehicles_after_relink": 3,
     "plates_read": 2,
     "decisions": {
@@ -74,11 +77,11 @@
     }
   },
   "timing": {
-    "detect_track_s": 7.4,
-    "plates_s": 1.4,
-    "ocr_s": 1.0,
-    "assemble_s": 0.4,
-    "total_s": 11.8
+    "detect_track_s": 3.2,
+    "plates_s": 0.6,
+    "ocr_s": 0.3,
+    "assemble_s": 0.3,
+    "total_s": 5.2
   },
   "vehicles": [
     {
@@ -967,14 +970,14 @@
       },
       "colour": {
         "label": "grey",
-        "confidence": 0.297,
+        "confidence": 0.345,
         "per_frame": [
           "grey",
           "grey",
           "grey"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (1/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",
@@ -2106,15 +2109,15 @@
         "source": "UVH-26"
       },
       "colour": {
-        "label": "green",
-        "confidence": 0.246,
+        "label": "grey",
+        "confidence": 0.274,
         "per_frame": [
           "green",
-          "white",
-          "green"
+          "grey",
+          "white"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "unreadable (low OCR confidence)",
@@ -2294,7 +2297,7 @@
         "plates_detected": 8
       },
       "decision": "no_confident_match",
-      "decision_reason": "plate unreadable (low OCR confidence): cannot identify from the plate",
+      "decision_reason": "Unreadable (low OCR confidence): cannot identify the vehicle from its plate",
       "candidates": []
     },
     {
@@ -4375,14 +4378,14 @@
       },
       "colour": {
         "label": "green",
-        "confidence": 0.185,
+        "confidence": 0.68,
         "per_frame": [
           "green",
-          "black",
+          "green",
           "green"
         ],
-        "note": "CLIP zero-shot",
-        "method": "clip"
+        "note": "CLIP zero-shot on vehicle pixels (3/3 crops masked)",
+        "method": "clip_masked"
       },
       "plate": {
         "status": "read",

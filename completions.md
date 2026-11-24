@@ -20,7 +20,7 @@ Open problems are in [PROBLEMS.md](PROBLEMS.md). Next steps are in [whatnext.md]
 - **Annotated video viewer** (`/viewer/runs/clipNN`, or **▶ Open video viewer** after an upload): tracked boxes on the video, picked plate frames side by side, per-frame reads, fused plate, top 5 with reasons.
 - **Live playback:** the finished analysis is revealed in step with the video (box → each plate read → "checking registry" → MATCH / no confident match), narrated in a live feed; low-confidence OCR characters are shown as `?`.
 - **Phantom boxes removed (C11, M12):** large tracks must be confirmed by COCO YOLOv8n; 13 phantoms (road, sky, signs) removed from our clips.
-- **Colour by CLIP zero-shot (C8, M13):** 27% → 64% exact on the first 11 clips; 59% on all 19 (close-ups with foliage are harder).
+- **Colour by CLIP zero-shot (C8, M13):** 27% → 64% exact on the first 11 clips; 59% on all 19 (close-ups with foliage are harder). **On vehicle pixels only (M17, 2026-11-24): 64% exact / 74% near on all 19.**
 - **Cross-camera clips clip12–19:** four cross-angled pairs filmed in our parking, labelled (AI draft, owner-verified), registry re-seeded (A6).
 - **Two-detector ensemble (C13, M15):** COCO YOLOv8n alongside UVH-26 for close-up, ground-level vehicles: found 52 → 61 of 67, registered matched 11 → 14 of 15, type compatible 90 → 95%.
 - **Fair evaluation (E13, E14, C14):** vehicles whose full plate nobody knows reported separately; one-to-one label ↔ vehicle association (removed 2 fake false matches).
@@ -206,3 +206,4 @@ All decisions, with the reason for each and their status, are in **[DECISIONS.md
 | dad8c11 / b89fb6d | Moving-camera wrong-side check (head-on pass); test clip ws01.mp4 via LFS |
 | 46f598e / e0a45b3 | Reviewed violations leave the queue; PR #3 merged |
 | (this push) | Team docs for the enforcement add-on (ENFORCEMENT.md, demo guide, architecture, status docs) |
+| (this push) | Model refinement round: partial boxes from COCO (C15), colour on vehicle pixels (M17), cross-camera partial-plate rule + duplicate folding (M18), wrong-way regression fixed (C17), OCR start-up errors surfaced (C18), robustness re-run; redesigned clip reports and printable challan PDFs (M19); all 19 clips re-run |

@@ -79,3 +79,12 @@ def test_duplicate_tracks_fold_nested_box(tmp_path):
     (tmp_path / "result.json").write_text(json.dumps({"vehicles": [
         vt(1, big, "SUV"), vt(2, small[:-3], "SUV"), vt(3, other, "SUV"), vt(4, tiny, "motorcycle/scooter")]}))
     assert duplicate_tracks(tmp_path) == {2: 1}
+
+
+def test_partial_plates_must_not_contradict_for_probable_links():
+    from tracevision.crosscam import partial_plates_agree
+    c = dict(DEFAULTS)
+    assert partial_plates_agree("C?14???5??", "CG14MW3529", c)          # every jointly read character agrees
+    assert not partial_plates_agree("CG04?S95?4", "C?14???5??", c)      # 0 vs 1 on a jointly read position
+    assert partial_plates_agree("??", "CG04NL3024", c)                  # too little joint evidence to object
+    assert partial_plates_agree("", "CG04NL3024", c)

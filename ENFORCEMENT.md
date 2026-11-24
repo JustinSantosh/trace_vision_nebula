@@ -16,6 +16,7 @@ The add-on builds on plate recognition. Once a vehicle has a **confident registr
 | **Issue / cancel a challan** | Below every vehicle record: violation (the fine fills in), location, note → **Issue challan**. Each issued challan has **Cancel** | Stored on this machine only (`runs/enforcement/issued_challans.json`). Marked "issued here" and `SYN-SIM-…` |
 | **Wrong-side driving, fixed cameras** | Case → **Direction** finding; **Enforcement** tab queue | The vehicle moves against the permitted direction inside a hand-drawn road zone (camera pan removed first) |
 | **Wrong-side driving, moving cameras** | Same | A car is seen **front first while it closes in, then rear**: a head-on pass. It's wrong-side only on a road declared **one-way** |
+| **Challan PDF** | **PDF** next to every challan (vehicle record history, "Simulated challans raised", and the message after issuing or confirming) | A printable notice: challan no., QR code, offence, fine, vehicle and synthetic owner, and, for challans raised from a case, the camera evidence (crops, plate as read, match score, wrong-side measurement). Watermarked SIMULATED on every page; each download is audited. `python -m tracevision.challan <id>` writes one from the command line |
 | **Review queue** | **Enforcement** tab | Every flag is a *suspicion* until someone presses **Confirm** or **Reject**. Confirming a flag on a matched vehicle raises a simulated challan. Reviewed items leave the queue ("Reviewed (N)" group, with **Reset to pending**) |
 | **Audit log** | **Enforcement** tab, bottom | Every lookup, refused lookup, challan issued or cancelled, and review |
 
@@ -120,6 +121,7 @@ It is **one real positive example**, so this shows the method works; it isn't a 
 | Path | What |
 |---|---|
 | `tracevision/intel.py` | Lookup, issue and cancel challans, audit log |
+| `tracevision/challan.py` | Challan notice PDF (uses `pdfstyle.py`, shared with the clip reports) |
 | `tracevision/violations.py` | Both wrong-side checks, camera-motion and orientation caches, CLI |
 | `tracevision/api.py` | Endpoints below; computes orientation after each upload |
 | `TRACEVISION_DATA/registry/synthetic_owner_records.csv` | 334 owner records, one per registry vehicle (keyed by `synthetic_vehicle_id`) |
@@ -142,6 +144,7 @@ The matching registry (`synthetic_vehicle_registry.csv`) is unchanged, so the ev
 | `GET /api/intel/{reg}?reason=&context=runs/clip03:T1` | Full record. With `context`, refused (409) unless that vehicle is a confident match to `reg` |
 | `POST /api/challans` `{registration_number, violation, fine_inr?, location, note, context?}` | Issue a simulated challan |
 | `POST /api/challans/cancel` `{challan_id}` | Cancel one issued here |
+| `GET /api/challans/{challan_id}/pdf` (`?download=1` to save) | Printable challan notice (simulated or synthetic-history challan) |
 | `GET /data/{runs|jobs}/{id}/violations` | Wrong-side result for one run, with per-vehicle measurements |
 | `GET /api/violations` | All flags (stored clips and uploads), clips assessed, simulated challans |
 | `POST /api/violations/review` `{violation_id, decision: confirmed|rejected|pending, note}` | Review a flag; a confirmed flag on a matched vehicle raises a challan |

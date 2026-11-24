@@ -167,13 +167,37 @@ def _status(day: str, today: date) -> dict:
 
 
 def lookup(registration: str, reason: str = "", context: str = "", today: date | None = None) -> dict:
-    """Everything on record for a registration: vehicle, owner, compliance, e-challans (incl. simulated ones)."""
+    """Everything on record for a registration: vehicle, owner, compliance, e-challans (incl. simulated ones). Audited."""
     reg = norm_reg(registration)
     base = {"registration": reg, "reason": reason or None, "context": context or None, "action": "lookup"}
+    try:
+        rec = record(reg, today)
+    except Refused:
+        audit({**base, "outcome": "not found"})
+        raise
+    audit({**base, "outcome": "ok"})
+    return rec
+
+
+def find_challan(challan_id: str) -> dict | None:
+    """A challan by id: one simulated here (issued_challans.json) or one from the synthetic e-challan history."""
+    cid = clean(challan_id, 40)
+    hit = next((c for c in issued_challans() if c.get("challan_id") == cid), None)
+    if hit:
+        return hit
+    for items in _tables()["challans"].values():
+        for c in items:
+            if c["challan_id"] == cid:
+                return {**c, "fine_inr": int(c["fine_inr"])}
+    return None
+
+
+def record(registration: str, today: date | None = None) -> dict:
+    """The record itself, with no audit entry (callers that show it to a person go through lookup())."""
+    reg = norm_reg(registration)
     t = _tables()
     veh = t["by_reg"].get(reg)
     if veh is None:
-        audit({**base, "outcome": "not found"})
         raise Refused(404, f"{reg} is not in the synthetic registry")
     own = t["owners"].get(veh["synthetic_vehicle_id"], {})
     today = today or date.today()
@@ -202,5 +226,4 @@ def lookup(registration: str, reason: str = "", context: str = "", today: date |
                             "pending_amount_inr": sum(c["fine_inr"] for c in pending)},
         "challans": challans,
     }
-    audit({**base, "outcome": "ok"})
     return rec

@@ -1,11 +1,11 @@
 # TRACEVISION AI — What Next
 
-**Last updated:** 2026-11-23 (evening) · Done work: [completions.md](completions.md) · Owner actions: [NEEDS.md](NEEDS.md) · Problems: [PROBLEMS.md](PROBLEMS.md) · Decisions: [DECISIONS.md](DECISIONS.md) · Pipeline design: [PIPELINE.md](PIPELINE.md) · Team workstreams: [TEAM_TASKS.md](TEAM_TASKS.md)
+**Last updated:** 2026-11-24 · Done work: [completions.md](completions.md) · Owner actions: [NEEDS.md](NEEDS.md) · Problems: [PROBLEMS.md](PROBLEMS.md) · Decisions: [DECISIONS.md](DECISIONS.md) · Pipeline design: [PIPELINE.md](PIPELINE.md) · Team workstreams: [TEAM_TASKS.md](TEAM_TASKS.md)
 
 **Where we are:**
-- **Built, tested and evaluated end to end.** 19 clips, 67 owner-verified vehicles: **14/15 registered vehicles matched, 0/46 false identifications (+0/6 on registered vehicles with unknown plates), 0/252 wrong plate characters**, 61/67 vehicles found, type 95% compatible, colour 59% exact.
+- **Built, tested and evaluated end to end.** 19 clips, 67 owner-verified vehicles: **14/15 registered vehicles matched, 0/46 false identifications (+0/6 on registered vehicles with unknown plates), 0/252 wrong plate characters**, 61/67 vehicles found, type 95% compatible, colour 64% exact / 74% near (vehicle pixels only, M17).
 - **Cross-camera:** the four declared, cross-angled parking pairs are linked jointly with evidence pooled from both angles: **5 of 5 checkable groups correct, 0 wrong** (M16).
-- **App:** upload → video viewer with live playback (box → plate reads → registry check → decision), per-vehicle details, cross-camera panel, HTML/PDF report per clip.
+- **App:** upload → video viewer with live playback (box → plate reads → registry check → decision), per-vehicle details, cross-camera panel, HTML/PDF report per clip (redesigned 2026-11-24), printable challan notice (PDF) for every challan.
 - **Enforcement add-on:** synthetic vehicle records and e-challans for confident matches, simulated challans, and wrong-side driving (fixed and moving cameras) with a review queue and an audit log. Team guide: [ENFORCEMENT.md](ENFORCEMENT.md).
 - **What's left for submission is owner work: [NEEDS.md](NEEDS.md)** (repo visibility, demo video, slides).
 
@@ -37,7 +37,7 @@
 - [x] **P3** judged algorithms: multi-frame fusion (`?` rule) + registry matching (match score, reasons, match / ambiguous / no-match), calibrated on synthetic cases
 - [x] **P4** pipeline: detect + track (two detectors) → re-link → phantom-box check (C11) → best frames → plate → OCR → fuse → type → CLIP colour → match
 - [x] **P5** FastAPI app, video viewer with live playback, cross-camera panel, HTML/PDF reports for all 19 clips
-- [x] **P6** evaluation (one-to-one label association, E14) and robustness sweep (*robustness numbers predate the ensemble and CLIP colour*)
+- [x] **P6** evaluation (one-to-one label association, E14) and robustness sweep (robustness re-run 2026-11-24 with the current pipeline)
 - [x] **Bonus:** cross-camera re-identification: plate-led open-world linking + joint linking with pooled evidence for declared cross-angled pairs (M14, M16)
 - [x] **Add-on:** enforcement (vehicle records, challans, wrong-side driving with review), E17–E20
 
@@ -51,11 +51,11 @@
 
 | # | Improvement | Problem | Size |
 |---|---|---|---|
-| 1 | **Colour** (59% exact): a small trained colour classifier, or background removal before CLIP | C8, C12 | Medium |
+| 1 | **Colour** (64% exact after masking, M17): a small trained colour classifier | C8, C16 | Medium |
 | 2 | **Duplicate nested boxes** in the pipeline itself (now folded only for cross-camera linking) | C12 | Small |
 | 3 | **Car vs SUV** confusion | C9 | Medium |
-| 4 | **Stricter OCR confidence on low-quality plates** (blur / 360p / night can be confidently wrong) | C10 | Small |
-| 5 | **Re-run the robustness sweep** with the current pipeline and include clip12–19 | — | Small |
+| 4 | **Stricter OCR confidence on low-quality plates** (heavy blur still gives 5/30 wrong characters). Tried τ_prob 0.9: −17 correct characters for −4 wrong, not adopted | C10 | Small |
+| 5 | **Robustness sweep on clip12–19** (re-run on clip01–11 is done) | — | Small |
 | 6 | A dedicated **vehicle re-ID model** for cross-camera matching without plates (open world) | C12 | Large |
 | 7 | A true **real-time mode** (analyse while playing); needs re-evaluation | — | Medium |
 | 8 | **More wrong-side clips** (fixed camera, and a moving camera on a known two-way road) to measure the check instead of showing one example | E18, E19 | Small (filming) |

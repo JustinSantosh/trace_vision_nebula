@@ -327,6 +327,15 @@ def _pool(v_a, v_b, reads, registry, cfg):
     return res
 
 
+def partial_plates_agree(pa, pb, c, min_joint=3):
+    """For PROBABLE (non-plate) links: whatever characters BOTH clips read must not contradict each other.
+    True if there is too little joint evidence (< min_joint characters) or the partial plates agree (>= plate_confirm)."""
+    if not pa or not pb:
+        return True
+    sim, joint = plate_similarity(pa, pb, c["lookalike_cost"])
+    return joint < min_joint or sim >= c["plate_confirm"]
+
+
 def duplicate_tracks(run_dir, min_contain=0.85, min_frac=0.7, min_area_ratio=0.3):
     """C12: one vehicle sometimes gets a second, nested box. Track S is a duplicate of track L when, on >= min_frac of
     S's frames that L also has, S's box lies >= min_contain inside L's box, S is not tiny relative to L
@@ -345,13 +354,12 @@ def duplicate_tracks(run_dir, min_contain=0.85, min_frac=0.7, min_area_ratio=0.3
             fs = [f for f in P if f in Q]
             if len(fs) < 3 or len(fs) < min_frac * min(len(P), len(Q)):
                 continue
-            ok = 0
-            for f in fs:     # on each shared frame: is the smaller box (whichever it is) inside the larger one?
+            cs, rs = [], []
+            for f in fs:     # on each shared frame: how far is the smaller box (whichever it is) inside the larger one?
                 a, b = sorted((P[f], Q[f]), key=area)
                 ix = max(0.0, min(a[2], b[2]) - max(a[0], b[0])); iy = max(0.0, min(a[3], b[3]) - max(a[1], b[1]))
-                if area(a) and area(b) and ix * iy / area(a) >= min_contain and area(a) / area(b) >= min_area_ratio:
-                    ok += 1
-            if ok >= min_frac * len(fs):     # duplicates: fold the track with fewer detections into the other
+                cs.append(ix * iy / area(a) if area(a) else 0.0); rs.append(area(a) / area(b) if area(b) else 0.0)
+            if np.mean(cs) >= min_contain and np.mean(rs) >= min_area_ratio:   # mean over shared frames (M18)
                 small, big = (p, q) if len(P) < len(Q) else (q, p)
                 dup[small["track_id"]] = big["track_id"]
     # resolve chains (a -> b -> c) to the outermost track
@@ -405,7 +413,7 @@ def link_pair(run_a, run_b, cfg=None, calib=None):
         for r, k in zip(*linear_sum_assignment(-M)):
             i, j = ra_i[r], rb_j[k]
             ts = type_sim(A[i]["type"], B[j]["type"])
-            if S[i, j][3] != "veto" and M[r, k] >= c["pair_min_score"] and (ts is None or ts >= 0.5):
+            if S[i, j][3] != "veto" and M[r, k] >= c["pair_min_score"] and (ts is None or ts >= 0.5)                     and partial_plates_agree(A[i]["plate"], B[j]["plate"], c):
                 links.append((i, j, "probable (same-scene pair: appearance / type / colour, by elimination)", S[i, j][0]))
     # last resort, only because the owner declared the clips show the SAME vehicles: if exactly one compatible
     # vehicle is left on each side and whatever plate characters both read agree, they are linked by elimination
@@ -417,7 +425,7 @@ def link_pair(run_a, run_b, cfg=None, calib=None):
         if len(cj) == 1 and len([k for k in la if comp(k, cj[0])]) == 1:
             j = cj[0]
             sim, joint = plate_similarity(A[i]["plate"], B[j]["plate"], c["lookalike_cost"]) if A[i]["plate"] and B[j]["plate"] else (1.0, 0)
-            if joint == 0 or sim >= c["plate_confirm"]:
+            if partial_plates_agree(A[i]["plate"], B[j]["plate"], c):
                 links.append((i, j, "probable (elimination: the only remaining compatible vehicle on each side"
                               + (f"; partial plates agree on {joint} characters" if joint else "") + ")", S[i, j][0]))
     registry = load_registry()

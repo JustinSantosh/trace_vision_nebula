@@ -22,11 +22,11 @@ From `python -m tracevision.evaluate` → `TRACEVISION_DATA/reports/p6_evaluatio
 | Unregistered vehicles given a false confident match | **0/46** | 0/32 | 0/14 |
 | Vehicles marked "in registry" but whose full plate nobody knows (so not in the registry): false matches | **0/6** | 0/6 | — |
 | **Wrong plate characters output** | **0/252** | 0/252 | — (plates too small) |
-| Plate characters read correctly / left as `?` | 84% / 16% | 84% / 16% | — |
+| Plate characters read correctly / left as `?` | 85% / 15% | 85% / 15% | — |
 | Exact plate (fully readable labels) | 14/19 | 14/19 | — |
 | Vehicles detected and tracked (at the labelled frame) | 61/67 | 47/53 | 14/14 |
-| Type exact / compatible (car≈SUV) | 77% / 95% | | 86% / 93% |
-| Colour exact / near (white≈silver≈grey), CLIP zero-shot | 59% / 67% | | |
+| Type exact / compatible (car≈SUV) | 77% / 95% | 74% / 96% | 86% / 93% |
+| Colour exact / near (white≈silver≈grey), CLIP on vehicle pixels only (M17) | 64% / 74% | 66% / 74% | 57% / 71% |
 | Processing time | **5–24 s per clip** on an RTX 3050 laptop GPU (two detectors; clips 3–30 s long); 52 s for the 4K clip10 | | |
 
 *Detection uses two models (M15): UVH-26 (Indian classes, trained on elevated CCTV) plus COCO YOLOv8n, which sees close-up, ground-level vehicles UVH-26 misses or mistypes. Before that change: 52/67 found, 11/15 matched, type 90% compatible. Labels are linked to system vehicles one-to-one by box position (E14). The 1 registered miss: clip15 white SUV (plate unreadable from that spot).*
@@ -34,12 +34,12 @@ From `python -m tracevision.evaluate` → `TRACEVISION_DATA/reports/p6_evaluatio
 *On the first 11 clips (before clip12–19 were added): 8/9 matched, 0/42 false, 0/132 wrong characters.*
 
 **Robustness** (same clips blurred, downscaled to 480p/360p, JPEG q10, night, noise; `python -m tracevision.robustness`):
-**0 false identifications under every degradation**, but identification drops to 1/8 registered vehicles under strong blur, downscaling, compression or night, and **some wrong plate characters appear (up to 17% at 360p)**. Details: `TRACEVISION_DATA/reports/p6_evaluation.md`.
+**0 false identifications under every degradation** (clip01, 03, 04, 08, 11; re-run 2026-11-24 with the current pipeline), but identification drops to 1–2 of 8 registered vehicles under strong blur, downscaling, compression or night (5/8 with noise), and **some wrong plate characters appear: 5/30 with heavy Gaussian blur, 2/19 motion blur, 1/38 at 480p, 1/94 JPEG q10; 0 at 360p, night and noise**. Details: `TRACEVISION_DATA/reports/p6_evaluation.md`.
 
 **How to read these numbers:**
 - The system **prefers `?` to a wrong character**, and **no vehicle outside the registry was ever "identified"**. Those are the properties an investigator needs most.
 - On the CCTV-style clips **every plate is under 16 px**, so the system correctly answers "no confident match". It identifies type and colour, not the plate.
-- **Colour** uses CLIP zero-shot: 64% exact, 75% near. It's still the least reliable attribute (dark or warm-lit vehicles).
+- **Colour** uses CLIP zero-shot on the vehicle's own pixels (YOLOv8n-seg mask, M17): 64% exact, 74% near (was 59% / 67% on the whole box). It's still the least reliable attribute (dark or warm-lit vehicles). The masking variant was chosen on these same labels, so the gain is slightly optimistic.
 - The test set is small (51 vehicles, 9 registered) and mostly ground-level footage (see the limitations below).
 - On heavily degraded footage the "never a wrong character" property weakens (see Robustness above).
 
@@ -136,7 +136,7 @@ Reports for all test clips: `TRACEVISION_DATA/evaluation/reports/clipNN_report.p
 
 ## Enforcement add-on (synthetic demo data)
 **Team guide (how to run, demo, add clips, troubleshoot): [ENFORCEMENT.md](ENFORCEMENT.md).** Open the **Enforcement** tab, or the **Vehicle record** and **Direction** findings in a case (also in **Cross-camera** for links with a confident pooled match).
-- **Vehicle record:** press **Look up** on a vehicle with a **confident** registry match (or type a registration in the Enforcement tab) to see everything on record: make, model, class, fuel, RTO, registration / insurance / PUC validity, registered owner, and e-challan history with the pending amount. **Issue a challan** for that vehicle from the same panel (violation, fine, location, note) and cancel it if needed; issued challans are simulated and never sent anywhere. Every lookup, challan and review is logged (audit log in the Enforcement tab). Data: `python TRACEVISION_DATA/scripts/generate_vehicle_intel.py` (seeded; 334 owner records, 434 challans; every vehicle the demo can match has 2-4 challans, one pending). **Not** a VAHAN / e-Challan lookup (DECISIONS E17).
+- **Vehicle record:** press **Look up** on a vehicle with a **confident** registry match (or type a registration in the Enforcement tab) to see everything on record: make, model, class, fuel, RTO, registration / insurance / PUC validity, registered owner, and e-challan history with the pending amount. **Issue a challan** for that vehicle from the same panel (violation, fine, location, note) and cancel it if needed; issued challans are simulated and never sent anywhere. Each challan has a **printable PDF notice** (offence, fine, vehicle and synthetic owner, camera evidence when raised from a case; watermarked SIMULATED). Every lookup, challan and review is logged (audit log in the Enforcement tab). Data: `python TRACEVISION_DATA/scripts/generate_vehicle_intel.py` (seeded; 334 owner records, 434 challans; every vehicle the demo can match has 2-4 challans, one pending). **Not** a VAHAN / e-Challan lookup (DECISIONS E17).
 - **Wrong-side driving, fixed cameras** (clip02, clip06): Hand-drawn zones with a permitted direction (`TRACEVISION_DATA/cameras/camera_rules.json`); camera pan is removed first. A flagged vehicle waits to be confirmed or rejected; a confirmed flag on a matched vehicle raises a **simulated** challan that is never sent anywhere. Result on our footage: **54 vehicles checked, 0 flagged** (no wrong-side event was filmed); the rule flags clip02's real tracks when they are replayed backwards (unit test). `python -m tracevision.violations` prints the per-clip check (DECISIONS E18).
 - **Wrong-side driving, moving cameras:** a car seen **front first while it closes in, then rear** has passed the camera head-on (CLIP scores each crop headlights-and-grille vs tail-lights-and-boot). On a road declared one-way in `camera_rules.json` that is wrong-side driving; on a two-way road it is normal oncoming traffic. Tested on one downloaded clip (`TRACEVISION_DATA/raw/wrongside/ws01.mp4`, Delhi flyover; upload it in the app to reproduce): the wrong-way SUV is flagged and nothing else is; 0 flags on our other moving clips (214 cars over 31 clips). One positive example, so this shows the method works, not a detection rate (DECISIONS E19). `python -m tracevision.violations --orient --jobs` computes the orientation for stored clips.
 

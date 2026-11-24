@@ -27,10 +27,11 @@ pipeline:
   ensemble_coco: true         # C13 / M15: second tracking pass with COCO YOLOv8n (close-up / ground-level vehicles) ...
   ensemble_match_iou: 0.5     # ... a COCO track overlapping a UVH-26 track this much (mean IoU) is the same vehicle (type vote)
   ensemble_new_conf: 0.5      # ... a COCO track overlapping none is added if its mean confidence is at least this
+  fold_duplicates: false       # M18: nested-duplicate folding in the pipeline stays OFF (it split a wrong-way track); crosscam folds
   plate_link_min_known: 6    # merge tracks whose fused plates agree on >= this many readable characters (and never disagree)
 
 colour:
-  method: clip              # clip = CLIP ViT-B/32 zero-shot (M13); heuristic = k-means + hue rules (fallback)
+  method: clip_masked       # clip_masked = CLIP on vehicle pixels only (YOLOv8n-seg mask, M17); clip = whole box (M13); heuristic = hue rules
 
 plate_detector:
   conf: 0.5               # DECISIONS M8
